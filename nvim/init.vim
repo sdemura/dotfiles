@@ -12,12 +12,12 @@
 " - https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
 " - https://github.com/amix/vimrc
 
-if has('nvim')
-    let s:editor_root=expand("~/.config/nvim")
-else
-    let s:editor_root=expand("~/.vim")
-    set nocompatible
-endif
+" if has('nvim')
+"     let s:editor_root=expand("~/.config/nvim")
+" else
+"     let s:editor_root=expand("~/.vim")
+"     set nocompatible
+" endif
 
 set mouse=a
 
@@ -44,12 +44,9 @@ Plugin 'gmarik/Vundle.vim'
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 
 Plugin 'scrooloose/syntastic'
-"Plugin 'vim-scripts/indentpython.vim'
 Plugin 'nvie/vim-flake8'
-"Plugin 'jnurmine/Zenburn'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
-"Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'vim-airline/vim-airline'
@@ -59,28 +56,19 @@ Plugin 'tpope/vim-commentary'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'vim-autopep8'
 Plugin 'altercation/vim-colors-solarized'
-"Plugin 'joshdick/onedark.vim'
-"Plugin 'Shougo/neocomplete.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'davidhalter/jedi-vim'
-"Plugin 'gosukiwi/vim-atom-dark'
-"Plugin 'tomasr/molokai'
-"Plugin 'mhinz/vim-janah'
-"Plugin 'scwood/vim-hybrid'
-"Plugin 'hdima/python-syntax'
 Plugin 'ervandew/supertab'
-"Plugin 'vim-ruby/vim-ruby'
 Plugin 'osyo-manga/vim-monster'
 Plugin 'zchee/deoplete-go'
 Plugin 'Shougo/vimproc.vim'
-Plugin 't9md/vim-chef'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'majutsushi/tagbar'
 Plugin 'saltstack/salt-vim'
 Plugin 'stephpy/vim-yaml'
 Plugin 'Glench/Vim-Jinja2-Syntax'
-"Plugin 'klen/python-mode'
+
 call vundle#end()
 
 filetype plugin indent on
@@ -514,27 +502,6 @@ au BufRead,BufNewFile *.html, *.htm, *.php set softtabstop=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Python Stuff
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" " Number of spaces that a pre-existing tab is equal to.
-" au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
-
-" "spaces for indents
-" au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
-" au BufRead,BufNewFile *.py,*.pyw set expandtab
-" au BufRead,BufNewFile *.py set softtabstop=4
-
-" " Use the below highlight group when displaying bad whitespace is desired.
-" highlight BadWhitespace ctermbg=236 guibg=#303030
-
-" " Display tabs at the beginning of a line in Python mode as bad.
-" au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-" " Make trailing whitespace be flagged as bad.
-" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
-" " Wrap text after a certain number of characters
-" au BufRead,BufNewFile *.py,*.pyw, set textwidth=80
-
-" " Use UNIX (\n) line endings.
-" au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 
 " Set the default file encoding to UTF-8:
 set encoding=utf-8
@@ -607,7 +574,7 @@ let g:NERDTreeWinPos = "right"
 " Toggle NERDTree
 "map <C-n> :NERDTreeToggle<cr>
 
-map <leader>o :NERDTreeToggle<cr> 
+map <leader>o :NERDTreeToggle<cr>
 
 " Toggle SyntasticCheck
 map <leader>s :SyntasticToggleMode<cr>

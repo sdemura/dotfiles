@@ -1,3 +1,4 @@
-nvim/bundle/vim-autopep8
-nvim/bundle/vim-chef
-nvim/bundle/vim-monster
+nvim/bundle/vim-autopep8/*
+nvim/bundle/vim-chef/*
+nvim/bundle/vim-monster/*
+nvim/.init.vim-rplugin~

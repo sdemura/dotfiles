@@ -12,12 +12,12 @@
 " - https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
 " - https://github.com/amix/vimrc
 
-" if has('nvim')
-"     let s:editor_root=expand("~/.config/nvim")
-" else
-"     let s:editor_root=expand("~/.vim")
-"     set nocompatible
-" endif
+if has('nvim')
+    let s:editor_root=expand("~/.config/nvim")
+else
+    let s:editor_root=expand("~/.vim")
+    set nocompatible
+endif
 
 set mouse=a
 
@@ -26,9 +26,6 @@ set encoding=utf-8
 set clipboard=unnamed
 
 filetype off                  " required
-
-
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "=> BEGIN VUNDLE CONFIG

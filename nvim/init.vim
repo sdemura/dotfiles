@@ -65,6 +65,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'saltstack/salt-vim'
 Plugin 'stephpy/vim-yaml'
 Plugin 'Glench/Vim-Jinja2-Syntax'
+Plugin 'nathanaelkane/vim-indent-guides'
+"Plugin 'farfanoide/vim-kivy'
 
 call vundle#end()
 
@@ -458,9 +460,11 @@ let g:deoplete#sources#go#align_class = 1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
-" Ruby Completion
-"let g:monster#completion#rcodetools#backend = "async_rct_complete"
-"let g:deoplete#sources#omni#input_patterns = {"ruby" : '[^. *\t]\.\w*\|\h\w*::'}
+" With deoplete.nvim
+" let g:monster#completion#rcodetools#backend = "async_rct_complete"
+" let g:deoplete#sources#omni#input_patterns = {
+" \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+" \}
 
 " Go Syntastic Fixes
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
@@ -522,7 +526,13 @@ let g:solarized_termtrans=1
 
 "colorscheme onedark
 colorscheme solarized
-set background=dark
+let termbg = $TERMBG
+if termbg == 'dark'
+    set background=dark
+endif
+if termbg == 'light'
+    set background=light
+endif
 hi MatchParen cterm=bold ctermbg=none
 set showcmd
 set noshowmode
@@ -593,8 +603,14 @@ autocmd FileType go set completeopt-=preview
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+"set background=dark
+"colorscheme solarized
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=none

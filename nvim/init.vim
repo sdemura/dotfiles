@@ -39,34 +39,33 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
-
-Plugin 'scrooloose/syntastic'
-Plugin 'nvie/vim-flake8'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'tpope/vim-fugitive'
-Plugin 'jmcantrell/vim-virtualenv'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'fatih/vim-go'
-Plugin 'tpope/vim-commentary'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'vim-autopep8'
+Plugin 'Glench/Vim-Jinja2-Syntax'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'Shougo/vimproc.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'Shougo/deoplete.nvim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
-Plugin 'osyo-manga/vim-monster'
-Plugin 'zchee/deoplete-go'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'vim-ruby/vim-ruby'
+Plugin 'fatih/vim-go'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'majutsushi/tagbar'
-Plugin 'saltstack/salt-vim'
-Plugin 'stephpy/vim-yaml'
-Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
-"Plugin 'farfanoide/vim-kivy'
+Plugin 'nvie/vim-flake8'
+Plugin 'osyo-manga/vim-monster'
+Plugin 'saltstack/salt-vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'stephpy/vim-yaml'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-autopep8'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'zchee/deoplete-go'
 
 call vundle#end()
 
@@ -106,14 +105,6 @@ filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
-
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-" let mapleader = "\<Space>"
-" let g:mapleader = "\<Space>"
-
-"let mapleader = "\\"
-"let g:mapleader = "\\"
 
 
 " Fast saving
@@ -201,8 +192,7 @@ set foldmethod=indent
 set foldlevel=99
 
 " Enable folding with the spacebar
-"nnoremap <space> za
-
+nnoremap <space> za
 
 " Ability to cancel search with escape
 nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
@@ -257,8 +247,6 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
-
-
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -460,12 +448,6 @@ let g:deoplete#sources#go#align_class = 1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
-" With deoplete.nvim
-" let g:monster#completion#rcodetools#backend = "async_rct_complete"
-" let g:deoplete#sources#omni#input_patterns = {
-" \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-" \}
-
 " Go Syntastic Fixes
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -568,8 +550,6 @@ autocmd FileType go nnoremap <buffer> z :w<cr>:GoRun<cr>
 autocmd FileType ruby nnoremap <buffer> z :w<cr>:exec '!ruby' shellescape(@%, 1)<cr>
 
 " Turn off auto comments
-
-"autocmd FileType * setlocal formatoptions-=ro
 autocmd Filetype * setlocal formatoptions-=cr
 
 " Tabgar Toggle
@@ -579,8 +559,6 @@ nmap <leader>t :TagbarToggle<CR>
 let g:NERDTreeWinPos = "right"
 
 " Toggle NERDTree
-"map <C-n> :NERDTreeToggle<cr>
-
 map <leader>o :NERDTreeToggle<cr>
 
 " Toggle SyntasticCheck
@@ -609,8 +587,7 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
-"set background=dark
-"colorscheme solarized
+" IndentGuide Colors
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=none

@@ -23,7 +23,7 @@ set mouse=a
 
 set encoding=utf-8
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 filetype off                  " required
 
@@ -57,6 +57,7 @@ Plugin 'nvie/vim-flake8'
 Plugin 'osyo-manga/vim-monster'
 Plugin 'saltstack/salt-vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'PProvost/vim-ps1'
 Plugin 'scrooloose/syntastic'
 Plugin 'stephpy/vim-yaml'
 Plugin 'tpope/vim-commentary'
@@ -66,6 +67,9 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-autopep8'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'zchee/deoplete-go'
+Plugin 'raphamorim/lucario'
+Plugin 'tomasr/molokai'
+"Plugin 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
 
 call vundle#end()
 
@@ -108,7 +112,7 @@ set autoread
 
 
 " Fast saving
-nmap <leader>w :w!<cr>
+nmap <leader>] :w!<cr>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -188,11 +192,14 @@ set splitbelow
 set splitright
 
 " Enable folding
-set foldmethod=indent
-set foldlevel=99
+" set foldmethod=indent
+" set foldlevel=99
 
-" Enable folding with the spacebar
-nnoremap <space> za
+" " Enable folding with the spacebar
+" nnoremap <space> za
+
+" Disable folding entirely
+set nofoldenable
 
 " Ability to cancel search with escape
 nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
@@ -505,6 +512,7 @@ syntax enable
 " Syntax Highlight Python
 
 let g:solarized_termtrans=1
+let g:molokai_original = 1
 
 "colorscheme onedark
 colorscheme solarized
@@ -518,6 +526,9 @@ endif
 hi MatchParen cterm=bold ctermbg=none
 set showcmd
 set noshowmode
+
+"no bg for line numbers
+highlight LineNr ctermbg=none
 
 let python_highlight_all=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -556,7 +567,7 @@ autocmd Filetype * setlocal formatoptions-=cr
 nmap <leader>t :TagbarToggle<CR>
 
 " NerdTREE open on right side
-let g:NERDTreeWinPos = "right"
+" let g:NERDTreeWinPos = "right"
 
 " Toggle NERDTree
 map <leader>o :NERDTreeToggle<cr>
@@ -591,3 +602,21 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=none
+
+imap <C-Return> <CR><CR><C-o>k<Tab>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM-GO Settings 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au FileType go nmap <leader>rt <Plug>(go-run-tab)
+au FileType go nmap <Leader>rs <Plug>(go-run-split)
+au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
+
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 
+
+let g:go_highlight_types = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_extra_types = 1

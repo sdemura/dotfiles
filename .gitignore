@@ -3,3 +3,5 @@ nvim/bundle/vim-chef/*
 nvim/bundle/vim-monster/*
 nvim/.init.vim-rplugin~
 nvim/bundle.old
+nvim/tmp
+nvim/bundle

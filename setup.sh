@@ -4,6 +4,7 @@
 ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
 
 # NVIM
+pip3 install neovim
 mkdir -p ~/.config
 ln -s ~/.dotfiles/nvim/ ~/.config/nvim
 ln -s ~/.dotfiles/nvim/init.vim ~/.nvimrc

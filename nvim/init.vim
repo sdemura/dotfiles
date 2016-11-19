@@ -11,7 +11,7 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'Glench/Vim-Jinja2-Syntax'
-Plugin 'stephpy/vim-yaml'
+" Plugin 'stephpy/vim-yaml'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'altercation/vim-colors-solarized'
@@ -43,23 +43,17 @@ Plugin 'raphamorim/lucario'
 Plugin 'fatih/molokai'
 Plugin 'jnurmine/Zenburn'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-" Plugin 'itchyny/lightline.vim'
-" Plugin 'taohex/lightline-buffer'
-"Plugin 'ap/vim-buftabline' 
-"Plugin 'bling/vim-bufferline'
-" Plugin 'dmcgrady/vim-lucario'
-" Plugin 'dracula/vim'
 Plugin 'sdemura/dracula-vim'
 Plugin 'airblade/vim-gitgutter'
-" Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-"Plugin 'ryanoasis/vim-devicons'
+ " Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plugin 'ryanoasis/vim-devicons'
+Plugin 'chriskempson/base16-vim'
 call vundle#end()
 
 filetype off                  " required
 filetype plugin indent on
 filetype plugin on
 filetype indent on
-
 
 set mouse=a
 set encoding=utf-8
@@ -75,7 +69,6 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
 set wildmenu
-
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 set ruler
 set cmdheight=1
@@ -112,10 +105,9 @@ set tw=500
 set nocursorcolumn      " speed up syntax highlighting
 set nocursorline
 set pastetoggle=<F2>
-
 set ai "Auto indent
 set si "Smart indent
-set wrap "Wrap lines
+set nowrap "No Wrap lines
 
 if has('persistent_undo')
   set undofile
@@ -241,11 +233,16 @@ endif
 
 " Color Scheme
 set background=dark
+" let base16colorspace=256  " Access colors present in 256 colorspace
 
 let g:solarized_termtrans=1
-let g:molokai_original=1
+" let g:molokai_original=1
+" colorscheme dracula
 colorscheme dracula
-"colorschemeacula
+" colorscheme molokai
+" colorscheme "base16-default-dark"
+" colorscheme solarized
+
 set showcmd
 set noshowmode
 
@@ -273,7 +270,7 @@ hi FoldColumn ctermbg=none
 let python_highlight_all=1
 
 autocmd FileType python setlocal cc=79
-autocmd FileType python nnoremap <buffer> z :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
+
 autocmd Filetype * setlocal formatoptions-=cr
 let g:autopep8_disable_show_diff=1
 
@@ -315,7 +312,6 @@ au CompleteDone * pclose
 autocmd FileType ruby set completeopt-=preview
 autocmd FileType go set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
-
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 """ Autocomplete Tab settings
@@ -326,8 +322,8 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=none
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
 
 " imap <C-Return> <CR><CR><C-o>k<Tab>
 
@@ -337,8 +333,9 @@ au FileType go nmap <leader>rt <Plug>(go-run-tab)
 au FileType go nmap <Leader>rs <Plug>(go-run-split)
 au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
 
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+" autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
+""" Vim-go settings
 let g:go_highlight_types = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -357,13 +354,15 @@ au BufRead,BufNewFile *.html, *.htm, *.php set shiftwidth=2
 au BufRead,BufNewFile *.html, *.htm, *.php set expandtab
 au BufRead,BufNewFile *.html, *.htm, *.php set softtabstop=2
 
+""" Bash 
+autocmd BufNewFile,BufRead *.sh set noexpandtab tabstop=2 shiftwidth=2
 
 """ MISC
 " always start terminal in insert mode
 autocmd BufWinEnter,WinEnter term://* startinsert
 
   " ==================== CtrlP ====================
-let g:ctrlp_cmd = 'CtrlPMRU'
+" let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_mruf_max=450    " number of recently opened files
@@ -374,23 +373,18 @@ let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
 
-func! MyCtrlPTag()
-  let g:ctrlp_prompt_mappings = {
-        \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-        \ 'AcceptSelection("t")': ['<c-t>'],
-        \ }
-  CtrlPBufTag
-endfunc
-command! MyCtrlPTag call MyCtrlPTag()
-
-
-"" Salt Stuff "
-" let g:sls_use_jinja_syntax = 0
-
+" func! MyCtrlPTag()
+"   let g:ctrlp_prompt_mappings = {
+"         \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
+"         \ 'AcceptSelection("t")': ['<c-t>'],
+"         \ }
+"   CtrlPBufTag
+" endfunc
+" command! MyCtrlPTag call MyCtrlPTag()
 
 hi MatchParen cterm=bold ctermbg=none
 highlight LineNr ctermbg=none
-" set fillchars+=vert:│
+set fillchars+=vert:│
 
 """ Custom keyboard shorcuts!
 :nnoremap <leader>vs :vsplit<Cr>
@@ -403,6 +397,7 @@ highlight LineNr ctermbg=none
 :nnoremap <leader>] :w<Cr>
 :nnoremap <leader>][ :wq<Cr>
 :nnoremap <leader>wq :wq<Cr>
+:nnoremap <leader>q :q<Cr>
 :nnoremap <leader><Esc> :q!<Cr>
 :nnoremap <leader>][p :qall!<Cr>
 :nnoremap <leader>t :TagbarToggle<CR>
@@ -410,3 +405,7 @@ highlight LineNr ctermbg=none
 :nnoremap <leader>s :SyntasticToggleMode<cr>
 :nnoremap <leader>e :e<Space>
 :nnoremap <leader>gr :GoRun 
+
+""" Custom run stuff
+autocmd FileType python nnoremap <buffer> z :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
+

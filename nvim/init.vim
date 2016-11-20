@@ -17,7 +17,7 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'davidhalter/jedi-vim'
+" Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 Plugin 'fatih/vim-go'
 Plugin 'jiangmiao/auto-pairs'
@@ -25,7 +25,6 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
-"Plugin 'nvie/vim-flake8'
 Plugin 'osyo-manga/vim-monster'
 Plugin 'saltstack/salt-vim'
 Plugin 'scrooloose/nerdtree'
@@ -35,19 +34,18 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-" Plugin 'vim-autopep8'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'zchee/deoplete-go'
-Plugin 'raphamorim/lucario'
-" Plugin 'tomasr/molokai'
 Plugin 'fatih/molokai'
 Plugin 'jnurmine/Zenburn'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'sdemura/dracula-vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-scripts/BufOnly.vim'
  " Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plugin 'ryanoasis/vim-devicons'
 Plugin 'chriskempson/base16-vim'
+Plugin 'zchee/deoplete-jedi'
 call vundle#end()
 
 filetype off                  " required
@@ -114,7 +112,8 @@ if has('persistent_undo')
   set undodir=~/.config/nvim/tmp/undo/
 endif
 
-
+" " Make double-<Esc> clear search highlights
+" nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
 nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
 
@@ -132,7 +131,7 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 """ Buffer stuff
-" map <leader>bd :Bclose<cr>:tabclose<cr>gT
+map <leader>bd :Bclose<cr>:tabclose<cr>gT
 " map <leader>ba :bufdo bd<cr>
 " map <leader>l :bnext<cr>
 " map <leader>h :bprevious<cr>
@@ -206,25 +205,25 @@ endif
 "     return ''
 " endfunction
 
-" command! Bclose call <SID>BufcloseCloseIt()
-" function! <SID>BufcloseCloseIt()
-"    let l:currentBufNum = bufnr("%")
-"    let l:alternateBufNum = bufnr("#")
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+   let l:currentBufNum = bufnr("%")
+   let l:alternateBufNum = bufnr("#")
 
-"    if buflisted(l:alternateBufNum)
-"      buffer #
-"    else
-"      bnext
-"    endif
+   if buflisted(l:alternateBufNum)
+     buffer #
+   else
+     bnext
+   endif
 
-"    if bufnr("%") == l:currentBufNum
-"      new
-"    endif
+   if bufnr("%") == l:currentBufNum
+     new
+   endif
 
-"    if buflisted(l:currentBufNum)
-"      execute("bdelete! ".l:currentBufNum)
-"    endif
-" endfunction
+   if buflisted(l:currentBufNum)
+     execute("bdelete! ".l:currentBufNum)
+   endif
+endfunction
 
 """ Remember last position in file
 if has("autocmd")
@@ -276,6 +275,10 @@ let g:autopep8_disable_show_diff=1
 
 
 """ NerdTree and Syntastic and deoplete
+
+let g:NERDTreeQuitOnOpen = 0
+let g:NERDTreeMouseMode=2
+let g:NERDTreeMinimalUI=1
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -362,7 +365,7 @@ autocmd BufNewFile,BufRead *.sh set noexpandtab tabstop=2 shiftwidth=2
 autocmd BufWinEnter,WinEnter term://* startinsert
 
   " ==================== CtrlP ====================
-" let g:ctrlp_cmd = 'CtrlPMRU'
+let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_mruf_max=450    " number of recently opened files
@@ -371,7 +374,7 @@ let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
-let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
+" let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
 
 " func! MyCtrlPTag()
 "   let g:ctrlp_prompt_mappings = {
@@ -395,6 +398,7 @@ set fillchars+=vert:│
 :nnoremap <leader>n :bnext<Cr>
 :nnoremap <leader>p :bprevious<Cr>
 :nnoremap <leader>] :w<Cr>
+:nnoremap <leader>w :w<Cr>
 :nnoremap <leader>][ :wq<Cr>
 :nnoremap <leader>wq :wq<Cr>
 :nnoremap <leader>q :q<Cr>
@@ -405,6 +409,9 @@ set fillchars+=vert:│
 :nnoremap <leader>s :SyntasticToggleMode<cr>
 :nnoremap <leader>e :e<Space>
 :nnoremap <leader>gr :GoRun 
+
+inoremap <C-e> <Esc>A
+inoremap <C-a> <Esc>I
 
 """ Custom run stuff
 autocmd FileType python nnoremap <buffer> z :w<cr>:exec '!python3' shellescape(@%, 1)<cr>

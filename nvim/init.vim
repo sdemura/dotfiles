@@ -46,6 +46,8 @@ Plugin 'vim-scripts/BufOnly.vim'
 " Plugin 'ryanoasis/vim-devicons'
 Plugin 'chriskempson/base16-vim'
 Plugin 'zchee/deoplete-jedi'
+Plugin 'haya14busa/incsearch.vim'
+" Plugin 'Yggdroot/indentLine'
 call vundle#end()
 
 filetype off                  " required
@@ -101,7 +103,7 @@ set tabstop=4
 set lbr
 set tw=500
 set nocursorcolumn      " speed up syntax highlighting
-set nocursorline
+" set nocursorline
 set pastetoggle=<F2>
 set ai "Auto indent
 set si "Smart indent
@@ -113,9 +115,9 @@ if has('persistent_undo')
 endif
 
 " " Make double-<Esc> clear search highlights
-" nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
+nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
-nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
+" nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
 
 vnoremap <silent> * :call VisualSelection('f', '')<CR>
 vnoremap <silent> # :call VisualSelection('b', '')<CR>
@@ -261,9 +263,10 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 0
 
 
-set colorcolumn=100
+" set colorcolumn=100
 hi FoldColumn ctermbg=none
-
+set cursorline
+"hi CursorLine ctermbg=241
 
 """ Python Stuff
 let python_highlight_all=1
@@ -277,7 +280,7 @@ let g:autopep8_disable_show_diff=1
 """ NerdTree and Syntastic and deoplete
 
 let g:NERDTreeQuitOnOpen = 0
-let g:NERDTreeMouseMode=2
+" let g:NERDTreeMouseMode=2
 let g:NERDTreeMinimalUI=1
 
 let g:syntastic_always_populate_loc_list = 1
@@ -325,8 +328,15 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=235
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=61
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=60
+
+" " hi IndentGuidesOdd ctermbg=236
+" " hi IndentGuidesEven ctermbg=236
+
+" let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+" set ts=4 sw=4 et
 
 " imap <C-Return> <CR><CR><C-o>k<Tab>
 
@@ -405,7 +415,8 @@ set fillchars+=vert:│
 :nnoremap <leader><Esc> :q!<Cr>
 :nnoremap <leader>][p :qall!<Cr>
 :nnoremap <leader>t :TagbarToggle<CR>
-:nnoremap <leader>o :NERDTreeToggle<cr>
+" :nnoremap <leader>o :NERDTreeToggle %<cr>
+" :nnoremap <leader>o :NERDTreeFind<cr>
 :nnoremap <leader>s :SyntasticToggleMode<cr>
 :nnoremap <leader>e :e<Space>
 :nnoremap <leader>gr :GoRun 
@@ -413,6 +424,35 @@ set fillchars+=vert:│
 inoremap <C-e> <Esc>A
 inoremap <C-a> <Esc>I
 
+
+
+" Open NERDTree in the directory of the current file (or /home if no file is open)
+" nmap <silent> <C-i> :call NERDTreeToggleInCurDir()<cr>
+nmap <silent> <leader>o : call NERDTreeToggleInCurDir()<cr>
+function! NERDTreeToggleInCurDir()
+  " If NERDTree is open in the current buffer
+  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+    exe ":NERDTreeClose"
+  else
+    exe ":NERDTreeFind"
+  endif
+endfunction
+
+
 """ Custom run stuff
 autocmd FileType python nnoremap <buffer> z :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+" :h g:incsearch#auto_nohlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
 

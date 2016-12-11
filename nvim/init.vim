@@ -1,11 +1,8 @@
-if has('nvim')
-    let s:editor_root=expand("~/.config/nvim")
-else
-    let s:editor_root=expand("~/.vim")
-    set nocompatible
-endif
+" Assume we have nvim outright. No need to check this anymore.
+let s:editor_root=expand("~/.config/nvim")
 
-filetype off                  " required
+" Turn off filetype before loading Vundle.
+filetype off                  
 
 set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#rc(s:editor_root . '/bundle')
@@ -51,6 +48,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'zchee/deoplete-go'
 Plugin 'zchee/deoplete-jedi'

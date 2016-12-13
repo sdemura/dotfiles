@@ -63,13 +63,20 @@ function parse_git_branch () {
 # make PS1 shorter
 function shorten_ps1 {
     unset PS1
-    PS1='\W\$$(parse_git_branch) '
+    # PS1='\W\$$(parse_git_branch) '
+    # PS1='\W\[\033[0m\]\[\033[1;32m\]$(parse_git_branch)\[\033[0m\]\$ '
+    # PS1='\W\[\033[1:36m\]\[\033[1;3g2m\]$(parse_git_branch)\[\033[0m\]\$ '
+    # PS1='\[\033[1;36m\]\u@\h:\[\033[0m\]\[\033[1;34m\]\W\[\033[0m\]\[\033[1;32m\]$(parse_git_branch)\[\033[0m\]\$ '
+    PS1='\[\033[1;34m\]\W\[\033[0m\]\[\033[1;32m\]$(parse_git_branch)\[\033[0m\]\$ '
 }
 
 # make PS1 longer
 function lengthen_ps1 {
     unset PS1
-    PS1='\u@\h:\w\$$(parse_git_branch) '
+    #PS1='\u@\h:\w\$$(parse_git_branch) '
+    PS1='\[\033[1;36m\]\u@\h:\[\033[0m\]\[\033[1;34m\]\W\[\033[0m\]\[\033[1;32m\]$(parse_git_branch)\[\033[0m\]\$ '
+
+
 }
 
 # set up tab titles on terminals

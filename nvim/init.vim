@@ -339,13 +339,22 @@ autocmd BufWinEnter,WinEnter term://* startinsert
 " Always go back to normal mode when leaving terminal mode
 autocmd BufLeave term://* stopinsert
 
-""" NeoVim Terminal mappings
-tnoremap <C-h> <C-\><C-n><C-w>h
-" Workaround since <C-h> isn't working in neovim right now
+" """ NeoVim Terminal mappings
+" tnoremap <C-h> <C-\><C-n><C-w>h
+" " Workaround since <C-h> isn't working in neovim right now
 tnoremap <C-w>h <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
+" Move around terminal with alt+{hjkl} 
+" :tnoremap <A-h> <C-\><C-n><C-w>h
+" :tnoremap <A-j> <C-\><C-n><C-w>j
+" :tnoremap <A-k> <C-\><C-n><C-w>k
+" :tnoremap <A-l> <C-\><C-n><C-w>l
+" :nnoremap <A-h> <C-w>h
+" :nnoremap <A-j> <C-w>j
+" :nnoremap <A-k> <C-w>k
+" :nnoremap <A-l> <C-w>l
 
 """ CtrlP settings
 let g:ctrlp_cmd = 'CtrlPMRU'

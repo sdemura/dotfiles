@@ -92,7 +92,7 @@ set magic
 set mat=2
 set nobackup
 set nocursorcolumn      " speed up syntax highlighting
-set nocursorline
+set cursorline
 set noerrorbells
 set nofoldenable
 set noshowmode
@@ -118,6 +118,15 @@ set tw=500
 set whichwrap+=<,>,h,l
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 set wildmenu
+
+
+if !&scrolloff
+  set scrolloff=1
+endif
+if !&sidescrolloff
+  set sidescrolloff=5
+endif
+set display+=lastline
 
 if has('persistent_undo')
   set undofile
@@ -266,20 +275,22 @@ let g:syntastic_auto_jump = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_loc_list_height = 5
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']  }
 let g:syntastic_python_checkers=['pyflakes']
 let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
-highlight SyntasticErrorSign ctermfg=white ctermbg=236
-highlight SyntasticWarningSign ctermfg=white ctermbg=236
+" highlight SyntasticErrorSign ctermfg=white ctermbg=236
+" highlight SyntasticWarningSign ctermfg=white ctermbg=236
 
 """ Auto complete settings
 au CompleteDone * pclose
 autocmd FileType ruby set completeopt-=preview
+autocmd FileType go set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#align_class = 1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
@@ -287,11 +298,11 @@ let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 """ Autocomplete Tab settings
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-"   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-"   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " let g:indent_guides_auto_colors = 0
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=60
@@ -317,7 +328,9 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
-
+let g:go_fmt_autosave = 1
+" let g:go_list_type = "quickfix"
+let g:go_fmt_command = "goimports"
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
@@ -346,15 +359,6 @@ tnoremap <C-w>h <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
-" Move around terminal with alt+{hjkl} 
-" :tnoremap <A-h> <C-\><C-n><C-w>h
-" :tnoremap <A-j> <C-\><C-n><C-w>j
-" :tnoremap <A-k> <C-\><C-n><C-w>k
-" :tnoremap <A-l> <C-\><C-n><C-w>l
-" :nnoremap <A-h> <C-w>h
-" :nnoremap <A-j> <C-w>j
-" :nnoremap <A-k> <C-w>k
-" :nnoremap <A-l> <C-w>l
 
 """ CtrlP settings
 let g:ctrlp_cmd = 'CtrlPMRU'
@@ -369,10 +373,6 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 
 """ Custom keyboard shorcuts!
 :nnoremap <leader><Esc> :q!<Cr>
-:nnoremap <leader>] :w<Cr>
-:nnoremap <leader>][ :wq<Cr>
-:nnoremap <leader>][p :qall!<Cr>
-:nnoremap <leader>c :bw!<Cr>
 :nnoremap <leader>e :e<Space>
 :nnoremap <leader>gr :GoRun 
 :nnoremap <leader>hs :split<Cr>

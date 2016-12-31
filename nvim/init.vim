@@ -22,7 +22,8 @@ call vundle#begin()
 " Plugin 'vim-ruby/vim-ruby'
 " Plugin 'vim-scripts/ZoomWin'
 Plugin 'Glench/Vim-Jinja2-Syntax'
-Plugin 'PProvost/vim-ps1'
+" Plugin 'PProvost/vim-ps1'
+" Plugin 'wesQvim-windowswap'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
@@ -37,13 +38,13 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'jmcantrell/vim-virtualenv'
+" Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'saltstack/salt-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
-Plugin 'sdemura/dracula-vim'
+" Plugin 'sdemura/dracula-vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
@@ -52,6 +53,7 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'zchee/deoplete-go'
 Plugin 'zchee/deoplete-jedi'
+" Plugin 'sheerun/vim-polyglot'
 call vundle#end()
 
 "" Turn filetype on after Vundle
@@ -233,9 +235,13 @@ endif
 
 " Color Scheme
 set background=dark
+" set background=light
 let g:solarized_termtrans=1
 "colorscheme solarized
-colorscheme base16-tomorrow-night
+" colorscheme base16-twilight
+" colorscheme base16-default-dark
+colorscheme base16-tomorrow
+" colorscheme base16-default-light
 
 """ Airline Stuff
 set laststatus=2
@@ -310,8 +316,8 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 
 
 """ IndentGuide Settings
-" hi IndentGuidesOdd ctermbg=236
-" hi IndentGuidesEven ctermbg=236
+hi IndentGuidesOdd ctermbg=236
+hi IndentGuidesEven ctermbg=235
 " let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 
@@ -320,6 +326,25 @@ au FileType go nnoremap <leader>g :GoDef<cr>
 au FileType go nmap <leader>rt <Plug>(go-run-tab)
 au FileType go nmap <Leader>rs <Plug>(go-run-split)
 au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
+
+" Open go docs in splits, verticals and tabs.
+au FileType go nmap <Leader>gds <Plug>(go-def-split)
+au FileType go nmap <Leader>gdv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>gdt <Plug>(go-def-tab)
+
+" Return from go doc
+au FileType go nmap <Leader>gp :GoDefPop<Cr>
+au FileType go nmap <Leader>gd :GoDef<Cr>
+
+" Show a list of interfaces implemented under word:
+au FileType go nmap <Leader>s <Plug>(go-implements)
+
+"Show type info for the word under the cursor
+au FileType go nmap <Leader>i <Plug>(go-info)
+
+" Rename the indentifier under the cursor
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
 
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
@@ -347,18 +372,24 @@ au BufRead,BufNewFile *.rb,*erb set shiftwidth=2
 
 """ NeoVim Terminal Mode Settings
 " always start terminal in insert mode
-autocmd BufWinEnter,WinEnter term://* startinsert
-
+" autocmd BufWinEnter,WinEnter term://* startinsert
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 " Always go back to normal mode when leaving terminal mode
 autocmd BufLeave term://* stopinsert
 
+"Terminal title as status line
+:autocmd TermOpen * setlocal statusline=%{b:term_title}
+
 " """ NeoVim Terminal mappings
-" tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-h> <C-\><C-n><C-w>h
 " " Workaround since <C-h> isn't working in neovim right now
 tnoremap <C-w>h <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
+
+" Exit terminal insert mode
+tnoremap <C-w> <C-\><C-n><Cr>
 
 """ CtrlP settings
 let g:ctrlp_cmd = 'CtrlPMRU'
@@ -372,7 +403,7 @@ let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 
 """ Custom keyboard shorcuts!
-:nnoremap <leader><Esc> :q!<Cr>
+" :nnoremap <leader><Esc> :q!<Cr>
 :nnoremap <leader>e :e<Space>
 :nnoremap <leader>gr :GoRun 
 :nnoremap <leader>hs :split<Cr>
@@ -424,7 +455,5 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <C-Z> :ZoomToggle<CR>
 
-" Custom configurations
-" hi MatchParen cterm=bold ctermbg=none
-" highlight LineNr ctermbg=none
-" set fillchars+=vert:‚îÇ
+" Polyglot settings
+let g:polyglot_disabled = ['go']

@@ -457,3 +457,9 @@ nnoremap <silent> <C-Z> :ZoomToggle<CR>
 
 " Polyglot settings
 let g:polyglot_disabled = ['go']
+
+" Needed on Linux shells
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  " source ~/.vimrc_background
+endif

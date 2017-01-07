@@ -53,7 +53,10 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'zchee/deoplete-go'
 Plugin 'zchee/deoplete-jedi'
+Plugin 'nvie/vim-flake8'
+Plugin 'tell-k/vim-autopep8'
 " Plugin 'sheerun/vim-polyglot'
+" Plugin 'python-mode/python-mode'
 call vundle#end()
 
 "" Turn filetype on after Vundle
@@ -241,6 +244,7 @@ let g:solarized_termtrans=1
 " colorscheme base16-twilight
 " colorscheme base16-default-dark
 colorscheme base16-tomorrow
+" colorscheme base16-default-dark
 " colorscheme base16-default-light
 
 """ Airline Stuff
@@ -285,10 +289,11 @@ let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_loc_list_height = 5
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']  }
-let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_python_exec = '/usr/local/bin/python3'
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
 
 " highlight SyntasticErrorSign ctermfg=white ctermbg=236
 " highlight SyntasticWarningSign ctermfg=white ctermbg=236
@@ -303,6 +308,8 @@ let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+" deoplete-jedi
+let g:deoplete#sources#jedi#python_path = '/usr/local/bin/python3'
 """ Autocomplete Tab settings
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
@@ -463,3 +470,13 @@ if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   " source ~/.vimrc_background
 endif
+
+" Python mode disable rope autocomplete
+" let g:pymode_rope_completion = 0
+" " PymodeAutoLint
+" nnoremap <F8> :PymodeLintAuto<Cr>:w<cr>
+" let g:pymode_doc = 1
+" let g:pymode_python = 'python3'
+"
+""" Python autopep settings
+

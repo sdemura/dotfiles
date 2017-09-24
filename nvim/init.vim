@@ -2,61 +2,56 @@
 let s:editor_root=expand("~/.config/nvim")
 
 " Turn off filetype before loading Vundle.
-filetype off                  
+filetype off
 
 set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#rc(s:editor_root . '/bundle')
 call vundle#begin()
 
-" Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-" Plugin 'Shougo/vimproc.vim'
-" Plugin 'Yggdroot/indentLine'
-" Plugin 'davidhalter/jedi-vim'
-" Plugin 'fatih/molokai'
-" Plugin 'garyburd/go-explorer'
-" Plugin 'jnurmine/Zenburn'
-" Plugin 'lilydjwg/python-syntax'
-" Plugin 'osyo-manga/vim-monster'
-" Plugin 'ryanoasis/vim-devicons'
-" Plugin 'stephpy/vim-yaml'
-" Plugin 'vim-ruby/vim-ruby'
-" Plugin 'vim-scripts/ZoomWin'
 Plugin 'Glench/Vim-Jinja2-Syntax'
-" Plugin 'PProvost/vim-ps1'
-" Plugin 'wesQvim-windowswap'
-Plugin 'Shougo/deoplete.nvim'
+" Plugin 'Shougo/deoplete.nvim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'danro/rename.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'ervandew/supertab'
 Plugin 'fatih/vim-go'
-Plugin 'fishbullet/deoplete-ruby'
+" Plugin 'fishbullet/deoplete-ruby'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'jistr/vim-nerdtree-tabs'
-" Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'nvie/vim-flake8'
 Plugin 'saltstack/salt-vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 " Plugin 'sdemura/dracula-vim'
+Plugin 'dracula/vim'
+Plugin 'tell-k/vim-autopep8'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-eunuch.git'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/BufOnly.vim'
-Plugin 'zchee/deoplete-go'
-Plugin 'zchee/deoplete-jedi'
-Plugin 'nvie/vim-flake8'
-Plugin 'tell-k/vim-autopep8'
-" Plugin 'sheerun/vim-polyglot'
-" Plugin 'python-mode/python-mode'
+Plugin 'w0rp/ale'
+" Plugin 'zchee/deoplete-go'
+" Plugin 'zchee/deoplete-jedi'
+Plugin 'hashivim/vim-terraform'
+Plugin 'z0mbix/vim-shfmt'
+Plugin 'roxma/nvim-completion-manager'
+Plugin 'roxma/ncm-rct-complete'
+Plugin 'ngmy/vim-rubocop'
+Plugin 'mhinz/vim-grepper'
 call vundle#end()
 
 "" Turn filetype on after Vundle
@@ -68,9 +63,7 @@ filetype plugin indent on
 syntax enable
 
 set mouse=a
-set encoding=utf-8
-set clipboard^=unnamed
-set clipboard^=unnamedplus
+set clipboard+=unnamedplus
 set history=500
 set autoread
 set so=7
@@ -80,7 +73,6 @@ set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
-" set cursorline
 set ai "Auto indent
 set backspace=indent,eol,start
 set cmdheight=1
@@ -123,7 +115,7 @@ set tw=500
 set whichwrap+=<,>,h,l
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 set wildmenu
-
+set wildmode=longest,list
 
 if !&scrolloff
   set scrolloff=1
@@ -137,6 +129,14 @@ if has('persistent_undo')
   set undofile
   set undodir=~/.config/nvim/tmp/undo/
 endif
+
+:set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+    \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+    \,sm:block-blinkwait175-blinkoff150-blinkon175
+
+" move buffers
+" :nmap <Tab> :bnext<CR>
+" :nmap <S-Tab> :bprevious<CR>
 
 " " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -201,59 +201,36 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
-" inoremap <C-e> <Esc>A
-" inoremap <C-a> <Esc>I
-
-" function! CmdLine(str)
-"     exe "menu Foo.Bar :" . a:str
-"     emenu Foo.Bar
-"     unmenu Foo
-" endfunction
-
-" function! VisualSelection(direction, extra_filter) range
-"     let l:saved_reg = @"
-"     execute "normal! vgvy"
-
-"     let l:pattern = escape(@", '\\/.*$^~[]')
-"     let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-"     if a:direction == 'b'
-"         execute "normal ?" . l:pattern . "^M"
-"     elseif a:direction == 'gv'
-"         call CmdLine("Ag \"" . l:pattern . "\" " )
-"     elseif a:direction == 'replace'
-"         call CmdLine("%s" . '/'. l:pattern . '/')
-"     elseif a:direction == 'f'
-"         execute "normal /" . l:pattern . "^M"
-"     endif
-
-"     let @/ = l:pattern
-"     let @" = l:saved_reg
-" endfunction
 
 """ Remember last position in file
 if has("autocmd")
    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+
+
 " Color Scheme
 set background=dark
-" set background=light
-let g:solarized_termtrans=1
-"colorscheme solarized
-" colorscheme base16-twilight
-" colorscheme base16-default-dark
-colorscheme base16-tomorrow
-" colorscheme base16-default-dark
-" colorscheme base16-default-light
+colorscheme base16-default-dark
+" colorscheme dracula
 
-""" Airline Stuff
 set laststatus=2
+
+" ALE niceness
+" always show ALE gutter
+let g:ale_sign_column_always = 1
+let g:airline#extensions#ale#enabled = 1
+
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline_powerline_fonts = 1
-let g:airline_theme='tomorrow'
+" let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline_powerline_fonts = 0
+" let g:airline_theme='tomorrow'
+let g:airline_theme='base16_default'
+" let g:airline_theme='dracula'
+" let g:airline_Theme='solarized'
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 
 """ Python Stuff
 let python_highlight_all = 1
@@ -261,7 +238,6 @@ autocmd FileType python setlocal cc=79
 
 autocmd Filetype * setlocal formatoptions-=cr
 let g:autopep8_disable_show_diff=1
-
 
 """ NerdTree
 let g:NERDTreeQuitOnOpen = 0
@@ -287,7 +263,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_loc_list_height = 5
+let g:syntastic_loc_list_height = 10 
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']  }
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_python_exec = '/usr/local/bin/python3'
@@ -295,8 +271,8 @@ let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 
-" highlight SyntasticErrorSign ctermfg=white ctermbg=236
-" highlight SyntasticWarningSign ctermfg=white ctermbg=236
+highlight SyntasticErrorSign ctermfg=white ctermbg=red
+highlight SyntasticWarningSign ctermfg=white ctermbg=red
 
 """ Auto complete settings
 au CompleteDone * pclose
@@ -308,19 +284,19 @@ let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" deoplete-jedi
+""" deoplete-jedi
+" use vim-jedi options, but not completions. Leave that to deoplete-jedi
+let g:jedi#completions_enabled = 0
 let g:deoplete#sources#jedi#python_path = '/usr/local/bin/python3'
+let g:jedi#force_py_version = 3
+autocmd BufWinEnter '__doc__' setlocal bufhidden=delete
+
 """ Autocomplete Tab settings
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-" let g:indent_guides_auto_colors = 0
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=60
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=60
-
 
 """ IndentGuide Settings
 hi IndentGuidesOdd ctermbg=236
@@ -361,7 +337,7 @@ let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_fmt_autosave = 1
-" let g:go_list_type = "quickfix"
+let g:go_list_type = "locationlist"
 let g:go_fmt_command = "goimports"
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
@@ -373,14 +349,14 @@ au BufNewFile,BufRead *.sh set noexpandtab tabstop=2 shiftwidth=2
 au BufRead,BufNewFile *.html, *.htm, *.php set expandtab
 au BufRead,BufNewFile *.html, *.htm, *.php set shiftwidth=2
 au BufRead,BufNewFile *.html, *.htm, *.php set softtabstop=2
-au BufRead,BufNewFile *.rb set softtabstop=2
-au BufRead,BufNewFile *.rb,*.erb set expandtab
-au BufRead,BufNewFile *.rb,*erb set shiftwidth=2
+au BufRead,BufNewFile Vagrantfile, *.rb set softtabstop=2
+au BufRead,BufNewFile Vagrantfile. *.rb,*.erb set expandtab
+au BufRead,BufNewFile Vagrantfile, *.rb,*erb set shiftwidth=2
 
 """ NeoVim Terminal Mode Settings
 " always start terminal in insert mode
-" autocmd BufWinEnter,WinEnter term://* startinsert
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+autocmd BufWinEnter,WinEnter term://* startinsert
+" au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 " Always go back to normal mode when leaving terminal mode
 autocmd BufLeave term://* stopinsert
 
@@ -390,7 +366,7 @@ autocmd BufLeave term://* stopinsert
 " """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
 " " Workaround since <C-h> isn't working in neovim right now
-tnoremap <C-w>h <C-\><C-n><C-w>h
+" tnoremap <C-w>h <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
@@ -412,9 +388,9 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 """ Custom keyboard shorcuts!
 " :nnoremap <leader><Esc> :q!<Cr>
 :nnoremap <leader>e :e<Space>
-:nnoremap <leader>gr :GoRun 
+:nnoremap <leader>gr :GoRun
 :nnoremap <leader>hs :split<Cr>
-:nnoremap <leader>ht :split term://$SHELL<Cr> 
+:nnoremap <leader>ht :split term://$SHELL<Cr>
 :nnoremap <leader>n :bnext<Cr>
 :nnoremap <leader>p :bprevious<Cr>
 :nnoremap <leader>q :q<Cr>
@@ -447,36 +423,13 @@ map n  <Plug>(incsearch-nohl-n)
 " Deleted text goes into black hole register:
 xnoremap p "_dP
 
-" Zoom / Restore window.
-function! s:ZoomToggle() abort
-  if exists('t:zoomed') && t:zoomed
-    execute t:zoom_winrestcmd
-    let t:zoomed = 0
-  else
-    let t:zoom_winrestcmd = winrestcmd()
-    resize
-    vertical resize
-    let t:zoomed = 1
-  endif
-endfunction
-command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <C-Z> :ZoomToggle<CR>
-
-" Polyglot settings
-let g:polyglot_disabled = ['go']
-
 " Needed on Linux shells
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   " source ~/.vimrc_background
 endif
 
-" Python mode disable rope autocomplete
-" let g:pymode_rope_completion = 0
-" " PymodeAutoLint
-" nnoremap <F8> :PymodeLintAuto<Cr>:w<cr>
-" let g:pymode_doc = 1
-" let g:pymode_python = 'python3'
-"
-""" Python autopep settings
+highlight Error term=reverse cterm=bold ctermfg=7 ctermbg=1 guifg=White guibg=Red
 
+" Supposedesly opens editor at last line
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 

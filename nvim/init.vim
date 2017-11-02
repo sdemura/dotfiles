@@ -8,50 +8,54 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#rc(s:editor_root . '/bundle')
 call vundle#begin()
 
-Plugin 'Glench/Vim-Jinja2-Syntax'
 " Plugin 'Shougo/deoplete.nvim'
+" Plugin 'ervandew/supertab'
+" Plugin 'fishbullet/deoplete-ruby'
+" Plugin 'sdemura/dracula-vim'
+" Plugin 'zchee/deoplete-go'
+" Plugin 'zchee/deoplete-jedi'
+Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'danro/rename.vim'
-Plugin 'davidhalter/jedi-vim'
+" Plugin 'danro/rename.vim'
+" Plugin 'davidhalter/jedi-vim'
+Plugin 'dracula/vim'
 Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'ervandew/supertab'
 Plugin 'fatih/vim-go'
-" Plugin 'fishbullet/deoplete-ruby'
 Plugin 'gmarik/Vundle.vim'
+Plugin 'hashivim/vim-terraform'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'majutsushi/tagbar'
+Plugin 'mhinz/vim-grepper'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nvie/vim-flake8'
+Plugin 'ngmy/vim-rubocop'
+" Plugin 'nvie/vim-flake8'
+Plugin 'qpkorr/vim-bufkill'
+Plugin 'roxma/ncm-rct-complete'
+Plugin 'roxma/nvim-completion-manager'
 Plugin 'saltstack/salt-vim'
 Plugin 'scrooloose/nerdtree'
-" Plugin 'sdemura/dracula-vim'
-Plugin 'dracula/vim'
-Plugin 'tell-k/vim-autopep8'
+" Plugin 'tell-k/vim-autopep8'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch.git'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'w0rp/ale'
-" Plugin 'zchee/deoplete-go'
-" Plugin 'zchee/deoplete-jedi'
-Plugin 'hashivim/vim-terraform'
 Plugin 'z0mbix/vim-shfmt'
-Plugin 'roxma/nvim-completion-manager'
-Plugin 'roxma/ncm-rct-complete'
-Plugin 'ngmy/vim-rubocop'
-Plugin 'mhinz/vim-grepper'
 call vundle#end()
 
 "" Turn filetype on after Vundle
@@ -130,14 +134,17 @@ if has('persistent_undo')
   set undodir=~/.config/nvim/tmp/undo/
 endif
 
-:set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-    \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-    \,sm:block-blinkwait175-blinkoff150-blinkon175
+" set guicursor=n-v-c:underline,i-ci-ve:ver25,r-cr:hor20,o:hor50
+"     \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+"     \,sm:underline-blinkwait175-blinkoff150-blinkon175
 
+" set guicursor=
 " move buffers
 " :nmap <Tab> :bnext<CR>
 " :nmap <S-Tab> :bprevious<CR>
-
+		:set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+		  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+		  \,sm:block-blinkwait175-blinkoff150-blinkon175
 " " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
@@ -165,25 +172,6 @@ try
 catch
 endtry
 
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-   let l:currentBufNum = bufnr("%")
-   let l:alternateBufNum = bufnr("#")
-
-   if buflisted(l:alternateBufNum)
-     buffer #
-   else
-     bnext
-   endif
-
-   if bufnr("%") == l:currentBufNum
-     new
-   endif
-
-   if buflisted(l:currentBufNum)
-     execute("bdelete! ".l:currentBufNum)
-   endif
-endfunction
 
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
@@ -211,8 +199,8 @@ endif
 
 " Color Scheme
 set background=dark
-colorscheme base16-default-dark
-" colorscheme dracula
+" colorscheme base16-default-dark
+colorscheme dracula
 
 set laststatus=2
 
@@ -226,8 +214,8 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline_powerline_fonts = 0
 " let g:airline_theme='tomorrow'
-let g:airline_theme='base16_default'
-" let g:airline_theme='dracula'
+" let g:airline_theme='base16_default'
+let g:airline_theme='dracula'
 " let g:airline_Theme='solarized'
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
@@ -240,12 +228,15 @@ autocmd Filetype * setlocal formatoptions-=cr
 let g:autopep8_disable_show_diff=1
 
 """ NerdTree
-let g:NERDTreeQuitOnOpen = 0
+let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 " Open NERDTree in the directory of the current file (or /home if no file is open)
 " nmap <silent> <C-i> :call NERDTreeToggleInCurDir()<cr>
+" try NOT using nerdtree
+" let g:loaded_nerd_tree = 1
+" let loaded_netrwPlugin = 1
 nmap <silent> <leader>o : call NERDTreeToggleInCurDir()<cr>
 function! NERDTreeToggleInCurDir()
   " If NERDTree is open in the current buffer
@@ -278,26 +269,17 @@ highlight SyntasticWarningSign ctermfg=white ctermbg=red
 au CompleteDone * pclose
 autocmd FileType ruby set completeopt-=preview
 autocmd FileType go set completeopt-=preview
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#align_class = 1
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:SuperTabDefaultCompletionType = "<c-n>"
 
-""" deoplete-jedi
-" use vim-jedi options, but not completions. Leave that to deoplete-jedi
-let g:jedi#completions_enabled = 0
-let g:deoplete#sources#jedi#python_path = '/usr/local/bin/python3'
-let g:jedi#force_py_version = 3
 autocmd BufWinEnter '__doc__' setlocal bufhidden=delete
 
 """ Autocomplete Tab settings
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+"   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+"   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 """ IndentGuide Settings
 hi IndentGuidesOdd ctermbg=236
 hi IndentGuidesEven ctermbg=235
@@ -337,7 +319,8 @@ let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_fmt_autosave = 1
-let g:go_list_type = "locationlist"
+" let g:go_list_autoclose = 1
+" let g:go_list_type = "locationlist"
 let g:go_fmt_command = "goimports"
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
@@ -355,18 +338,16 @@ au BufRead,BufNewFile Vagrantfile, *.rb,*erb set shiftwidth=2
 
 """ NeoVim Terminal Mode Settings
 " always start terminal in insert mode
-autocmd BufWinEnter,WinEnter term://* startinsert
+" autocmd BufWinEnter,WinEnter term://* startinsert
 " au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-" Always go back to normal mode when leaving terminal mode
-autocmd BufLeave term://* stopinsert
+" " Always go back to normal mode when leaving terminal mode
+" autocmd BufLeave term://* stopinsert
 
 "Terminal title as status line
 :autocmd TermOpen * setlocal statusline=%{b:term_title}
 
 " """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
-" " Workaround since <C-h> isn't working in neovim right now
-" tnoremap <C-w>h <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
@@ -429,7 +410,11 @@ if filereadable(expand("~/.vimrc_background"))
   " source ~/.vimrc_background
 endif
 
-highlight Error term=reverse cterm=bold ctermfg=7 ctermbg=1 guifg=White guibg=Red
+" Custom theme fixes
+" This is for DRACULA theme
+" highlight Error term=reverse cterm=bold ctermfg=7 ctermbg=1 guifg=White guibg=Red
+hi PmenuSel ctermfg=NONE ctermbg=61 cterm=NONE guifg=NONE guibg=#44475a gui=NONE
+hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=NONE gui=NONE
 
 " Supposedesly opens editor at last line
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 

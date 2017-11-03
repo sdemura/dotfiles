@@ -9,20 +9,24 @@ call vundle#rc(s:editor_root . '/bundle')
 call vundle#begin()
 
 " Plugin 'Shougo/deoplete.nvim'
+" Plugin 'altercation/vim-colors-solarized'
+" Plugin 'danro/rename.vim'
+" Plugin 'davidhalter/jedi-vim'
 " Plugin 'ervandew/supertab'
 " Plugin 'fishbullet/deoplete-ruby'
+" Plugin 'nvie/vim-flake8'
 " Plugin 'sdemura/dracula-vim'
+" Plugin 'tell-k/vim-autopep8'
+" Plugin 'vim-ruby/vim-ruby'
+" Plugin 'vim-scripts/BufOnly.vim'
 " Plugin 'zchee/deoplete-go'
 " Plugin 'zchee/deoplete-jedi'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
-" Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'danro/rename.vim'
-" Plugin 'davidhalter/jedi-vim'
 Plugin 'dracula/vim'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'fatih/vim-go'
@@ -36,13 +40,11 @@ Plugin 'majutsushi/tagbar'
 Plugin 'mhinz/vim-grepper'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ngmy/vim-rubocop'
-" Plugin 'nvie/vim-flake8'
 Plugin 'qpkorr/vim-bufkill'
 Plugin 'roxma/ncm-rct-complete'
 Plugin 'roxma/nvim-completion-manager'
 Plugin 'saltstack/salt-vim'
 Plugin 'scrooloose/nerdtree'
-" Plugin 'tell-k/vim-autopep8'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch.git'
@@ -52,8 +54,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'w0rp/ale'
 Plugin 'z0mbix/vim-shfmt'
 call vundle#end()
@@ -134,21 +134,12 @@ if has('persistent_undo')
   set undodir=~/.config/nvim/tmp/undo/
 endif
 
-" set guicursor=n-v-c:underline,i-ci-ve:ver25,r-cr:hor20,o:hor50
-"     \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-"     \,sm:underline-blinkwait175-blinkoff150-blinkon175
+:set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+      \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+      \,sm:block-blinkwait175-blinkoff150-blinkon175
 
-" set guicursor=
-" move buffers
-" :nmap <Tab> :bnext<CR>
-" :nmap <S-Tab> :bprevious<CR>
-		:set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-		  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-		  \,sm:block-blinkwait175-blinkoff150-blinkon175
-" " Make double-<Esc> clear search highlights
+" Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
-
-" nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
 
 vnoremap <silent> * :call VisualSelection('f', '')<CR>
 vnoremap <silent> # :call VisualSelection('b', '')<CR>
@@ -162,9 +153,6 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-
-""" Buffer stuff
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
 
 try
   set switchbuf=useopen,usetab,newtab
@@ -194,8 +182,6 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 if has("autocmd")
    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-
-
 
 " Color Scheme
 set background=dark
@@ -247,43 +233,15 @@ function! NERDTreeToggleInCurDir()
   endif
 endfunction
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_jump = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_loc_list_height = 10 
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']  }
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_python_python_exec = '/usr/local/bin/python3'
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-
-highlight SyntasticErrorSign ctermfg=white ctermbg=red
-highlight SyntasticWarningSign ctermfg=white ctermbg=red
-
 """ Auto complete settings
 au CompleteDone * pclose
-autocmd FileType ruby set completeopt-=preview
-autocmd FileType go set completeopt-=preview
+" autocmd FileType ruby set completeopt-=preview
+" autocmd FileType go set completeopt-=preview
 
 autocmd BufWinEnter '__doc__' setlocal bufhidden=delete
 
-""" Autocomplete Tab settings
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-"   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-"   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-""" IndentGuide Settings
 hi IndentGuidesOdd ctermbg=236
 hi IndentGuidesEven ctermbg=235
-" let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 
 """ Go Settings
@@ -310,7 +268,6 @@ au FileType go nmap <Leader>i <Plug>(go-info)
 " Rename the indentifier under the cursor
 au FileType go nmap <Leader>e <Plug>(go-rename)
 
-
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
@@ -329,19 +286,13 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 """ FileType settings
 au BufNewFile,BufRead *.sh set noexpandtab tabstop=2 shiftwidth=2
+au BufNewFile,BufRead *.yaml set noexpandtab tabstop=2 shiftwidth=2
 au BufRead,BufNewFile *.html, *.htm, *.php set expandtab
 au BufRead,BufNewFile *.html, *.htm, *.php set shiftwidth=2
 au BufRead,BufNewFile *.html, *.htm, *.php set softtabstop=2
 au BufRead,BufNewFile Vagrantfile, *.rb set softtabstop=2
 au BufRead,BufNewFile Vagrantfile. *.rb,*.erb set expandtab
 au BufRead,BufNewFile Vagrantfile, *.rb,*erb set shiftwidth=2
-
-""" NeoVim Terminal Mode Settings
-" always start terminal in insert mode
-" autocmd BufWinEnter,WinEnter term://* startinsert
-" au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-" " Always go back to normal mode when leaving terminal mode
-" autocmd BufLeave term://* stopinsert
 
 "Terminal title as status line
 :autocmd TermOpen * setlocal statusline=%{b:term_title}
@@ -367,7 +318,6 @@ let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 
 """ Custom keyboard shorcuts!
-" :nnoremap <leader><Esc> :q!<Cr>
 :nnoremap <leader>e :e<Space>
 :nnoremap <leader>gr :GoRun
 :nnoremap <leader>hs :split<Cr>
@@ -386,9 +336,6 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 inoremap <C-e> <Esc>A
 inoremap <C-a> <Esc>I
 
-""" Custom run stuff
-autocmd FileType python nnoremap <buffer> z :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
-
 """ IncSearch plugin settings.
 let g:incsearch#auto_nohlsearch = 1
 map #  <Plug>(incsearch-nohl-#)
@@ -401,8 +348,6 @@ map g* <Plug>(incsearch-nohl-g*)
 map g/ <Plug>(incsearch-stay)
 map n  <Plug>(incsearch-nohl-n)
 
-" Deleted text goes into black hole register:
-xnoremap p "_dP
 
 " Needed on Linux shells
 if filereadable(expand("~/.vimrc_background"))

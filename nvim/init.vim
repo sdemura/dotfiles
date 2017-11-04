@@ -194,10 +194,10 @@ set laststatus=2
 " always show ALE gutter
 let g:ale_sign_column_always = 1
 let g:airline#extensions#ale#enabled = 1
-
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-" let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline_powerline_fonts = 0
 " let g:airline_theme='tomorrow'
 " let g:airline_theme='base16_default'
@@ -360,6 +360,7 @@ endif
 " highlight Error term=reverse cterm=bold ctermfg=7 ctermbg=1 guifg=White guibg=Red
 hi PmenuSel ctermfg=NONE ctermbg=61 cterm=NONE guifg=NONE guibg=#44475a gui=NONE
 hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=NONE gui=NONE
-
+" hi CursorLine ctermbg=NONE
+hi Cursor ctermfg=black
 " Supposedesly opens editor at last line
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 

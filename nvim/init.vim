@@ -77,6 +77,7 @@ set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
+set tgc
 set ai "Auto indent
 set backspace=indent,eol,start
 set cmdheight=1
@@ -360,7 +361,11 @@ endif
 " highlight Error term=reverse cterm=bold ctermfg=7 ctermbg=1 guifg=White guibg=Red
 hi PmenuSel ctermfg=NONE ctermbg=61 cterm=NONE guifg=NONE guibg=#44475a gui=NONE
 hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=NONE gui=NONE
-" hi CursorLine ctermbg=NONE
-hi Cursor ctermfg=black
+" hi CursorLine ctermbg=NONE guibg=NONE
 " Supposedesly opens editor at last line
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
+
+" This actually doesn't work on mac
+hi Cursor ctermfg=NONE guifg=NONE 
+
+

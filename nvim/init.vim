@@ -9,7 +9,7 @@ call vundle#rc(s:editor_root . '/bundle')
 call vundle#begin()
 
 " Plugin 'Shougo/deoplete.nvim'
-" Plugin 'altercation/vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized'
 " Plugin 'danro/rename.vim'
 " Plugin 'davidhalter/jedi-vim'
 " Plugin 'ervandew/supertab'
@@ -66,6 +66,8 @@ filetype plugin indent on
 " Enable syntax highlighting
 syntax enable
 
+" term gui colors
+set tgc
 set mouse=a
 set clipboard+=unnamedplus
 set history=500
@@ -77,7 +79,7 @@ set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
-set tgc
+" set tgc
 set ai "Auto indent
 set backspace=indent,eol,start
 set cmdheight=1
@@ -188,6 +190,7 @@ endif
 set background=dark
 " colorscheme base16-default-dark
 colorscheme dracula
+" colorscheme solarized
 
 set laststatus=2
 
@@ -222,7 +225,7 @@ let g:NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 " Open NERDTree in the directory of the current file (or /home if no file is open)
 " nmap <silent> <C-i> :call NERDTreeToggleInCurDir()<cr>
 " try NOT using nerdtree
-" let g:loaded_nerd_tree = 1
+" let g:loaded_nerd_tree = 0 
 " let loaded_netrwPlugin = 1
 nmap <silent> <leader>o : call NERDTreeToggleInCurDir()<cr>
 function! NERDTreeToggleInCurDir()
@@ -359,9 +362,11 @@ endif
 " Custom theme fixes
 " This is for DRACULA theme
 " highlight Error term=reverse cterm=bold ctermfg=7 ctermbg=1 guifg=White guibg=Red
-hi PmenuSel ctermfg=NONE ctermbg=61 cterm=NONE guifg=NONE guibg=#44475a gui=NONE
-hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=NONE gui=NONE
-" hi CursorLine ctermbg=NONE guibg=NONE
+" hi PmenuSel ctermfg=NONE ctermbg=61 cterm=NONE guifg=NONE guibg=#44475a gui=NONE
+" hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=NONE gui=NONE
+
+" hi CursorLine guibg=black
+hi CursorLine ctermbg=black guibg=NONE
 " Supposedesly opens editor at last line
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
 

@@ -9,7 +9,6 @@ call vundle#rc(s:editor_root . '/bundle')
 call vundle#begin()
 
 " Plugin 'Shougo/deoplete.nvim'
-Plugin 'altercation/vim-colors-solarized'
 " Plugin 'danro/rename.vim'
 " Plugin 'davidhalter/jedi-vim'
 " Plugin 'ervandew/supertab'
@@ -21,6 +20,7 @@ Plugin 'altercation/vim-colors-solarized'
 " Plugin 'vim-scripts/BufOnly.vim'
 " Plugin 'zchee/deoplete-go'
 " Plugin 'zchee/deoplete-jedi'
+Plugin 'lifepillar/vim-solarized8'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
@@ -56,6 +56,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'w0rp/ale'
 Plugin 'z0mbix/vim-shfmt'
+Plugin 'tomasr/molokai'
+Plugin 'arcticicestudio/nord-vim'
 call vundle#end()
 
 "" Turn filetype on after Vundle
@@ -163,7 +165,6 @@ try
 catch
 endtry
 
-
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
   nmap <D-k> <M-k>
@@ -189,9 +190,14 @@ endif
 " Color Scheme
 set background=dark
 " colorscheme base16-default-dark
-colorscheme dracula
-" colorscheme solarized
+" colorscheme dracula
+" colorscheme solarized8
+" let g:solarized_old_cursor_style = 1
+" colorscheme molokai
+" nord comment 
+let g:nord_comment_brightness = 12 
 
+colorscheme nord
 set laststatus=2
 
 " ALE niceness
@@ -205,8 +211,10 @@ let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline_powerline_fonts = 0
 " let g:airline_theme='tomorrow'
 " let g:airline_theme='base16_default'
-let g:airline_theme='dracula'
+" let g:airline_theme='dracula'
+let g:airline_theme='nord'
 " let g:airline_Theme='solarized'
+" let g:airline_solarized_bg='dark'
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 
@@ -340,6 +348,9 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 inoremap <C-e> <Esc>A
 inoremap <C-a> <Esc>I
 
+" Map Escape to jj
+:imap jj <Esc>
+
 """ IncSearch plugin settings.
 let g:incsearch#auto_nohlsearch = 1
 map #  <Plug>(incsearch-nohl-#)
@@ -366,7 +377,7 @@ endif
 " hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=NONE gui=NONE
 
 " hi CursorLine guibg=black
-hi CursorLine ctermbg=black guibg=NONE
+" hi CursorLine ctermbg=black guibg=NONE
 " Supposedesly opens editor at last line
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
 

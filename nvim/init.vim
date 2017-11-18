@@ -226,7 +226,7 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 :nnoremap <leader>w :w<Cr>
 :nnoremap <leader>wq :wq<Cr>
 :nnoremap <leader>Q :qall!<Cr>
-
+:nnoremap <leader>t :TagbarToggle<Cr>
 " Map Escape to jj
 :imap jj <Esc>
 

@@ -154,6 +154,7 @@ colorscheme nord
 " ALE niceness
 " always show ALE gutter
 let g:ale_sign_column_always = 1
+let g:ale_python_pylint_executable = 'python3'
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#enabled = 1

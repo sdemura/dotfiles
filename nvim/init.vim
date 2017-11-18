@@ -79,6 +79,7 @@ set incsearch
 set langmenu=en
 set lazyredraw
 set lbr
+set laststatus=2
 set magic
 set mat=2
 set mouse=a
@@ -105,7 +106,7 @@ set splitbelow
 set splitright
 set t_vb=
 set tabstop=4
-set tgc
+set termguicolors
 set tm=500
 set tw=500
 set undodir=~/.config/nvim/tmp/undo/
@@ -147,9 +148,8 @@ endif
 
 " Color Scheme
 set background=dark
+let g:nord_comment_brightness = 20 
 colorscheme nord
-" let g:nord_comment_brightness = 20 
-set laststatus=2
 
 " ALE niceness
 " always show ALE gutter
@@ -181,13 +181,8 @@ function! NERDTreeToggleInCurDir()
     exe ":NERDTreeFind"
   endif
 endfunction
-
-""" Auto complete settings
-au CompleteDone * pclose
-
-" hi IndentGuidesOdd ctermbg=236
-" hi IndentGuidesEven ctermbg=235
-" let g:indent_guides_guide_size = 1
+"
+let g:indent_guides_guide_size = 1
 
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1

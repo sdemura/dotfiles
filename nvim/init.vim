@@ -76,6 +76,7 @@ set foldcolumn=0
 set hid
 set history=500
 set hlsearch
+set icm=nosplit
 set ignorecase
 set incsearch
 set langmenu=en
@@ -85,7 +86,6 @@ set lbr
 set magic
 set mat=2
 set mouse=a
-" set noexpandtab
 set nobackup
 set nocursorcolumn      " speed up syntax highlighting
 set noerrorbells
@@ -97,6 +97,7 @@ set nowb
 set nowrap "No Wrap lines
 set nu
 set pastetoggle=<F2>
+set relativenumber
 set ruler
 set shiftwidth=4
 set showcmd
@@ -234,22 +235,14 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 " Map Escape to jj
 :imap jj <Esc>
 
-""" IncSearch plugin settings.
+" IncSearch settings
 let g:incsearch#auto_nohlsearch = 1
-map #  <Plug>(incsearch-nohl-#)
-map *  <Plug>(incsearch-nohl-*)
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map N  <Plug>(incsearch-nohl-N)
-map g# <Plug>(incsearch-nohl-g#)
-map g* <Plug>(incsearch-nohl-g*)
-map g/ <Plug>(incsearch-stay)
 map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
-" autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
-
-" " This actually doesn't work on mac
-" hi Cursor ctermfg=NONE guifg=NONE 
-
-
+" Open at last spot in line.
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif

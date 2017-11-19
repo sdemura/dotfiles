@@ -17,6 +17,7 @@ Plug 'gmarik/Vundle.vim'
 " Plug 'vim-scripts/BufOnly.vim'
 " Plug 'zchee/deoplete-go'
 " Plug 'zchee/deoplete-jedi'
+Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
@@ -60,7 +61,8 @@ filetype plugin indent on
 " Enable syntax highlighting
 syntax enable
 
-let $LANG='en'
+" let $LANG='en'
+" set tabstop=4
 set ai "Auto indent
 set autoread
 set backspace=indent,eol,start
@@ -77,12 +79,13 @@ set hlsearch
 set ignorecase
 set incsearch
 set langmenu=en
+set laststatus=2
 set lazyredraw
 set lbr
-set laststatus=2
 set magic
 set mat=2
 set mouse=a
+" set noexpandtab
 set nobackup
 set nocursorcolumn      " speed up syntax highlighting
 set noerrorbells
@@ -102,6 +105,7 @@ set si "Smart indent
 set smartcase
 set smarttab
 set so=7
+set softtabstop=4
 set splitbelow
 set splitright
 set t_vb=
@@ -196,11 +200,11 @@ let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
 
 """ FileType settings
-au BufNewFile,BufRead *.sh set noexpandtab tabstop=2 shiftwidth=2
-au BufNewFile,BufRead *.yaml set noexpandtab tabstop=2 shiftwidth=2
-au BufRead,BufNewFile *.html, *.htm, *.php set expandtab
-au BufRead,BufNewFile *.html, *.htm, *.php set shiftwidth=2
-au BufRead,BufNewFile *.html, *.htm, *.php set softtabstop=2
+" au BufNewFile,BufRead *.sh set noexpandtab tabstop=2 shiftwidth=2
+" au BufNewFile,BufRead *.yaml set noexpandtab tabstop=2 shiftwidth=2
+" au BufRead,BufNewFile *.html, *.htm, *.php set expandtab
+" au BufRead,BufNewFile *.html, *.htm, *.php set shiftwidth=2
+" au BufRead,BufNewFile *.html, *.htm, *.php set softtabstop=2
 
 " """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -217,9 +221,9 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_mruf_max=450    " number of recently opened files
 let g:ctrlp_max_files=0     " do not limit the number of searchable files
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+let g:ctrlp_use_caching = 0 
+let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 
 """ Custom keyboard shorcuts!

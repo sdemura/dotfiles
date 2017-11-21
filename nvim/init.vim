@@ -49,6 +49,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-repeat'
 Plug 'w0rp/ale'
 Plug 'z0mbix/vim-shfmt'
 call plug#end()
@@ -79,6 +80,7 @@ set hlsearch
 set icm=nosplit
 set ignorecase
 set incsearch
+set iskeyword+=$        " Bash variables now included as a 'woerd'
 set langmenu=en
 set laststatus=2
 set lazyredraw
@@ -223,7 +225,7 @@ let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_mruf_max=450    " number of recently opened files
 let g:ctrlp_max_files=0     " do not limit the number of searchable files
 let g:ctrlp_use_caching = 0 
-let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
 let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 
@@ -231,7 +233,7 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 :nnoremap <leader>w :w<Cr>
 :nnoremap <leader>wq :wq<Cr>
 :nnoremap <leader>Q :qall!<Cr>
-:nnoremap <leader>t :TagbarToggle<Cr>
+:nnoremap <silent> <leader>t :TagbarToggle<Cr>
 " Map Escape to jj
 :imap jj <Esc>
 

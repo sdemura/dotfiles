@@ -17,7 +17,6 @@ Plug 'gmarik/Vundle.vim'
 " Plug 'vim-scripts/BufOnly.vim'
 " Plug 'zchee/deoplete-go'
 " Plug 'zchee/deoplete-jedi'
-Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
@@ -35,6 +34,7 @@ Plug 'jmcantrell/vim-virtualenv'
 Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ngmy/vim-rubocop'
+Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
 Plug 'qpkorr/vim-bufkill'
 Plug 'roxma/ncm-rct-complete'
 Plug 'roxma/nvim-completion-manager'
@@ -45,11 +45,11 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-repeat'
 Plug 'w0rp/ale'
 Plug 'z0mbix/vim-shfmt'
 call plug#end()
@@ -62,24 +62,31 @@ filetype plugin indent on
 " Enable syntax highlighting
 syntax enable
 
+" Commented options are set by default in neovim
 " let $LANG='en'
+" set ai "Auto indent
+" set autoread
+" set backspace=indent,eol,start
+" set display+=lastline
+" set encoding=UTF-8
+" set hlsearch
+" set incsearch
+" set ruler
+" set showcmd
+" set smarttab
 " set tabstop=4
-set ai "Auto indent
-set autoread
-set backspace=indent,eol,start
+" set undodir=~/.config/nvim/tmp/undo/
+" set wildmenu
 set clipboard+=unnamedplus
 set cmdheight=1
 set cursorline
-set display+=lastline
 set expandtab
 set ffs=unix,dos,mac
 set foldcolumn=0
 set hid
 set history=500
-set hlsearch
 set icm=nosplit
 set ignorecase
-set incsearch
 set iskeyword+=$        " Bash variables now included as a 'woerd'
 set langmenu=en
 set laststatus=2
@@ -100,13 +107,10 @@ set nowrap "No Wrap lines
 set nu
 set pastetoggle=<F2>
 set relativenumber
-set ruler
 set shiftwidth=4
-set showcmd
 set showmatch
 set si "Smart indent
 set smartcase
-set smarttab
 set so=7
 set softtabstop=4
 set splitbelow
@@ -115,12 +119,11 @@ set t_vb=
 set tabstop=4
 set termguicolors
 set tm=500
+set ttyfast
 set tw=500
-set undodir=~/.config/nvim/tmp/undo/
 set undofile
 set whichwrap+=<,>,h,l
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
-set wildmenu
 set wildmode=longest,list
 
 :set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
@@ -202,14 +205,8 @@ let g:go_highlight_types = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
 
-""" FileType settings
-" au BufNewFile,BufRead *.sh set noexpandtab tabstop=2 shiftwidth=2
-" au BufNewFile,BufRead *.yaml set noexpandtab tabstop=2 shiftwidth=2
-" au BufRead,BufNewFile *.html, *.htm, *.php set expandtab
-" au BufRead,BufNewFile *.html, *.htm, *.php set shiftwidth=2
-" au BufRead,BufNewFile *.html, *.htm, *.php set softtabstop=2
 
-" """ NeoVim Terminal mappings
+""" NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k

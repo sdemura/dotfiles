@@ -2,21 +2,6 @@
 let s:editor_root=expand("~/.config/nvim")
 
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'gmarik/Vundle.vim'
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'danro/rename.vim'
-" Plug 'davidhalter/jedi-vim'
-" Plug 'dracula/vim'
-" Plug 'ervandew/supertab'
-" Plug 'fishbullet/deoplete-ruby'
-" Plug 'mhinz/vim-grepper'
-" Plug 'nvie/vim-flake8'
-" Plug 'sdemura/dracula-vim'
-" Plug 'tell-k/vim-autopep8'
-" Plug 'vim-ruby/vim-ruby'
-" Plug 'vim-scripts/BufOnly.vim'
-" Plug 'zchee/deoplete-go'
-" Plug 'zchee/deoplete-jedi'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
@@ -29,7 +14,6 @@ Plug 'hashivim/vim-terraform'
 Plug 'hashivim/vim-vagrant'
 Plug 'haya14busa/incsearch.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -44,7 +28,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -138,10 +121,10 @@ map j gj
 map k gk
 
 " Allow ctrl movements to work with tmux
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" map <C-j> <C-W>j
+" map <C-k> <C-W>k
+" map <C-h> <C-W>h
+" map <C-l> <C-W>l
 
 try
   set switchbuf=useopen,usetab,newtab
@@ -149,12 +132,12 @@ try
 catch
 endtry
 
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
+" if has("mac") || has("macunix")
+"   nmap <D-j> <M-j>
+"   nmap <D-k> <M-k>
+"   vmap <D-j> <M-j>
+"   vmap <D-k> <M-k>
+" endif
 
 " Color Scheme
 set background=dark

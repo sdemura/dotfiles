@@ -49,11 +49,11 @@ call plug#end()
 set clipboard+=unnamedplus
 set cursorline
 set expandtab
-set ffs=unix,dos,mac
+set fileformats=unix,dos,mac
 set hidden
 set history=500
-set icm=nosplit
 set ignorecase
+set inccommand=nosplit
 set iskeyword+=$ 
 set langmenu=en
 set lazyredraw
@@ -82,7 +82,8 @@ set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 set wildmode=longest,list
 
-:set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+" Blinking cursor
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
       \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
       \,sm:block-blinkwait175-blinkoff150-blinkon175
 

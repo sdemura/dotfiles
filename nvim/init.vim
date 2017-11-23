@@ -50,62 +50,62 @@ syntax enable
 " set ai "Auto indent
 " set autoread
 " set backspace=indent,eol,start
+" set cmdheight=1
 " set display+=lastline
 " set encoding=UTF-8
 " set hlsearch
 " set incsearch
+" set laststatus=2
+" set mat=2
+set noshowmode
+" set nowb
 " set ruler
 " set showcmd
+" set showmatch
 " set smarttab
+" set so=8
+" set t_vb=
 " set tabstop=4
+" set tm=500
+" set ttyfast
+" set tw=500
 " set undodir=~/.config/nvim/tmp/undo/
+" set whichwrap+=<,>,h,l
 " set wildmenu
 set clipboard+=unnamedplus
-set cmdheight=1
 set cursorline
 set expandtab
 set ffs=unix,dos,mac
-set foldcolumn=0
-set hid
+set hidden
 set history=500
 set icm=nosplit
 set ignorecase
 set iskeyword+=$        " Bash variables now included as a 'woerd'
 set langmenu=en
-set laststatus=2
 set lazyredraw
 set lbr
 set magic
-set mat=2
 set mouse=a
 set nobackup
-set nocursorcolumn      " speed up syntax highlighting
+" set nocursorcolumn      " speed up syntax highlighting
 set noerrorbells
-set nofoldenable
-set noshowmode
+" set nofoldenable
 set noswapfile
 set novisualbell
-set nowb
 set nowrap "No Wrap lines
 set nu
 set pastetoggle=<F2>
 set relativenumber
 set shiftwidth=4
-set showmatch
 set si "Smart indent
 set smartcase
-set so=7
 set softtabstop=4
 set splitbelow
 set splitright
-set t_vb=
+set switchbuf=useopen,usetab,newtab
 set tabstop=4
 set termguicolors
-set tm=500
-set ttyfast
-set tw=500
 set undofile
-set whichwrap+=<,>,h,l
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 set wildmode=longest,list
 
@@ -119,25 +119,6 @@ nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 " Fast up and/down
 map j gj
 map k gk
-
-" Allow ctrl movements to work with tmux
-" map <C-j> <C-W>j
-" map <C-k> <C-W>k
-" map <C-h> <C-W>h
-" map <C-l> <C-W>l
-
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
-
-" if has("mac") || has("macunix")
-"   nmap <D-j> <M-j>
-"   nmap <D-k> <M-k>
-"   vmap <D-j> <M-j>
-"   vmap <D-k> <M-k>
-" endif
 
 " Color Scheme
 set background=dark

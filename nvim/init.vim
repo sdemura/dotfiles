@@ -1,77 +1,51 @@
-" Assume we have nvim outright. No need to check this anymore.
-let s:editor_root=expand("~/.config/nvim")
-
+" Load Plugins
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'Glench/Vim-Jinja2-Syntax'
+" IDE-like things
+Plug 'majutsushi/tagbar'
+Plug 'roxma/ncm-rct-complete'
+Plug 'roxma/nvim-completion-manager'
+Plug 'scrooloose/nerdtree'
+Plug 'w0rp/ale'
+
+" Git Integration
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
-Plug 'arcticicestudio/nord-vim'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+
+" Language Specific Plugins
+Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'fatih/vim-go'
 Plug 'hashivim/vim-terraform'
 Plug 'hashivim/vim-vagrant'
-Plug 'haya14busa/incsearch.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'majutsushi/tagbar'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ngmy/vim-rubocop'
-Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
-Plug 'qpkorr/vim-bufkill'
-Plug 'roxma/ncm-rct-complete'
-Plug 'roxma/nvim-completion-manager'
+Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
-Plug 'scrooloose/nerdtree'
+Plug 'z0mbix/vim-shfmt'
+
+"Fuzzy Finding and Search
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'haya14busa/incsearch.vim'
+Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
+
+" UI Enhancements
+Plug 'arcticicestudio/nord-vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Misc
+Plug 'jiangmiao/auto-pairs'
+Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'w0rp/ale'
-Plug 'z0mbix/vim-shfmt'
 call plug#end()
 
-"" Turn filetype on after Vundle
-filetype on
-filetype indent on
-filetype plugin indent on
-
-" Enable syntax highlighting
-syntax enable
-
-" Commented options are set by default in neovim
-" let $LANG='en'
-" set ai "Auto indent
-" set autoread
-" set backspace=indent,eol,start
-" set cmdheight=1
-" set display+=lastline
-" set encoding=UTF-8
-" set hlsearch
-" set incsearch
-" set laststatus=2
-" set mat=2
-set noshowmode
-" set nowb
-" set ruler
-" set showcmd
-" set showmatch
-" set smarttab
-" set so=8
-" set t_vb=
-" set tabstop=4
-" set tm=500
-" set ttyfast
-" set tw=500
-" set undodir=~/.config/nvim/tmp/undo/
-" set whichwrap+=<,>,h,l
-" set wildmenu
+" Settings
 set clipboard+=unnamedplus
 set cursorline
 set expandtab
@@ -80,25 +54,24 @@ set hidden
 set history=500
 set icm=nosplit
 set ignorecase
-set iskeyword+=$        " Bash variables now included as a 'woerd'
+set iskeyword+=$ 
 set langmenu=en
 set lazyredraw
-set lbr
+set linebreak
 set magic
 set mouse=a
 set nobackup
-" set nocursorcolumn      " speed up syntax highlighting
 set noerrorbells
-" set nofoldenable
+set noshowmode
 set noswapfile
 set novisualbell
-set nowrap "No Wrap lines
-set nu
+set nowrap 
+set number
 set pastetoggle=<F2>
 set relativenumber
 set shiftwidth=4
-set si "Smart indent
 set smartcase
+set smartindent
 set softtabstop=4
 set splitbelow
 set splitright
@@ -125,11 +98,12 @@ set background=dark
 let g:nord_comment_brightness = 20 
 colorscheme nord
 
-" ALE niceness
-" always show ALE gutter
+" Ale Settings
 let g:ale_sign_column_always = 1
 let g:ale_python_pylint_executable = 'python3'
 let g:airline#extensions#ale#enabled = 1
+
+" Airline Settings
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -140,7 +114,7 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 
 """ NerdTree
-let g:NERDTreeQuitOnOpen = 1
+" let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
@@ -156,9 +130,11 @@ function! NERDTreeToggleInCurDir()
     exe ":NERDTreeFind"
   endif
 endfunction
-"
-let g:indent_guides_guide_size = 1
 
+" Indent Guide 
+" let g:indent_guides_guide_size = 1
+
+" Vim-Go
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
@@ -195,6 +171,7 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 :nnoremap <leader>wq :wq<Cr>
 :nnoremap <leader>Q :qall!<Cr>
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
+
 " Map Escape to jj
 :imap jj <Esc>
 

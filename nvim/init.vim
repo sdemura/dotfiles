@@ -155,8 +155,8 @@ tnoremap <C-l> <C-\><C-n><C-w>l
 tnoremap <C-w> <C-\><C-n><Cr>
 
 autocmd TermOpen * startinsert
-autocmd BufWinEnter,WinEnter term://* startinsert
-autocmd BufWinLeave,WinLeave term://* stopinsert
+" autocmd BufWinEnter,WinEnter term://* startinsert
+" autocmd BufWinLeave,WinLeave term://* stopinsert
 
 """ CtrlP settings
 let g:ctrlp_cmd = 'CtrlPMRU'

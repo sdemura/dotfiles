@@ -29,7 +29,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
 
 " UI Enhancements
-Plug 'arcticicestudio/nord-vim'
+Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
@@ -95,8 +95,6 @@ map j gj
 map k gk
 
 " Color Scheme
-set background=dark
-let g:nord_comment_brightness = 20 
 colorscheme nord
 
 " Ale Settings
@@ -155,6 +153,10 @@ tnoremap <C-l> <C-\><C-n><C-w>l
 
 " Exit terminal insert mode
 tnoremap <C-w> <C-\><C-n><Cr>
+
+autocmd TermOpen * startinsert
+autocmd BufWinEnter,WinEnter term://* startinsert
+autocmd BufWinLeave,WinLeave term://* stopinsert
 
 """ CtrlP settings
 let g:ctrlp_cmd = 'CtrlPMRU'

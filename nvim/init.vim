@@ -43,6 +43,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tell-k/vim-autopep8'
 call plug#end()
 
 " Settings
@@ -95,6 +96,7 @@ map j gj
 map k gk
 
 " Color Scheme
+set background=dark
 colorscheme nord
 
 " Ale Settings
@@ -130,9 +132,6 @@ function! NERDTreeToggleInCurDir()
   endif
 endfunction
 
-" Indent Guide 
-" let g:indent_guides_guide_size = 1
-
 " Vim-Go
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
@@ -143,7 +142,6 @@ let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
-
 
 """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h

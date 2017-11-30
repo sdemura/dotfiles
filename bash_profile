@@ -45,14 +45,27 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+# Personal stuff
+export API_DIR='/Users/sean/Code/go/src/github.com/apcera/apcera-tools/users/sean/apcera_api_demo'
+export PYAPC='/Users/sean/Code/go/src/github.com/apcera/apcera-tools/users/sean/pyapc'
+export PROJECT_HOME=~/python/
+export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
+
+#PERSONAL TOOLS
+export PATH="$PATH:$HOME/.tools"
+export TERMBG=dark
+
 #HCOSM STUFF
-# export PATH="/usr/local/bin:$PATH"
-# export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+# export GOPATH=$CWRK
 export GOPATH=~/go
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:/Users/sean/bin
 export PATH=$PATH:/Users/sean/ops/bin
 export PATH=$PATH:$GOPATH/bin
 
+export CWRK=~/continuum-workspace
 export APCSRC=$GOPATH/src/github.com/apcera
 export GITHUB=/Users/sean/Code/go/src/github.com
 export ROCKSALT=$APCSRC/rocksalt
@@ -60,16 +73,14 @@ export ROCKTOP=$APCSRC/rocksalt-top
 export SALTGPG=~/.saltgpg
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 
-# GPG APCERA RELEASE KEY
-export CNTMP_PRIV_KEY_PASS=kMihczEw59J24UHUwWaq
-
 # Set short PS1 as default
 shorten_ps1
 
-# LS Colors
 alias ls='ls -GFh'
 
 # Configure rbenv
 eval "$(rbenv init -)"
 
 alias ai="apcera-install"
+
+export PATH="$HOME/.cargo/bin:$PATH"

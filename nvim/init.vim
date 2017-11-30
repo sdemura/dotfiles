@@ -125,10 +125,10 @@ let g:NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 nmap <silent> <leader>o : call NERDTreeToggleInCurDir()<cr>
 function! NERDTreeToggleInCurDir()
   " If NERDTree is open in the current buffer
-  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-    exe ":NERDTreeClose"
+  if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
+    exe ':NERDTreeClose'
   else
-    exe ":NERDTreeFind"
+    exe ':NERDTreeFind'
   endif
 endfunction
 
@@ -141,7 +141,7 @@ let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
 
 """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -186,4 +186,8 @@ map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
 " Open at last spot in line.
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+augroup remember_position_in_file
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+augroup END
+

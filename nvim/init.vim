@@ -36,7 +36,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " Misc
-Plug 'jiangmiao/auto-pairs'
+Plug 'sdemura/auto-pairs'
+" Plug 'rstacruz/vim-closer'
+" Plug 'Raimondi/delimitMate'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -191,3 +193,5 @@ augroup remember_position_in_file
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END
 
+" Auto pairs
+let g:AutoPairsOnlyWhitespace = 1

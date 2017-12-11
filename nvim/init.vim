@@ -49,6 +49,7 @@ Plug 'tell-k/vim-autopep8'
 call plug#end()
 
 " Settings
+set autochdir
 set clipboard+=unnamedplus
 set cursorline
 set expandtab
@@ -110,7 +111,9 @@ let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#buffer_nr_format = '%s '
 let g:airline_powerline_fonts = 0
 let g:airline_theme='nord'
 let g:airline_left_sep = ''

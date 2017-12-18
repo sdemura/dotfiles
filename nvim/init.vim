@@ -161,6 +161,9 @@ autocmd TermOpen * startinsert
 " autocmd BufWinEnter,WinEnter term://* startinsert
 " autocmd BufWinLeave,WinLeave term://* stopinsert
 
+" Disable line numbers for terminal.
+autocmd TermOpen * setlocal nonumber norelativenumber
+
 """ CtrlP settings
 let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_working_path_mode = 'ra'
@@ -198,3 +201,9 @@ augroup END
 
 " Auto pairs
 let g:AutoPairsOnlyWhitespace = 1
+
+" YAML settings
+augroup yaml_settings
+    autocmd!
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+augroup END

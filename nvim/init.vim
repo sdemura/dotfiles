@@ -9,8 +9,8 @@ Plug 'w0rp/ale'
 
 " Git Integration
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
 
 " Language Specific Plugins
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -114,6 +114,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#buffer_nr_format = '%s '
+let g:airline#extensions#tabline#buffer_idx_mode = 0
 let g:airline_powerline_fonts = 0
 let g:airline_theme='nord'
 let g:airline_left_sep = ''

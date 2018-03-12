@@ -6,6 +6,7 @@ Plug 'roxma/ncm-rct-complete'
 Plug 'roxma/nvim-completion-manager'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
+Plug 'sbdchd/neoformat'
 
 " Git Integration
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -36,16 +37,15 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " Misc
-Plug 'sdemura/auto-pairs'
-" Plug 'rstacruz/vim-closer'
-" Plug 'Raimondi/delimitMate'
 Plug 'qpkorr/vim-bufkill'
+Plug 'rizzatti/dash.vim'
+Plug 'sdemura/auto-pairs'
+Plug 'tell-k/vim-autopep8'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tell-k/vim-autopep8'
 call plug#end()
 
 " Settings
@@ -98,7 +98,9 @@ nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 map j gj
 map k gk
 
-" Color Scheme
+" Color Scheme.
+" Nord Brightness has to be set before activating the color scheme
+let g:nord_comment_brightness = 15
 set background=dark
 colorscheme nord
 
@@ -120,7 +122,7 @@ let g:airline_theme='nord'
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 
-""" NerdTree
+" """ NerdTree
 " let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
@@ -166,7 +168,8 @@ autocmd TermOpen * startinsert
 autocmd TermOpen * setlocal nonumber norelativenumber
 
 """ CtrlP settings
-let g:ctrlp_cmd = 'CtrlPMRU'
+" let g:ctrlp_cmd = 'CtrlPMRU'
+let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_mruf_max=450    " number of recently opened files

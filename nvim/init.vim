@@ -7,6 +7,9 @@ Plug 'roxma/nvim-completion-manager'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
+" Plug 'Sougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'zchee/deoplete-jedi'
+
 
 " Git Integration
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -103,6 +106,9 @@ map k gk
 let g:nord_comment_brightness = 15
 set background=dark
 colorscheme nord
+
+" Enable Deoplete
+let g:deoplete#enable_at_startup = 1
 
 " Ale Settings
 let g:ale_sign_column_always = 1

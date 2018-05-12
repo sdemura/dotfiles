@@ -26,6 +26,7 @@ Plug 'ngmy/vim-rubocop'
 Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
 Plug 'z0mbix/vim-shfmt'
+Plug 'martinda/Jenkinsfile-vim-syntax'
 
 "Fuzzy Finding and Search
 Plug 'ctrlpvim/ctrlp.vim'

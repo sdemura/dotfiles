@@ -24,7 +24,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'hashivim/vim-vagrant'
 Plug 'ngmy/vim-rubocop'
 Plug 'pearofducks/ansible-vim'
-Plug 'saltstack/salt-vim'
+" Plug 'saltstack/salt-vim'
 Plug 'z0mbix/vim-shfmt'
 Plug 'martinda/Jenkinsfile-vim-syntax'
 
@@ -41,8 +41,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " Misc
-Plug 'qpkorr/vim-bufkill'
-Plug 'rizzatti/dash.vim'
+" Plug 'qpkorr/vim-bufkill'
+" Plug 'rizzatti/dash.vim'
 Plug 'sdemura/auto-pairs'
 Plug 'tell-k/vim-autopep8'
 Plug 'tpope/vim-commentary'
@@ -168,14 +168,11 @@ tnoremap <C-l> <C-\><C-n><C-w>l
 tnoremap <C-w> <C-\><C-n><Cr>
 
 autocmd TermOpen * startinsert
-" autocmd BufWinEnter,WinEnter term://* startinsert
-" autocmd BufWinLeave,WinLeave term://* stopinsert
 
 " Disable line numbers for terminal.
 autocmd TermOpen * setlocal nonumber norelativenumber
 
 """ CtrlP settings
-" let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already

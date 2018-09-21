@@ -7,13 +7,9 @@ Plug 'roxma/nvim-completion-manager'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-" Plug 'Sougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'zchee/deoplete-jedi'
-
 
 " Git Integration
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
 " Language Specific Plugins
@@ -22,10 +18,7 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'fatih/vim-go'
 Plug 'hashivim/vim-terraform'
 Plug 'hashivim/vim-vagrant'
-Plug 'ngmy/vim-rubocop'
 Plug 'pearofducks/ansible-vim'
-" Plug 'saltstack/salt-vim'
-Plug 'z0mbix/vim-shfmt'
 Plug 'martinda/Jenkinsfile-vim-syntax'
 
 "Fuzzy Finding and Search
@@ -39,10 +32,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
 
 " Misc
-" Plug 'qpkorr/vim-bufkill'
-" Plug 'rizzatti/dash.vim'
 Plug 'sdemura/auto-pairs'
 Plug 'tell-k/vim-autopep8'
 Plug 'tpope/vim-commentary'
@@ -51,6 +43,16 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 call plug#end()
+
+" Most likely not needed anymore
+" Plug 'saltstack/salt-vim'
+" Plug 'z0mbix/vim-shfmt'
+" Plug 'qpkorr/vim-bufkill'
+" Plug 'rizzatti/dash.vim'
+" Plug 'ngmy/vim-rubocop'
+" Plug 'tpope/vim-fugitive'
+" Plug 'Sougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'zchee/deoplete-jedi'
 
 " Settings
 set autochdir
@@ -90,10 +92,10 @@ set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 set wildmode=longest,list
 
-" Blinking cursor
-set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-      \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-      \,sm:block-blinkwait175-blinkoff150-blinkon175
+" " Blinking cursor
+" set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+"       \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+"       \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -108,6 +110,8 @@ let g:nord_comment_brightness = 15
 set background=dark
 colorscheme nord
 
+" set background=light
+" colorscheme solarized
 " Enable Deoplete
 let g:deoplete#enable_at_startup = 1
 
@@ -143,7 +147,7 @@ function! NERDTreeToggleInCurDir()
   if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
     exe ':NERDTreeClose'
   else
-    exe ':NERDTreeFind'
+    exe ':NERDTree'
   endif
 endfunction
 
@@ -167,12 +171,15 @@ tnoremap <C-l> <C-\><C-n><C-w>l
 " Exit terminal insert mode
 tnoremap <C-w> <C-\><C-n><Cr>
 
-autocmd TermOpen * startinsert
+" autocmd TermOpen * startinsert
+" autocmd BufWinEnter,WinEnter term://* startinsert
+" autocmd BufWinLeave,WinLeave term://* stopinsert
 
 " Disable line numbers for terminal.
 autocmd TermOpen * setlocal nonumber norelativenumber
 
 """ CtrlP settings
+" let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
@@ -184,13 +191,13 @@ let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 
 """ Custom keyboard shorcuts!
-:nnoremap <leader>w :w<Cr>
-:nnoremap <leader>wq :wq<Cr>
-:nnoremap <leader>Q :qall!<Cr>
+" :nnoremap <leader>w :w<Cr>
+" :nnoremap <leader>wq :wq<Cr>
+" :nnoremap <leader>Q :qall!<Cr>
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
 
-" Map Escape to jj
-:imap jj <Esc>
+" " Map Escape to jj
+" :imap jj <Esc>
 
 " IncSearch settings
 let g:incsearch#auto_nohlsearch = 1
@@ -207,7 +214,7 @@ augroup remember_position_in_file
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END
 
-" Auto pairs
+" Sean Auto pairs
 let g:AutoPairsOnlyWhitespace = 1
 
 " YAML settings
@@ -215,3 +222,6 @@ augroup yaml_settings
     autocmd!
     autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 augroup END
+
+" Neovim Login Shell
+let &shell='/bin/bash --rcfile ~/.bash_profile'

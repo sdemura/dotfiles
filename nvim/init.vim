@@ -1,58 +1,65 @@
+" set python
+let s:uname = system("uname -s")
+if s:uname == "Darwin\n"
+    let g:python3_host_prog = '/usr/local/bin/python3'
+    let g:python_host_prog = '/usr/local/bin/python'
+else
+    let g:python3_host_prog = '/usr/bin/python3'
+    let g:python_host_prog = '/usr/bin/python'
+endif
+"
 " Load Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 " IDE-like things
 Plug 'majutsushi/tagbar'
-Plug 'roxma/ncm-rct-complete'
-Plug 'roxma/nvim-completion-manager'
-Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
 
 " Git Integration
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mhinz/vim-signify'
 
 " Language Specific Plugins
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 Plug 'hashivim/vim-terraform'
-Plug 'hashivim/vim-vagrant'
 Plug 'pearofducks/ansible-vim'
-Plug 'martinda/Jenkinsfile-vim-syntax'
+Plug 'saltstack/salt-vim'
 
 "Fuzzy Finding and Search
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'haya14busa/incsearch.vim'
-Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
+Plug 'nixprime/cpsm', { 'do': 'env ./install.sh' }
 
 " UI Enhancements
 Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator', { 'branch': 'indicator' }
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'altercation/vim-colors-solarized'
+Plug 'ap/vim-buftabline'
+Plug 'itchyny/lightline.vim'
+Plug 'NLKNguyen/papercolor-theme'
+
 
 " Misc
 Plug 'sdemura/auto-pairs'
-Plug 'tell-k/vim-autopep8'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
+Plug 'qpkorr/vim-bufkill'
+Plug 'tpope/vim-fugitive'
+Plug 'milkypostman/vim-togglelist'
+Plug 'edkolev/tmuxline.vim'
+
+" LanguageClient stuff
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
 call plug#end()
 
-" Most likely not needed anymore
-" Plug 'saltstack/salt-vim'
-" Plug 'z0mbix/vim-shfmt'
-" Plug 'qpkorr/vim-bufkill'
-" Plug 'rizzatti/dash.vim'
-" Plug 'ngmy/vim-rubocop'
-" Plug 'tpope/vim-fugitive'
-" Plug 'Sougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'zchee/deoplete-jedi'
 
 " Settings
 set autochdir
@@ -72,16 +79,18 @@ set magic
 set mouse=a
 set nobackup
 set noerrorbells
+set number
+set norelativenumber
 set noshowmode
 set noswapfile
 set novisualbell
 set nowrap 
-set number
 set pastetoggle=<F2>
-set relativenumber
 set shiftwidth=4
+set signcolumn=yes
 set smartcase
 set smartindent
+" set statusline+=%F
 set softtabstop=4
 set splitbelow
 set splitright
@@ -92,11 +101,6 @@ set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 set wildmode=longest,list
 
-" " Blinking cursor
-" set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-"       \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-"       \,sm:block-blinkwait175-blinkoff150-blinkon175
-
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
@@ -106,61 +110,28 @@ map k gk
 
 " Color Scheme.
 " Nord Brightness has to be set before activating the color scheme
-let g:nord_comment_brightness = 15
-set background=dark
-colorscheme nord
+" let g:nord_comment_brightness = 15
+set background=light
+colorscheme PaperColor
 
-" set background=light
-" colorscheme solarized
 " Enable Deoplete
 let g:deoplete#enable_at_startup = 1
 
 " Ale Settings
 let g:ale_sign_column_always = 1
-let g:ale_python_pylint_executable = 'python3'
-let g:airline#extensions#ale#enabled = 1
-
-" Airline Settings
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#buffer_nr_format = '%s '
-let g:airline#extensions#tabline#buffer_idx_mode = 0
-let g:airline_powerline_fonts = 0
-let g:airline_theme='nord'
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-
-" """ NerdTree
-" let g:NERDTreeQuitOnOpen = 1
-let g:NERDTreeMinimalUI=1
-let g:NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-
-" Open NERDTree in the directory of the current file (or /home if no file is open)
-" nmap <silent> <C-i> :call NERDTreeToggleInCurDir()<cr>
-" let g:loaded_nerd_tree = 0 
-nmap <silent> <leader>o : call NERDTreeToggleInCurDir()<cr>
-function! NERDTreeToggleInCurDir()
-  " If NERDTree is open in the current buffer
-  if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
-    exe ':NERDTreeClose'
-  else
-    exe ':NERDTree'
-  endif
-endfunction
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
 
 " Vim-Go
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_types = 1
-let g:go_fmt_autosave = 1
-let g:go_fmt_command = 'goimports'
+" let g:go_highlight_build_constraints = 1
+" let g:go_highlight_extra_types = 1
+" let g:go_highlight_fields = 1
+" let g:go_highlight_functions = 1
+" let g:go_highlight_methods = 1
+" let g:go_highlight_operators = 1
+" let g:go_highlight_types = 1
+" let g:go_fmt_autosave = 1
+" let g:go_fmt_command = 'goimports'
 
 """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -171,42 +142,18 @@ tnoremap <C-l> <C-\><C-n><C-w>l
 " Exit terminal insert mode
 tnoremap <C-w> <C-\><C-n><Cr>
 
-" autocmd TermOpen * startinsert
-" autocmd BufWinEnter,WinEnter term://* startinsert
-" autocmd BufWinLeave,WinLeave term://* stopinsert
-
 " Disable line numbers for terminal.
 autocmd TermOpen * setlocal nonumber norelativenumber
 
 """ CtrlP settings
-" let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
-let g:ctrlp_mruf_max=450    " number of recently opened files
-let g:ctrlp_max_files=0     " do not limit the number of searchable files
-let g:ctrlp_use_caching = 0 
-let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
 let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
-let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
+" let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 
 """ Custom keyboard shorcuts!
-" :nnoremap <leader>w :w<Cr>
-" :nnoremap <leader>wq :wq<Cr>
-" :nnoremap <leader>Q :qall!<Cr>
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
-
-" " Map Escape to jj
-" :imap jj <Esc>
-
-" IncSearch settings
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
 
 " Open at last spot in line.
 augroup remember_position_in_file
@@ -224,4 +171,42 @@ augroup yaml_settings
 augroup END
 
 " Neovim Login Shell
-let &shell='/bin/bash --rcfile ~/.bash_profile'
+let &shell='/bin/bash --rcfile ~/.bashrc'
+
+" Language server settings
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['/home/sean/.local/bin/pyls', '-v'],
+    \ }
+
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <leader>r :call LanguageClient#textDocument_references()<CR>
+
+" Bind <leader>y to forward last-yanked text to Clipper
+" -N needed on ubuntu netcat
+nnoremap <leader>y :call system('nc -N localhost 8377', @0)<CR>
+
+let g:tmux_navigator_disable_when_zoomed = 1
+
+" disable ALE for python so we can use PYLS and deoplete
+let g:ale_linters = {'python': []}
+
+" prevent deoplete from loading preview windows
+set completeopt-=preview
+
+" neoformat settings
+let g:neoformat_enabled_python = ['black', 'isort']
+nnoremap <leader>f :Neoformat<CR>
+
+" buftabline
+let g:buftabline_numbers = 1
+let g:buftabline_indicators = 1
+
+let g:lightline = {
+      \ 'colorscheme': 'PaperColor',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
+      \ }
+      \ }
+
+let g:tmuxline_powerline_separators = 0

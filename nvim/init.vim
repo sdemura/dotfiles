@@ -16,7 +16,8 @@ Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
 
 " Git Integration
-Plug 'mhinz/vim-signify'
+" Plug 'mhinz/vim-signify'
+Plug 'airblade/vim-gitgutter'
 
 " Language Specific Plugins
 Plug 'Glench/Vim-Jinja2-Syntax'

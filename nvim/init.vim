@@ -3,11 +3,17 @@ let s:uname = system("uname -s")
 if s:uname == "Darwin\n"
     let g:python3_host_prog = '/usr/local/bin/python3'
     let g:python_host_prog = '/usr/local/bin/python'
+    let g:LanguageClient_serverCommands = {
+        \ 'python': ['/usr/local/bin/pyls', '-v'],
+        \ }
 else
     let g:python3_host_prog = '/usr/bin/python3'
     let g:python_host_prog = '/usr/bin/python'
+    let g:LanguageClient_serverCommands = {
+        \ 'python': ['/home/sean/.local/bin/pyls', '-v'],
+        \ }
 endif
-"
+
 " Load Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 " IDE-like things
@@ -16,7 +22,6 @@ Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
 
 " Git Integration
-" Plug 'mhinz/vim-signify'
 Plug 'airblade/vim-gitgutter'
 
 " Language Specific Plugins
@@ -91,7 +96,6 @@ set shiftwidth=4
 set signcolumn=yes
 set smartcase
 set smartindent
-" set statusline+=%F
 set softtabstop=4
 set splitbelow
 set splitright
@@ -120,19 +124,6 @@ let g:deoplete#enable_at_startup = 1
 
 " Ale Settings
 let g:ale_sign_column_always = 1
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-
-" Vim-Go
-" let g:go_highlight_build_constraints = 1
-" let g:go_highlight_extra_types = 1
-" let g:go_highlight_fields = 1
-" let g:go_highlight_functions = 1
-" let g:go_highlight_methods = 1
-" let g:go_highlight_operators = 1
-" let g:go_highlight_types = 1
-" let g:go_fmt_autosave = 1
-" let g:go_fmt_command = 'goimports'
 
 """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -151,7 +142,7 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
-" let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
+let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
@@ -173,11 +164,6 @@ augroup END
 
 " Neovim Login Shell
 let &shell='/bin/bash --rcfile ~/.bashrc'
-
-" Language server settings
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['/home/sean/.local/bin/pyls', '-v'],
-    \ }
 
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
@@ -206,8 +192,11 @@ let g:buftabline_indicators = 1
 let g:lightline = {
       \ 'colorscheme': 'PaperColor',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
-      \ }
+      \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \  }
       \ }
 
 let g:tmuxline_powerline_separators = 0

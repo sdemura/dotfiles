@@ -141,8 +141,9 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
-let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
+" let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
+let g:ctrlp_user_command = 'fd --type f --color never "" %s'
 
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>

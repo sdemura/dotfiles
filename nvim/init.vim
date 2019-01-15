@@ -34,7 +34,6 @@ Plug 'saltstack/salt-vim'
 
 "Fuzzy Finding and Search
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'nixprime/cpsm', { 'do': 'env ./install.sh' }
 
 " UI Enhancements
 Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
@@ -141,7 +140,6 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
-" let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 let g:ctrlp_user_command = 'fd --no-ignore --follow --exclude .git --hidden --type f --color never "" %s'
 let g:ctrlp_use_caching = 0

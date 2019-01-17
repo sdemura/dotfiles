@@ -20,6 +20,11 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'majutsushi/tagbar'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Git Integration
 Plug 'airblade/vim-gitgutter'
@@ -27,7 +32,6 @@ Plug 'airblade/vim-gitgutter'
 " Language Specific Plugins
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
-" Plug 'fatih/vim-go'
 Plug 'hashivim/vim-terraform'
 Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
@@ -36,13 +40,11 @@ Plug 'saltstack/salt-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 
 " UI Enhancements
-Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
-Plug 'christoomey/vim-tmux-navigator', { 'branch': 'indicator' }
+Plug 'sdemura/vim-tmux-navigator', { 'branch': 'indicator' }
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
-
 
 " Misc
 Plug 'sdemura/auto-pairs'
@@ -54,15 +56,6 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-fugitive'
 Plug 'milkypostman/vim-togglelist'
 Plug 'edkolev/tmuxline.vim'
-
-" LanguageClient stuff
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
 call plug#end()
 
 

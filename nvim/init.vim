@@ -25,6 +25,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'scrooloose/nerdtree'
 
 " Git Integration
 Plug 'airblade/vim-gitgutter'
@@ -74,6 +75,7 @@ set langmenu=en
 set lazyredraw
 set linebreak
 set magic
+
 set mouse=a
 set nobackup
 set noerrorbells
@@ -130,8 +132,9 @@ tnoremap <C-w> <C-\><C-n><Cr>
 autocmd TermOpen * setlocal nonumber norelativenumber
 
 """ CtrlP settings
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ar'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 let g:ctrlp_user_command = 'fd --no-ignore --follow --exclude .git --hidden --type f --color never "" %s'
@@ -193,3 +196,6 @@ let g:lightline = {
       \ }
 
 let g:tmuxline_powerline_separators = 0
+
+" nerd tree toggle
+map <leader>o :NERDTreeToggle<CR>

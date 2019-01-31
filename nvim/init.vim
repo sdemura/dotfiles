@@ -161,9 +161,13 @@ augroup END
 " Neovim Login Shell
 let &shell='/bin/bash --rcfile ~/.bashrc'
 
+" Language Client Neovi settings
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <leader>r :call LanguageClient#textDocument_references()<CR>
+
+" disable inline errors
+let g:LanguageClient_useVirtualText = 0
 
 " Bind <leader>y to forward last-yanked text to Clipper
 " -N needed on ubuntu netcat
@@ -199,3 +203,26 @@ let g:tmuxline_powerline_separators = 0
 
 " nerd tree toggle
 map <leader>o :NERDTreeToggle<CR>
+
+" Swap words:
+" taken from Eclim
+" https://github.com/ervandew/eclim
+
+function! SwapWords() " {{{
+  " Initially based on http://www.vim.org/tips/tip.php?tip_id=329
+
+  " save the last search pattern
+  let save_search = @/
+
+  normal! "_yiw
+  let pos = getpos('.')
+  keepjumps s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/
+  call setpos('.', pos)
+
+  " restore the last search pattern
+  let @/ = save_search
+
+  silent! call repeat#set(":call SwapWords()\<cr>", v:count)
+endfunction " }}}
+
+command! SwapWords :call SwapWords()

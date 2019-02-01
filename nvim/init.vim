@@ -10,7 +10,7 @@ else
     let g:python3_host_prog = '/usr/bin/python3'
     let g:python_host_prog = '/usr/bin/python'
     let g:LanguageClient_serverCommands = {
-        \ 'python': ['/home/sean/.local/bin/pyls', '-v'],
+        \ 'python': ['~/.local/bin/pyls', '-v'],
         \ }
 endif
 
@@ -55,6 +55,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'milkypostman/vim-togglelist'
 Plug 'edkolev/tmuxline.vim'
 call plug#end()
@@ -132,8 +133,8 @@ tnoremap <C-w> <C-\><C-n><Cr>
 autocmd TermOpen * setlocal nonumber norelativenumber
 
 """ CtrlP settings
-" let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_cmd = 'CtrlPMixed'
+" let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ar'
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'

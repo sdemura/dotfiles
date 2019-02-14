@@ -1,6 +1,6 @@
 " set python
-let s:uname = system("uname -s")
-if s:uname == "Darwin\n"
+let s:uname = system('uname -s')
+if s:uname ==# "Darwin\n"
     let g:python3_host_prog = '/usr/local/bin/python3'
     let g:python_host_prog = '/usr/local/bin/python'
     let g:LanguageClient_serverCommands = {
@@ -38,7 +38,8 @@ Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
 
 "Fuzzy Finding and Search
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " UI Enhancements
 Plug 'sdemura/vim-tmux-navigator', { 'branch': 'indicator' }
@@ -177,7 +178,7 @@ nnoremap <leader>y :call system('nc -N localhost 8377', @0)<CR>
 let g:tmux_navigator_disable_when_zoomed = 1
 
 " disable ALE for python so we can use PYLS and deoplete
-let g:ale_linters = {'python': []}
+let g:ale_linters = {'python': [], 'python3': [], 'python2': []}
 
 " prevent deoplete from loading preview windows
 set completeopt-=preview
@@ -185,6 +186,15 @@ set completeopt-=preview
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 nnoremap <leader>f :Neoformat<CR>
+"
+" Use ctrlP for leader f
+let g:Lf_ShortcutF = '<C-P>'
+let g:Lf_WorkingDirectoryMode = 'Ac'
+nnoremap <C-M> = :LeaderfMru<CR>
+
+" let g:Lf_ShowHidden = 1
+let g:Lf_ReverseOrder = 1
+let g:Lf_WindowHeight = 0.40
 
 " buftabline
 let g:buftabline_numbers = 1
@@ -204,26 +214,3 @@ let g:tmuxline_powerline_separators = 0
 
 " nerd tree toggle
 map <leader>o :NERDTreeToggle<CR>
-
-" Swap words:
-" taken from Eclim
-" https://github.com/ervandew/eclim
-
-function! SwapWords() " {{{
-  " Initially based on http://www.vim.org/tips/tip.php?tip_id=329
-
-  " save the last search pattern
-  let save_search = @/
-
-  normal! "_yiw
-  let pos = getpos('.')
-  keepjumps s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/
-  call setpos('.', pos)
-
-  " restore the last search pattern
-  let @/ = save_search
-
-  silent! call repeat#set(":call SwapWords()\<cr>", v:count)
-endfunction " }}}
-
-command! SwapWords :call SwapWords()

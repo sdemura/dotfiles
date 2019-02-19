@@ -38,7 +38,6 @@ Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
 
 "Fuzzy Finding and Search
-" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " UI Enhancements
@@ -47,6 +46,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'dhruvasagar/vim-zoom'
 
 " Misc
 Plug 'sdemura/auto-pairs'
@@ -188,9 +188,12 @@ let g:neoformat_enabled_python = ['black', 'isort']
 nnoremap <leader>f :Neoformat<CR>
 "
 " Use ctrlP for leader f
-let g:Lf_ShortcutF = '<C-P>'
+" let g:Lf_ShortcutF = '<C-P>'
+" let g:Lf_WorkingDirectoryMode = 'Ac'
+" nnoremap <C-M> = :LeaderfMru<CR>
+let g:Lf_ShortcutF = '<leader>p'
 let g:Lf_WorkingDirectoryMode = 'Ac'
-nnoremap <C-M> = :LeaderfMru<CR>
+nnoremap <leader>m = :LeaderfMru<CR>
 
 " let g:Lf_ShowHidden = 1
 let g:Lf_ReverseOrder = 1
@@ -214,3 +217,9 @@ let g:tmuxline_powerline_separators = 0
 
 " nerd tree toggle
 map <leader>o :NERDTreeToggle<CR>
+
+"LanguageClient context menu
+nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
+
+" vim-zoom mapping
+nmap <leader>z <Plug>(zoom-toggle)

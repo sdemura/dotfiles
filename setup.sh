@@ -6,7 +6,7 @@
 pip3 install black python-language-server[all]
 
 # need brew installed first
-brew install git shellcheck shfmt fd tmux npm
+brew install git shellcheck shfmt fd tmux npm fzf
 
 npm -g install js-beautify
 

@@ -190,7 +190,7 @@ set completeopt-=preview
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
-nnoremap <leader>f :Neoformat<CR>
+nnoremap <leader>n :Neoformat<CR>
 " let g:neoformat_verbose = 1 " only affects the verbosity of Neoformat
 
 "
@@ -248,8 +248,9 @@ let g:user_emmet_settings = {
 
 "FZF Settings
 let $FZF_DEFAULT_OPTS = "--bind 'ctrl-j:ignore,ctrl-k:ignore'"
-nnoremap <C-P> :FZF<CR>
-nnoremap <C-M> :History<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>m :History<CR>
+nnoremap <leader>g :Rg<CR>
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -264,3 +265,7 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler

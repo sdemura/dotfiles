@@ -26,6 +26,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'scrooloose/nerdtree'
+Plug 'mattn/emmet-vim'
 
 " Git Integration
 Plug 'airblade/vim-gitgutter'
@@ -38,10 +39,13 @@ Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
 
 "Fuzzy Finding and Search
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-
+" Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+"
 " UI Enhancements
-Plug 'sdemura/vim-tmux-navigator', { 'branch': 'indicator' }
+" Plug 'sdemura/vim-tmux-navigator', { 'branch': 'indicator' }
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
@@ -185,15 +189,18 @@ set completeopt-=preview
 
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
+let g:neoformat_enabled_json = ['jq']
 nnoremap <leader>f :Neoformat<CR>
+" let g:neoformat_verbose = 1 " only affects the verbosity of Neoformat
+
 "
 " Use ctrlP for leader f
 " let g:Lf_ShortcutF = '<C-P>'
 " let g:Lf_WorkingDirectoryMode = 'Ac'
 " nnoremap <C-M> = :LeaderfMru<CR>
-let g:Lf_ShortcutF = '<leader>p'
-let g:Lf_WorkingDirectoryMode = 'Ac'
-nnoremap <leader>m = :LeaderfMru<CR>
+" let g:Lf_ShortcutF = '<leader>p'
+" let g:Lf_WorkingDirectoryMode = 'Ac'
+" nnoremap <leader>[ = :LeaderfMru<CR>
 
 " let g:Lf_ShowHidden = 1
 let g:Lf_ReverseOrder = 1
@@ -223,3 +230,35 @@ nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
 
 " vim-zoom mapping
 nmap <leader>z <Plug>(zoom-toggle)
+
+" vim-emmett
+let g:user_emmet_leader_key=','
+
+" disable snippet support
+" until https://github.com/palantir/python-language-server/pull/499/files
+let g:LanguageClient_settingsPath = '~/.dotfiles/nvim/settings.json'
+let g:LanguageClient_hasSnippetsSupport = 0
+
+"
+let g:user_emmet_settings = {
+\  'html' : {
+\    'indent_blockelement': 1,
+\  },
+\}
+
+nnoremap <C-P> :FZF<CR>
+nnoremap <C-M> :History<CR>
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }

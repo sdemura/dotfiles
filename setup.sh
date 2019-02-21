@@ -6,7 +6,10 @@
 pip3 install black python-language-server[all]
 
 # need brew installed first
-brew install git shellcheck shfmt fd tmux
+brew install git shellcheck shfmt fd tmux npm
+
+npm -g install js-beautify
+
 
 # set up vim-plug
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \

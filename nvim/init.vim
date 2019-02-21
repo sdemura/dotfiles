@@ -246,6 +246,8 @@ let g:user_emmet_settings = {
 \  },
 \}
 
+"FZF Settings
+let $FZF_DEFAULT_OPTS = "--bind 'ctrl-j:ignore,ctrl-k:ignore'"
 nnoremap <C-P> :FZF<CR>
 nnoremap <C-M> :History<CR>
 let g:fzf_colors =

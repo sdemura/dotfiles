@@ -246,9 +246,9 @@ let g:user_emmet_settings = {
 \  },
 \}
 
-"FZF Settings
 let $FZF_DEFAULT_OPTS = "--bind 'ctrl-j:ignore,ctrl-k:ignore'"
-nnoremap <leader>f :Files<CR>
+" https://github.com/junegunn/fzf.vim/issues/721
+nnoremap <expr> <leader>f (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<CR>"
 nnoremap <leader>m :History<CR>
 nnoremap <leader>g :Rg<CR>
 let g:fzf_colors =
@@ -271,3 +271,7 @@ autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 augroup END
+
+" do not use fzf for languageclient-neovim
+let g:LanguageClient_selectionUI = 'location-list'
+let g:LanguageClient_fzfContextMenu = 0

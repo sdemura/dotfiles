@@ -41,6 +41,8 @@ Plug 'saltstack/salt-vim'
 "Fuzzy Finding and Search
 " Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" brew installed
+" Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 "
 " UI Enhancements
@@ -165,7 +167,7 @@ augroup yaml_settings
 augroup END
 
 " Neovim Login Shell
-let &shell='/bin/bash --rcfile ~/.bashrc'
+let &shell='/bin/bash'
 
 " Language Client Neovi settings
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -246,13 +248,13 @@ let g:user_emmet_settings = {
 \  },
 \}
 
-" following are in bash profile
-" export FZF_DEFAULT_OPTS="--bind 'ctrl-j:ignore,ctrl-k:ignore'"
-" export FZF_DEFAULT_COMMAND='fd --no-ignore --follow --exclude .git --hidden --type f --color=always'
-" export FZF_DEFAULT_OPTS="--ansi --preview 'bat -p --theme OneHalfLight --color always {}'"
-" https://github.com/junegunn/fzf.vim/issues/721
-" nnoremap <leader>f :Files<CR>
-nnoremap <expr> <leader>f (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<CR>"
+" command! -bang -nargs=* History call fzf#vim#history()
+" command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
+
+" nnoremap <expr> <leader>f (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<CR>"
+
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>F :GFiles<CR>
 nnoremap <leader>m :History<CR>
 nnoremap <leader>g :Rg<CR>
 let g:fzf_colors =
@@ -274,6 +276,7 @@ augroup fzf-statusline-dsiable
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+  \| autocmd FocusGained,BufEnter,BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal i | endif
 augroup END
 
 " do not use fzf for languageclient-neovim

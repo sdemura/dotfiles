@@ -246,8 +246,12 @@ let g:user_emmet_settings = {
 \  },
 \}
 
-let $FZF_DEFAULT_OPTS = "--bind 'ctrl-j:ignore,ctrl-k:ignore'"
+" following are in bash profile
+" export FZF_DEFAULT_OPTS="--bind 'ctrl-j:ignore,ctrl-k:ignore'"
+" export FZF_DEFAULT_COMMAND='fd --no-ignore --follow --exclude .git --hidden --type f --color=always'
+" export FZF_DEFAULT_OPTS="--ansi --preview 'bat -p --theme OneHalfLight --color always {}'"
 " https://github.com/junegunn/fzf.vim/issues/721
+" nnoremap <leader>f :Files<CR>
 nnoremap <expr> <leader>f (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<CR>"
 nnoremap <leader>m :History<CR>
 nnoremap <leader>g :Rg<CR>

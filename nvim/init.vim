@@ -119,6 +119,7 @@ map k gk
 " Nord Brightness has to be set before activating the color scheme
 " let g:nord_comment_brightness = 15
 set background=light
+" set background=dark
 colorscheme PaperColor
 
 " Enable Deoplete
@@ -249,9 +250,11 @@ let g:user_emmet_settings = {
 \}
 
 " command! -bang -nargs=* History call fzf#vim#history()
-" command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
+command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
 
 " nnoremap <expr> <leader>f (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<CR>"
+
+let $FZF_PREVIEW_COMMAND='bat {}'
 
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>F :GFiles<CR>

@@ -26,7 +26,6 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'scrooloose/nerdtree'
-Plug 'mattn/emmet-vim'
 
 " Git Integration
 Plug 'airblade/vim-gitgutter'
@@ -39,23 +38,21 @@ Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
 
 "Fuzzy Finding and Search
-" Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" brew installed
-" Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 "
 " UI Enhancements
-" Plug 'sdemura/vim-tmux-navigator', { 'branch': 'indicator' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'dhruvasagar/vim-zoom'
+Plug 'ntpeters/vim-better-whitespace'
 
 " Misc
-Plug 'sdemura/auto-pairs'
+Plug 'mattn/emmet-vim'
+Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
@@ -63,6 +60,7 @@ Plug 'tpope/vim-surround'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'wellle/targets.vim'
 Plug 'milkypostman/vim-togglelist'
 Plug 'edkolev/tmuxline.vim'
 call plug#end()
@@ -78,7 +76,7 @@ set hidden
 set history=500
 set ignorecase
 set inccommand=nosplit
-set iskeyword+=$ 
+set iskeyword+=$
 set langmenu=en
 set lazyredraw
 set linebreak
@@ -92,7 +90,7 @@ set norelativenumber
 set noshowmode
 set noswapfile
 set novisualbell
-set nowrap 
+set nowrap
 set pastetoggle=<F2>
 set shiftwidth=4
 set signcolumn=yes
@@ -116,10 +114,7 @@ map j gj
 map k gk
 
 " Color Scheme.
-" Nord Brightness has to be set before activating the color scheme
-" let g:nord_comment_brightness = 15
 set background=light
-" set background=dark
 colorscheme PaperColor
 
 " Enable Deoplete
@@ -140,15 +135,6 @@ tnoremap <C-w> <C-\><C-n><Cr>
 " Disable line numbers for terminal.
 autocmd TermOpen * setlocal nonumber norelativenumber
 
-""" CtrlP settings
-let g:ctrlp_cmd = 'CtrlPMixed'
-" let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ar'
-let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
-let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
-let g:ctrlp_user_command = 'fd --no-ignore --follow --exclude .git --hidden --type f --color never "" %s'
-let g:ctrlp_use_caching = 0
-
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
 
@@ -157,9 +143,6 @@ augroup remember_position_in_file
     autocmd!
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END
-
-" Sean Auto pairs
-let g:AutoPairsOnlyWhitespace = 1
 
 " YAML settings
 augroup yaml_settings
@@ -170,11 +153,6 @@ augroup END
 " Neovim Login Shell
 let &shell='/bin/bash'
 
-" Language Client Neovi settings
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <leader>r :call LanguageClient#textDocument_references()<CR>
-
 " disable inline errors
 let g:LanguageClient_useVirtualText = 0
 
@@ -182,6 +160,7 @@ let g:LanguageClient_useVirtualText = 0
 " -N needed on ubuntu netcat
 nnoremap <leader>y :call system('nc -N localhost 8377', @0)<CR>
 
+" vim-tmux-navigator
 let g:tmux_navigator_disable_when_zoomed = 1
 
 " disable ALE for python so we can use PYLS and deoplete
@@ -193,26 +172,14 @@ set completeopt-=preview
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
-nnoremap <leader>n :Neoformat<CR>
-" let g:neoformat_verbose = 1 " only affects the verbosity of Neoformat
-
-"
-" Use ctrlP for leader f
-" let g:Lf_ShortcutF = '<C-P>'
-" let g:Lf_WorkingDirectoryMode = 'Ac'
-" nnoremap <C-M> = :LeaderfMru<CR>
-" let g:Lf_ShortcutF = '<leader>p'
-" let g:Lf_WorkingDirectoryMode = 'Ac'
-" nnoremap <leader>[ = :LeaderfMru<CR>
-
-" let g:Lf_ShowHidden = 1
-let g:Lf_ReverseOrder = 1
-let g:Lf_WindowHeight = 0.40
+nnoremap <silent> <leader>n :Neoformat<CR>
 
 " buftabline
+let g:buftabline_separators = 1
 let g:buftabline_numbers = 1
 let g:buftabline_indicators = 1
 
+" lightline
 let g:lightline = {
       \ 'colorscheme': 'PaperColor',
       \ 'active': {
@@ -220,19 +187,22 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head'
-      \  }
+      \  },
       \ }
+		" \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+        " \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
 
-let g:tmuxline_powerline_separators = 0
+" tmuxline
+let g:tmuxline_powerline_separators = 1
 
 " nerd tree toggle
-map <leader>o :NERDTreeToggle<CR>
+map <silent> <leader>o :NERDTreeToggle<CR>
 
 "LanguageClient context menu
 nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
 
 " vim-zoom mapping
-nmap <leader>z <Plug>(zoom-toggle)
+nmap <silent> <leader>z <Plug>(zoom-toggle)
 
 " vim-emmett
 let g:user_emmet_leader_key=','
@@ -242,24 +212,14 @@ let g:user_emmet_leader_key=','
 let g:LanguageClient_settingsPath = '~/.dotfiles/nvim/settings.json'
 let g:LanguageClient_hasSnippetsSupport = 0
 
-"
-let g:user_emmet_settings = {
-\  'html' : {
-\    'indent_blockelement': 1,
-\  },
-\}
-
-" command! -bang -nargs=* History call fzf#vim#history()
+" FZF Crap
 command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
-
-" nnoremap <expr> <leader>f (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<CR>"
-
+" hack for preview.sh
 let $FZF_PREVIEW_COMMAND='bat {}'
-
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>F :GFiles<CR>
-nnoremap <leader>m :History<CR>
-nnoremap <leader>g :Rg<CR>
+nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader>F :GFiles<CR>
+nnoremap <silent> <leader>m :History<CR>
+nnoremap <silent> <leader>g :Rg<CR>
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -275,13 +235,20 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-augroup fzf-statusline-dsiable
+augroup disable_fzf_statusline
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
   \| autocmd FocusGained,BufEnter,BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal i | endif
 augroup END
 
-" do not use fzf for languageclient-neovim
+" languageclient-neovim
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> <ldo not use fzf for languageclient-neovimeader>d :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <leader>r :call LanguageClient#textDocument_references()<CR>
 let g:LanguageClient_selectionUI = 'location-list'
 let g:LanguageClient_fzfContextMenu = 0
+
+" strip whitespace on save
+let g:strip_whitespace_on_save = 1
+let g:strip_whitespace_confirm = 0

@@ -20,10 +20,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'majutsushi/tagbar'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'scrooloose/nerdtree'
 
@@ -213,9 +210,10 @@ let g:LanguageClient_settingsPath = '~/.dotfiles/nvim/settings.json'
 let g:LanguageClient_hasSnippetsSupport = 0
 
 " FZF Crap
-command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
-" hack for preview.sh
-let $FZF_PREVIEW_COMMAND='bat {}'
+" hack
+" let $FZF_PREVIEW_COMMAND='bat {}'
+" command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
+let $FZF_DEFAULT_OPTS="--cycle --bind 'ctrl-j:ignore,ctrl-k:ignore'"
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>F :GFiles<CR>
 nnoremap <silent> <leader>m :History<CR>
@@ -244,8 +242,6 @@ augroup END
 
 " languageclient-neovim
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> <ldo not use fzf for languageclient-neovimeader>d :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <leader>r :call LanguageClient#textDocument_references()<CR>
 let g:LanguageClient_selectionUI = 'location-list'
 let g:LanguageClient_fzfContextMenu = 0
 

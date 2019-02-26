@@ -186,8 +186,6 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \  },
       \ }
-		" \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-        " \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
 
 " tmuxline
 let g:tmuxline_powerline_separators = 1
@@ -213,7 +211,7 @@ let g:LanguageClient_hasSnippetsSupport = 0
 " hack
 " let $FZF_PREVIEW_COMMAND='bat {}'
 " command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
-let $FZF_DEFAULT_OPTS="--cycle --bind 'ctrl-j:ignore,ctrl-k:ignore'"
+let $FZF_DEFAULT_OPTS="--cycle --bind 'ctrl-j:ignore,ctrl-k:ignore' --ansi"
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>F :GFiles<CR>
 nnoremap <silent> <leader>m :History<CR>

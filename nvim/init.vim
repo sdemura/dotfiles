@@ -1,18 +1,6 @@
-" set python
-let s:uname = system('uname -s')
-if s:uname ==# "Darwin\n"
-    let g:python3_host_prog = '/usr/local/bin/python3'
-    let g:python_host_prog = '/usr/local/bin/python'
-    let g:LanguageClient_serverCommands = {
-        \ 'python': ['/usr/local/bin/pyls', '-v'],
-        \ }
-else
-    let g:python3_host_prog = '/usr/bin/python3'
-    let g:python_host_prog = '/usr/bin/python'
-    let g:LanguageClient_serverCommands = {
-        \ 'python': ['~/.local/bin/pyls', '-v'],
-        \ }
-endif
+" assumes pyenv
+let g:python_host_prog='/Users/seand/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog='/Users/seand/.pyenv/versions/neovim3/bin/python3'
 
 " Load Plugins
 call plug#begin('~/.local/share/nvim/plugged')
@@ -193,9 +181,6 @@ let g:tmuxline_powerline_separators = 1
 " nerd tree toggle
 map <silent> <leader>o :NERDTreeToggle<CR>
 
-"LanguageClient context menu
-nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
-
 " vim-zoom mapping
 nmap <silent> <leader>z <Plug>(zoom-toggle)
 
@@ -212,8 +197,8 @@ let g:LanguageClient_hasSnippetsSupport = 0
 " let $FZF_PREVIEW_COMMAND='bat {}'
 " command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
 let $FZF_DEFAULT_OPTS="--cycle --bind 'ctrl-j:ignore,ctrl-k:ignore' --ansi"
-nnoremap <silent> <leader>f :Files<CR>
-nnoremap <silent> <leader>F :GFiles<CR>
+nnoremap <silent> <leader>F :Files<CR>
+nnoremap <silent> <leader>f :GFiles<CR>
 nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>g :Rg<CR>
 let g:fzf_colors =
@@ -239,9 +224,10 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 augroup END
 
 " languageclient-neovim
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 let g:LanguageClient_selectionUI = 'location-list'
+let g:LanguageClient_serverCommands = {'python': ['/Users/seand/.pyenv/versions/neovim3/bin/pyls', '-v']}
 let g:LanguageClient_fzfContextMenu = 0
+nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
 
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1

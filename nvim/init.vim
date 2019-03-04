@@ -32,8 +32,8 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'dhruvasagar/vim-zoom'
 Plug 'ntpeters/vim-better-whitespace'
+
 
 " Misc
 Plug 'mattn/emmet-vim'
@@ -52,7 +52,7 @@ call plug#end()
 
 
 " Settings
-set autochdir
+" set autochdir
 set clipboard+=unnamedplus
 set cursorline
 set expandtab
@@ -176,13 +176,10 @@ let g:lightline = {
       \ }
 
 " tmuxline
-let g:tmuxline_powerline_separators = 1
+let g:tmuxline_powerline_separators = 0
 
 " nerd tree toggle
 map <silent> <leader>o :NERDTreeToggle<CR>
-
-" vim-zoom mapping
-nmap <silent> <leader>z <Plug>(zoom-toggle)
 
 " vim-emmett
 let g:user_emmet_leader_key=','

@@ -8,8 +8,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'majutsushi/tagbar'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'scrooloose/nerdtree'
 
 " Git Integration
@@ -149,10 +150,10 @@ nnoremap <leader>y :call system('nc -N localhost 8377', @0)<CR>
 let g:tmux_navigator_disable_when_zoomed = 1
 
 " disable ALE for python so we can use PYLS and deoplete
-let g:ale_linters = {'python': [], 'python3': [], 'python2': []}
+" let g:ale_linters = {'python': [], 'python3': [], 'python2': []}
 
 " prevent deoplete from loading preview windows
-set completeopt-=preview
+" set completeopt-=preview
 
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
@@ -220,11 +221,11 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd FocusGained,BufEnter,BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal i | endif
 augroup END
 
-" languageclient-neovim
-let g:LanguageClient_selectionUI = 'location-list'
-let g:LanguageClient_serverCommands = {'python': ['/Users/seand/.pyenv/versions/neovim3/bin/pyls', '-v']}
-let g:LanguageClient_fzfContextMenu = 0
-nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
+" " languageclient-neovim
+" let g:LanguageClient_selectionUI = 'location-list'
+" let g:LanguageClient_serverCommands = {'python': ['/Users/seand/.pyenv/versions/neovim3/bin/pyls', '-v']}
+" let g:LanguageClient_fzfContextMenu = 0
+" nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
 
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1

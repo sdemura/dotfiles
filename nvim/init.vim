@@ -8,9 +8,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'majutsushi/tagbar'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-jedi'
+" Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'scrooloose/nerdtree'
 
 " Git Integration
@@ -27,10 +27,10 @@ Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
 
 "Fuzzy Finding and Search
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'junegunn/fzf.vim'
-Plug 'ctrlpvim/ctrlp.vim'
-"
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+
 " UI Enhancements
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -162,7 +162,7 @@ set completeopt-=preview
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
-nnoremap <silent> <leader>f :Neoformat<CR>
+nnoremap <silent> <leader>n :Neoformat<CR>
 
 " buftabline
 let g:buftabline_separators = 1
@@ -195,10 +195,10 @@ let g:LanguageClient_settingsPath = '~/.dotfiles/nvim/settings.json'
 let g:LanguageClient_hasSnippetsSupport = 0
 
 " " languageclient-neovim
-" let g:LanguageClient_selectionUI = 'location-list'
-" let g:LanguageClient_serverCommands = {'python': ['/Users/seand/.pyenv/versions/neovim3/bin/pyls', '-v']}
-" let g:LanguageClient_fzfContextMenu = 0
-" nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
+let g:LanguageClient_selectionUI = 'location-list'
+let g:LanguageClient_serverCommands = {'python': [expand('~/.pyenv/versions/neovim3/bin/pyls'), '-v']}
+let g:LanguageClient_fzfContextMenu = 0
+nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
 
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1
@@ -214,6 +214,33 @@ let g:ale_echo_msg_format = '%linter%: %s'
 set completeopt-=preview
 let g:float_preview#docked = 0
 
-" resurrect ctrlp
-let g:ctrlp_user_command = 'fd --no-ignore --follow --exclude .git --hidden --type f --color=never "" %s'
-let g:ctrlp_use_caching = 0
+" FZF Crap
+" hack
+" let $FZF_PREVIEW_COMMAND='bat {}'
+" command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
+let $FZF_DEFAULT_OPTS="--cycle --bind 'ctrl-j:ignore,ctrl-k:ignore' --ansi"
+nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader>ff :GFiles<CR>
+nnoremap <silent> <leader>m :History<CR>
+nnoremap <silent> <leader>g :Rg<CR>
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+augroup disable_fzf_statusline
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+  \| autocmd FocusGained,BufEnter,BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal i | endif
+augroup END

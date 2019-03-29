@@ -3,7 +3,13 @@
     "plugins": {
       "jedi_completion": {
         "include_params": false
-      }
+      },
+      "pyflakes": {"enabled": false},
+      "flake8": {"enabled": false},
+      "pylint": {"enabled": false},
+      "mccabe": {"enabled": false},
+      "pycodestyle": {"enabled": false},
+      "yapf": {"disabled": false}
     }
   }
 }

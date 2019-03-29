@@ -16,6 +16,9 @@ Plug 'scrooloose/nerdtree'
 " Git Integration
 Plug 'airblade/vim-gitgutter'
 
+" Floating window
+Plug 'ncm2/float-preview.nvim'
+
 " Language Specific Plugins
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
@@ -230,3 +233,13 @@ augroup END
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
+let g:ale_set_highlights = 0
+let g:ale_echo_msg_format = '%linter%: %s'
+
+" autocmd CompleteDone * pclose
+
+" I have a habbit of typing W to save, so we'll remap it.
+:command W w
+
+set completeopt-=preview
+let g:float_preview#docked = 0

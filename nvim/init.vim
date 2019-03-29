@@ -162,7 +162,7 @@ set completeopt-=preview
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
-nnoremap <silent> <leader>n :Neoformat<CR>
+nnoremap <silent> <leader>f :Neoformat<CR>
 
 " buftabline
 let g:buftabline_separators = 1

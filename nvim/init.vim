@@ -157,7 +157,7 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " let g:ale_linters = {'python': [], 'python3': [], 'python2': []}
 
 " prevent deoplete from loading preview windows
-" set completeopt-=preview
+set completeopt-=preview
 
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
@@ -193,37 +193,6 @@ let g:user_emmet_leader_key=','
 " until https://github.com/palantir/python-language-server/pull/499/files
 let g:LanguageClient_settingsPath = '~/.dotfiles/nvim/settings.json'
 let g:LanguageClient_hasSnippetsSupport = 0
-
-" FZF Crap
-" hack
-" let $FZF_PREVIEW_COMMAND='bat {}'
-" command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
-" let $FZF_DEFAULT_OPTS="--cycle --bind 'ctrl-j:ignore,ctrl-k:ignore' --ansi"
-" nnoremap <silent> <leader>F :Files<CR>
-" nnoremap <silent> <leader>f :GFiles<CR>
-" nnoremap <silent> <leader>m :History<CR>
-" nnoremap <silent> <leader>g :Rg<CR>
-" let g:fzf_colors =
-" \ { 'fg':      ['fg', 'Normal'],
-"   \ 'bg':      ['bg', 'Normal'],
-"   \ 'hl':      ['fg', 'Comment'],
-"   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-"   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-"   \ 'hl+':     ['fg', 'Statement'],
-"   \ 'info':    ['fg', 'PreProc'],
-"   \ 'border':  ['fg', 'Ignore'],
-"   \ 'prompt':  ['fg', 'Conditional'],
-"   \ 'pointer': ['fg', 'Exception'],
-"   \ 'marker':  ['fg', 'Keyword'],
-"   \ 'spinner': ['fg', 'Label'],
-"   \ 'header':  ['fg', 'Comment'] }
-
-" augroup disable_fzf_statusline
-" autocmd! FileType fzf
-" autocmd  FileType fzf set laststatus=0 noshowmode noruler
-"   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-"   \| autocmd FocusGained,BufEnter,BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal i | endif
-" augroup END
 
 " " languageclient-neovim
 " let g:LanguageClient_selectionUI = 'location-list'

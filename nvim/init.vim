@@ -8,9 +8,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'majutsushi/tagbar'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'scrooloose/nerdtree'
 
 " Git Integration
@@ -154,7 +154,7 @@ nnoremap <leader>y :call system('nc -N localhost 8377', @0)<CR>
 let g:tmux_navigator_disable_when_zoomed = 1
 
 " disable ALE for python so we can use PYLS and deoplete
-" let g:ale_linters = {'python': [], 'python3': [], 'python2': []}
+" let g:ale_linters = {'python': ['/Users/seand/.pyenv/shims/pylint']}
 
 " prevent deoplete from loading preview windows
 set completeopt-=preview
@@ -203,6 +203,8 @@ nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
+
+" ale settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 

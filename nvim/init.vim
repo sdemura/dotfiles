@@ -8,9 +8,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'majutsushi/tagbar'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-jedi'
+" Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'scrooloose/nerdtree'
 
 " Git Integration

@@ -209,3 +209,8 @@ let g:picker_custom_find_flags = '--color never --files'
 nmap <unique> <C-p> <Plug>(PickerEdit)
 nmap <unique> <C-p>v <Plug>(PickerVsplit)
 nmap <unique> <C-p>s <Plug>(PickerSplit)
+
+if executable("rg")
+    set grepprg=rg\ -i\ --vimgrep\ --no-heading
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif

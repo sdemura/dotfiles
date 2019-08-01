@@ -10,14 +10,10 @@ Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'scrooloose/nerdtree'
+Plug 'justinmk/vim-dirvish'
 
 " Git Integration
 Plug 'airblade/vim-gitgutter'
-
-" Floating window
-" Plug 'ncm2/float-preview.nvim'
 
 " Language Specific Plugins
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -26,10 +22,8 @@ Plug 'hashivim/vim-terraform'
 Plug 'pearofducks/ansible-vim'
 Plug 'saltstack/salt-vim'
 
-"Fuzzy Finding and Search
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
+"Fuzzy Finding and Search (requires fd and fzy)
+Plug 'srstevenson/vim-picker'
 
 " UI Enhancements
 Plug 'christoomey/vim-tmux-navigator'
@@ -39,15 +33,13 @@ Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'ntpeters/vim-better-whitespace'
 
-
 " Misc
-Plug 'mattn/emmet-vim'
+" Plug 'mattn/emmet-vim'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'wellle/targets.vim'
@@ -141,7 +133,7 @@ augroup yaml_settings
 augroup END
 
 " Neovim Login Shell
-let &shell='/bin/bash'
+let &shell='/bin/zsh'
 
 " disable inline errors
 let g:LanguageClient_useVirtualText = 0
@@ -183,9 +175,6 @@ let g:lightline = {
 " tmuxline
 let g:tmuxline_powerline_separators = 0
 
-" nerd tree toggle
-map <silent> <leader>o :NERDTreeToggle<CR>
-
 " vim-emmett
 let g:user_emmet_leader_key=','
 
@@ -208,41 +197,15 @@ let g:strip_whitespace_confirm = 0
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 
-" autocmd CompleteDone * pclose
-
 " I have a habbit of typing W to save, so we'll remap it.
 :command W w
 
 set completeopt-=preview
 let g:float_preview#docked = 0
 
-" FZF Crap
-" hack
-" let $FZF_PREVIEW_COMMAND='bat {}'
-" command! -bang -nargs=* History call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
-let $FZF_DEFAULT_OPTS="--cycle --bind 'ctrl-j:ignore,ctrl-k:ignore' --ansi"
-nnoremap <silent> <leader>f :Files<CR>
-nnoremap <silent> <leader>ff :GFiles<CR>
-nnoremap <silent> <leader>m :History<CR>
-nnoremap <silent> <leader>g :Rg<CR>
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+let g:picker_custom_find_executable = 'rg'
+let g:picker_custom_find_flags = '--color never --files'
 
-augroup disable_fzf_statusline
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-  \| autocmd FocusGained,BufEnter,BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal i | endif
-augroup END
+nmap <unique> <C-p> <Plug>(PickerEdit)
+nmap <unique> <C-p>v <Plug>(PickerVsplit)
+nmap <unique> <C-p>s <Plug>(PickerSplit)

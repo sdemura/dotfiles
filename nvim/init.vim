@@ -2,41 +2,30 @@ let g:python_host_prog=expand('~/.pyenv/versions/neovim-py2/bin/python')
 let g:python3_host_prog=expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 call plug#begin('~/.local/share/nvim/plugged')
-" IDE-like things
-Plug 'majutsushi/tagbar'
-Plug 'sbdchd/neoformat'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'justinmk/vim-dirvish'
-Plug 'dense-analysis/ale'
-
-" Git Integration
-Plug 'airblade/vim-gitgutter'
-
-" Language Specific Plugins
-Plug 'sheerun/vim-polyglot'
-
-" UI Enhancements
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'joshdick/onedark.vim'
-Plug 'vim-airline/vim-airline'
-
-" Misc
 Plug 'Raimondi/delimitMate'
+Plug 'airblade/vim-gitgutter'
+Plug 'dense-analysis/ale'
+Plug 'joshdick/onedark.vim'
+Plug 'justinmk/vim-dirvish'
+Plug 'majutsushi/tagbar'
+Plug 'milkypostman/vim-togglelist'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'sbdchd/neoformat'
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
 Plug 'wellle/targets.vim'
-Plug 'milkypostman/vim-togglelist'
 call plug#end()
 
-
 " Settings
-" set autochdir
 set clipboard+=unnamedplus
 set cursorline
 set expandtab
@@ -86,28 +75,25 @@ map k gk
 set background=dark
 colorscheme onedark
 
-" " Enable Deoplete
-" let g:deoplete#enable_at_startup = 1
-
 " " Ale Settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 let g:ale_sign_column_always = 1
-let g:ale_linters = {
-\   'python': [''],
-\}
-
-""" NeoVim Terminal mappings
-tnoremap <C-h> <C-\><C-n><C-w>h
-tnoremap <C-j> <C-\><C-n><C-w>j
-tnoremap <C-k> <C-\><C-n><C-w>k
-tnoremap <C-l> <C-\><C-n><C-w>l
+" let g:ale_linters = {
+" \   'python': [''],
+" \}
 
 " vim splits without CTL-W
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+""" NeoVim Terminal mappings
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
 
 " Exit terminal insert mode
 tnoremap <C-w> <C-\><C-n><Cr>
@@ -133,25 +119,23 @@ let g:neoformat_enabled_json = ['jq']
 nnoremap <silent> <leader>f :Neoformat<CR>
 
 " lightline settings
-let g:lightline = {
-        \ 'colorscheme': 'onedark'
-        \ }
+let g:lightline = {'colorscheme': 'onedark'}
 
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 
-
 " I have a habbit of typing W to save, so we'll remap it.
 :command W w
 
+" use ripgrep for grep
 if executable("rg")
     set grepprg=rg\ -i\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
 " nvr-remote
-if has('nvim')
+if has('nvr')
   let $GIT_EDITOR = 'nvr -cc split --remote-wait'
 endif
 
@@ -160,4 +144,3 @@ nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
 
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
-

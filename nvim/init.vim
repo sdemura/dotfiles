@@ -8,7 +8,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'majutsushi/tagbar'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'justinmk/vim-dirvish'
 
@@ -16,25 +17,14 @@ Plug 'justinmk/vim-dirvish'
 Plug 'airblade/vim-gitgutter'
 
 " Language Specific Plugins
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'hashivim/vim-terraform'
-Plug 'pearofducks/ansible-vim'
-Plug 'saltstack/salt-vim'
-
-"Fuzzy Finding and Search (requires fd and fzy)
-Plug 'srstevenson/vim-picker'
+Plug 'sheerun/vim-polyglot'
 
 " UI Enhancements
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'ap/vim-buftabline'
-Plug 'itchyny/lightline.vim'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'joshdick/onedark.vim'
 
 " Misc
-" Plug 'mattn/emmet-vim'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -42,9 +32,9 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-eunuch'
 Plug 'wellle/targets.vim'
 Plug 'milkypostman/vim-togglelist'
-Plug 'edkolev/tmuxline.vim'
 call plug#end()
 
 
@@ -96,8 +86,8 @@ map j gj
 map k gk
 
 " Color Scheme.
-set background=light
-colorscheme PaperColor
+set background=dark
+colorscheme onedark
 
 " Enable Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -106,10 +96,10 @@ let g:deoplete#enable_at_startup = 1
 let g:ale_sign_column_always = 1
 
 """ NeoVim Terminal mappings
-tnoremap <C-h> <C-\><C-n><C-w>h
-tnoremap <C-j> <C-\><C-n><C-w>j
-tnoremap <C-k> <C-\><C-n><C-w>k
-tnoremap <C-l> <C-\><C-n><C-w>l
+" tnoremap <C-h> <C-\><C-n><C-w>h
+" tnoremap <C-j> <C-\><C-n><C-w>j
+" tnoremap <C-k> <C-\><C-n><C-w>k
+" tnoremap <C-l> <C-\><C-n><C-w>l
 
 " Exit terminal insert mode
 tnoremap <C-w> <C-\><C-n><Cr>
@@ -121,16 +111,10 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
 
 " Open at last spot in line.
-augroup remember_position_in_file
-    autocmd!
-    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-augroup END
-
-" YAML settings
-augroup yaml_settings
-    autocmd!
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-augroup END
+" augroup remember_position_in_file
+"     autocmd!
+"     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" augroup END
 
 " Neovim Login Shell
 let &shell='/bin/zsh'
@@ -138,45 +122,20 @@ let &shell='/bin/zsh'
 " disable inline errors
 let g:LanguageClient_useVirtualText = 0
 
-" Bind <leader>y to forward last-yanked text to Clipper
-" -N needed on ubuntu netcat
-nnoremap <leader>y :call system('nc -N localhost 8377', @0)<CR>
-
 " vim-tmux-navigator
 let g:tmux_navigator_disable_when_zoomed = 1
 
-" disable ALE for python so we can use PYLS and deoplete
-" let g:ale_linters = {'python': ['/Users/seand/.pyenv/shims/pylint']}
-
 " prevent deoplete from loading preview windows
-set completeopt-=preview
+" set completeopt-=preview
 
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
-nnoremap <silent> <leader>n :Neoformat<CR>
+nnoremap <silent> <leader>f :Neoformat<CR>
 
-" buftabline
-let g:buftabline_separators = 1
-let g:buftabline_numbers = 1
-let g:buftabline_indicators = 1
-
-" lightline
 let g:lightline = {
-      \ 'colorscheme': 'PaperColor',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \  },
-      \ }
-
-" tmuxline
-let g:tmuxline_powerline_separators = 0
-
-" vim-emmett
-let g:user_emmet_leader_key=','
+        \ 'colorscheme': 'onedark'
+        \ }
 
 " disable snippet support
 " until https://github.com/palantir/python-language-server/pull/499/files
@@ -186,7 +145,6 @@ let g:LanguageClient_hasSnippetsSupport = 0
 " " languageclient-neovim
 let g:LanguageClient_selectionUI = 'location-list'
 let g:LanguageClient_serverCommands = {'python': [expand('~/.pyenv/versions/neovim3/bin/pyls'), '-v']}
-let g:LanguageClient_fzfContextMenu = 0
 nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
 
 " strip whitespace on save
@@ -200,11 +158,8 @@ let g:ale_echo_msg_format = '%linter%: %s'
 " I have a habbit of typing W to save, so we'll remap it.
 :command W w
 
+" keep the preview window closed
 set completeopt-=preview
-let g:float_preview#docked = 0
-
-let g:picker_custom_find_executable = 'rg'
-let g:picker_custom_find_flags = '--color never --files'
 
 nmap <unique> <C-p> <Plug>(PickerEdit)
 nmap <unique> <C-p>v <Plug>(PickerVsplit)
@@ -214,3 +169,5 @@ if executable("rg")
     set grepprg=rg\ -i\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
+
+nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>

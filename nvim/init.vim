@@ -31,13 +31,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-eunuch'
 Plug 'wellle/targets.vim'
 Plug 'milkypostman/vim-togglelist'
-
-Plug 'tyru/open-browser.vim' "{
-  " Disable netrw gx mapping.
-  let g:netrw_nogx = get(g:, 'netrw_nogx', 1)
-  nmap gx <Plug>(openbrowser-open)
-  vmap gx <Plug>(openbrowser-open)
-"}
 call plug#end()
 
 
@@ -92,11 +85,11 @@ map k gk
 set background=dark
 colorscheme onedark
 
-" Enable Deoplete
-let g:deoplete#enable_at_startup = 1
+" " Enable Deoplete
+" let g:deoplete#enable_at_startup = 1
 
-" Ale Settings
-let g:ale_sign_column_always = 1
+" " Ale Settings
+" let g:ale_sign_column_always = 1
 
 """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -142,9 +135,9 @@ let g:lightline = {
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 
-" ale settings
-let g:ale_set_highlights = 0
-let g:ale_echo_msg_format = '%linter%: %s'
+" " ale settings
+" let g:ale_set_highlights = 0
+" let g:ale_echo_msg_format = '%linter%: %s'
 
 " I have a habbit of typing W to save, so we'll remap it.
 :command W w
@@ -154,13 +147,14 @@ if executable("rg")
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
+" nvr-remote
+if has('nvim')
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+endif
+
 " shortcut to edit nvim config
 nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
 
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 
-" nvr-remote
-if has('nvim')
-  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
-endif

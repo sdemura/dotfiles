@@ -1,16 +1,11 @@
-" assumes pyenv
-let g:python_host_prog=expand('~/.pyenv/versions/neovim2/bin/python')
-let g:python3_host_prog=expand('~/.pyenv/versions/neovim3/bin/python3')
+let g:python_host_prog=expand('~/.pyenv/versions/neovim-py2/bin/python')
+let g:python3_host_prog=expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
-" Load Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 " IDE-like things
 Plug 'majutsushi/tagbar'
-Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'justinmk/vim-dirvish'
 
 " Git Integration
@@ -23,6 +18,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'joshdick/onedark.vim'
+Plug 'vim-airline/vim-airline'
 
 " Misc
 Plug 'Raimondi/delimitMate'
@@ -35,6 +31,13 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-eunuch'
 Plug 'wellle/targets.vim'
 Plug 'milkypostman/vim-togglelist'
+
+Plug 'tyru/open-browser.vim' "{
+  " Disable netrw gx mapping.
+  let g:netrw_nogx = get(g:, 'netrw_nogx', 1)
+  nmap gx <Plug>(openbrowser-open)
+  vmap gx <Plug>(openbrowser-open)
+"}
 call plug#end()
 
 
@@ -96,10 +99,16 @@ let g:deoplete#enable_at_startup = 1
 let g:ale_sign_column_always = 1
 
 """ NeoVim Terminal mappings
-" tnoremap <C-h> <C-\><C-n><C-w>h
-" tnoremap <C-j> <C-\><C-n><C-w>j
-" tnoremap <C-k> <C-\><C-n><C-w>k
-" tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+
+" vim splits without CTL-W
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " Exit terminal insert mode
 tnoremap <C-w> <C-\><C-n><Cr>
@@ -110,42 +119,24 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
 
-" Open at last spot in line.
-" augroup remember_position_in_file
-"     autocmd!
-"     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-" augroup END
+" Open at last spot in line. from defaults.vim
+augroup remember_position_in_file
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+augroup END
 
 " Neovim Login Shell
 let &shell='/bin/zsh'
-
-" disable inline errors
-let g:LanguageClient_useVirtualText = 0
-
-" vim-tmux-navigator
-let g:tmux_navigator_disable_when_zoomed = 1
-
-" prevent deoplete from loading preview windows
-" set completeopt-=preview
 
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
 nnoremap <silent> <leader>f :Neoformat<CR>
 
+" lightline settings
 let g:lightline = {
         \ 'colorscheme': 'onedark'
         \ }
-
-" disable snippet support
-" until https://github.com/palantir/python-language-server/pull/499/files
-let g:LanguageClient_settingsPath = '~/.dotfiles/nvim/settings.json'
-let g:LanguageClient_hasSnippetsSupport = 0
-
-" " languageclient-neovim
-let g:LanguageClient_selectionUI = 'location-list'
-let g:LanguageClient_serverCommands = {'python': [expand('~/.pyenv/versions/neovim3/bin/pyls'), '-v']}
-nnoremap <silent><leader>k :call LanguageClient_contextMenu()<CR>
 
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1
@@ -158,16 +149,18 @@ let g:ale_echo_msg_format = '%linter%: %s'
 " I have a habbit of typing W to save, so we'll remap it.
 :command W w
 
-" keep the preview window closed
-set completeopt-=preview
-
-nmap <unique> <C-p> <Plug>(PickerEdit)
-nmap <unique> <C-p>v <Plug>(PickerVsplit)
-nmap <unique> <C-p>s <Plug>(PickerSplit)
-
 if executable("rg")
     set grepprg=rg\ -i\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
+" shortcut to edit nvim config
 nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
+
+" https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+
+" nvr-remote
+if has('nvim')
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+endif

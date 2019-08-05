@@ -7,6 +7,7 @@ Plug 'majutsushi/tagbar'
 Plug 'sbdchd/neoformat'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'justinmk/vim-dirvish'
+Plug 'dense-analysis/ale'
 
 " Git Integration
 Plug 'airblade/vim-gitgutter'
@@ -89,7 +90,12 @@ colorscheme onedark
 " let g:deoplete#enable_at_startup = 1
 
 " " Ale Settings
-" let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
+let g:ale_echo_msg_format = '%linter%: %s'
+let g:ale_sign_column_always = 1
+let g:ale_linters = {
+\   'python': [''],
+\}
 
 """ NeoVim Terminal mappings
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -135,9 +141,6 @@ let g:lightline = {
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 
-" " ale settings
-" let g:ale_set_highlights = 0
-" let g:ale_echo_msg_format = '%linter%: %s'
 
 " I have a habbit of typing W to save, so we'll remap it.
 :command W w

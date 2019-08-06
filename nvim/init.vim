@@ -2,6 +2,7 @@ let g:python_host_prog=expand('~/.pyenv/versions/neovim-py2/bin/python')
 let g:python3_host_prog=expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 call plug#begin('~/.local/share/nvim/plugged')
+
 Plug 'Raimondi/delimitMate'
 Plug 'airblade/vim-gitgutter'
 Plug 'dense-analysis/ale'
@@ -23,9 +24,12 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'wellle/targets.vim'
+
 call plug#end()
 
+
 " Settings
+" set autochdir
 set clipboard+=unnamedplus
 set cursorline
 set expandtab
@@ -95,8 +99,8 @@ tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 
-" Exit terminal insert mode
-tnoremap <C-w> <C-\><C-n><Cr>
+" " Exit terminal insert mode
+" tnoremap <C-w> <C-\><C-n><Cr>
 
 " Disable line numbers for terminal.
 autocmd TermOpen * setlocal nonumber norelativenumber
@@ -130,9 +134,11 @@ let g:strip_whitespace_confirm = 0
 
 " use ripgrep for grep
 if executable("rg")
-    set grepprg=rg\ -i\ --vimgrep\ --no-heading
+    set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
+
+nnoremap <leader>g :silent lgrep<Space>
 
 " nvr-remote
 if has('nvr')
@@ -144,3 +150,12 @@ nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
 
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+
+" list folders at top for dirvish
+let g:dirvish_mode = ':sort ,^.*[\/],'
+
+" autochdir hack
+augroup auto_ch_dir
+    autocmd!
+    autocmd BufEnter * silent! lcd %:p:h
+augroup END

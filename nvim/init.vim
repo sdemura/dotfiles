@@ -11,7 +11,6 @@ Plug 'justinmk/vim-dirvish'
 Plug 'majutsushi/tagbar'
 Plug 'milkypostman/vim-togglelist'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sbdchd/neoformat'
 Plug 'sheerun/vim-polyglot'
@@ -99,9 +98,6 @@ tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 
-" " Exit terminal insert mode
-" tnoremap <C-w> <C-\><C-n><Cr>
-
 " Disable line numbers for terminal.
 autocmd TermOpen * setlocal nonumber norelativenumber
 
@@ -138,8 +134,6 @@ if executable("rg")
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
-nnoremap <leader>g :silent lgrep<Space>
-
 " nvr-remote
 if has('nvr')
   let $GIT_EDITOR = 'nvr -cc split --remote-wait'
@@ -147,9 +141,6 @@ endif
 
 " shortcut to edit nvim config
 nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
-
-" https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 
 " list folders at top for dirvish
 let g:dirvish_mode = ':sort ,^.*[\/],'

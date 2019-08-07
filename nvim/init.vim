@@ -26,9 +26,8 @@ Plug 'wellle/targets.vim'
 
 call plug#end()
 
-
 " Settings
-" set autochdir
+" set autochdir " doesn't work with dirvish.
 set clipboard+=unnamedplus
 set cursorline
 set expandtab
@@ -146,7 +145,7 @@ nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
 let g:dirvish_mode = ':sort ,^.*[\/],'
 
 " autochdir hack
-augroup auto_ch_dir
-    autocmd!
-    autocmd BufEnter * silent! lcd %:p:h
-augroup END
+" augroup auto_ch_dir
+"     autocmd!
+"     autocmd BufEnter * silent! lcd %:p:h
+" augroup END

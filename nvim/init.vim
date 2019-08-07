@@ -3,16 +3,31 @@ let g:python3_host_prog=expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'Raimondi/delimitMate'
-Plug 'airblade/vim-gitgutter'
+" IDE like things
 Plug 'dense-analysis/ale'
-Plug 'joshdick/onedark.vim'
-Plug 'justinmk/vim-dirvish'
+Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
-Plug 'milkypostman/vim-togglelist'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'ntpeters/vim-better-whitespace'
 Plug 'sbdchd/neoformat'
+Plug 'neoclide/coc.nvim'
+
+" UI Enhancements
+Plug 'airblade/vim-gitgutter'
+Plug 'justinmk/vim-dirvish'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'vim-airline/vim-airline'
+
+" " Fuzzy Finding
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Themes
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'joshdick/onedark.vim'
+
+" Usability improvements
+Plug 'milkypostman/vim-togglelist'
+Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -21,7 +36,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
 Plug 'wellle/targets.vim'
 
 call plug#end()
@@ -74,16 +88,19 @@ map j gj
 map k gk
 
 " Color Scheme.
-set background=dark
-colorscheme onedark
+" set background=dark
+" colorscheme onedark
+
+set background=light
+colorscheme papercolor
 
 " " Ale Settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 let g:ale_sign_column_always = 1
-" let g:ale_linters = {
-" \   'python': [''],
-" \}
+let g:ale_linters = {
+\   'python': [''],
+\}
 
 " vim splits without CTL-W
 nnoremap <C-J> <C-W><C-J>
@@ -117,9 +134,6 @@ let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
 nnoremap <silent> <leader>f :Neoformat<CR>
 
-" lightline settings
-let g:lightline = {'colorscheme': 'onedark'}
-
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
@@ -144,8 +158,32 @@ nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
 " list folders at top for dirvish
 let g:dirvish_mode = ':sort ,^.*[\/],'
 
-" autochdir hack
-" augroup auto_ch_dir
-"     autocmd!
-"     autocmd BufEnter * silent! lcd %:p:h
-" augroup END
+" autochdir doesn't work with dirvish
+set noautochdir
+augroup auto_ch_dir
+    autocmd!
+    autocmd BufEnter * silent! lcd %:p:h
+augroup END
+
+" " In Neovim, you can set up fzf window using a Vim command
+let g:fzf_layout = { 'window': 'enew' }
+let g:fzf_layout = { 'window': '-tabnew' }
+let g:fzf_layout = { 'window': '10new' }
+
+" " Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+"
+nnoremap <C-p> :Files

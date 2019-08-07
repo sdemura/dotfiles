@@ -8,6 +8,8 @@ Plug 'dense-analysis/ale'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'sbdchd/neoformat'
+
+" Completions
 Plug 'neoclide/coc.nvim'
 
 " UI Enhancements
@@ -15,10 +17,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
-
-" " Fuzzy Finding
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 
 " Themes
 Plug 'NLKNguyen/papercolor-theme'
@@ -99,8 +97,8 @@ let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 let g:ale_sign_column_always = 1
 let g:ale_linters = {
-\   'python': [''],
-\}
+    \ 'python': [''],
+    \}
 
 " vim splits without CTL-W
 nnoremap <C-J> <C-W><C-J>
@@ -148,7 +146,7 @@ if executable("rg")
 endif
 
 " nvr-remote
-if has('nvr')
+if has('nvim')
   let $GIT_EDITOR = 'nvr -cc split --remote-wait'
 endif
 
@@ -165,25 +163,3 @@ augroup auto_ch_dir
     autocmd BufEnter * silent! lcd %:p:h
 augroup END
 
-" " In Neovim, you can set up fzf window using a Vim command
-let g:fzf_layout = { 'window': 'enew' }
-let g:fzf_layout = { 'window': '-tabnew' }
-let g:fzf_layout = { 'window': '10new' }
-
-" " Customize fzf colors to match your color scheme
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-"
-nnoremap <C-p> :Files

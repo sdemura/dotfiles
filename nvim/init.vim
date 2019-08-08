@@ -9,9 +9,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'sbdchd/neoformat'
 
-" Completions
-Plug 'neoclide/coc.nvim'
-
 " UI Enhancements
 Plug 'airblade/vim-gitgutter'
 Plug 'justinmk/vim-dirvish'
@@ -35,6 +32,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
+Plug 'sdemura/dash.vim'
 
 call plug#end()
 
@@ -63,6 +61,7 @@ set noshowmode
 set noswapfile
 set novisualbell
 set nowrap
+set path+=**
 set pastetoggle=<F2>
 set shiftwidth=4
 set signcolumn=yes
@@ -78,6 +77,8 @@ set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 set wildmode=longest,list
 
+filetype plugin indent on
+
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
@@ -86,19 +87,19 @@ map j gj
 map k gk
 
 " Color Scheme.
-" set background=dark
-" colorscheme onedark
+set background=dark
+colorscheme onedark
 
-set background=light
-colorscheme papercolor
+" set background=light
+" colorscheme papercolor
 
 " " Ale Settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 let g:ale_sign_column_always = 1
-let g:ale_linters = {
-    \ 'python': [''],
-    \}
+" let g:ale_linters = {
+"     \ 'python': [],
+"     \}
 
 " vim splits without CTL-W
 nnoremap <C-J> <C-W><C-J>
@@ -163,3 +164,7 @@ augroup auto_ch_dir
     autocmd BufEnter * silent! lcd %:p:h
 augroup END
 
+" make some tags!
+command! MakeTags !ctags -R .
+
+nmap <silent> <leader>d <Plug>DashSearch

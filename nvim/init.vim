@@ -15,10 +15,6 @@ Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
 
-" Fuzzy Finding
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'"
-
 " Themes
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'vim-airline/vim-airline-themes'

@@ -15,6 +15,10 @@ Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
 
+" Fuzzy Finding
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'"
+
 " Themes
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'vim-airline/vim-airline-themes'
@@ -119,6 +123,9 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
 
+" use vim 8.1 escape for terminal
+:tnoremap <C-w> <C-\><C-n>
+
 " Open at last spot in line. from defaults.vim
 augroup remember_position_in_file
     autocmd!
@@ -157,14 +164,8 @@ nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
 " list folders at top for dirvish
 let g:dirvish_mode = ':sort ,^.*[\/],'
 
-" autochdir doesn't work with dirvish
-set noautochdir
-augroup auto_ch_dir
-    autocmd!
-    autocmd BufEnter * silent! lcd %:p:h
-augroup END
-
 " make some tags!
 command! MakeTags !ctags -R .
 
+" launch dash from leader d
 nmap <silent> <leader>d <Plug>DashSearch

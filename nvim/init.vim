@@ -34,6 +34,9 @@ Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'sdemura/dash.vim'
 
+" Fuzzy Finding
+Plug 'ctrlpvim/ctrlp.vim'
+
 call plug#end()
 
 " Settings
@@ -61,7 +64,7 @@ set noshowmode
 set noswapfile
 set novisualbell
 set nowrap
-set path+=**
+" set path+=**
 set pastetoggle=<F2>
 set shiftwidth=4
 set signcolumn=yes
@@ -119,9 +122,6 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
 
-" use vim 8.1 escape for terminal
-:tnoremap <C-w> <C-\><C-n>
-
 " Open at last spot in line. from defaults.vim
 augroup remember_position_in_file
     autocmd!
@@ -149,6 +149,13 @@ if executable("rg")
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
+" Use fd for ctrlp.
+if executable('fd')
+    let g:ctrlp_user_command = 'fd -i -H -t f -c never "" %s'
+    let g:ctrlp_use_caching = 0
+    let g:ctrlp_working_path_mode = 0
+endif
+
 " nvr-remote
 if has('nvim')
   let $GIT_EDITOR = 'nvr -cc split --remote-wait'
@@ -165,3 +172,5 @@ command! MakeTags !ctags -R .
 
 " launch dash from leader d
 nmap <silent> <leader>d <Plug>DashSearch
+
+let g:airline#extensions#tabline#tab_nr_type = 3 " splits and tab number

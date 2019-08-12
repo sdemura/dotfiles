@@ -10,14 +10,11 @@ Plug 'majutsushi/tagbar'
 Plug 'sbdchd/neoformat'
 
 " UI Enhancements
-Plug 'airblade/vim-gitgutter'
 Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'vim-airline/vim-airline'
 
 " Themes
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'joshdick/onedark.vim'
 
 " Usability improvements
@@ -40,7 +37,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 " Settings
-" set autochdir " doesn't work with dirvish.
 set clipboard+=unnamedplus
 set cursorline
 set expandtab
@@ -60,11 +56,8 @@ set nobackup
 set noerrorbells
 set number
 set norelativenumber
-set noshowmode
-set noswapfile
 set novisualbell
 set nowrap
-" set path+=**
 set pastetoggle=<F2>
 set shiftwidth=4
 set signcolumn=yes
@@ -172,5 +165,3 @@ command! MakeTags !ctags -R .
 
 " launch dash from leader d
 nmap <silent> <leader>d <Plug>DashSearch
-
-let g:airline#extensions#tabline#tab_nr_type = 3 " splits and tab number

@@ -16,6 +16,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Themes
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
 
 " Usability improvements
 Plug 'milkypostman/vim-togglelist'
@@ -84,7 +85,7 @@ map k gk
 
 " Color Scheme.
 set background=dark
-colorscheme onedark
+colorscheme gruvbox
 
 " set background=light
 " colorscheme papercolor
@@ -146,7 +147,7 @@ endif
 if executable('fd')
     let g:ctrlp_user_command = 'fd -i -H -t f -c never "" %s'
     let g:ctrlp_use_caching = 0
-    let g:ctrlp_working_path_mode = 0
+    " let g:ctrlp_working_path_mode = 0
 endif
 
 " nvr-remote
@@ -165,3 +166,6 @@ command! MakeTags !ctags -R .
 
 " launch dash from leader d
 nmap <silent> <leader>d <Plug>DashSearch
+
+" look at this later
+" https://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim

@@ -169,3 +169,5 @@ nmap <silent> <leader>d <Plug>DashSearch
 
 " look at this later
 " https://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim
+
+autocmd TermOpen * setlocal scl="no"

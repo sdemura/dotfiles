@@ -14,8 +14,6 @@ Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
 
 " Themes
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 
 " Usability improvements
@@ -110,8 +108,8 @@ tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 
-" Disable line numbers for terminal.
-autocmd TermOpen * setlocal nonumber norelativenumber
+" Disable line numbers and sign column for terminal
+autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
 
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
@@ -138,7 +136,7 @@ let g:strip_whitespace_confirm = 0
 :command W w
 
 " use ripgrep for grep
-if executable("rg")
+if executable('rg')
     set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
@@ -147,7 +145,6 @@ endif
 if executable('fd')
     let g:ctrlp_user_command = 'fd -i -H -t f -c never "" %s'
     let g:ctrlp_use_caching = 0
-    " let g:ctrlp_working_path_mode = 0
 endif
 
 " nvr-remote
@@ -167,7 +164,6 @@ command! MakeTags !ctags -R .
 " launch dash from leader d
 nmap <silent> <leader>d <Plug>DashSearch
 
-" look at this later
-" https://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim
-
-autocmd TermOpen * setlocal scl="no"
+" set statusline=
+" set statusline+=\ %f
+" set statusline+=\ %m

@@ -1,5 +1,5 @@
-let g:python_host_prog=expand('~/.pyenv/versions/neovim-py2/bin/python')
-let g:python3_host_prog=expand('~/.pyenv/versions/neovim-py3/bin/python3')
+let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -23,9 +23,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'sdemura/dash.vim'
@@ -78,35 +76,31 @@ filetype plugin indent on
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
 " Fast up and/down
-map j gj
-map k gk
-
+" map j gj
+" map k gk
+nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+"
 " Color Scheme.
 set background=dark
 colorscheme gruvbox
-
-" set background=light
-" colorscheme papercolor
 
 " " Ale Settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 let g:ale_sign_column_always = 1
-" let g:ale_linters = {
-"     \ 'python': [],
-"     \}
 
-" vim splits without CTL-W
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" " vim splits without CTL-W
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
-""" NeoVim Terminal mappings
-tnoremap <C-h> <C-\><C-n><C-w>h
-tnoremap <C-j> <C-\><C-n><C-w>j
-tnoremap <C-k> <C-\><C-n><C-w>k
-tnoremap <C-l> <C-\><C-n><C-w>l
+" """ NeoVim Terminal mappings
+" tnoremap <C-h> <C-\><C-n><C-w>h
+" tnoremap <C-j> <C-\><C-n><C-w>j
+" tnoremap <C-k> <C-\><C-n><C-w>k
+" tnoremap <C-l> <C-\><C-n><C-w>l
 
 " Disable line numbers and sign column for terminal
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
@@ -119,9 +113,6 @@ augroup remember_position_in_file
     autocmd!
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END
-
-" Neovim Login Shell
-let &shell='/bin/zsh'
 
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
@@ -147,11 +138,6 @@ if executable('fd')
     let g:ctrlp_use_caching = 0
 endif
 
-" nvr-remote
-if has('nvim')
-  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
-endif
-
 " shortcut to edit nvim config
 nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
 
@@ -164,6 +150,14 @@ command! MakeTags !ctags -R .
 " launch dash from leader d
 nmap <silent> <leader>d <Plug>DashSearch
 
-" set statusline=
-" set statusline+=\ %f
-" set statusline+=\ %m
+" Who needs airline now?
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+set statusline=%<%f\%{StatuslineGit()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P

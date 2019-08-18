@@ -1,6 +1,16 @@
 let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
 let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
+" install vim-plug if not already there
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  augroup install_vim_plug
+      autocmd!
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  augroup END
+endif
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 " IDE like things
@@ -124,7 +134,7 @@ let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 
 " I have a habbit of typing W to save, so we'll remap it.
-:command W w
+:command! W w
 
 " use ripgrep for grep
 if executable('rg')

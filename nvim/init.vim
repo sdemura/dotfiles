@@ -57,7 +57,7 @@ set novisualbell
 set nowrap
 set pastetoggle=<F2>
 set shiftwidth=4
-set signcolumn=yes
+" set signcolumn=yes
 set smartcase
 set smartindent
 set softtabstop=4
@@ -88,7 +88,7 @@ colorscheme gruvbox
 " " Ale Settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
-let g:ale_sign_column_always = 1
+" let g:ale_sign_column_always = 1
 
 " " vim splits without CTL-W
 " nnoremap <C-J> <C-W><C-J>

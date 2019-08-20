@@ -155,7 +155,8 @@ let g:dirvish_mode = ':sort ,^.*[\/],'
 nmap <silent> <leader>d <Plug>DashSearch
 
 " Who needs airline now?
-command! GitBranch !git rev-parse --abbrev-ref HEAD
+command! GitBranch !pwd && git rev-parse --abbrev-ref HEAD
+nnoremap <leader>b :GitBranch<cr>
 
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w

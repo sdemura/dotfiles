@@ -133,9 +133,6 @@ nnoremap <silent> <leader>f :Neoformat<CR>
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 
-" I have a habbit of typing W to save, so we'll remap it.
-:command! W w
-
 " use ripgrep for grep
 if executable('rg')
     set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
@@ -154,20 +151,28 @@ nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
 " list folders at top for dirvish
 let g:dirvish_mode = ':sort ,^.*[\/],'
 
-" make some tags!
-command! MakeTags !ctags -R .
-
 " launch dash from leader d
 nmap <silent> <leader>d <Plug>DashSearch
 
 " Who needs airline now?
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
+command! GitBranch !git rev-parse --abbrev-ref HEAD
 
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
+" I have a habbit of typing W to save, so we'll remap it.
+:command! W w
 
-set statusline=%<%f\%{StatuslineGit()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+" make some tags!
+command! MakeTags !ctags -R .
+
+"
+  " return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+" endfunction
+" function! GitBranch()
+"   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+" endfunction
+
+" function! StatuslineGit()
+"   let l:branchname = GitBranch()
+"   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+" endfunction
+
+" set statusline=%{StatuslineGit()}\%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P

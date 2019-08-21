@@ -41,6 +41,9 @@ Plug 'sdemura/dash.vim'
 " Fuzzy Finding
 Plug 'ctrlpvim/ctrlp.vim'
 
+" Python Autocomplete
+Plug 'davidhalter/jedi-vim'
+
 call plug#end()
 
 " Settings
@@ -98,19 +101,6 @@ colorscheme gruvbox
 " " Ale Settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
-" let g:ale_sign_column_always = 1
-
-" " vim splits without CTL-W
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
-
-" """ NeoVim Terminal mappings
-" tnoremap <C-h> <C-\><C-n><C-w>h
-" tnoremap <C-j> <C-\><C-n><C-w>j
-" tnoremap <C-k> <C-\><C-n><C-w>k
-" tnoremap <C-l> <C-\><C-n><C-w>l
 
 " Disable line numbers and sign column for terminal
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
@@ -154,6 +144,9 @@ let g:dirvish_mode = ':sort ,^.*[\/],'
 " launch dash from leader d
 nmap <silent> <leader>d <Plug>DashSearch
 
+" expand paranthesis after (<CR>
+let g:delimitMate_expand_cr = 2
+
 " Who needs airline now?
 command! GitBranch !pwd && git rev-parse --abbrev-ref HEAD
 nnoremap <leader>b :GitBranch<cr>
@@ -163,17 +156,3 @@ nnoremap <leader>b :GitBranch<cr>
 
 " make some tags!
 command! MakeTags !ctags -R .
-
-"
-  " return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-" endfunction
-" function! GitBranch()
-"   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-" endfunction
-
-" function! StatuslineGit()
-"   let l:branchname = GitBranch()
-"   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-" endfunction
-
-" set statusline=%{StatuslineGit()}\%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P

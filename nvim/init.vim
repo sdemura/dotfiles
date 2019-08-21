@@ -147,6 +147,9 @@ nmap <silent> <leader>d <Plug>DashSearch
 " expand paranthesis after (<CR>
 let g:delimitMate_expand_cr = 2
 
+" disable popup for jedi completions
+autocmd FileType python setlocal completeopt-=preview
+
 " Who needs airline now?
 command! GitBranch !pwd && git rev-parse --abbrev-ref HEAD
 nnoremap <leader>b :GitBranch<cr>

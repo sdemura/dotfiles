@@ -19,6 +19,9 @@ Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'sbdchd/neoformat'
 
+" Git
+Plug 'tpope/vim-fugitive'
+
 " UI Enhancements
 Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -105,6 +108,9 @@ let g:ale_echo_msg_format = '%linter%: %s'
 " Disable line numbers and sign column for terminal
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
 
+" Mimic Vim8 Terminal escape
+:tnoremap <C-w> <C-\><C-n><C-w>
+
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
 
@@ -136,7 +142,7 @@ if executable('fd')
 endif
 
 " shortcut to edit nvim config
-nnoremap <silent> <leader>nv :e ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <leader>nv :e ~/.dotfiles/nvim/init.vim<CR>
 
 " list folders at top for dirvish
 let g:dirvish_mode = ':sort ,^.*[\/],'

@@ -129,5 +129,6 @@ export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .';
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 alias vim="nvim"
+alias n="nvim"
 
 [[ -f ~/.creds ]] && source ~/.creds

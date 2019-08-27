@@ -148,13 +148,16 @@ nnoremap <silent> <leader>nv :e ~/.dotfiles/nvim/init.vim<CR>
 let g:dirvish_mode = ':sort ,^.*[\/],'
 
 " launch dash from leader d
-nmap <silent> <leader>d <Plug>DashSearch
+nmap <silent> <leader>D <Plug>DashSearch
 
 " expand paranthesis after (<CR>
 let g:delimitMate_expand_cr = 2
 
 " disable popup for jedi completions
-autocmd FileType python setlocal completeopt-=preview
+augroup disable_python_preview
+    autocmd!
+    autocmd FileType python setlocal completeopt-=preview
+augroup END
 
 " Who needs airline now?
 command! GitBranch !pwd && git rev-parse --abbrev-ref HEAD

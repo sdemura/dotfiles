@@ -108,8 +108,6 @@ export PATH=$PATH:/usr/local/sbin
 export PATH=$PATH:~/bin
 export PATH=$PATH:$HOME/src/pf9-test-infra/tools/osenv/bin
 
-eval "$(pyenv init -)"
-
 # export EDITOR='code-insiders -w'
 export EDITOR=nvim
 
@@ -132,3 +130,5 @@ alias vim="nvim"
 alias n="nvim"
 
 [[ -f ~/.creds ]] && source ~/.creds
+
+eval "$(pyenv init -)"

@@ -69,7 +69,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-if grep -qi Debian /etc/os-release; then
+if grep -qi Debian /etc/os-release 2>/dev/null; then
     plugins=(git)
 else
     plugins=(git fzf)
@@ -129,7 +129,7 @@ bindkey '^N' history-beginning-search-forward
 export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .';
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-if (grep -qi Debian /etc/os-release); then
+if grep -qi Debian /etc/os-release 2>/dev/null; then
     alias fd=fdfind
 fi
 

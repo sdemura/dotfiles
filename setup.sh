@@ -9,8 +9,8 @@ if [[ $(uname) == 'Linux' ]]; then
         fd-find \
         fzf \
         libbz2-dev \
-        libffi-dev  \
-        liblzma-dev  \
+        libffi-dev \
+        liblzma-dev \
         libncurses5-dev \
         libncursesw5-dev \
         libreadline-dev \
@@ -22,13 +22,14 @@ if [[ $(uname) == 'Linux' ]]; then
         python-openssl \
         ripgrep \
         shellcheck \
-        tk-dev  \
+        tk-dev \
         wget \
-        xz-utils  \
+        xz-utils \
         zlib1g-dev \
         zsh
 else
-    brew install readline xz neovim zsh ripgrep fzf fd shellcheck realpath
+    # use zsh from macos
+    brew install readline xz neovim ripgrep fzf fd shellcheck coreutils
 fi
 
 if [[ ! -d ~/.pyenv ]]; then

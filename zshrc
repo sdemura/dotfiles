@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/sean/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -69,7 +69,11 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf)
+if grep -qi Debian /etc/os-release; then
+    plugins=(git)
+else
+    plugins=(git fzf)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -114,7 +118,6 @@ export EDITOR=nvim
 # tmux thing
 export DISABLE_AUTO_TITLE='true'
 
-alias cat="bat"
 alias code='code-insiders'
 
 alias pf9='cd ~/src/platform9'
@@ -126,9 +129,14 @@ bindkey '^N' history-beginning-search-forward
 export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .';
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+if (grep -qi Debian /etc/os-release); then
+    alias fd=fdfind
+fi
+
 alias vim="nvim"
 alias n="nvim"
 
 [[ -f ~/.creds ]] && source ~/.creds
 
+export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"

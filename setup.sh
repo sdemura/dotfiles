@@ -1,7 +1,6 @@
 #!/bin/bash
 
-set -ex
-
+set -exo pipefail
 
 if [[ $(uname) == 'Linux' ]]; then
     sudo apt-get install -y \

@@ -1,7 +1,9 @@
 #!/bin/bash
 
-mkdir -p ~/.config/nvim
-ln -sf init.vim ~/.config/nvim/init.vim
+set -ex
 
-ln -sf zshenv ~/.zshenv
-ln -sf zshrc ~/.zshrc
+mkdir -p ~/.config/nvim
+ln -sf $(realpath init.vim) ~/.config/nvim/init.vim
+
+ln -sf $(realpath zshenv) ~/.zshenv
+ln -sf $(realpath zshrc) ~/.zshrc

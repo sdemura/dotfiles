@@ -142,7 +142,7 @@ if executable('fd')
 endif
 
 " shortcut to edit nvim config
-nnoremap <silent> <leader>nv :e ~/.dotfiles/nvim/init.vim<CR>
+nnoremap <silent> <leader>nv :e ~/.dotfiles/init.vim<CR>
 
 " list folders at top for dirvish
 let g:dirvish_mode = ':sort ,^.*[\/],'

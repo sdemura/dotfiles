@@ -40,6 +40,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'sdemura/dash.vim'
+Plug 'mileszs/ack.vim'
 
 " Fuzzy Finding
 Plug 'ctrlpvim/ctrlp.vim'
@@ -79,7 +80,8 @@ set smartindent
 set softtabstop=4
 set splitbelow
 set splitright
-set switchbuf=useopen,usetab,newtab
+" set switchbuf=useopen,usetab,newtab
+set switchbuf=useopen
 set tabstop=4
 set termguicolors
 set undofile
@@ -109,7 +111,7 @@ let g:ale_echo_msg_format = '%linter%: %s'
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
 
 " Mimic Vim8 Terminal escape
-:tnoremap <C-w> <C-\><C-n><C-w>
+:tnoremap <C-w> <C-\><C-n><CR><C-w>
 
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
@@ -129,11 +131,6 @@ nnoremap <silent> <leader>f :Neoformat<CR>
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 
-" use ripgrep for grep
-if executable('rg')
-    set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
-    set grepformat=%f:%l:%c:%m,%f:%l:%m
-endif
 
 " Use fd for ctrlp.
 if executable('fd')
@@ -168,3 +165,15 @@ nnoremap <leader>b :GitBranch<cr>
 
 " make some tags!
 command! MakeTags !ctags -R .
+
+" Automatically open location/quickfix if results
+" augroup auto_open_quickfix
+"     autocmd!
+"     autocmd QuickFixCmdPost [^l]* cwindow
+"     autocmd QuickFixCmdPost l*    lwindow
+" augroup END
+
+if executable('rg')
+    set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
+    let g:ackprg = &grepprg
+endif

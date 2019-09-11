@@ -29,7 +29,7 @@ if [[ $(uname) == 'Linux' ]]; then
         zsh
 else
     # use zsh from macos
-    brew install readline xz neovim ripgrep fzf fd shellcheck coreutils
+    brew install --force readline xz neovim ripgrep fzf fd shellcheck coreutils
 fi
 
 if [[ ! -d ~/.pyenv ]]; then

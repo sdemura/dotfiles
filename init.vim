@@ -51,7 +51,8 @@ Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 " Settings
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
+set clipboard=unnamed
 set cursorline
 set expandtab
 set fileformats=unix,dos,mac

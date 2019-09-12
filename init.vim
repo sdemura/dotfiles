@@ -51,8 +51,7 @@ Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 " Settings
-" set clipboard+=unnamedplus
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 set cursorline
 set expandtab
 set fileformats=unix,dos,mac
@@ -132,13 +131,6 @@ nnoremap <silent> <leader>f :Neoformat<CR>
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 
-
-" Use fd for ctrlp.
-if executable('fd')
-    let g:ctrlp_user_command = 'fd -i -H -t f -c never "" %s'
-    let g:ctrlp_use_caching = 0
-endif
-
 " shortcut to edit nvim config
 nnoremap <silent> <leader>nv :e ~/.dotfiles/init.vim<CR>
 
@@ -167,14 +159,13 @@ nnoremap <leader>b :GitBranch<cr>
 " make some tags!
 command! MakeTags !ctags -R .
 
-" Automatically open location/quickfix if results
-" augroup auto_open_quickfix
-"     autocmd!
-"     autocmd QuickFixCmdPost [^l]* cwindow
-"     autocmd QuickFixCmdPost l*    lwindow
-" augroup END
-
 if executable('rg')
     set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
     let g:ackprg = &grepprg
+endif
+
+" Use fd for ctrlp.
+if executable('fd')
+    let g:ctrlp_user_command = 'fd -i -H -t f -c never "" %s'
+    let g:ctrlp_use_caching = 0
 endif

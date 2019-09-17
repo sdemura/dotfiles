@@ -21,6 +21,7 @@ Plug 'sbdchd/neoformat'
 
 " Git
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 
 " UI Enhancements
 Plug 'justinmk/vim-dirvish'
@@ -74,13 +75,11 @@ set novisualbell
 set nowrap
 set pastetoggle=<F2>
 set shiftwidth=4
-" set signcolumn=yes
 set smartcase
 set smartindent
 set softtabstop=4
 set splitbelow
 set splitright
-" set switchbuf=useopen,usetab,newtab
 set switchbuf=useopen
 set tabstop=4
 set termguicolors

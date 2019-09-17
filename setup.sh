@@ -8,6 +8,7 @@ if [[ $(uname) == 'Linux' ]]; then
         curl \
         fd-find \
         fzf \
+        httpie \
         libbz2-dev \
         libffi-dev \
         liblzma-dev \
@@ -29,7 +30,7 @@ if [[ $(uname) == 'Linux' ]]; then
         zsh
 else
     # use zsh from macos
-    brew install --force readline xz neovim ripgrep fzf fd shellcheck coreutils
+    brew reinstall readline xz neovim ripgrep fzf fd shellcheck coreutils httpie
 fi
 
 if [[ ! -d ~/.pyenv ]]; then

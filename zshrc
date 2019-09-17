@@ -141,3 +141,6 @@ alias n="nvim"
 
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
+
+# # workaround until brew nvim is fixed
+# export PATH="$HOME/nvim-osx64/bin:$PATH"

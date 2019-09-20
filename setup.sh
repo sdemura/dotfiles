@@ -8,6 +8,7 @@ if [[ $(uname) == 'Linux' ]]; then
         curl \
         fd-find \
         fzf \
+        git \
         httpie \
         libbz2-dev \
         libffi-dev \
@@ -30,7 +31,7 @@ if [[ $(uname) == 'Linux' ]]; then
         zsh
 else
     # use zsh from macos
-    brew reinstall readline xz neovim ripgrep fzf fd shellcheck coreutils httpie
+    brew reinstall readline xz neovim ripgrep fzf fd shellcheck coreutils httpie git
 fi
 
 if [[ ! -d ~/.pyenv ]]; then
@@ -68,3 +69,7 @@ fi
 mkdir -p ~/.config/nvim
 ln -sf "$(realpath init.vim)" ~/.config/nvim/init.vim
 nvim +PlugInstall +qa
+
+mkdir -p ~/.tmux/plugins
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+ln -sf $(realpath tmux.conf) ~/.tmux.conf

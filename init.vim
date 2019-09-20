@@ -85,7 +85,8 @@ set tabstop=4
 set termguicolors
 set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
-set wildmode=longest,list
+" set wildmode=longest,list
+" set wildmode=longest
 
 filetype plugin indent on
 

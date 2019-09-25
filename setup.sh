@@ -66,6 +66,8 @@ if [[ ! -d "$HOME/.oh-my-zsh/" ]]; then
     ln -sf "$(realpath zshrc)" ~/.zshrc
 fi
 
+ln -sf "$(realpath sean.zsh-theme)" ~/.oh-my-zsh/custom/themes/sean.zsh-theme
+
 mkdir -p ~/.config/nvim
 ln -sf "$(realpath init.vim)" ~/.config/nvim/init.vim
 nvim +PlugInstall +qa

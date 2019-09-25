@@ -57,7 +57,6 @@ set cursorline
 set expandtab
 set fileformats=unix,dos,mac
 set hidden
-set history=500
 set ignorecase
 set inccommand=nosplit
 set iskeyword+=$
@@ -65,7 +64,6 @@ set langmenu=en
 set lazyredraw
 set linebreak
 set magic
-
 set mouse=a
 set nobackup
 set noerrorbells
@@ -85,10 +83,6 @@ set tabstop=4
 set termguicolors
 set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
-" set wildmode=longest,list
-" set wildmode=longest
-
-filetype plugin indent on
 
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -134,7 +128,7 @@ let g:strip_whitespace_confirm = 0
 " shortcut to edit nvim config
 nnoremap <silent> <leader>nv :e ~/.dotfiles/init.vim<CR>
 
-" list folders at top for dirvish
+" " list folders at top for dirvish
 let g:dirvish_mode = ':sort ,^.*[\/],'
 
 " launch dash from leader d

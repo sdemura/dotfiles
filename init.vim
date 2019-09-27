@@ -26,6 +26,7 @@ Plug 'tpope/vim-rhubarb'
 " UI Enhancements
 Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'itchyny/lightline.vim'
 
 " Themes
 Plug 'morhetz/gruvbox'
@@ -137,6 +138,9 @@ nmap <silent> <leader>D <Plug>DashSearch
 " expand paranthesis after (<CR>
 let g:delimitMate_expand_cr = 2
 
+" set leader key for :Ack
+nnoremap <leader>a :Ack<space>
+
 " disable popup for jedi completions
 augroup disable_python_preview
     autocmd!
@@ -150,9 +154,6 @@ nnoremap <leader>b :GitBranch<cr>
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w
 
-" make some tags!
-command! MakeTags !ctags -R .
-
 if executable('rg')
     set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
     let g:ackprg = &grepprg
@@ -163,3 +164,16 @@ if executable('fd')
     let g:ctrlp_user_command = 'fd -i -H -t f -c never "" %s'
     let g:ctrlp_use_caching = 0
 endif
+
+" disable MODE in statusbar
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ 'active': {
+      \   'left': [ [ 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ ['lineinfo'], ['percent'] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }

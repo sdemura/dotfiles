@@ -177,3 +177,8 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+
+augroup wrap_text_files
+    autocmd!
+    autocmd BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
+augroup END

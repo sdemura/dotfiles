@@ -22,6 +22,7 @@ Plug 'sbdchd/neoformat'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'mhinz/vim-signify'
 
 " UI Enhancements
 Plug 'justinmk/vim-dirvish'

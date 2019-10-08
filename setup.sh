@@ -74,4 +74,4 @@ nvim +PlugInstall +qa
 
 mkdir -p ~/.tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-ln -sf $(realpath tmux.conf) ~/.tmux.conf
+ln -sf "$(realpath tmux.conf)" ~/.tmux.conf

@@ -8,6 +8,7 @@ if [[ $(uname) == 'Linux' ]]; then
         curl \
         fd-find \
         fzf \
+        fuse \
         git \
         httpie \
         libbz2-dev \
@@ -20,15 +21,21 @@ if [[ $(uname) == 'Linux' ]]; then
         libssl-dev \
         llvm \
         make \
-        neovim \
         python-openssl \
         ripgrep \
         shellcheck \
+        squashfuse \
         tk-dev \
         wget \
         xz-utils \
         zlib1g-dev \
         zsh
+
+    if ! command -v nvim; then
+        wget https://github.com/neovim/neovim/releases/download/v0.4.2/nvim.appimage
+        sudo mv nvim.appimage /usr/local/bin/nvim
+        sudo chmod +x /usr/local/bin/nvim
+    fi
 else
     # use zsh from macos
     brew reinstall readline xz neovim ripgrep fzf fd shellcheck coreutils httpie git
@@ -73,5 +80,5 @@ ln -sf "$(realpath init.vim)" ~/.config/nvim/init.vim
 nvim +PlugInstall +qa
 
 mkdir -p ~/.tmux/plugins
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+[[ ! -d ~/.tmux/plugins/tpm ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ln -sf "$(realpath tmux.conf)" ~/.tmux.conf

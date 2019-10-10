@@ -26,6 +26,7 @@ if [[ $(uname) == 'Linux' ]]; then
         shellcheck \
         squashfuse \
         tk-dev \
+        tmux \
         wget \
         xz-utils \
         zlib1g-dev \

@@ -39,6 +39,8 @@ if [[ $(uname) == 'Linux' ]]; then
 else
     # use zsh from macos
     brew reinstall readline xz neovim ripgrep fzf fd shellcheck coreutils httpie git
+    defaults write -g InitialKeyRepeat -int 10
+    defaults write -g KeyRepeat -int 1
 fi
 
 if [[ ! -d ~/.pyenv ]]; then

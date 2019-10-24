@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>KeepAlive</key>
+    <false/>
+    <key>Label</key>
+    <string>net.clamav.freshclam</string>
+    <key>LowPriorityIO</key>
+    <true/>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/freshclam</string>
+        <string>-v</string>
+        <string>--log=/var/log/clamav/freshclam.log</string>
+        <string>--config-file=/usr/local/etc/clamav/freshclam.conf</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StartInterval</key>
+    <integer>3600</integer>
+    <key>UserName</key>
+    <string>{{ ansible_user }}</string>
+</dict>
+</plist>

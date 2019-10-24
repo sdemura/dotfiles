@@ -1,0 +1,54 @@
+- hosts: localhost
+  become: yes
+  gather_facts: false
+
+  tasks:
+    - name: install clamav
+      homebrew:
+        name: clamav
+      become: no
+
+    - name: copy clamd.conf
+      copy:
+        src: clamd.conf
+        dest: /usr/local/etc/clamav/clamd.conf
+
+    - name: copy freshclam.conf
+      copy:
+        src: freshclam.conf
+        dest: /usr/local/etc/clamav/freshclam.conf
+
+    - name: ensure clamav log dir exists
+      file:
+        path: /var/log/clamav
+        state: directory
+        # owner: lookup('env', "USER")
+        owner: "{{ ansible_user }}"
+        group: clamav
+
+    - name: ensure freshclam.log exists
+      file:
+        path: /var/log/clamav
+        state: touch
+        owner: "{{ ansible_user }}"
+        group: clamav
+
+    - name: update clamav database
+      command: /usr/local/bin/freshclam -v
+      become: no
+
+    - name: add clamscan.plist
+      template:
+        src: net.clamav.clamscan.plist.j2
+        dest: /Library/LaunchAgents/net.clamav.clamscan.plist
+
+    - name: load plist file
+      command: launchctl load -w /Library/LaunchAgents/net.clamav.clamscan.plist
+
+    - name: add freshclam.plist
+      template:
+        src: net.clamav.freshclam.plist.j2
+        dest: /Library/LaunchAgents/net.clamav.freshclam.plist
+
+    - name: load freshclam.plist
+      command: launchctl load -w /Library/LaunchAgents/net.clamav.freshclam.plist

@@ -70,11 +70,7 @@ ZSH_THEME="sean"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-if grep -qi Debian /etc/os-release 2>/dev/null; then
-    plugins=(git)
-else
-    plugins=(git fzf)
-fi
+plugins=(git fzf)
 
 source $ZSH/oh-my-zsh.sh
 

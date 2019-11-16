@@ -32,6 +32,7 @@ Plug 'scrooloose/nerdtree'
 
 " Themes
 Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 
 " Usability improvements
 Plug 'milkypostman/vim-togglelist'
@@ -51,6 +52,13 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " Python Autocomplete
 Plug 'davidhalter/jedi-vim'
+Plug 'deoplete-plugins/deoplete-jedi'
+
+" Go Stuff
+Plug 'fatih/vim-go'
+
+" Completion
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 call plug#end()
 
@@ -98,7 +106,7 @@ nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
 " Color Scheme.
 set background=dark
-colorscheme gruvbox
+colorscheme nord
 
 " " Ale Settings
 let g:ale_set_highlights = 0
@@ -169,7 +177,7 @@ endif
 
 " disable MODE in statusbar
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
@@ -187,3 +195,12 @@ augroup END
 
 " nerdtree
 map - :NERDTreeToggle<CR>
+
+" Enable deoplete
+let g:deoplete#enable_at_startup = 1
+
+" Enable omni completion for vim-go
+call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+
+" Disable Jedi completions in favor of deoplete
+let g:jedi#completions_enabled = 0

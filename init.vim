@@ -171,7 +171,7 @@ endif
 
 " Use fd for ctrlp.
 if executable('fd')
-    let g:ctrlp_user_command = 'fd -i -H -t f -c never "" %s'
+    let g:ctrlp_user_command = 'fd -i -I -H -t f -c never "" %s'
     let g:ctrlp_use_caching = 0
 endif
 

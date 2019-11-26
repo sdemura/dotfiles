@@ -25,13 +25,11 @@ Plug 'tpope/vim-rhubarb'
 Plug 'mhinz/vim-signify'
 
 " UI Enhancements
-" Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 
 " Themes
-Plug 'morhetz/gruvbox'
 Plug 'arcticicestudio/nord-vim'
 
 " Usability improvements

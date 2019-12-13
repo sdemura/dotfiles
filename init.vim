@@ -47,13 +47,14 @@ Plug 'mileszs/ack.vim'
 
 " Fuzzy Finding
 Plug 'ctrlpvim/ctrlp.vim'
-
+" Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+"
 " Python Autocomplete
 Plug 'davidhalter/jedi-vim'
 Plug 'deoplete-plugins/deoplete-jedi'
 
 " Go Stuff
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', {'tag': '*'}
 
 " Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -154,6 +155,12 @@ augroup disable_python_preview
     autocmd!
     autocmd FileType python setlocal completeopt-=preview
 augroup END
+"
+" disable popup for go completions
+augroup disable_go_preview
+    autocmd!
+    autocmd FileType go setlocal completeopt-=preview
+augroup END
 
 " Who needs airline now?
 command! GitBranch !pwd && git rev-parse --abbrev-ref HEAD
@@ -202,3 +209,9 @@ call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 " Disable Jedi completions in favor of deoplete
 let g:jedi#completions_enabled = 0
+
+let g:go_fmt_fail_silently = 1
+
+" let g:Lf_ShortcutF = '<C-P>'
+" let g:Lf_WindowPosition = 'popup'
+" let g:Lf_PreviewInPopup = 1

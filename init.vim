@@ -43,11 +43,10 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'sdemura/dash.vim'
-Plug 'mileszs/ack.vim'
+Plug 'mhinz/vim-grepper'
 
 " Fuzzy Finding
-Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'liuchengxu/vim-clap'
 "
 " Python Autocomplete
 Plug 'davidhalter/jedi-vim'
@@ -147,9 +146,6 @@ nmap <silent> <leader>D <Plug>DashSearch
 " expand paranthesis after (<CR>
 let g:delimitMate_expand_cr = 2
 
-" set leader key for :Ack
-nnoremap <leader>a :Ack<space>
-
 " disable popup for jedi completions
 augroup disable_python_preview
     autocmd!
@@ -162,22 +158,11 @@ augroup disable_go_preview
     autocmd FileType go setlocal completeopt-=preview
 augroup END
 
-" Who needs airline now?
-command! GitBranch !pwd && git rev-parse --abbrev-ref HEAD
-nnoremap <leader>b :GitBranch<cr>
-
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w
 
 if executable('rg')
-    set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
-    let g:ackprg = &grepprg
-endif
-
-" Use fd for ctrlp.
-if executable('fd')
-    let g:ctrlp_user_command = 'fd -i -I -H -t f -c never "" %s'
-    let g:ctrlp_use_caching = 0
+    set grepprg=rg\ --smart-case\ --vimgrep\ --regexp\ --no-heading
 endif
 
 " disable MODE in statusbar
@@ -209,9 +194,19 @@ call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 " Disable Jedi completions in favor of deoplete
 let g:jedi#completions_enabled = 0
+" use G instead of G so we can use g for grepper
+let g:jedi#goto_assignments_command = "<leader>G"
+
+" Eon'5 who function signatures
+let g:jedi#show_call_signatures = 2
 
 let g:go_fmt_fail_silently = 1
 
-" let g:Lf_ShortcutF = '<C-P>'
-" let g:Lf_WindowPosition = 'popup'
-" let g:Lf_PreviewInPopup = 1
+" Ctrl-P replacement
+" nnoremap <C-p> :Clap files<CR>
+nnoremap <C-p> :Clap files<CR>
+
+" Grepper
+nnoremap <leader>g :Grepper -tool rg<CR>
+let g:grepper = { 'next_tool': '<leader>g' }
+let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --regexp' }

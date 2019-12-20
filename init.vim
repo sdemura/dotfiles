@@ -27,7 +27,7 @@ Plug 'mhinz/vim-signify'
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
-Plug 'scrooloose/nerdtree'
+Plug 'justinmk/vim-dirvish'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
@@ -46,7 +46,7 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 
 " Fuzzy Finding
-Plug 'liuchengxu/vim-clap'
+Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
 "
 " Python Autocomplete
 Plug 'davidhalter/jedi-vim'
@@ -138,7 +138,7 @@ let g:strip_whitespace_confirm = 0
 nnoremap <silent> <leader>nv :e ~/.dotfiles/init.vim<CR>
 
 " " list folders at top for dirvish
-let g:dirvish_mode = ':sort ,^.*[\/],'
+" let g:dirvish_mode = ':sort ,^.*[\/],'
 
 " launch dash from leader d
 nmap <silent> <leader>D <Plug>DashSearch
@@ -183,8 +183,8 @@ augroup wrap_text_files
     autocmd BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
 augroup END
 
-" nerdtree
-map - :NERDTreeToggle<CR>
+" " nerdtree
+" map - :NERDTreeToggle<CR>
 
 " Enable deoplete
 let g:deoplete#enable_at_startup = 1
@@ -203,10 +203,9 @@ let g:jedi#show_call_signatures = 2
 let g:go_fmt_fail_silently = 1
 
 " Ctrl-P replacement
-" nnoremap <C-p> :Clap files<CR>
 nnoremap <C-p> :Clap files<CR>
 
 " Grepper
 nnoremap <leader>g :Grepper -tool rg<CR>
 let g:grepper = { 'next_tool': '<leader>g' }
-let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --regexp' }
+let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --no-ignore-vcs --smart-case --regexp' }

@@ -47,16 +47,14 @@ Plug 'mhinz/vim-grepper'
 
 " Fuzzy Finding
 Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
-"
-" Python Autocomplete
-Plug 'davidhalter/jedi-vim'
-Plug 'deoplete-plugins/deoplete-jedi'
 
 " Go Stuff
 Plug 'fatih/vim-go', {'tag': '*'}
 
 " Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'davidhalter/jedi-vim'
+Plug 'deoplete-plugins/deoplete-jedi'
 
 call plug#end()
 
@@ -161,9 +159,9 @@ augroup END
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w
 
-if executable('rg')
-    set grepprg=rg\ --smart-case\ --vimgrep\ --regexp\ --no-heading
-endif
+" if executable('rg')
+"     set grepprg=rg\ --smart-case\ --vimgrep\ --regexp\ --no-heading
+" endif
 
 " disable MODE in statusbar
 let g:lightline = {
@@ -182,9 +180,6 @@ augroup wrap_text_files
     autocmd!
     autocmd BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
 augroup END
-
-" " nerdtree
-" map - :NERDTreeToggle<CR>
 
 " Enable deoplete
 let g:deoplete#enable_at_startup = 1
@@ -209,3 +204,4 @@ nnoremap <C-p> :Clap files<CR>
 nnoremap <leader>g :Grepper -tool rg<CR>
 let g:grepper = { 'next_tool': '<leader>g' }
 let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --no-ignore-vcs --smart-case --regexp' }
+

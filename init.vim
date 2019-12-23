@@ -46,7 +46,8 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 
 " Fuzzy Finding
-Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
+Plug 'liuchengxu/vim-clap'
+" , { 'do': function('clap#helper#build_all') }
 
 " Go Stuff
 Plug 'fatih/vim-go', {'tag': '*'}

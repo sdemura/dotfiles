@@ -20,8 +20,6 @@ Plug 'majutsushi/tagbar'
 Plug 'sbdchd/neoformat'
 
 " Git
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
 Plug 'mhinz/vim-signify'
 
 " UI Enhancements
@@ -46,8 +44,7 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 
 " Fuzzy Finding
-Plug 'liuchengxu/vim-clap'
-" , { 'do': function('clap#helper#build_all') }
+Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
 
 " Go Stuff
 Plug 'fatih/vim-go', {'tag': '*'}
@@ -101,16 +98,14 @@ nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
 nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
-" Color Scheme.
-set background=dark
-colorscheme nord
 
 " " Ale Settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 
 " Disable line numbers and sign column for terminal
-autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
+" autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
+autocmd TermOpen * setlocal scl=no
 
 " Mimic Vim8 Terminal escape
 :tnoremap <C-w> <C-\><C-n><CR><C-w>
@@ -190,6 +185,7 @@ call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 " Disable Jedi completions in favor of deoplete
 let g:jedi#completions_enabled = 0
+
 " use G instead of G so we can use g for grepper
 let g:jedi#goto_assignments_command = "<leader>G"
 
@@ -206,3 +202,6 @@ nnoremap <leader>g :Grepper -tool rg<CR>
 let g:grepper = { 'next_tool': '<leader>g' }
 let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --no-ignore-vcs --smart-case --regexp' }
 
+" Color Scheme.
+set background=dark
+colorscheme nord

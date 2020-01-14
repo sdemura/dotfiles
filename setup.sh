@@ -3,56 +3,52 @@
 set -exo pipefail
 
 if [[ $(uname) == 'Linux' ]]; then
-  if grep -ie "Debian|Ubuntu" /etc/os-release; then
-    sudo apt-get install -y \
-        build-essential \
-        curl \
-        fd-find \
-        fzf \
-        fuse \
-        git \
-        httpie \
-        libbz2-dev \
-        libffi-dev \
-        liblzma-dev \
-        libncurses5-dev \
-        libncursesw5-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        libssl-dev \
-        llvm \
-        make \
-        python-openssl \
-        ripgrep \
-        shellcheck \
-        squashfuse \
-        tk-dev \
-        tmux \
-        wget \
-        xz-utils \
-        zlib1g-dev \
-        zsh
+    if grep -ie "Debian|Ubuntu" /etc/os-release; then
+        sudo apt-get install -y \
+            build-essential \
+            curl \
+            fd-find \
+            fzf \
+            fuse \
+            git \
+            httpie \
+            libbz2-dev \
+            libffi-dev \
+            liblzma-dev \
+            libncurses5-dev \
+            libncursesw5-dev \
+            libreadline-dev \
+            libsqlite3-dev \
+            libssl-dev \
+            llvm \
+            make \
+            python-openssl \
+            ripgrep \
+            shellcheck \
+            squashfuse \
+            tk-dev \
+            tmux \
+            wget \
+            xz-utils \
+            zlib1g-dev \
+            zsh
     else
-	    sudo yum install -y epel-release
-	   sudo yum groupinstall -y 'Development Tools'
-      sudo yum install -y \
-	      zlib-devel\
-	      readline-devel \
-	      ncurses-devel \
-	      openssl-devel \
-	      xz-devel \
-	      sqlite-devel \
-	      tk-devel \
-	      llvm \
-	      llvm-devel \
-	      curl\
-	      wget\
-	      fuse \
-	      util-linux-user \
-	      zsh
+        sudo yum install -y epel-release
+        sudo yum groupinstall -y 'Development Tools'
+        sudo yum install -y \
+            zlib-devel readline-devel \
+            ncurses-devel \
+            openssl-devel \
+            xz-devel \
+            sqlite-devel \
+            tk-devel \
+            llvm \
+            llvm-devel \
+            curl wget fuse \
+            util-linux-user \
+            zsh
 
     fi
-
 
     if ! command -v nvim; then
         wget https://github.com/neovim/neovim/releases/download/v0.4.2/nvim.appimage

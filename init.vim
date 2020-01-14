@@ -21,6 +21,9 @@ Plug 'sbdchd/neoformat'
 
 " Git
 Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-dispatch'
 
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
@@ -29,6 +32,7 @@ Plug 'justinmk/vim-dirvish'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
+Plug 'gruvbox-community/gruvbox'
 
 " Usability improvements
 Plug 'milkypostman/vim-togglelist'
@@ -44,7 +48,7 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 
 " Fuzzy Finding
-Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 " Go Stuff
 Plug 'fatih/vim-go', {'tag': '*'}
@@ -85,7 +89,7 @@ set splitbelow
 set splitright
 set switchbuf=useopen
 set tabstop=4
-set termguicolors
+set notermguicolors
 set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 
@@ -155,21 +159,16 @@ augroup END
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w
 
-" if executable('rg')
-"     set grepprg=rg\ --smart-case\ --vimgrep\ --regexp\ --no-heading
-" endif
-
-" disable MODE in statusbar
 let g:lightline = {
-      \ 'colorscheme': 'nord',
-      \ 'active': {
-      \   'left': [ [ 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-      \   'right': [ ['lineinfo'], ['percent'] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
+      \ 'colorscheme': 'gruvbox',
+      \     'active': {
+      \       'left': [ [ 'mode', 'paste' ],
+      \                 [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \       'right': [ ['lineinfo'], ['percent'] ]
+      \     },
+      \     'component_function': {
+      \       'gitbranch': 'fugitive#head'
+      \     },
       \ }
 
 augroup wrap_text_files
@@ -204,4 +203,4 @@ let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --no-ignore-vcs --sma
 
 " Color Scheme.
 set background=dark
-colorscheme nord
+colorscheme gruvbox

@@ -99,8 +99,8 @@ nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 " Fast up and/down
 " map j gj
 " map k gk
-nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+" nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+" nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
 
 " " Ale Settings
@@ -196,10 +196,14 @@ let g:go_fmt_fail_silently = 1
 " Ctrl-P replacement
 nnoremap <C-p> :Clap files<CR>
 
+" make navigating tabs easier
+nnoremap H gT
+nnoremap L gt
+
 " Grepper
 nnoremap <leader>g :Grepper -tool rg<CR>
 let g:grepper = { 'next_tool': '<leader>g' }
-let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --no-ignore-vcs --smart-case --regexp' }
+let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --smart-case --regexp' }
 
 " Color Scheme.
 set background=dark

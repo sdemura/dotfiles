@@ -28,7 +28,7 @@ Plug 'tpope/vim-dispatch'
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
-Plug 'justinmk/vim-dirvish'
+Plug 'preservim/nerdtree'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
@@ -109,7 +109,7 @@ let g:ale_echo_msg_format = '%linter%: %s'
 
 " Disable line numbers and sign column for terminal
 " autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
-autocmd TermOpen * setlocal scl=no
+" autocmd TermOpen * setlocal scl=yes nonumber
 
 " Mimic Vim8 Terminal escape
 :tnoremap <C-w> <C-\><C-n><CR><C-w>
@@ -199,6 +199,9 @@ nnoremap <C-p> :Clap files<CR>
 " make navigating tabs easier
 nnoremap H gT
 nnoremap L gt
+
+" NERDTreeToggle
+nnoremap <silent> - :NERDTreeToggle<cr>
 
 " Grepper
 nnoremap <leader>g :Grepper -tool rg<CR>

@@ -28,7 +28,8 @@ Plug 'tpope/vim-dispatch'
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
+Plug 'justinmk/vim-dirvish'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
@@ -48,7 +49,7 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 
 " Fuzzy Finding
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 " Go Stuff
 Plug 'fatih/vim-go', {'tag': '*'}
@@ -108,7 +109,7 @@ let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
 
 " Disable line numbers and sign column for terminal
-" autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
+autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
 " autocmd TermOpen * setlocal scl=yes nonumber
 
 " Mimic Vim8 Terminal escape
@@ -194,14 +195,14 @@ let g:jedi#show_call_signatures = 2
 let g:go_fmt_fail_silently = 1
 
 " Ctrl-P replacement
-nnoremap <C-p> :Clap files<CR>
+" nnoremap <C-p> :Clap files<CR>
 
 " make navigating tabs easier
 nnoremap H gT
 nnoremap L gt
 
 " NERDTreeToggle
-nnoremap <silent> - :NERDTreeToggle<cr>
+" nnoremap <silent> - :NERDTreeToggle<cr>
 
 " Grepper
 nnoremap <leader>g :Grepper -tool rg<CR>

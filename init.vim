@@ -14,9 +14,8 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 " IDE like things
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'Raimondi/delimitMate'
-Plug 'majutsushi/tagbar'
 Plug 'sbdchd/neoformat'
 
 " Git
@@ -28,15 +27,13 @@ Plug 'tpope/vim-dispatch'
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
-" Plug 'preservim/nerdtree'
-Plug 'justinmk/vim-dirvish'
+Plug 'preservim/nerdtree'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
 Plug 'gruvbox-community/gruvbox'
 
 " Usability improvements
-Plug 'milkypostman/vim-togglelist'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
@@ -49,15 +46,7 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 
 " Fuzzy Finding
-" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
-
-" Go Stuff
-Plug 'fatih/vim-go', {'tag': '*'}
-
-" Completion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'davidhalter/jedi-vim'
-Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 call plug#end()
 
@@ -97,13 +86,6 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
-" Fast up and/down
-" map j gj
-" map k gk
-" nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-" nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
-
-
 " " Ale Settings
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %s'
@@ -136,26 +118,11 @@ let g:strip_whitespace_confirm = 0
 " shortcut to edit nvim config
 nnoremap <silent> <leader>nv :e ~/.dotfiles/init.vim<CR>
 
-" " list folders at top for dirvish
-" let g:dirvish_mode = ':sort ,^.*[\/],'
-
 " launch dash from leader d
 nmap <silent> <leader>D <Plug>DashSearch
 
 " expand paranthesis after (<CR>
 let g:delimitMate_expand_cr = 2
-
-" disable popup for jedi completions
-augroup disable_python_preview
-    autocmd!
-    autocmd FileType python setlocal completeopt-=preview
-augroup END
-"
-" disable popup for go completions
-augroup disable_go_preview
-    autocmd!
-    autocmd FileType go setlocal completeopt-=preview
-augroup END
 
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w
@@ -167,42 +134,23 @@ let g:lightline = {
       \                 [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
       \       'right': [ ['lineinfo'], ['percent'] ]
       \     },
+      \     'component': {
+      \       'filename': '%F'
+      \     },
       \     'component_function': {
-      \       'gitbranch': 'fugitive#head'
+      \       'gitbranch': 'fugitive#head',
       \     },
       \ }
 
-augroup wrap_text_files
-    autocmd!
-    autocmd BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
-augroup END
-
-" Enable deoplete
-let g:deoplete#enable_at_startup = 1
-
-" Enable omni completion for vim-go
-call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
-
-" Disable Jedi completions in favor of deoplete
-let g:jedi#completions_enabled = 0
-
-" use G instead of G so we can use g for grepper
-let g:jedi#goto_assignments_command = "<leader>G"
-
-" Eon'5 who function signatures
-let g:jedi#show_call_signatures = 2
-
-let g:go_fmt_fail_silently = 1
-
 " Ctrl-P replacement
-" nnoremap <C-p> :Clap files<CR>
+nnoremap <C-p> :Clap files<CR>
 
 " make navigating tabs easier
 nnoremap H gT
 nnoremap L gt
 
 " NERDTreeToggle
-" nnoremap <silent> - :NERDTreeToggle<cr>
+nnoremap <silent> - :NERDTreeToggle<cr>
 
 " Grepper
 nnoremap <leader>g :Grepper -tool rg<CR>

@@ -123,7 +123,7 @@ alias pf9='cd ~/src/platform9'
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 
-export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .';
+export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 if grep -qi Debian /etc/os-release 2>/dev/null; then

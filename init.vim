@@ -95,7 +95,7 @@ autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
 " autocmd TermOpen * setlocal scl=yes nonumber
 
 " Mimic Vim8 Terminal escape
-:tnoremap <C-w> <C-\><C-n><CR><C-w>
+:tnoremap <C-w> <C-\><C-n><CR><C-l><C-w>
 
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>

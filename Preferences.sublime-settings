@@ -1,0 +1,20 @@
+{
+	"auto_complete_cycle": true,
+	"bold_folder_labels": true,
+	"color_scheme": "Packages/Color Scheme - Default/Celeste.sublime-color-scheme",
+	"font_size": 13,
+	"highlight_line": false,
+	"ignored_packages":
+	[
+		"Vintage",
+			
+],
+	"rulers":
+	[
+		100
+	],
+	"theme": "Adaptive.sublime-theme",
+	"trim_only_modified_white_space": false,
+	"trim_trailing_white_space_on_save": true,
+	"scroll_past_end": true,
+}

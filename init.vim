@@ -1,5 +1,5 @@
-let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
-let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
+" let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
+" let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -28,6 +28,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
+Plug 'majutsushi/tagbar'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
@@ -44,6 +45,13 @@ Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
+
+" Salt
+Plug 'saltstack/salt-vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
+
+" Puppet
+Plug 'rodjek/vim-puppet'
 
 " Fuzzy Finding
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
@@ -79,7 +87,7 @@ set splitbelow
 set splitright
 set switchbuf=useopen
 set tabstop=4
-set notermguicolors
+set termguicolors
 set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 
@@ -106,11 +114,16 @@ augroup remember_position_in_file
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END
 
+" Yaml file settings
+autocmd FileType yaml setlocal breakindent breakindentopt=shift:2,min:40,sbr showbreak=>> wrap
+
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
 nnoremap <silent> <leader>f :Neoformat<CR>
 
+" tagbar settings
+nnoremap <silent> <leader>t :TagbarToggle<CR>
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
@@ -128,14 +141,11 @@ let g:delimitMate_expand_cr = 2
 :command! W w
 
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'nord',
       \     'active': {
       \       'left': [ [ 'mode', 'paste' ],
       \                 [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
       \       'right': [ ['lineinfo'], ['percent'] ]
-      \     },
-      \     'component': {
-      \       'filename': '%F'
       \     },
       \     'component_function': {
       \       'gitbranch': 'fugitive#head',
@@ -143,7 +153,8 @@ let g:lightline = {
       \ }
 
 " Ctrl-P replacement
-nnoremap <C-p> :Clap files<CR>
+nnoremap <C-p> :Clap files --hidden<CR>
+let g:clap_disable_run_rooter = v:true
 
 " make navigating tabs easier
 nnoremap H gT
@@ -151,12 +162,19 @@ nnoremap L gt
 
 " NERDTreeToggle
 nnoremap <silent> - :NERDTreeToggle<cr>
+let g:NERDTreeShowHidden=1
 
 " Grepper
 nnoremap <leader>g :Grepper -tool rg<CR>
 let g:grepper = { 'next_tool': '<leader>g' }
 let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --smart-case --regexp' }
 
+" saltstack
+let g:sls_use_jinja_syntax = 1
+
+" change to basedir of open buffer
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+
 " Color Scheme.
 set background=dark
-colorscheme gruvbox
+colorscheme nord

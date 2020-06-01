@@ -103,3 +103,5 @@ nvim +PlugInstall +qa
 mkdir -p ~/.tmux/plugins
 [[ ! -d ~/.tmux/plugins/tpm ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ln -sf "$(realpath tmux.conf)" ~/.tmux.conf
+
+defaults write com.googlecode.iterm2 DisableWindowSizeSnap -integer 1

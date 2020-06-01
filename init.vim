@@ -1,4 +1,4 @@
-" let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
+let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
 " let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 " install vim-plug if not already there
@@ -36,7 +36,6 @@ Plug 'gruvbox-community/gruvbox'
 
 " Usability improvements
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
@@ -54,8 +53,8 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'rodjek/vim-puppet'
 
 " Fuzzy Finding
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
-
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 " Settings
@@ -141,7 +140,7 @@ let g:delimitMate_expand_cr = 2
 :command! W w
 
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'gruvbox',
       \     'active': {
       \       'left': [ [ 'mode', 'paste' ],
       \                 [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
@@ -153,8 +152,10 @@ let g:lightline = {
       \ }
 
 " Ctrl-P replacement
-nnoremap <C-p> :Clap files --hidden<CR>
-let g:clap_disable_run_rooter = v:true
+" nnoremap <C-p> :Clap files ++finder=fd --type f --hidden --exclude '.git'<CR>
+
+" do not change dir when searching
+" let g:clap_disable_run_rooter = v:true
 
 " make navigating tabs easier
 nnoremap H gT
@@ -169,12 +170,22 @@ nnoremap <leader>g :Grepper -tool rg<CR>
 let g:grepper = { 'next_tool': '<leader>g' }
 let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --smart-case --regexp' }
 
+" dont use polyglot for jinja
+let g:polyglot_disabled = ['jinja', 'puppet']
+
 " saltstack
 let g:sls_use_jinja_syntax = 1
 
 " change to basedir of open buffer
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+"
+" Use fd for ctrlp.
+if executable('fd')
+    let g:ctrlp_user_command = 'fd --type f --hidden --exclude .git --color never "" %s'
+    let g:ctrlp_use_caching = 0
+endif
+let g:ctrlp_working_path_mode = 0
 
 " Color Scheme.
 set background=dark
-colorscheme nord
+colorscheme gruvbox

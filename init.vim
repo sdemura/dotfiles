@@ -1,5 +1,5 @@
 let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
-" let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -44,6 +44,7 @@ Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
+Plug 'machakann/vim-highlightedyank'
 
 " Salt
 Plug 'saltstack/salt-vim'
@@ -53,7 +54,6 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'rodjek/vim-puppet'
 
 " Fuzzy Finding
-" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
@@ -73,11 +73,11 @@ set magic
 set mouse=a
 set nobackup
 set noerrorbells
-set number
-set norelativenumber
 set novisualbell
 set nowrap
+set number
 set pastetoggle=<F2>
+set relativenumber
 set shiftwidth=4
 set smartcase
 set smartindent
@@ -99,10 +99,9 @@ let g:ale_echo_msg_format = '%linter%: %s'
 
 " Disable line numbers and sign column for terminal
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
-" autocmd TermOpen * setlocal scl=yes nonumber
 
 " Mimic Vim8 Terminal escape
-:tnoremap <C-w> <C-\><C-n><CR><C-l><C-w>
+:tnoremap <C-w> <C-\><C-n><CR><C-l><C-w><Cr>
 
 """ Custom keyboard shorcuts!
 :nnoremap <silent> <leader>t :TagbarToggle<Cr>
@@ -123,6 +122,7 @@ nnoremap <silent> <leader>f :Neoformat<CR>
 
 " tagbar settings
 nnoremap <silent> <leader>t :TagbarToggle<CR>
+
 " strip whitespace on save
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
@@ -150,12 +150,6 @@ let g:lightline = {
       \       'gitbranch': 'fugitive#head',
       \     },
       \ }
-
-" Ctrl-P replacement
-" nnoremap <C-p> :Clap files ++finder=fd --type f --hidden --exclude '.git'<CR>
-
-" do not change dir when searching
-" let g:clap_disable_run_rooter = v:true
 
 " make navigating tabs easier
 nnoremap H gT

@@ -1,3 +1,5 @@
+set shell=/bin/zsh
+
 let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
 let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
@@ -14,7 +16,6 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 " IDE like things
-" Plug 'dense-analysis/ale'
 Plug 'Raimondi/delimitMate'
 Plug 'sbdchd/neoformat'
 
@@ -77,7 +78,7 @@ set novisualbell
 set nowrap
 set number
 set pastetoggle=<F2>
-set relativenumber
+set norelativenumber
 set shiftwidth=4
 set smartcase
 set smartindent
@@ -141,14 +142,14 @@ let g:delimitMate_expand_cr = 2
 
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',
-      \     'active': {
-      \       'left': [ [ 'mode', 'paste' ],
-      \                 [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-      \       'right': [ ['lineinfo'], ['percent'] ]
-      \     },
-      \     'component_function': {
-      \       'gitbranch': 'fugitive#head',
-      \     },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
+      \   'right': [ ['lineinfo'], ['percent'] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \ },
       \ }
 
 " make navigating tabs easier
@@ -163,9 +164,6 @@ let g:NERDTreeShowHidden=1
 nnoremap <leader>g :Grepper -tool rg<CR>
 let g:grepper = { 'next_tool': '<leader>g' }
 let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --smart-case --regexp' }
-
-" dont use polyglot for jinja
-let g:polyglot_disabled = ['jinja', 'puppet']
 
 " saltstack
 let g:sls_use_jinja_syntax = 1
@@ -182,4 +180,7 @@ let g:ctrlp_working_path_mode = 0
 
 " Color Scheme.
 set background=dark
+if has('gui_vimr')
+    set background=light
+endif
 colorscheme gruvbox

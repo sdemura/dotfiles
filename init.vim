@@ -104,9 +104,6 @@ autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
 " Mimic Vim8 Terminal escape
 :tnoremap <C-w> <C-\><C-n><CR><C-l><C-w><Cr>
 
-""" Custom keyboard shorcuts!
-:nnoremap <silent> <leader>t :TagbarToggle<Cr>
-
 " Open at last spot in line. from defaults.vim
 augroup remember_position_in_file
     autocmd!
@@ -157,13 +154,14 @@ nnoremap H gT
 nnoremap L gt
 
 " NERDTreeToggle
-nnoremap <silent> - :NERDTreeToggle<cr>
+
+nnoremap <silent> - :NERDTreeToggle %:p:h<cr>
 let g:NERDTreeShowHidden=1
 
 " Grepper
 nnoremap <leader>g :Grepper -tool rg<CR>
 let g:grepper = { 'next_tool': '<leader>g' }
-let g:grepper.rg = { 'grepprg': 'rg --no-heading --vimgrep --smart-case --regexp' }
+let g:grepper.rg = { 'grepprg': 'rg --no-heading --hidden --vimgrep --smart-case --regexp' }
 
 " saltstack
 let g:sls_use_jinja_syntax = 1

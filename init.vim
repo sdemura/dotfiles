@@ -56,6 +56,10 @@ Plug 'rodjek/vim-puppet'
 
 " Fuzzy Finding
 Plug 'ctrlpvim/ctrlp.vim'
+
+" Code Completion
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deoplete-plugins/deoplete-jedi'
 call plug#end()
 
 " Settings
@@ -175,6 +179,12 @@ if executable('fd')
     let g:ctrlp_use_caching = 0
 endif
 let g:ctrlp_working_path_mode = 0
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+" Disable preview
+set completeopt-=preview
 
 " Color Scheme.
 set background=dark

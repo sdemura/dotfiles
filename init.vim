@@ -1,7 +1,7 @@
 set shell=/bin/zsh
 
-let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
-let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
+let g:python_host_prog = expand('~/.pyenv/versions/nvim2/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/nvim3/bin/python3')
 
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -60,6 +60,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Code Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 " Settings
@@ -182,13 +183,11 @@ let g:ctrlp_working_path_mode = 0
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
+let g:jedi#completions_enabled = 0
 
 " Disable preview
 set completeopt-=preview
 
 " Color Scheme.
-set background=dark
-if has('gui_vimr')
-    set background=light
-endif
+set background=light
 colorscheme gruvbox

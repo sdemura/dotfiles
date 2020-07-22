@@ -159,14 +159,15 @@ nnoremap H gT
 nnoremap L gt
 
 " NERDTreeToggle
-
 nnoremap <silent> - :NERDTreeToggle %:p:h<cr>
 let g:NERDTreeShowHidden=1
 
 " Grepper
-nnoremap <leader>g :Grepper -tool rg<CR>
-let g:grepper = { 'next_tool': '<leader>g' }
-let g:grepper.rg = { 'grepprg': 'rg --no-heading --hidden --vimgrep --smart-case --regexp' }
+nnoremap <leader>gs :GrepperRg<space>
+let g:grepper = {}
+let g:grepper.tools = ['rg']
+let g:grepper.rg = { 'grepprg': 'rg --hidden -g "!.git" --no-heading  --vimgrep --smart-case --regexp' }
+let g:grepper.simple_prompt = 1
 
 " saltstack
 let g:sls_use_jinja_syntax = 1

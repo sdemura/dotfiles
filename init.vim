@@ -189,6 +189,10 @@ let g:jedi#completions_enabled = 0
 " Disable preview
 set completeopt-=preview
 
+" Vim fugitive shortcuts
+nnoremap <leader>ga :Git add<space>
+nnoremap <leader>gc :Gcommit<space>
+
 " Color Scheme.
 set background=light
 colorscheme gruvbox

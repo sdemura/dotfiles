@@ -14,7 +14,6 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
-
 " IDE like things
 Plug 'Raimondi/delimitMate'
 Plug 'sbdchd/neoformat'

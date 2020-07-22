@@ -141,6 +141,7 @@ let g:delimitMate_expand_cr = 2
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w
 
+" lightline settings
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',
       \ 'active': {

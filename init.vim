@@ -163,7 +163,7 @@ nnoremap <silent> - :NERDTreeToggle %:p:h<cr>
 let g:NERDTreeShowHidden=1
 
 " Grepper
-nnoremap <leader>gs :GrepperRg<space>
+nnoremap <leader>gg :GrepperRg<space>
 let g:grepper = {}
 let g:grepper.tools = ['rg']
 let g:grepper.rg = { 'grepprg': 'rg --hidden -g "!.git" --no-heading  --vimgrep --smart-case --regexp' }
@@ -192,6 +192,7 @@ set completeopt-=preview
 " Vim fugitive shortcuts
 nnoremap <leader>ga :Git add<space>
 nnoremap <leader>gc :Gcommit<space>
+nnoremap <leader>gp :Gpush<space>
 
 " Color Scheme.
 set background=light

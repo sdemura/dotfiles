@@ -185,6 +185,7 @@ let g:ctrlp_working_path_mode = 0
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 let g:jedi#completions_enabled = 0
+let g:deoplete#sources#jedi#show_docstring = 1
 
 " Disable preview
 set completeopt-=preview

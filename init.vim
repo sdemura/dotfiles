@@ -196,5 +196,5 @@ nnoremap <leader>gc :Gcommit<space>
 nnoremap <leader>gp :Gpush<space>
 
 " Color Scheme.
-set background=light
+set background=dark
 colorscheme gruvbox

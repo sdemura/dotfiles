@@ -1,7 +1,7 @@
 set shell=/bin/zsh
 
-let g:python_host_prog = expand('~/.pyenv/versions/nvim2/bin/python')
-let g:python3_host_prog = expand('~/.pyenv/versions/nvim3/bin/python3')
+let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))

@@ -9,7 +9,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="sean"
+ZSH_THEME="sunaku"
 # ZSH_THEME="theunraveler"
 
 # Set list of themes to pick from when loading at random
@@ -70,7 +70,7 @@ ZSH_THEME="sean"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf)
+plugins=(git fzf pyenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,37 +115,37 @@ export EDITOR=nvim
 # tmux thing
 export DISABLE_AUTO_TITLE='true'
 
-alias code='code-insiders'
+# alias code='code-insiders'
 
-alias pf9='cd ~/src/platform9'
+# alias pf9='cd ~/src/platform9'
 
-# https://news.ycombinator.com/item?id=7762904
-bindkey '^P' history-beginning-search-backward
-bindkey '^N' history-beginning-search-forward
+# # https://news.ycombinator.com/item?id=7762904
+# bindkey '^P' history-beginning-search-backward
+# bindkey '^N' history-beginning-search-forward
 
-export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .'
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-if grep -qi Debian /etc/os-release 2>/dev/null; then
-    alias fd=fdfind
-fi
+# if grep -qi Debian /etc/os-release 2>/dev/null; then
+#     alias fd=fdfind
+# fi
 
-alias vim="nvim"
-alias n="nvim"
+# alias vim="nvim"
+# alias n="nvim"
 
-[[ -f ~/.creds ]] && source ~/.creds
+# [[ -f ~/.creds ]] && source ~/.creds
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
+# export PATH="$HOME/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
 
-# # workaround until brew nvim is fixed
-# export PATH="$HOME/nvim-osx64/bin:$PATH"
+# # # workaround until brew nvim is fixed
+# # export PATH="$HOME/nvim-osx64/bin:$PATH"
 
-alias gbage='for k in `git branch -r | \
-  perl -pe '\''s/^..(.*?)( ->.*)?$/\1/'\''`; \
-  do echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k -- | \
-     head -n 1`\\t$k; done | sort -r'
+# alias gbage='for k in `git branch -r | \
+#   perl -pe '\''s/^..(.*?)( ->.*)?$/\1/'\''`; \
+#   do echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k -- | \
+#      head -n 1`\\t$k; done | sort -r'
 
-alias branch='git rev-parse --abbrev-ref HEAD'
+# alias branch='git rev-parse --abbrev-ref HEAD'
 
-source /Users/sean/.local/share/nvim/plugged/gruvbox/gruvbox_256palette.sh
+# source /Users/sean/.local/share/nvim/plugged/gruvbox/gruvbox_256palette.sh

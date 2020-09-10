@@ -17,6 +17,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " IDE like things
 Plug 'Raimondi/delimitMate'
 Plug 'sbdchd/neoformat'
+Plug 'dense-analysis/ale'
 
 " Git
 Plug 'mhinz/vim-signify'
@@ -29,6 +30,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
 Plug 'majutsushi/tagbar'
+Plug 'junegunn/vim-peekaboo'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
@@ -117,6 +119,9 @@ augroup END
 " Yaml file settings
 autocmd FileType yaml setlocal breakindent breakindentopt=shift:2,min:40,sbr showbreak=>> wrap
 
+" Markdown settings
+au BufRead,BufNewFile *.md setlocal textwidth=80
+
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_json = ['jq']
@@ -166,7 +171,7 @@ let g:NERDTreeShowHidden=1
 nnoremap <leader>gg :GrepperRg<space>
 let g:grepper = {}
 let g:grepper.tools = ['rg']
-let g:grepper.rg = { 'grepprg': 'rg --hidden -g "!.git" --no-heading  --vimgrep --smart-case --regexp' }
+let g:grepper.rg = { 'grepprg': 'rg --hidden -g "!.git" -g "!venv" -g "!.venv"--no-heading  --vimgrep --smart-case --regexp' }
 let g:grepper.simple_prompt = 1
 
 " saltstack
@@ -177,7 +182,7 @@ nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 "
 " Use fd for ctrlp.
 if executable('fd')
-    let g:ctrlp_user_command = 'fd --type f --hidden --exclude .git --color never "" %s'
+    let g:ctrlp_user_command = 'fd --type f --hidden --exclude .git --exclude venv --exclude .venv --color never "" %s'
     let g:ctrlp_use_caching = 0
 endif
 let g:ctrlp_working_path_mode = 0
@@ -196,5 +201,5 @@ nnoremap <leader>gc :Gcommit<space>
 nnoremap <leader>gp :Gpush<space>
 
 " Color Scheme.
-set background=dark
+set background=light
 colorscheme gruvbox

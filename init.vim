@@ -59,9 +59,9 @@ Plug 'rodjek/vim-puppet'
 Plug 'ctrlpvim/ctrlp.vim'
 
 " Code Completion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'davidhalter/jedi-vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'deoplete-plugins/deoplete-jedi'
+" Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 " Settings

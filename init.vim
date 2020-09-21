@@ -1,7 +1,10 @@
 set shell=/bin/zsh
 
-let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
-let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
+" let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
+" let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
+
+let g:python_host_prog = expand('~/.virtualenvs/neovim-py2/bin/python')
+let g:python3_host_prog = expand('~/.virtualenvs/neovim-py3/bin/python3')
 
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -35,6 +38,8 @@ Plug 'junegunn/vim-peekaboo'
 " Themes
 Plug 'arcticicestudio/nord-vim'
 Plug 'gruvbox-community/gruvbox'
+Plug 'lifepillar/vim-solarized8'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Usability improvements
 Plug 'ntpeters/vim-better-whitespace'
@@ -59,9 +64,9 @@ Plug 'rodjek/vim-puppet'
 Plug 'ctrlpvim/ctrlp.vim'
 
 " Code Completion
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'deoplete-plugins/deoplete-jedi'
-" Plug 'davidhalter/jedi-vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 " Settings
@@ -148,7 +153,7 @@ let g:delimitMate_expand_cr = 2
 
 " lightline settings
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'dracula',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
@@ -179,7 +184,7 @@ let g:sls_use_jinja_syntax = 1
 
 " change to basedir of open buffer
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
-"
+
 " Use fd for ctrlp.
 if executable('fd')
     let g:ctrlp_user_command = 'fd --type f --hidden --exclude .git --exclude venv --exclude .venv --color never "" %s'
@@ -201,5 +206,5 @@ nnoremap <leader>gc :Gcommit<space>
 nnoremap <leader>gp :Gpush<space>
 
 " Color Scheme.
-set background=light
-colorscheme gruvbox
+set background=dark
+colorscheme dracula

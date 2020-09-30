@@ -1,10 +1,7 @@
 set shell=/bin/zsh
 
-" let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
-" let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
-
-let g:python_host_prog = expand('~/.virtualenvs/neovim-py2/bin/python')
-let g:python3_host_prog = expand('~/.virtualenvs/neovim-py3/bin/python3')
+let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
 
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -77,7 +74,6 @@ set fileformats=unix,dos,mac
 set hidden
 set ignorecase
 set inccommand=nosplit
-set iskeyword+=$
 set langmenu=en
 set lazyredraw
 set linebreak
@@ -107,7 +103,7 @@ nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
 " " Ale Settings
 let g:ale_set_highlights = 0
-let g:ale_echo_msg_format = '%linter%: %s'
+let g:ale_echo_msg_format = '%linter%: %code% %s'
 
 " Disable line numbers and sign column for terminal
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
@@ -122,7 +118,12 @@ augroup remember_position_in_file
 augroup END
 
 " Yaml file settings
-autocmd FileType yaml setlocal breakindent breakindentopt=shift:2,min:40,sbr showbreak=>> wrap
+" autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab breakindent breakindentopt=shift:2,min:40,sbr showbreak=>> wrap
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+" Make sure we can surround Bash Variables
+autocmd FileType sh setlocal iskeyword+=$
+
 
 " Markdown settings
 au BufRead,BufNewFile *.md setlocal textwidth=80
@@ -153,7 +154,7 @@ let g:delimitMate_expand_cr = 2
 
 " lightline settings
 let g:lightline = {
-      \ 'colorscheme': 'dracula',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
@@ -169,14 +170,15 @@ nnoremap H gT
 nnoremap L gt
 
 " NERDTreeToggle
-nnoremap <silent> - :NERDTreeToggle %:p:h<cr>
+" nnoremap <silent> - :NERDTreeToggle %:p:h<cr>
+nnoremap <silent> - :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden=1
 
 " Grepper
 nnoremap <leader>gg :GrepperRg<space>
 let g:grepper = {}
 let g:grepper.tools = ['rg']
-let g:grepper.rg = { 'grepprg': 'rg --hidden -g "!.git" -g "!venv" -g "!.venv"--no-heading  --vimgrep --smart-case --regexp' }
+let g:grepper.rg = {'grepprg': 'rg --hidden -g "!.git" -g "!venv" -g "!.venv" --no-heading  --vimgrep --smart-case --regexp'}
 let g:grepper.simple_prompt = 1
 
 " saltstack
@@ -206,5 +208,5 @@ nnoremap <leader>gc :Gcommit<space>
 nnoremap <leader>gp :Gpush<space>
 
 " Color Scheme.
-set background=dark
-colorscheme dracula
+set background=light
+colorscheme solarized8

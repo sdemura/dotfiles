@@ -58,8 +58,8 @@ if [[ $(uname) == 'Linux' ]]; then
 else
     # use zsh from macos
     brew reinstall readline xz neovim ripgrep fzf fd shellcheck coreutils httpie git
-    defaults write -g InitialKeyRepeat -int 10
-    defaults write -g KeyRepeat -int 1
+    # defaults write -g InitialKeyRepeat -int 10
+    # defaults write -g KeyRepeat -int 1
 fi
 
 if [[ ! -d ~/.pyenv ]]; then
@@ -70,7 +70,7 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 
 PYTHON_2=2.7.16
-PYTHON_3=3.6.9
+PYTHON_3=3.8.5
 
 pyenv install -s $PYTHON_2
 pyenv install -s $PYTHON_3
@@ -81,7 +81,7 @@ pyenv virtualenv -f $PYTHON_2 neovim-py2
 pyenv global $PYTHON_2 $PYTHON_3
 
 pyenv activate neovim-py3
-pip3 install black jedi pynvim neovim pylint
+pip3 install --upgrade black jedi pynvim neovim pylint
 pyenv deactivate
 
 pyenv activate neovim-py2

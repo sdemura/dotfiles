@@ -22,8 +22,9 @@ Plug 'dense-analysis/ale'
 " Git
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
+" Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-dispatch'
+Plug 'shumphrey/fugitive-gitlab.vim'
 
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
@@ -198,6 +199,9 @@ let g:ctrlp_working_path_mode = 0
 let g:deoplete#enable_at_startup = 1
 let g:jedi#completions_enabled = 0
 let g:deoplete#sources#jedi#show_docstring = 1
+
+" gitlab GBrowse
+let g:fugitive_gitlab_domains = ['https://maestro.corelight.io']
 
 " Disable preview
 set completeopt-=preview

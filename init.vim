@@ -22,7 +22,6 @@ Plug 'dense-analysis/ale'
 " Git
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-dispatch'
 Plug 'shumphrey/fugitive-gitlab.vim'
 
@@ -30,6 +29,7 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/vim-peekaboo'
 
@@ -60,6 +60,7 @@ Plug 'rodjek/vim-puppet'
 
 " Fuzzy Finding
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 " Code Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -214,3 +215,6 @@ nnoremap <leader>gp :Gpush<space>
 " Color Scheme.
 set background=light
 colorscheme solarized8
+
+let g:clap_theme = 'solarized_light'
+

@@ -51,16 +51,12 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 Plug 'machakann/vim-highlightedyank'
 
-" Salt
-Plug 'saltstack/salt-vim'
-Plug 'Glench/Vim-Jinja2-Syntax'
-
-" Puppet
-Plug 'rodjek/vim-puppet'
+" " Salt
+" Plug 'saltstack/salt-vim'
+" Plug 'Glench/Vim-Jinja2-Syntax'
 
 " Fuzzy Finding
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 " Code Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -69,7 +65,7 @@ Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 " Settings
-set clipboard^=unnamed,unnamedplus
+" set clipboard^=unnamed,unnamedplus
 set cursorline
 set expandtab
 set fileformats=unix,dos,mac
@@ -156,7 +152,7 @@ let g:delimitMate_expand_cr = 2
 
 " lightline settings
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
@@ -173,7 +169,7 @@ nnoremap L gt
 
 " NERDTreeToggle
 " nnoremap <silent> - :NERDTreeToggle %:p:h<cr>
-nnoremap <silent> - :NERDTreeToggle<cr>
+nnoremap <silent> - :NERDTreeToggleVCS<cr>
 let g:NERDTreeShowHidden=1
 
 " Grepper
@@ -213,8 +209,5 @@ nnoremap <leader>gc :Gcommit<space>
 nnoremap <leader>gp :Gpush<space>
 
 " Color Scheme.
-set background=light
-colorscheme solarized8
-
-let g:clap_theme = 'solarized_light'
-
+set background=dark
+colorscheme nord

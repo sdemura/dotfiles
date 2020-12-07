@@ -84,6 +84,7 @@ set nowrap
 set number
 set pastetoggle=<F2>
 set norelativenumber
+set signcolumn=auto
 set shiftwidth=4
 set smartcase
 set smartindent
@@ -207,6 +208,9 @@ set completeopt-=preview
 nnoremap <leader>ga :Git add<space>
 nnoremap <leader>gc :Gcommit<space>
 nnoremap <leader>gp :Gpush<space>
+
+" yank to *
+nnoremap <leader>y "*y
 
 " Color Scheme.
 set background=dark

@@ -1,7 +1,7 @@
 set shell=/bin/zsh
 
-let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
-let g:python3_host_prog = expand('~/.pyenv/versions/neovim-py3/bin/python3')
+" let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
+let g:python3_host_prog = expand('~/.virtualenvs/neovim-py3/bin/python3')
 
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -22,22 +22,18 @@ Plug 'dense-analysis/ale'
 " Git
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-dispatch'
 Plug 'shumphrey/fugitive-gitlab.vim'
 
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/vim-peekaboo'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
 Plug 'gruvbox-community/gruvbox'
-Plug 'lifepillar/vim-solarized8'
-Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Usability improvements
 Plug 'ntpeters/vim-better-whitespace'
@@ -51,21 +47,21 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 Plug 'machakann/vim-highlightedyank'
 
-" " Salt
-" Plug 'saltstack/salt-vim'
-" Plug 'Glench/Vim-Jinja2-Syntax'
-
 " Fuzzy Finding
 Plug 'ctrlpvim/ctrlp.vim'
 
 " Code Completion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'davidhalter/jedi-vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'deoplete-plugins/deoplete-jedi'
+" Plug 'davidhalter/jedi-vim'
+
+" LSP
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Settings
 " set clipboard^=unnamed,unnamedplus
+set clipboard=unnamedplus
 set cursorline
 set expandtab
 set fileformats=unix,dos,mac

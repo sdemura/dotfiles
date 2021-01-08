@@ -29,7 +29,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
 Plug 'majutsushi/tagbar'
-Plug 'junegunn/vim-peekaboo'
+" Plug 'junegunn/vim-peekaboo'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
@@ -48,7 +48,9 @@ Plug 'mhinz/vim-grepper'
 Plug 'machakann/vim-highlightedyank'
 
 " Fuzzy Finding
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+
 
 " Code Completion
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -118,7 +120,6 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " Make sure we can surround Bash Variables
 autocmd FileType sh setlocal iskeyword+=$
-
 
 " Markdown settings
 au BufRead,BufNewFile *.md setlocal textwidth=80
@@ -206,7 +207,10 @@ nnoremap <leader>gc :Gcommit<space>
 nnoremap <leader>gp :Gpush<space>
 
 " yank to *
-nnoremap <leader>y "*y
+" nnoremap <leader>y "*y
+
+nnoremap <C-p> :Clap files<cr>
+nnoremap <leader>r :Clap registers<cr>
 
 " Color Scheme.
 set background=dark

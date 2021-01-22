@@ -17,7 +17,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " IDE like things
 Plug 'Raimondi/delimitMate'
 Plug 'sbdchd/neoformat'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 " Git
 Plug 'mhinz/vim-signify'
@@ -29,7 +29,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
 Plug 'majutsushi/tagbar'
-" Plug 'junegunn/vim-peekaboo'
 
 " Themes
 Plug 'arcticicestudio/nord-vim'
@@ -48,17 +47,14 @@ Plug 'mhinz/vim-grepper'
 Plug 'machakann/vim-highlightedyank'
 
 " Fuzzy Finding
-" Plug 'ctrlpvim/ctrlp.vim'
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
-
+Plug 'ctrlpvim/ctrlp.vim'
 
 " Code Completion
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'deoplete-plugins/deoplete-jedi'
 " Plug 'davidhalter/jedi-vim'
-
-" LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 " Settings
@@ -150,7 +146,7 @@ let g:delimitMate_expand_cr = 2
 
 " lightline settings
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
@@ -176,9 +172,6 @@ let g:grepper = {}
 let g:grepper.tools = ['rg']
 let g:grepper.rg = {'grepprg': 'rg --hidden -g "!.git" -g "!venv" -g "!.venv" --no-heading  --vimgrep --smart-case --regexp'}
 let g:grepper.simple_prompt = 1
-
-" saltstack
-let g:sls_use_jinja_syntax = 1
 
 " change to basedir of open buffer
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
@@ -213,5 +206,5 @@ nnoremap <C-p> :Clap files<cr>
 nnoremap <leader>r :Clap registers<cr>
 
 " Color Scheme.
-set background=dark
-colorscheme nord
+set background=light
+colorscheme gruvbox

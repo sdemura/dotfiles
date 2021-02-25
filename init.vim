@@ -47,7 +47,9 @@ Plug 'mhinz/vim-grepper'
 Plug 'machakann/vim-highlightedyank'
 
 " Fuzzy Finding
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Code Completion
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -144,16 +146,14 @@ let g:delimitMate_expand_cr = 2
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w
 
-" lightline settings
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
-      \   'right': [ ['lineinfo'], ['percent'] ]
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
+      \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
 
@@ -162,7 +162,6 @@ nnoremap H gT
 nnoremap L gt
 
 " NERDTreeToggle
-" nnoremap <silent> - :NERDTreeToggle %:p:h<cr>
 nnoremap <silent> - :NERDTreeToggleVCS<cr>
 let g:NERDTreeShowHidden=1
 
@@ -202,9 +201,8 @@ nnoremap <leader>gp :Gpush<space>
 " yank to *
 " nnoremap <leader>y "*y
 
-nnoremap <C-p> :Clap files<cr>
-nnoremap <leader>r :Clap registers<cr>
+nnoremap <C-p> :Files<cr>
 
 " Color Scheme.
-set background=light
-colorscheme gruvbox
+set background=dark
+colorscheme nord

@@ -1,6 +1,5 @@
 set shell=/bin/zsh
 
-" let g:python_host_prog = expand('~/.pyenv/versions/neovim-py2/bin/python')
 let g:python3_host_prog = expand('~/.virtualenvs/neovim-py3/bin/python3')
 
 " install vim-plug if not already there
@@ -17,7 +16,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 " IDE like things
 Plug 'Raimondi/delimitMate'
 Plug 'sbdchd/neoformat'
-" Plug 'dense-analysis/ale'
 
 " Git
 Plug 'mhinz/vim-signify'
@@ -27,11 +25,14 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
-Plug 'preservim/nerdtree'
+Plug 'justinmk/vim-dirvish'
 Plug 'majutsushi/tagbar'
 
+" Neovim 0.5 stuff
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
+
 " Themes
-Plug 'arcticicestudio/nord-vim'
 Plug 'gruvbox-community/gruvbox'
 
 " Usability improvements
@@ -47,14 +48,10 @@ Plug 'mhinz/vim-grepper'
 Plug 'machakann/vim-highlightedyank'
 
 " Fuzzy Finding
-" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Code Completion
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'deoplete-plugins/deoplete-jedi'
-" Plug 'davidhalter/jedi-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
@@ -113,7 +110,6 @@ augroup remember_position_in_file
 augroup END
 
 " Yaml file settings
-" autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab breakindent breakindentopt=shift:2,min:40,sbr showbreak=>> wrap
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " Make sure we can surround Bash Variables
@@ -147,23 +143,22 @@ let g:delimitMate_expand_cr = 2
 :command! W w
 
 let g:lightline = {
-      \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'FugitiveHead',
+      \   'cocstatus': 'coc#status',
       \ },
       \ }
+
+"Use autocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 " make navigating tabs easier
 nnoremap H gT
 nnoremap L gt
-
-" NERDTreeToggle
-nnoremap <silent> - :NERDTreeToggleVCS<cr>
-let g:NERDTreeShowHidden=1
 
 " Grepper
 nnoremap <leader>gg :GrepperRg<space>
@@ -174,13 +169,6 @@ let g:grepper.simple_prompt = 1
 
 " change to basedir of open buffer
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
-
-" Use fd for ctrlp.
-if executable('fd')
-    let g:ctrlp_user_command = 'fd --type f --hidden --exclude .git --exclude venv --exclude .venv --color never "" %s'
-    let g:ctrlp_use_caching = 0
-endif
-let g:ctrlp_working_path_mode = 0
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -195,14 +183,38 @@ set completeopt-=preview
 
 " Vim fugitive shortcuts
 nnoremap <leader>ga :Git add<space>
-nnoremap <leader>gc :Gcommit<space>
-nnoremap <leader>gp :Gpush<space>
-
-" yank to *
-" nnoremap <leader>y "*y
+nnoremap <leader>gc :G commit<space>
+nnoremap <leader>gp :G push<space>
 
 nnoremap <C-p> :Files<cr>
 
+" Themes!
+function NordTheme()
+    let g:nvcode_termcolors=256
+    set background=dark
+    let $BAT_THEME='Nord'
+    let g:lightline.colorscheme='nord'
+    colorscheme nord
+endfunction
+
+function GruvboxTheme()
+    set background=light
+    let $BAT_THEME='gruvbox-light'
+    let g:lightline.colorscheme='gruvbox'
+    colorscheme gruvbox
+endfunction
+
 " Color Scheme.
-set background=dark
-colorscheme nord
+call NordTheme()
+
+" Treesitter stuff
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  highlight = { enable = true },
+}
+EOF
+
+" Coc stuff
+"" Symbol renaming.
+nmap <leader>r <Plug>(coc-rename)

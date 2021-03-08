@@ -210,7 +210,7 @@ call NordTheme()
 " Treesitter stuff
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  ensure_installed = {"python", "bash"},
   highlight = { enable = true },
 }
 EOF

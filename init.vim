@@ -14,8 +14,9 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 " IDE like things
-Plug 'Raimondi/delimitMate'
+" Plug 'Raimondi/delimitMate'
 Plug 'sbdchd/neoformat'
+Plug 'windwp/nvim-autopairs'
 
 " Git
 Plug 'mhinz/vim-signify'
@@ -24,9 +25,13 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'justinmk/vim-dirvish'
-Plug 'majutsushi/tagbar'
+Plug 'preservim/tagbar'
+
+" Plug 'arcticicestudio/nord-vim'
 
 " Neovim 0.5 stuff
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -34,6 +39,7 @@ Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
 
 " Themes
 Plug 'gruvbox-community/gruvbox'
+Plug 'sainnhe/edge'
 
 " Usability improvements
 Plug 'ntpeters/vim-better-whitespace'
@@ -142,20 +148,6 @@ let g:delimitMate_expand_cr = 2
 " I have a habbit of typing W to save, so we'll remap it.
 :command! W w
 
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'cocstatus': 'coc#status',
-      \ },
-      \ }
-
-"Use autocmd to force lightline update.
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
-
 " make navigating tabs easier
 nnoremap H gT
 nnoremap L gt
@@ -193,15 +185,22 @@ function NordTheme()
     let g:nvcode_termcolors=256
     set background=dark
     let $BAT_THEME='Nord'
-    let g:lightline.colorscheme='nord'
+    let g:airline_theme='nord_minimal'
     colorscheme nord
 endfunction
 
 function GruvboxTheme()
     set background=light
     let $BAT_THEME='gruvbox-light'
-    let g:lightline.colorscheme='gruvbox'
+    let g:airline_theme='gruvbox'
     colorscheme gruvbox
+endfunction
+
+function EdgeTheme()
+    set background=dark
+    let $BAT_THEME='Nord'
+    let g:airline_theme='edge'
+    colorscheme edge
 endfunction
 
 " Color Scheme.
@@ -215,6 +214,12 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+lua <<EOF
+require('nvim-autopairs').setup()
+EOF
+
 " Coc stuff
 "" Symbol renaming.
 nmap <leader>r <Plug>(coc-rename)
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)

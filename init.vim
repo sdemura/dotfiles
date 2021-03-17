@@ -25,21 +25,21 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
-" Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'justinmk/vim-dirvish'
 Plug 'preservim/tagbar'
-
-" Plug 'arcticicestudio/nord-vim'
 
 " Neovim 0.5 stuff
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
 
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
 " Themes
 Plug 'gruvbox-community/gruvbox'
 Plug 'sainnhe/edge'
+" Plug 'arcticicestudio/nord-vim'
 
 " Usability improvements
 Plug 'ntpeters/vim-better-whitespace'
@@ -96,6 +96,9 @@ set termguicolors
 set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 
+" Use the almighty , for leader
+let mapleader = ","
+"
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
@@ -178,7 +181,8 @@ nnoremap <leader>ga :Git add<space>
 nnoremap <leader>gc :G commit<space>
 nnoremap <leader>gp :G push<space>
 
-nnoremap <C-p> :Files<cr>
+nnoremap <leader>b :Buffers<cr>
+nnoremap <leader>f :Files<cr>
 
 " Themes!
 function NordTheme()
@@ -217,6 +221,9 @@ EOF
 lua <<EOF
 require('nvim-autopairs').setup()
 EOF
+
+" nnoremap <leader>f NvimTreeToggle<cr>
+nnoremap <leader>o :NvimTreeToggle<CR>
 
 " Coc stuff
 "" Symbol renaming.

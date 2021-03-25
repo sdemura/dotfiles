@@ -96,9 +96,10 @@ set termguicolors
 set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 
-" Use the almighty , for leader
+" Use the almighty , for leader, but also keep \
+nmap \ ,
 let mapleader = ","
-"
+
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
@@ -182,7 +183,7 @@ nnoremap <leader>gc :G commit<space>
 nnoremap <leader>gp :G push<space>
 
 nnoremap <leader>b :Buffers<cr>
-nnoremap <leader>f :Files<cr>
+nnoremap <leader>p :Files<cr>
 
 " Themes!
 function NordTheme()
@@ -213,7 +214,7 @@ call NordTheme()
 " Treesitter stuff
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"python", "bash"},
+  ensure_installed = {"python", "bash", "yaml", "json"},
   highlight = { enable = true },
 }
 EOF
@@ -223,6 +224,8 @@ require('nvim-autopairs').setup()
 EOF
 
 " nnoremap <leader>f NvimTreeToggle<cr>
+let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
+let g:nvim_tree_hijack_netrw = 0
 nnoremap <leader>o :NvimTreeToggle<CR>
 
 " Coc stuff

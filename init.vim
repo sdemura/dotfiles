@@ -226,10 +226,29 @@ EOF
 " nnoremap <leader>f NvimTreeToggle<cr>
 let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
 let g:nvim_tree_hijack_netrw = 0
-nnoremap <leader>o :NvimTreeToggle<CR>
+nnoremap <silent> <leader>o :NvimTreeToggle<CR>
 
 " Coc stuff
 "" Symbol renaming.
-nmap <leader>r <Plug>(coc-rename)
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+
+" GoTo code navigation.
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gy <Plug>(coc-type-definition)
+nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300

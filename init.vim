@@ -1,4 +1,4 @@
-set shell=/bin/zsh
+" set shell=/bin/zsh
 
 let g:python3_host_prog = expand('~/.virtualenvs/neovim-py3/bin/python3')
 
@@ -15,6 +15,7 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 " IDE like things
 " Plug 'Raimondi/delimitMate'
+Plug 'dense-analysis/ale'
 Plug 'sbdchd/neoformat'
 Plug 'windwp/nvim-autopairs'
 
@@ -107,6 +108,10 @@ nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %code% %s'
 
+let g:ale_linters = {'python': ['pylint']}
+" let g:ale_linters = ['shellcheck']
+" let g:ale_linters_explicit = 1
+
 " Disable line numbers and sign column for terminal
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
 
@@ -185,32 +190,6 @@ nnoremap <leader>gp :G push<space>
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>p :Files<cr>
 
-" Themes!
-function NordTheme()
-    let g:nvcode_termcolors=256
-    set background=dark
-    let $BAT_THEME='Nord'
-    let g:airline_theme='nord_minimal'
-    colorscheme nord
-endfunction
-
-function GruvboxTheme()
-    set background=light
-    let $BAT_THEME='gruvbox-light'
-    let g:airline_theme='gruvbox'
-    colorscheme gruvbox
-endfunction
-
-function EdgeTheme()
-    set background=dark
-    let $BAT_THEME='Nord'
-    let g:airline_theme='edge'
-    colorscheme edge
-endfunction
-
-" Color Scheme.
-call NordTheme()
-
 " Treesitter stuff
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -252,3 +231,31 @@ endfunction
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
+
+" Themes!
+function NordTheme()
+    let g:nvcode_termcolors=256
+    set background=dark
+    let $BAT_THEME='Nord'
+    let g:airline_theme='nord_minimal'
+    colorscheme nord
+endfunction
+
+function GruvboxTheme()
+    set background=light
+    let $BAT_THEME='gruvbox-light'
+    let g:airline_theme='gruvbox'
+    colorscheme gruvbox
+endfunction
+
+function EdgeTheme()
+    set background=light
+    let $BAT_THEME='Nord'
+    let g:airline_theme='edge'
+    colorscheme edge
+endfunction
+
+" Color Scheme.
+call NordTheme()
+
+

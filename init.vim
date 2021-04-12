@@ -14,7 +14,6 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 " IDE like things
-" Plug 'Raimondi/delimitMate'
 Plug 'dense-analysis/ale'
 Plug 'sbdchd/neoformat'
 Plug 'windwp/nvim-autopairs'
@@ -26,9 +25,8 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 
 " UI Enhancements
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/tagbar'
+Plug 'hoob3rt/lualine.nvim'
 
 " Neovim 0.5 stuff
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -190,6 +188,10 @@ nnoremap <leader>gp :G push<space>
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>p :Files<cr>
 
+
+" Indent Guide settings
+let g:indent_guides_guide_size=1
+
 " Treesitter stuff
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -199,7 +201,9 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 lua <<EOF
-require('nvim-autopairs').setup()
+require('nvim-autopairs').setup({
+  ignored_next_char = "[%w%.]" -- will ignore alphanumeric and `.` symbol
+})
 EOF
 
 " nnoremap <leader>f NvimTreeToggle<cr>
@@ -217,7 +221,6 @@ nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 
-
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -234,28 +237,18 @@ set updatetime=300
 
 " Themes!
 function NordTheme()
-    let g:nvcode_termcolors=256
     set background=dark
     let $BAT_THEME='Nord'
-    let g:airline_theme='nord_minimal'
+
+    lua <<EOF
+    require('lualine').setup{
+        options = {theme = 'nord'},
+        extensions = {'fugitive', 'fzf', 'nvim-tree'}
+    }
+EOF
     colorscheme nord
-endfunction
-
-function GruvboxTheme()
-    set background=light
-    let $BAT_THEME='gruvbox-light'
-    let g:airline_theme='gruvbox'
-    colorscheme gruvbox
-endfunction
-
-function EdgeTheme()
-    set background=light
-    let $BAT_THEME='Nord'
-    let g:airline_theme='edge'
-    colorscheme edge
 endfunction
 
 " Color Scheme.
 call NordTheme()
-
 

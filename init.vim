@@ -36,7 +36,6 @@ Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Themes
-Plug 'gruvbox-community/gruvbox'
 " Plug 'arcticicestudio/nord-vim'
 
 " Usability improvements
@@ -61,7 +60,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Settings
-" set clipboard^=unnamed,unnamedplus
 set clipboard=unnamedplus
 set cursorline
 set expandtab
@@ -93,6 +91,11 @@ set tabstop=4
 set termguicolors
 set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
+"
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+" for coc.nvim
+set updatetime=300
 
 " Use the almighty , for leader, but also keep \
 nmap \ ,
@@ -106,8 +109,6 @@ let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %code% %s'
 
 let g:ale_linters = {'python': ['pylint']}
-" let g:ale_linters = ['shellcheck']
-" let g:ale_linters_explicit = 1
 
 " Disable line numbers and sign column for terminal
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
@@ -168,11 +169,6 @@ let g:grepper.simple_prompt = 1
 " change to basedir of open buffer
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:jedi#completions_enabled = 0
-let g:deoplete#sources#jedi#show_docstring = 1
-
 " gitlab GBrowse
 let g:fugitive_gitlab_domains = ['https://maestro.corelight.io']
 
@@ -186,7 +182,6 @@ nnoremap <leader>gp :G push<space>
 
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>p :Files<cr>
-
 
 " Indent Guide settings
 let g:indent_guides_guide_size=1
@@ -230,10 +225,6 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
 
 " Themes!
 function NordTheme()

@@ -37,7 +37,6 @@ Plug 'kyazdani42/nvim-tree.lua'
 
 " Themes
 Plug 'gruvbox-community/gruvbox'
-Plug 'sainnhe/edge'
 " Plug 'arcticicestudio/nord-vim'
 
 " Usability improvements
@@ -202,7 +201,8 @@ EOF
 
 lua <<EOF
 require('nvim-autopairs').setup({
-  ignored_next_char = "[%w%.]" -- will ignore alphanumeric and `.` symbol
+  ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
+  check_line_pair = false
 })
 EOF
 

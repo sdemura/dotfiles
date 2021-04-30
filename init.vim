@@ -234,7 +234,8 @@ function NordTheme()
     lua <<EOF
     require('lualine').setup{
         options = {theme = 'nord'},
-        extensions = {'fugitive', 'fzf', 'nvim-tree'}
+        extensions = {'fugitive', 'fzf', 'nvim-tree'},
+        sections = {lualine_c = {{'filename', shorten = true, full_path = true}}},
     }
 EOF
     colorscheme nord

@@ -50,13 +50,10 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 Plug 'machakann/vim-highlightedyank'
 
-" HIghlighting
+" Syntax Hilighting
 Plug 'hashivim/vim-hashicorp-tools'
 
 " Fuzzy Finding
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Plug 'junegunn/fzf.vim'
-
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'

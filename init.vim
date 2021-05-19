@@ -50,9 +50,16 @@ Plug 'sdemura/dash.vim'
 Plug 'mhinz/vim-grepper'
 Plug 'machakann/vim-highlightedyank'
 
+" HIghlighting
+Plug 'hashivim/vim-hashicorp-tools'
+
 " Fuzzy Finding
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Code Completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -181,7 +188,10 @@ nnoremap <leader>gc :G commit<space>
 nnoremap <leader>gp :G push<space>
 
 nnoremap <leader>b :Buffers<cr>
-nnoremap <leader>p :Files<cr>
+" nnoremap <leader>p :Files<cr>
+nnoremap <leader>p :Telescope find_files hidden=true<cr>
+" nnoremap <leader>p :lua require 'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob=!.git'} })<cr>
+
 
 " Indent Guide settings
 let g:indent_guides_guide_size=1
@@ -234,8 +244,23 @@ function NordTheme()
     lua <<EOF
     require('lualine').setup{
         options = {theme = 'nord'},
-        extensions = {'fugitive', 'fzf', 'nvim-tree'},
-        sections = {lualine_c = {{'filename', shorten = true, full_path = true}}},
+        extensions = {'fugitive', 'nvim-tree'},
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch'},
+          lualine_c = {{'filename', path=2}},
+          lualine_x = {'encoding', 'fileformat', 'filetype'},
+          lualine_y = {'progress'},
+          lualine_z = {'location'}
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {'filename'},
+          lualine_x = {'location'},
+          lualine_y = {},
+          lualine_z = {}
+        }
     }
 EOF
     colorscheme nord

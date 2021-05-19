@@ -184,10 +184,7 @@ nnoremap <leader>ga :Git add<space>
 nnoremap <leader>gc :G commit<space>
 nnoremap <leader>gp :G push<space>
 
-nnoremap <leader>b :Buffers<cr>
-" nnoremap <leader>p :Files<cr>
-nnoremap <leader>p :Telescope find_files hidden=true<cr>
-" nnoremap <leader>p :lua require 'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob=!.git'} })<cr>
+nnoremap <leader>p :lua require 'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob=!.git', '--smart-case'} })<cr>
 
 
 " Indent Guide settings

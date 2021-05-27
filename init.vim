@@ -94,11 +94,6 @@ set tabstop=4
 set termguicolors
 set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
-"
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-" for coc.nvim
-" set updatetime=300
 
 " Use the almighty , for leader, but also keep \
 nmap \ ,
@@ -208,26 +203,6 @@ EOF
 let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
 let g:nvim_tree_hijack_netrw = 0
 nnoremap <silent> <leader>o :NvimTreeToggle<CR>
-
-" " Coc stuff
-" "" Symbol renaming.
-" nmap <leader>rn <Plug>(coc-rename)
-
-" " GoTo code navigation.
-" nmap <silent> <leader>gd <Plug>(coc-definition)
-" nmap <silent> <leader>gy <Plug>(coc-type-definition)
-" nmap <silent> <leader>gi <Plug>(coc-implementation)
-" nmap <silent> <leader>gr <Plug>(coc-references)
-
-" function! s:show_documentation()
-"   if (index(['vim','help'], &filetype) >= 0)
-"     execute 'h '.expand('<cword>')
-"   elseif (coc#rpc#ready())
-"     call CocActionAsync('doHover')
-"   else
-"     execute '!' . &keywordprg . " " . expand('<cword>')
-"   endif
-" endfunction
 
 " Themes!
 function NordTheme()

@@ -32,7 +32,10 @@ Plug 'hoob3rt/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
 Plug 'rktjmp/lush.nvim'
+
+" Color Schemes
 Plug 'npxbr/gruvbox.nvim'
+Plug 'projekt0n/github-nvim-theme'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
@@ -95,7 +98,7 @@ set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 
 
-let mapleader="\<Space>"
+" let mapleader="\<Space>"
 
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -332,8 +335,35 @@ EOF
     set background=light
     colorscheme gruvbox
 endfunction
+"
+" Themes!
+function GithubLightTheme()
+    lua <<EOF
+    require('lualine').setup{
+        options = {theme = 'github'},
+        extensions = {'fugitive', 'nvim-tree'},
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch'},
+          lualine_c = {{'filename', file_status = true, path=1}},
+          lualine_x = {'encoding', 'fileformat', 'filetype'},
+          lualine_y = {'progress'},
+          lualine_z = {'location'}
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {'filename'},
+          lualine_x = {'location'},
+          lualine_y = {},
+          lualine_z = {}
+        }
+    }
+    require('github-theme').setup({themeStyle = 'light'})
+EOF
+endfunction
 
-call GruvboxLightTheme()
+call GithubLightTheme()
 
 " https://github.com/nvim-telescope/telescope.nvim/issues/82#issuecomment-854596669
 autocmd FileType TelescopePrompt

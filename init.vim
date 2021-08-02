@@ -31,6 +31,7 @@ Plug 'hoob3rt/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': '0.5-compat'}
 Plug 'rktjmp/lush.nvim'
 Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+Plug 'romgrk/barbar.nvim'
 
 " Color Schemes
 Plug 'npxbr/gruvbox.nvim'
@@ -284,7 +285,7 @@ endfunction
 function GruvBoxTheme()
 lua <<EOF
     require('lualine').setup{
-        options = {theme = 'gruvbox_light'},
+        options = {theme = 'gruvbox'},
         extensions = {'fugitive', 'nvim-tree'},
         sections = {
           lualine_a = {'mode'},
@@ -336,8 +337,36 @@ require('github-theme').setup({themeStyle = 'light'}) -- tab pages line, active 
 EOF
 endfunction
 
+function GithubDarkTheme()
+lua <<EOF
+    require('lualine').setup{
+        options = {theme = 'github'},
+        extensions = {'fugitive', 'nvim-tree'},
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch'},
+          lualine_c = {{'filename', file_status = true, path=1}},
+          lualine_x = {'encoding', 'fileformat', 'filetype'},
+          lualine_y = {'progress'},
+          lualine_z = {'location'}
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {'filename'},
+          lualine_x = {'location'},
+          lualine_y = {},
+          lualine_z = {}
+        }
+    }
+require('github-theme').setup({themeStyle = 'dark'}) -- tab pages line, active tab page label
+
+EOF
+endfunction
+
 " call GithubLightTheme()
-call GruvBoxTheme()
+call GithubDarkTheme()
+" call GruvBoxTheme()
 
 if executable("rg")
     set grepprg=rg\ -i\ --vimgrep\ --no-heading\ --hidden\ --glob=!.git\ --glob=!.scannerwork\ --smart-case
@@ -369,3 +398,4 @@ augroup END
 cnoreabbrev <expr> grep (getcmdtype() ==# ':' && getcmdline() ==# 'grep') ? 'Grep' : 'grep'
 
 let g:better_whitespace_filetypes_blacklist=['TelescopePrompt']
+

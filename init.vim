@@ -31,7 +31,9 @@ Plug 'hoob3rt/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': '0.5-compat'}
 Plug 'rktjmp/lush.nvim'
 Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
-Plug 'romgrk/barbar.nvim'
+" Plug 'romgrk/barbar.nvim'
+Plug 'kdheepak/tabline.nvim'
+
 
 " Color Schemes
 Plug 'npxbr/gruvbox.nvim'
@@ -263,7 +265,7 @@ lua <<EOF
         sections = {
           lualine_a = {'mode'},
           lualine_b = {'branch'},
-          lualine_c = {{'filename', file_status = true, path=1}},
+          lualine_c = {{'filename', file_status = true, path=2}},
           lualine_x = {'encoding', 'fileformat', 'filetype'},
           lualine_y = {'progress'},
           lualine_z = {'location'}
@@ -365,7 +367,7 @@ EOF
 endfunction
 
 " call GithubLightTheme()
-call GithubDarkTheme()
+call GithubLightTheme()
 " call GruvBoxTheme()
 
 if executable("rg")
@@ -399,3 +401,9 @@ cnoreabbrev <expr> grep (getcmdtype() ==# ':' && getcmdline() ==# 'grep') ? 'Gre
 
 let g:better_whitespace_filetypes_blacklist=['TelescopePrompt']
 
+lua <<EOF
+require'tabline'.setup {}
+EOF
+
+
+nnoremap <leader>tt :TablineToggleShowAllBuffers<cr>

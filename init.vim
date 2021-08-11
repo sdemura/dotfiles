@@ -31,7 +31,6 @@ Plug 'hoob3rt/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': '0.5-compat'}
 Plug 'rktjmp/lush.nvim'
 Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
-" Plug 'romgrk/barbar.nvim'
 Plug 'kdheepak/tabline.nvim'
 
 
@@ -42,6 +41,8 @@ Plug 'arcticicestudio/nord-vim'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
+
+Plug 'earthly/earthly.vim', { 'branch': 'main' }
 
 " Usability improvements
 Plug 'ntpeters/vim-better-whitespace'
@@ -121,13 +122,22 @@ augroup remember_position_in_file
 augroup END
 
 " Yaml file settings
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+augroup yaml_settings
+    autocmd!
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+augroup END
 
 " Make sure we can surround Bash Variables
-autocmd FileType sh setlocal iskeyword+=$
+augroup bash_word
+    autocmd!
+    autocmd FileType sh setlocal iskeyword+=$
+augroup END
 
 " Markdown settings
-au BufRead,BufNewFile *.md setlocal textwidth=80
+augroup md_wrap
+    autocmd!
+    au BufRead,BufNewFile *.md setlocal textwidth=80
+augroup END
 
 " neoformat settings
 let g:neoformat_enabled_python = ['black', 'isort']
@@ -367,12 +377,11 @@ EOF
 endfunction
 
 " call GithubLightTheme()
-call GithubLightTheme()
 " call GruvBoxTheme()
+call GithubLightTheme()
 
-if executable("rg")
+if executable('rg')
     set grepprg=rg\ -i\ --vimgrep\ --no-heading\ --hidden\ --glob=!.git\ --glob=!.scannerwork\ --smart-case
-    "set grepformat=%f:%l:%c:%m,%f:%l:%m
     set grepformat^=%f:%l:%c:%m
 endif
 
@@ -401,9 +410,8 @@ cnoreabbrev <expr> grep (getcmdtype() ==# ':' && getcmdline() ==# 'grep') ? 'Gre
 
 let g:better_whitespace_filetypes_blacklist=['TelescopePrompt']
 
+" tabline fun
 lua <<EOF
 require'tabline'.setup {}
 EOF
-
-
 nnoremap <leader>tt :TablineToggleShowAllBuffers<cr>

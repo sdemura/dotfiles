@@ -14,7 +14,7 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 " IDE like things
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'sbdchd/neoformat'
 
 " Git
@@ -31,6 +31,7 @@ Plug 'hoob3rt/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': '0.5-compat'}
 Plug 'rktjmp/lush.nvim'
 Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+Plug 'gennaro-tedesco/nvim-peekup'
 Plug 'kdheepak/tabline.nvim'
 
 
@@ -265,6 +266,9 @@ lua << EOF
     }
 EOF
 
+set completeopt=menuone,noselect
+
+
 " Themes!
 function NordTheme()
     set background=dark
@@ -378,7 +382,7 @@ endfunction
 
 " call GithubLightTheme()
 " call GruvBoxTheme()
-call GithubLightTheme()
+call GithubDarkTheme()
 
 if executable('rg')
     set grepprg=rg\ -i\ --vimgrep\ --no-heading\ --hidden\ --glob=!.git\ --glob=!.scannerwork\ --smart-case
@@ -412,6 +416,7 @@ let g:better_whitespace_filetypes_blacklist=['TelescopePrompt']
 
 " tabline fun
 lua <<EOF
-require'tabline'.setup {}
+    require'tabline'.setup { tabline_show_bufnr = true }
 EOF
 nnoremap <leader>tt :TablineToggleShowAllBuffers<cr>
+

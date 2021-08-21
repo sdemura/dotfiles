@@ -174,7 +174,7 @@ nnoremap <leader>gp :G push<space>
 
 " nnoremap <silent> <C-p> <cmd>:lua require 'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob=!.git', '--glob=!.scannerwork', '--smart-case'} })<cr>
 " nnoremap <silent> <leader>p <cmd>:Telescope projects<cr>
- nnoremap <silent> <C-p> :FZF<cr>
+ nnoremap <silent> <C-t> :FZF<cr>
 
 " " Remap control r to show registers
 " inoremap <C-r> <cmd> :lua require 'telescope.builtin'.registers()<cr>

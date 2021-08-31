@@ -14,7 +14,7 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 " IDE like things
-" Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale'
 Plug 'sbdchd/neoformat'
 
 " Syntax STuff
@@ -32,6 +32,8 @@ Plug 'hoob3rt/lualine.nvim'
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'windwp/nvim-autopairs'
+" project.nvim'
 
 " Neovim 0.5 stuff
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': '0.5-compat'}
@@ -108,7 +110,7 @@ nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '%linter%: %code% %s'
 
-let g:ale_linters = {'python': ['pylint']}
+let g:ale_linters = {'python': []}
 
 let g:sls_use_jinja_syntax = 1
 "
@@ -351,9 +353,16 @@ require('telescope').setup {
     }
   }
 }
+
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
+
+require('nvim-autopairs').setup{}
+require("nvim-autopairs.completion.compe").setup({
+  map_cr = true, --  map <CR> on insert mode
+  map_complete = true, -- it will auto insert `(` after select function or method item
+  auto_select = false,  -- auto select first item
+})
+
 EOF
-
-

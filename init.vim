@@ -2,6 +2,11 @@
 
 let g:python3_host_prog = expand('~/.virtualenvs/neovim-py3/bin/python3')
 
+let g:loaded_python_provider = 0
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+let g:loaded_node_provider = 0
+"
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -32,8 +37,6 @@ Plug 'hoob3rt/lualine.nvim'
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'windwp/nvim-autopairs'
-" project.nvim'
 
 " Neovim 0.5 stuff
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': '0.5-compat'}
@@ -49,14 +52,12 @@ Plug 'hrsh7th/nvim-compe'
 "
 " Color Schemes
 Plug 'projekt0n/github-nvim-theme'
-" Plug 'hashivim/vim-terraform'
 Plug 'jvirtanen/vim-hcl'
 Plug 'saltstack/salt-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 
 " Usability improvements
 Plug 'ntpeters/vim-better-whitespace'
-" Plug 'tpope/vim-commentary'
 Plug 'terrortylor/nvim-comment'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
@@ -116,7 +117,6 @@ let g:sls_use_jinja_syntax = 1
 "
 " Disable line numbers and sign column for terminal
 autocmd TermOpen * setlocal nonumber norelativenumber scl="no"
-
 " Mimic Vim8 Terminal escape
 :tnoremap <C-w> <C-\><C-n><CR><C-l><C-w><Cr>
 
@@ -181,7 +181,7 @@ let g:fugitive_gitlab_domains = ['https://maestro.corelight.io']
 
 
 " " Remap control r to show registers
-" inoremap <C-r> <cmd> :lua require 'telescope.builtin'.registers()<cr>
+inoremap <C-r> <cmd> :lua require 'telescope.builtin'.registers()<cr>
 
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' , '.terraform', '.terraform.lock.hcl' ] "empty by default
 
@@ -226,7 +226,8 @@ augroup END
 nnoremap <silent><leader>o :NvimTreeToggle<CR>
 nnoremap <silent><leader>ff :NvimTreeFindFile<CR>
 
-nnoremap <silent> <C-t> :lua require 'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob=!__pycache__', '--glob=!.terraform', '--glob=!.git', '--glob=!.scannerwork', '--smart-case'} })<cr>
+nnoremap <silent> <C-t> :lua require 'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob=!__pycache__', '--glob=!.terraform', '--glob=!.git', '--glob=!.scannerwork', '--smart-case'}, previewer = false })<cr>
+
 
 lua <<EOF
 -- Github Dark Theme
@@ -342,27 +343,20 @@ end
 require('gitsigns').setup()
 
 --- telescope
-require('telescope').setup {
-  extensions = {
-    fzf = {
-      fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = false, -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
-    }
+ require('telescope').setup {
+    extensions = {
+   fzf = {
+     fuzzy = true,                    -- false will only do exact matching
+     override_generic_sorter = false, -- override the generic sorter
+     override_file_sorter = true,     -- override the file sorter
+     case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                     -- -- the default case_mode is "smart_case"
+   }
   }
-}
+ }
 
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
-
-require('nvim-autopairs').setup{}
-require("nvim-autopairs.completion.compe").setup({
-  map_cr = true, --  map <CR> on insert mode
-  map_complete = true, -- it will auto insert `(` after select function or method item
-  auto_select = false,  -- auto select first item
-})
 
 EOF

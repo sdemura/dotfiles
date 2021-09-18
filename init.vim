@@ -251,7 +251,7 @@ require('lualine').setup{
       lualine_z = {}
     }
 }
-require('github-theme').setup({themeStyle = 'dark'}) -- tab pages line, active tab page label
+require('github-theme').setup({theme_style = 'dark'}) -- tab pages line, active tab page label
 
 --- nvim comment
 require('nvim_comment').setup()

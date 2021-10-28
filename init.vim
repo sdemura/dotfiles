@@ -6,7 +6,7 @@ let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
 let g:loaded_node_provider = 0
-"
+
 " install vim-plug if not already there
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -32,14 +32,16 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 
 " UI Enhancements
 Plug 'preservim/tagbar'
-Plug 'hoob3rt/lualine.nvim'
+" Plug 'hoob3rt/lualine.nvim'
+Plug 'nvim-lualine/lualine.nvim'
 
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Neovim 0.5 stuff
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': '0.5-compat'}
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': '0.5-compat'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'rktjmp/lush.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -47,15 +49,16 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'kyazdani42/nvim-web-devicons' "
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'neovim/nvim-lspconfig'
-Plug 'kabouzeid/nvim-lspinstall'
+Plug 'williamboman/nvim-lsp-installer'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
-"
+
 " Color Schemes
-Plug 'projekt0n/github-nvim-theme'
+" Plug 'projekt0n/github-nvim-theme'
 Plug 'jvirtanen/vim-hcl'
 Plug 'saltstack/salt-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'sainnhe/everforest'
 
 " Usability improvements
 Plug 'ntpeters/vim-better-whitespace'
@@ -104,7 +107,7 @@ set undofile
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*.o,*.pyc
 
 nnoremap Y y$
-"
+
 " Make double-<Esc> clear search highlights
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
@@ -230,29 +233,27 @@ nnoremap <silent><leader>ff :NvimTreeFindFile<CR>
 nnoremap <silent> <C-t> :lua require 'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob=!__pycache__', '--glob=!.terraform', '--glob=!.git', '--glob=!.scannerwork', '--smart-case'}, previewer = false })<cr>
 
 
+
 lua <<EOF
+-- nvim tree
+require'nvim-tree'.setup {}
+
+ require('lualine').setup{
+     options = {theme = 'everforest'},
+     extensions = {'fugitive', 'nvim-tree'},
+     sections = {
+       lualine_a = {'mode'},
+       lualine_b = {'branch'},
+       lualine_c = {{'filename', file_status = true, path=1}},
+       lualine_x = {'encoding', 'fileformat', 'filetype'},
+       lualine_y = {'progress'},
+       lualine_z = {'location'}
+     },
+ }
+
 -- Github Dark Theme
-require('lualine').setup{
-    options = {theme = 'github'},
-    extensions = {'fugitive', 'nvim-tree'},
-    sections = {
-      lualine_a = {'mode'},
-      lualine_b = {'branch'},
-      lualine_c = {{'filename', file_status = true, path=1}},
-      lualine_x = {'encoding', 'fileformat', 'filetype'},
-      lualine_y = {'progress'},
-      lualine_z = {'location'}
-    },
-    inactive_sections = {
-      lualine_a = {},
-      lualine_b = {},
-      lualine_c = {'filename'},
-      lualine_x = {'location'},
-      lualine_y = {},
-      lualine_z = {}
-    }
-}
-require('github-theme').setup({theme_style = 'dark'}) -- tab pages line, active tab page label
+-- require('github-theme').setup({theme_style = 'dark', hide_inactive_statusline = false}) -- tab pages line, active tab page label
+
 
 --- nvim comment
 require('nvim_comment').setup()
@@ -279,14 +280,20 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 
---- lsp install
-require'lspinstall'.setup() -- important
-local servers = require'lspinstall'.installed_servers()
-for _, server in pairs(servers) do
-  require'lspconfig'[server].setup{
-    capabilities = capabilities
-  }
-end
+local lsp_installer = require("nvim-lsp-installer")
+
+lsp_installer.on_server_ready(function(server)
+    local opts = {}
+
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
+
+    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+    server:setup(opts)
+    vim.cmd [[ do User LspAttachBuffers ]]
+end)
 
 --- lspconfig
 local nvim_lsp = require('lspconfig')
@@ -297,14 +304,13 @@ local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  --Enable completion triggered by <c-x><c-o>
+  -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
 
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  -- See `:help vim.lsp.*` for documentation on any of the below functions buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -321,26 +327,51 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
 end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'pyright' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+--- end lspconfig
 
 --- gitsigns
 require('gitsigns').setup()
 
 --- telescope
- require('telescope').setup {
+local actions = require("telescope.actions")
+
+ require('telescope').setup({
+     defaults = {
+         mappings = {
+            i = {
+                ["<esc>"] = actions.close,
+            },
+        },
+    },
     extensions = {
-   fzf = {
-     fuzzy = true,                    -- false will only do exact matching
-     override_generic_sorter = false, -- override the generic sorter
-     override_file_sorter = true,     -- override the file sorter
-     case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                     -- -- the default case_mode is "smart_case"
-   }
-  }
- }
+       fzf = {
+         fuzzy = true,                    -- false will only do exact matching
+         override_generic_sorter = false, -- override the generic sorter
+         override_file_sorter = true,     -- override the file sorter
+         case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                          -- -- the default case_mode is "smart_case"
+       },
+     },
+ })
 
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
-
 EOF
+
+let g:everforest_background = 'soft'
+colorscheme everforest

@@ -187,7 +187,7 @@ let g:fugitive_gitlab_domains = ['https://maestro.corelight.io']
 " " Remap control r to show registers
 inoremap <C-r> <cmd> :lua require 'telescope.builtin'.registers()<cr>
 
-let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' , '.terraform', '.terraform.lock.hcl' ] "empty by default
+" let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' , '.terraform', '.terraform.lock.hcl' ] "empty by default
 
 if executable('rg')
     set grepprg=rg\ -i\ --vimgrep\ --no-heading\ --hidden\ --glob=!.git\ --glob=!.scannerwork\ --smart-case
@@ -236,7 +236,9 @@ nnoremap <silent> <C-t> :lua require 'telescope.builtin'.find_files({ find_comma
 
 lua <<EOF
 -- nvim tree
-require'nvim-tree'.setup {}
+require'nvim-tree'.setup {
+    nvim_tree_ignore = { '.git', 'node_modules', '.cache' , '.terraform', '.terraform.lock.hcl' } -- empty by default
+    }
 
  require('lualine').setup{
      options = {theme = 'everforest'},

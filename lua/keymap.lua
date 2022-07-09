@@ -25,8 +25,9 @@ map('n', '<leader>t', ':TroubleToggle<CR>', opts)
 map('n', '<leader>nv', ':e ~/.dotfiles/init.lua<CR>', opts)
 map('n', '<leader>i', ':e ~/.dotfiles/lua/plugins.lua<CR>', opts)
 
-map('n', 'H', 'gT', opts)
-map('n', 'L', 'gt', opts)
+
+map('n', ']t', 'gT', opts)
+map('n', '[t', 'gt', opts)
 
 -- map("t", "<C-w>", [[<C-\><C-N><C-W><CR>]], opts)
 map('t', '<esc><esc>', [[<C-\><C-N><CR><C-l><CR>]], opts)

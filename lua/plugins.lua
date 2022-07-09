@@ -147,6 +147,7 @@ return require('packer').startup(function(use)
                 local capabilities = vim.lsp.protocol.make_client_capabilities()
                 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
+                -- setup automatic attach for certain lsp's
                 local lspconfig = require('lspconfig')
                 lspconfig.gopls.setup({ on_attach = on_attach, capabilities = capabilities })
                 lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities })
@@ -447,13 +448,14 @@ return require('packer').startup(function(use)
         config = function() vim.g.cursorhold_updatetime = 100 end,
     })
 
-    -- use({
-    --     "echasnovski/mini.nvim",
-    --     branch = "stable",
-    --     config = function()
-    --         require("mini.trailspace").setup({})
-    --     end,
-    -- })
+    use({
+        "echasnovski/mini.nvim",
+        branch = "stable",
+        config = function()
+            require("mini.trailspace").setup({})
+            require("mini.surround").setup({})
+        end,
+    })
 
     use({ 'numToStr/Comment.nvim', config = function() require('Comment').setup({}) end })
 
@@ -462,21 +464,22 @@ return require('packer').startup(function(use)
         config = function() require('indent_blankline').setup({ show_current_context = true }) end,
     })
     -- using packer.nvim
-    -- use({ 'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons',
-    -- config = function()
-    --     require("bufferline").setup {
-    --         options = {
-    --             offsets = {
-    --                 { filetype = "nvimtree", text = "Files", text_align = "left" },
-    --                 { filetype = "neo-tree", text = "Files", text_align = "left" },
-    --                 { filetype = "aerial", text = "Symbols", text_align = "left" }
-    --             },
-    --             separator_style = "slant",
-    --             show_buffer_close_icons = false,
-    --         }
-    --     }
-    -- end
-    -- })
+    use({ 'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons',
+    config = function()
+        require("bufferline").setup {
+            options = {
+                offsets = {
+                    { filetype = "nvimtree", text = "Files", text_align = "left" },
+                    { filetype = "neo-tree", text = "Files", text_align = "left" },
+                    { filetype = "aerial", text = "Symbols", text_align = "left" }
+                },
+                separator_style = "thick",
+                -- show_buffer_close_icons = false,
+                enforce_regular_tabs = true,
+            }
+        }
+    end
+    })
     use({
         'windwp/nvim-autopairs',
         config = function()
@@ -496,12 +499,11 @@ return require('packer').startup(function(use)
             })
         end,
     })
-    use({ 'tiagovla/scope.nvim', config = function() require('scope').setup({}) end })
-    use({ 'rcarriga/nvim-notify', config = function() vim.notify = require('notify') end })
+    use({'tiagovla/scope.nvim', config = function() require('scope').setup({}) end })
+    use({'rcarriga/nvim-notify', config = function() vim.notify = require('notify') end })
     use('stevearc/stickybuf.nvim')
-    use({ 'phaazon/hop.nvim', config = function() require('hop').setup({}) end })
-    use('machakann/vim-sandwich')
-    use('ntpeters/vim-better-whitespace')
-    use({ 'mizlan/iswap.nvim', config = function() require('iswap').setup({}) end })
+    use({'phaazon/hop.nvim', config = function() require('hop').setup({}) end })
+    use({'mizlan/iswap.nvim', config = function() require('iswap').setup({}) end })
+
     if packer_bootstrap then require('packer').sync() end
 end)

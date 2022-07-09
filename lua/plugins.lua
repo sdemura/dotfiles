@@ -502,10 +502,6 @@ return require('packer').startup(function(use)
     use({ 'phaazon/hop.nvim', config = function() require('hop').setup({}) end })
     use('machakann/vim-sandwich')
     use('ntpeters/vim-better-whitespace')
-    use({
-        'gbprod/cutlass.nvim',
-        config = function() require('cutlass').setup({}) end,
-    })
     use({ 'mizlan/iswap.nvim', config = function() require('iswap').setup({}) end })
     if packer_bootstrap then require('packer').sync() end
 end)

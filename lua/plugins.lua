@@ -237,6 +237,7 @@ return require('packer').startup(function(use)
                         i = { ['<esc>'] = actions.close },
                         n = { ['<esc>'] = actions.close },
                     },
+                    file_ignore_patterns = {".git/"}
                 },
                 extensions = {
                     fzf = {

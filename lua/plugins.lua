@@ -510,7 +510,7 @@ return require('packer').startup(function(use)
         config = function() require('stabilize').setup { nested = "QuickFixCmdPost,DiagnosticChanged *" } end })
     use({ "ray-x/lsp_signature.nvim",
         config = function() require('lsp_signature').setup { hi_parameter = "IncSearch" } end })
-    use 'ray-x/go.nvim'
+    use({ 'ray-x/go.nvim', config = function() require("go").setup {} end })
     use 'ray-x/guihua.lua'
 
     if packer_bootstrap then require('packer').sync() end

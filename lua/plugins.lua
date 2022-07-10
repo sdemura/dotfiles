@@ -141,7 +141,7 @@ return require('packer').startup(function(use)
                         show_guides = true,
                     })
                     aerial.on_attach(client, bufnr)
-                    require "lsp_signature".on_attach()
+                    require "lsp_signature".on_attach({ handler_opts = { border = "none" } })
                 end
 
                 -- Add additional capabilities supported by nvim-cmp
@@ -238,7 +238,7 @@ return require('packer').startup(function(use)
                         i = { ['<esc>'] = actions.close },
                         n = { ['<esc>'] = actions.close },
                     },
-                    file_ignore_patterns = {".git/"}
+                    file_ignore_patterns = { ".git/" }
                 },
                 extensions = {
                     fzf = {
@@ -467,20 +467,20 @@ return require('packer').startup(function(use)
     })
     -- using packer.nvim
     use({ 'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons',
-    config = function()
-        require("bufferline").setup {
-            options = {
-                offsets = {
-                    { filetype = "nvimtree", text = "Files", text_align = "left" },
-                    { filetype = "neo-tree", text = "Files", text_align = "left" },
-                    { filetype = "aerial", text = "Symbols", text_align = "left" }
-                },
-                separator_style = "thick",
-                -- show_buffer_close_icons = false,
-                enforce_regular_tabs = true,
+        config = function()
+            require("bufferline").setup {
+                options = {
+                    offsets = {
+                        { filetype = "nvimtree", text = "Files", text_align = "left" },
+                        { filetype = "neo-tree", text = "Files", text_align = "left" },
+                        { filetype = "aerial", text = "Symbols", text_align = "left" }
+                    },
+                    separator_style = "thick",
+                    -- show_buffer_close_icons = false,
+                    enforce_regular_tabs = true,
+                }
             }
-        }
-    end
+        end
     })
     use({
         'windwp/nvim-autopairs',
@@ -501,13 +501,17 @@ return require('packer').startup(function(use)
             })
         end,
     })
-    use({'tiagovla/scope.nvim', config = function() require('scope').setup({}) end })
-    use({'rcarriga/nvim-notify', config = function() vim.notify = require('notify') end })
+    use({ 'tiagovla/scope.nvim', config = function() require('scope').setup({}) end })
+    use({ 'rcarriga/nvim-notify', config = function() vim.notify = require('notify') end })
     use('stevearc/stickybuf.nvim')
-    use({'phaazon/hop.nvim', config = function() require('hop').setup({}) end })
-    use({'mizlan/iswap.nvim', config = function() require('iswap').setup({}) end })
-    use({'luukvbaal/stabilize.nvim', config=function() require('stabilize').setup{nested="QuickFixCmdPost,DiagnosticChanged *"} end})
-    use("ray-x/lsp_signature.nvim")
+    use({ 'phaazon/hop.nvim', config = function() require('hop').setup({}) end })
+    use({ 'mizlan/iswap.nvim', config = function() require('iswap').setup({}) end })
+    use({ 'luukvbaal/stabilize.nvim',
+        config = function() require('stabilize').setup { nested = "QuickFixCmdPost,DiagnosticChanged *" } end })
+    use({ "ray-x/lsp_signature.nvim",
+        config = function() require('lsp_signature').setup { hi_parameter = "IncSearch" } end })
+    use 'ray-x/go.nvim'
+    use 'ray-x/guihua.lua'
 
     if packer_bootstrap then require('packer').sync() end
 end)

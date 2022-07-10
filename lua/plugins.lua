@@ -141,7 +141,7 @@ return require('packer').startup(function(use)
                         show_guides = true,
                     })
                     aerial.on_attach(client, bufnr)
-                    require "lsp_signature".on_attach({ handler_opts = { border = "none" } })
+                    require "lsp_signature".on_attach({ handler_opts = { border = "none" }, hint_enable = false })
                 end
 
                 -- Add additional capabilities supported by nvim-cmp

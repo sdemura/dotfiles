@@ -141,6 +141,7 @@ return require('packer').startup(function(use)
                         show_guides = true,
                     })
                     aerial.on_attach(client, bufnr)
+                    require "lsp_signature".on_attach()
                 end
 
                 -- Add additional capabilities supported by nvim-cmp
@@ -505,6 +506,8 @@ return require('packer').startup(function(use)
     use('stevearc/stickybuf.nvim')
     use({'phaazon/hop.nvim', config = function() require('hop').setup({}) end })
     use({'mizlan/iswap.nvim', config = function() require('iswap').setup({}) end })
+    use({'luukvbaal/stabilize.nvim', config=function() require('stabilize').setup{nested="QuickFixCmdPost,DiagnosticChanged *"} end})
+    use("ray-x/lsp_signature.nvim")
 
     if packer_bootstrap then require('packer').sync() end
 end)

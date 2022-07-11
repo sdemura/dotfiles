@@ -1,16 +1,6 @@
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
---- Keymaps
--- map("n", "<leader>y", '<cmd>lua require("notify")("yanking to system clipboard")<cr> "*y', opts)
--- map("n", "<leader>Y", '<cmd>lua require("notify")("yanking line to system clipboard")<cr> "*Y', opts)
--- map("n", "<leader>p", '"*p <cmd> lua require("notify")("pasted from system clipboard)<cr>', opts)
--- map("n", "<leader>P", '"*P <cmd> lua require("notify")("pasted from system clipboard)<cr>', opts)
---
--- map("v", "<leader>y", '"*y <cmd>lua require("notify")("yanked to system clipboard")<cr>', opts)
--- map("v", "<leader>P", '"*P', opts)
--- map("v", "<leader>p", '"*p', opts)
-
 map("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
 map(
     "n",

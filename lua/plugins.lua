@@ -50,7 +50,7 @@ return require("packer").startup(function(use)
     use("hrsh7th/cmp-nvim-lsp")
     use("hrsh7th/cmp-path")
 
-    use({"L3MON4D3/LuaSnip"})
+    use({ "L3MON4D3/LuaSnip" })
     use("saadparwaiz1/cmp_luasnip")
 
     use({
@@ -72,7 +72,6 @@ return require("packer").startup(function(use)
                     ["<C-e>"] = cmp.mapping.close(),
                     -- ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                     ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                    ["<tab>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 },
                 sources = {
                     { name = "nvim_lsp" },
@@ -132,7 +131,7 @@ return require("packer").startup(function(use)
                     -- Mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local bufopts =
-                        { noremap = true, silent = true, buffer = bufnr }
+                    { noremap = true, silent = true, buffer = bufnr }
                     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
                     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
@@ -212,8 +211,7 @@ return require("packer").startup(function(use)
 
                 -- Add additional capabilities supported by nvim-cmp
                 local capabilities = vim.lsp.protocol.make_client_capabilities()
-                capabilities =
-                    require("cmp_nvim_lsp").update_capabilities(capabilities)
+                capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
                 -- setup automatic attach for certain lsp's
                 local lspconfig = require("lspconfig")
@@ -293,7 +291,6 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use("projekt0n/github-nvim-theme")
     use("sainnhe/everforest")
     use("shumphrey/fugitive-gitlab.vim")
     use("tpope/vim-fugitive")
@@ -399,6 +396,7 @@ return require("packer").startup(function(use)
         },
         config = function()
             require("neo-tree").setup({
+                -- popup_border_style = "rounded",
                 close_if_last_window = true,
                 window = {
                     mappings = {
@@ -581,7 +579,7 @@ return require("packer").startup(function(use)
                             text_align = "left",
                         },
                     },
-                    separator_style = "thick",
+                    -- separator_style = "thick",
                     -- show_buffer_close_icons = false,
                     enforce_regular_tabs = true,
                 },
@@ -644,6 +642,8 @@ return require("packer").startup(function(use)
         "stevearc/dressing.nvim",
         config = function() require("dressing").setup({}) end,
     })
+
+    use({ 'abecodes/tabout.nvim', config = function() require('tabout').setup {} end, wants={"nvim-treesitter"}, after={"nvim-cmp"}})
 
     if packer_bootstrap then require("packer").sync() end
 end)

@@ -82,3 +82,4 @@ map("n", "cg*", 'N"_cgn', opts)
 -- bufferline
 map("n", "]b", ":BufferLineCycleNext<CR>", opts)
 map("n", "[b", ":BufferLineCyclePrev<CR>", opts)
+map("i", "<C-l>", "<Plug>(TaboutMulti)", {silent = true})

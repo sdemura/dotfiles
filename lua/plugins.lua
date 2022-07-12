@@ -70,7 +70,6 @@ return require("packer").startup(function(use)
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.close(),
-                    -- ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                     ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 },
                 sources = {
@@ -423,7 +422,6 @@ return require("packer").startup(function(use)
             require("lualine").setup({
                 options = {
                     theme = "auto",
-                    globalstatus = true,
                     section_separators = "",
                     component_separators = "",
                 },
@@ -509,11 +507,6 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use({
-        "folke/todo-comments.nvim",
-        requires = "nvim-lua/plenary.nvim",
-        config = function() require("todo-comments").setup() end,
-    })
 
     use("EdenEast/nightfox.nvim")
 
@@ -526,8 +519,8 @@ return require("packer").startup(function(use)
         config = function() require("regexplainer").setup() end,
     })
 
-    use("mfussenegger/nvim-dap")
-    use("mfussenegger/nvim-dap-python")
+    -- use("mfussenegger/nvim-dap")
+    -- use("mfussenegger/nvim-dap-python")
 
     use({
         "antoinemadec/FixCursorHold.nvim",
@@ -601,7 +594,7 @@ return require("packer").startup(function(use)
                     javascript = { "string", "template_string" },
                     java = false,
                 },
-                disable_filetype = { "TelescopePrompt", "spectre_panel" },
+                disable_filetype = { "TelescopePrompt", },
             })
         end,
     })
@@ -618,10 +611,10 @@ return require("packer").startup(function(use)
         "phaazon/hop.nvim",
         config = function() require("hop").setup({}) end,
     })
-    use({
-        "mizlan/iswap.nvim",
-        config = function() require("iswap").setup({}) end,
-    })
+    -- use({
+    --     "mizlan/iswap.nvim",
+    --     config = function() require("iswap").setup({}) end,
+    -- })
     use({
         "luukvbaal/stabilize.nvim",
         config = function()
@@ -643,7 +636,7 @@ return require("packer").startup(function(use)
         config = function() require("dressing").setup({}) end,
     })
 
-    use({ 'abecodes/tabout.nvim', config = function() require('tabout').setup {} end, wants={"nvim-treesitter"}, after={"nvim-cmp"}})
+    -- use({ 'abecodes/tabout.nvim', config = function() require('tabout').setup {} end, wants={"nvim-treesitter"}, after={"nvim-cmp"}})
 
     if packer_bootstrap then require("packer").sync() end
 end)

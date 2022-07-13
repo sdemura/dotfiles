@@ -395,7 +395,7 @@ return require("packer").startup(function(use)
         },
         config = function()
             require("neo-tree").setup({
-                -- popup_border_style = "rounded",
+                popup_border_style = "rounded",
                 close_if_last_window = true,
                 window = {
                     mappings = {
@@ -436,8 +436,8 @@ return require("packer").startup(function(use)
                 sections = {
                     lualine_b = {
                         "branch",
-                        { "diff", colored = false },
-                        { "diagnostics", colored = false },
+                        { "diff", },
+                        { "diagnostics", },
                     },
                     lualine_c = {
                         {

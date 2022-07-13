@@ -5,7 +5,7 @@ local set = vim.opt
 g.everforest_background = "soft"
 g.everforest_show_eob = 0
 set.background = "dark"
-vim.cmd("colorscheme nightfox")
+vim.cmd("colorscheme nordfox")
 
 -- require("github-theme").setup({
 --   theme_style = "light",

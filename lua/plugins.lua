@@ -532,9 +532,11 @@ return require("packer").startup(function(use)
         branch = "stable",
         config = function()
             require("mini.trailspace").setup({})
-            require("mini.surround").setup({})
+            -- require("mini.surround").setup({})
         end,
     })
+
+    use({ 'kylechui/nvim-surround', config = function() require("nvim-surround").setup {} end })
 
     use({
         "numToStr/Comment.nvim",

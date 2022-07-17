@@ -458,35 +458,15 @@ return require("packer").startup(function(use)
             require("nvim-treesitter.configs").setup({
                 ensure_installed = {
                     "bash",
-                    "c",
-                    "comment",
-                    "cpp",
-                    "css",
                     "dockerfile",
                     "go",
-                    "graphql",
                     "hcl",
-                    "help",
-                    "html",
-                    "http",
-                    "javascript",
                     "json",
-                    "json5",
-                    "jsonc",
                     "lua",
                     "make",
                     "markdown",
-                    "ninja",
-                    "perl",
-                    "php",
                     "python",
-                    "query",
-                    "regex",
-                    "ruby",
-                    "rust",
-                    "todotxt",
                     "toml",
-                    "typescript",
                     "vim",
                     "yaml",
                 },
@@ -638,7 +618,32 @@ return require("packer").startup(function(use)
         config = function() require("dressing").setup({}) end,
     })
 
-    -- use({ 'abecodes/tabout.nvim', config = function() require('tabout').setup {} end, wants={"nvim-treesitter"}, after={"nvim-cmp"}})
+    use { 'akinsho/git-conflict.nvim', config = function()
+        require('git-conflict').setup()
+    end }
+
+    use({ 'karb94/neoscroll.nvim', config = function() require('neoscroll').setup() end })
+    use({ 'nvim-treesitter/nvim-treesitter-textobjects', config = function()
+        require('nvim-treesitter.configs').setup {
+            textobjects = {
+                select = {
+                    enable = true,
+
+                    -- Automatically jump forward to textobj, similar to targets.vim
+                    lookahead = true,
+
+                    keymaps = {
+                        -- You can use the capture groups defined in textobjects.scm
+                        ["af"] = "@function.outer",
+                        ["if"] = "@function.inner",
+                        ["ac"] = "@class.outer",
+                        ["ic"] = "@class.inner",
+                    },
+                },
+            },
+
+        }
+    end })
 
     if packer_bootstrap then require("packer").sync() end
 end)

@@ -1,6 +1,10 @@
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
+-- map("n", "j", "jzz", opts)
+-- map("n", "k", "kzz", opts)
+-- map("n", "G", "Gzz", opts)
+
 map("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
 map(
     "n",

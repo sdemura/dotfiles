@@ -1,4 +1,4 @@
-require("impatient")
+--require("impatient")
 require("options")
 require("plugins")
 require("keymap")

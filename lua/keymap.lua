@@ -5,6 +5,18 @@ local opts = { noremap = true, silent = true }
 -- map("n", "k", "kzz", opts)
 -- map("n", "G", "Gzz", opts)
 
+-- Send empty lines to blackhole register
+local function smart_dd()
+    if vim.api.nvim_get_current_line():match("^%s*$") then
+        return "\"_dd"
+    else
+        return "dd"
+    end
+end
+
+vim.keymap.set("n", "dd", smart_dd, { noremap = true, expr = true })
+
+
 map("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
 map(
     "n",
@@ -44,25 +56,29 @@ map("t", "<esc><esc>", [[<C-\><C-N><CR><C-l><CR>]], opts)
 map(
     "",
     "f",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>"
+    ,
     {}
 )
 vim.api.nvim_set_keymap(
     "",
     "F",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
+    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>"
+    ,
     {}
 )
 map(
     "",
     "t",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>",
+    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>"
+    ,
     {}
 )
 map(
     "",
     "T",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>",
+    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>"
+    ,
     {}
 )
 map("n", "<sace>h", ":HopWord<cr>", opts)
@@ -86,4 +102,4 @@ map("n", "cg*", 'N"_cgn', opts)
 -- bufferline
 map("n", "]b", ":BufferLineCycleNext<CR>", opts)
 map("n", "[b", ":BufferLineCyclePrev<CR>", opts)
-map("i", "<C-l>", "<Plug>(TaboutMulti)", {silent = true})
+map("i", "<C-l>", "<Plug>(TaboutMulti)", { silent = true })

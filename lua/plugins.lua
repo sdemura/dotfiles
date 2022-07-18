@@ -530,37 +530,37 @@ return require("packer").startup(function(use)
         end,
     })
     -- using packer.nvim
-    use({
-        "akinsho/bufferline.nvim",
-        tag = "v2.*",
-        requires = "kyazdani42/nvim-web-devicons",
-        config = function()
-            require("bufferline").setup({
-                options = {
-                    offsets = {
-                        {
-                            filetype = "nvimtree",
-                            text = "Files",
-                            text_align = "left",
-                        },
-                        {
-                            filetype = "neo-tree",
-                            text = "Files",
-                            text_align = "left",
-                        },
-                        {
-                            filetype = "aerial",
-                            text = "Symbols",
-                            text_align = "left",
-                        },
-                    },
-                    -- separator_style = "thick",
-                    -- show_buffer_close_icons = false,
-                    enforce_regular_tabs = true,
-                },
-            })
-        end,
-    })
+    -- use({
+    --     "akinsho/bufferline.nvim",
+    --     tag = "v2.*",
+    --     requires = "kyazdani42/nvim-web-devicons",
+    --     config = function()
+    --         require("bufferline").setup({
+    --             options = {
+    --                 offsets = {
+    --                     {
+    --                         filetype = "nvimtree",
+    --                         text = "Files",
+    --                         text_align = "left",
+    --                     },
+    --                     {
+    --                         filetype = "neo-tree",
+    --                         text = "Files",
+    --                         text_align = "left",
+    --                     },
+    --                     {
+    --                         filetype = "aerial",
+    --                         text = "Symbols",
+    --                         text_align = "left",
+    --                     },
+    --                 },
+    --                 -- separator_style = "thick",
+    --                 -- show_buffer_close_icons = false,
+    --                 enforce_regular_tabs = true,
+    --             },
+    --         })
+    --     end,
+    -- })
     use({
         "windwp/nvim-autopairs",
         config = function()
@@ -644,6 +644,7 @@ return require("packer").startup(function(use)
 
         }
     end })
+    use ({"b0o/incline.nvim", config=function() require('incline').setup{} end})
 
     if packer_bootstrap then require("packer").sync() end
 end)

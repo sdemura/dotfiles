@@ -81,25 +81,24 @@ map(
     ,
     {}
 )
-map("n", "<sace>h", ":HopWord<cr>", opts)
-map("n", "ss", ":HopAnywhere<cr>", opts)
+map("n", "s", ":HopWord<cr>", opts)
+-- map("n", "s", ":HopAnywhere<cr>", opts)
 
--- make it easier to bounce back and forth between terminals
-function _G.set_terminal_keymaps()
-    -- local opts = {noremap = true}
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-w>h", [[<C-\><C-n><C-W>h]], opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-w>j", [[<C-\><C-n><C-W>j]], opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-w>k", [[<C-\><C-n><C-W>k]], opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-w>l", [[<C-\><C-n><C-W>l]], opts)
-end
+-- -- make it easier to bounce back and forth between terminals
+-- function _G.set_terminal_keymaps()
+--     -- local opts = {noremap = true}
+--     vim.api.nvim_buf_set_keymap(0, "t", "<C-w>h", [[<C-\><C-n><C-W>h]], opts)
+--     vim.api.nvim_buf_set_keymap(0, "t", "<C-w>j", [[<C-\><C-n><C-W>j]], opts)
+--     vim.api.nvim_buf_set_keymap(0, "t", "<C-w>k", [[<C-\><C-n><C-W>k]], opts)
+--     vim.api.nvim_buf_set_keymap(0, "t", "<C-w>l", [[<C-\><C-n><C-W>l]], opts)
+-- end
 
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
-vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+-- vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 -- https://www.reddit.com/r/neovim/comments/tjvs4z/alt_click_for_multiple_cursors/
-map("n", "cg*", 'N"_cgn', opts)
+-- map("n", "cg*", 'N"_cgn', opts)
 
 -- bufferline
 map("n", "]b", ":BufferLineCycleNext<CR>", opts)
 map("n", "[b", ":BufferLineCyclePrev<CR>", opts)
-map("i", "<C-l>", "<Plug>(TaboutMulti)", { silent = true })

@@ -219,7 +219,7 @@ return require("packer").startup(function(use)
                     on_attach = on_attach,
                     capabilities = capabilities,
                 })
-                lspconfig.pylsp.setup({
+                lspconfig.pyright.setup({
                     on_attach = on_attach,
                     capabilities = capabilities,
                 })

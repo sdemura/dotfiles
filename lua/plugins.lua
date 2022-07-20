@@ -42,6 +42,7 @@ packer.init({
 return require("packer").startup(function(use)
     use("wbthomason/packer.nvim")
     -- use("Glench/Vim-Jinja2-Syntax")
+    use({ 'kyazdani42/nvim-web-devicons', config = function() require('nvim-web-devicons').setup() end })
     use({
         "folke/which-key.nvim",
         config = function() require("which-key").setup({}) end,
@@ -218,7 +219,7 @@ return require("packer").startup(function(use)
                     on_attach = on_attach,
                     capabilities = capabilities,
                 })
-                lspconfig.pyright.setup({
+                lspconfig.pylsp.setup({
                     on_attach = on_attach,
                     capabilities = capabilities,
                 })
@@ -350,39 +351,39 @@ return require("packer").startup(function(use)
             require("telescope").load_extension("ui-select")
         end,
     })
-    use({
-        "s1n7ax/nvim-window-picker",
-        tag = "1.*",
-        config = function()
-            require("window-picker").setup({
-                autoselect_one = true,
-                include_current = false,
-                selection_chars = "ABCDEFGHIJKLMNOP",
-                filter_rules = {
-                    -- filter using buffer options
-                    bo = {
-                        -- if the file type is one of following, the window will be ignored
-                        filetype = {
-                            "aerial",
-                            "neo-tree",
-                            "neo-tree-popup",
-                            "notify",
-                            "quickfix",
-                            "toggleterm",
-                            "qf",
-                            "fugitiveblame",
-                        },
-
-                        -- if the buffer type is one of following, the window will be ignored
-                        buftype = { "terminal", "quickfix" },
-                    },
-                },
-
-                other_win_hl_color = "#f4a261",
-                fg_color = "#dfdfe0",
-            })
-        end,
-    })
+    -- use({
+    --     "s1n7ax/nvim-window-picker",
+    --     tag = "1.*",
+    --     config = function()
+    --         require("window-picker").setup({
+    --             autoselect_one = true,
+    --             include_current = false,
+    --             selection_chars = "ABCDEFGHIJKLMNOP",
+    --             filter_rules = {
+    --                 -- filter using buffer options
+    --                 bo = {
+    --                     -- if the file type is one of following, the window will be ignored
+    --                     filetype = {
+    --                         "aerial",
+    --                         "neo-tree",
+    --                         "neo-tree-popup",
+    --                         "notify",
+    --                         "quickfix",
+    --                         "toggleterm",
+    --                         "qf",
+    --                         "fugitiveblame",
+    --                     },
+    --
+    --                     -- if the buffer type is one of following, the window will be ignored
+    --                     buftype = { "terminal", "quickfix" },
+    --                 },
+    --             },
+    --
+    --             other_win_hl_color = "#f4a261",
+    --             fg_color = "#dfdfe0",
+    --         })
+    --     end,
+    -- })
 
     use({
         "nvim-neo-tree/neo-tree.nvim",
@@ -391,17 +392,17 @@ return require("packer").startup(function(use)
             "nvim-lua/plenary.nvim",
             "kyazdani42/nvim-web-devicons",
             "MunifTanjim/nui.nvim",
-            "s1n7ax/nvim-window-picker",
+            -- "s1n7ax/nvim-window-picker",
         },
         config = function()
             require("neo-tree").setup({
                 popup_border_style = "rounded",
                 close_if_last_window = true,
-                window = {
-                    mappings = {
-                        ["<cr>"] = "open_with_window_picker",
-                    },
-                },
+                -- window = {
+                --     mappings = {
+                --         ["<cr>"] = "open_with_window_picker",
+                --     },
+                -- },
                 filesystem = {
                     filtered_items = {
                         hide_gitignored = false,
@@ -644,7 +645,7 @@ return require("packer").startup(function(use)
 
         }
     end })
-    use ({"b0o/incline.nvim", config=function() require('incline').setup{} end})
+    use({ "b0o/incline.nvim", config = function() require('incline').setup {} end })
 
     if packer_bootstrap then require("packer").sync() end
 end)

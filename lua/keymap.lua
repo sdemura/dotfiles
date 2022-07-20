@@ -38,7 +38,7 @@ map(
 )
 map("n", "<leader>o", ":Neotree toggle<CR>", opts)
 map("n", "<leader>b", ":Neotree toggle buffers<CR>", opts)
-map("n", "<leader>r", ":Neotree toggle reveal<CR>", opts)
+map("n", "<leader>r", ":Neotree reveal<CR>", opts)
 map("n", "<leader>G", ":Neotree toggle git_status<CR>", opts)
 map("n", "<leader>s", ":AerialToggle!<CR>", opts)
 map("n", "<leader>t", ":TroubleToggle<CR>", opts)

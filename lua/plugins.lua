@@ -29,7 +29,9 @@ vim.cmd([[
 
 -- Only move on if we can require Packer.
 local ok, packer = pcall(require, "packer")
-if not ok then return end
+if not ok then
+    return
+end
 
 packer.init({
     display = {
@@ -41,11 +43,17 @@ packer.init({
 
 return require("packer").startup(function(use)
     use("wbthomason/packer.nvim")
-    -- use("Glench/Vim-Jinja2-Syntax")
-    use({ 'kyazdani42/nvim-web-devicons', config = function() require('nvim-web-devicons').setup() end })
+    use({
+        "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("nvim-web-devicons").setup()
+        end,
+    })
     use({
         "folke/which-key.nvim",
-        config = function() require("which-key").setup({}) end,
+        config = function()
+            require("which-key").setup({})
+        end,
     })
     use("hrsh7th/cmp-buffer")
     use("hrsh7th/cmp-nvim-lsp")
@@ -62,7 +70,9 @@ return require("packer").startup(function(use)
             cmp.setup({
                 preselect = cmp.PreselectMode.None,
                 snippet = {
-                    expand = function(args) require("luasnip").lsp_expand(args.body) end,
+                    expand = function(args)
+                        require("luasnip").lsp_expand(args.body)
+                    end,
                 },
                 mapping = {
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -83,8 +93,6 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use("lewis6991/impatient.nvim")
-
     use("nathom/filetype.nvim")
 
     use({
@@ -101,18 +109,8 @@ return require("packer").startup(function(use)
                     "<cmd>lua vim.diagnostic.open_float()<CR>",
                     opts
                 )
-                vim.api.nvim_set_keymap(
-                    "n",
-                    "[d",
-                    "<cmd>lua vim.diagnostic.goto_prev()<CR>",
-                    opts
-                )
-                vim.api.nvim_set_keymap(
-                    "n",
-                    "]d",
-                    "<cmd>lua vim.diagnostic.goto_next()<CR>",
-                    opts
-                )
+                vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+                vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
                 vim.api.nvim_set_keymap(
                     "n",
                     "<space>q",
@@ -122,85 +120,32 @@ return require("packer").startup(function(use)
 
                 local on_attach = function(client, bufnr)
                     -- Enable completion triggered by <c-x><c-o>
-                    vim.api.nvim_buf_set_option(
-                        bufnr,
-                        "omnifunc",
-                        "v:lua.vim.lsp.omnifunc"
-                    )
+                    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
                     -- Mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
-                    local bufopts =
-                    { noremap = true, silent = true, buffer = bufnr }
+                    local bufopts = { noremap = true, silent = true, buffer = bufnr }
                     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
                     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-                    vim.keymap.set(
-                        "n",
-                        "gi",
-                        vim.lsp.buf.implementation,
-                        bufopts
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "<C-k>",
-                        vim.lsp.buf.signature_help,
-                        bufopts
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "<space>wa",
-                        vim.lsp.buf.add_workspace_folder,
-                        bufopts
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "<space>wr",
-                        vim.lsp.buf.remove_workspace_folder,
-                        bufopts
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "<space>wl",
-                        function()
-                            print(
-                                vim.inspect(
-                                    vim.lsp.buf.list_workspace_folders()
-                                )
-                            )
-                        end,
-                        bufopts
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "<space>D",
-                        vim.lsp.buf.type_definition,
-                        bufopts
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "<space>rn",
-                        vim.lsp.buf.rename,
-                        bufopts
-                    )
-                    vim.keymap.set(
-                        "n",
-                        "<space>ca",
-                        vim.lsp.buf.code_action,
-                        bufopts
-                    )
+                    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+                    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+                    vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+                    vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+                    vim.keymap.set("n", "<space>wl", function()
+                        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+                    end, bufopts)
+                    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
+                    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
+                    vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-                    vim.keymap.set(
-                        "n",
-                        "<space>f",
-                        vim.lsp.buf.formatting,
-                        bufopts
-                    )
+                    vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
 
                     -- -- aerials.nvim
                     local aerial = require("aerial")
                     aerial.setup({
                         show_guides = true,
+                        default_direction = "right",
                     })
                     aerial.on_attach(client, bufnr)
                     require("lsp_signature").on_attach({
@@ -291,18 +236,21 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use("sainnhe/everforest")
     use("shumphrey/fugitive-gitlab.vim")
     use("tpope/vim-fugitive")
     use("wellle/targets.vim")
     use({
         "stevearc/aerial.nvim",
-        config = function() require("aerial").setup() end,
+        config = function()
+            require("aerial").setup()
+        end,
     })
     use({
         "folke/trouble.nvim",
         requires = "kyazdani42/nvim-web-devicons",
-        config = function() require("trouble").setup() end,
+        config = function()
+            require("trouble").setup()
+        end,
     })
     use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
     use({ "nvim-telescope/telescope-ui-select.nvim" })
@@ -342,7 +290,9 @@ return require("packer").startup(function(use)
                         },
                     },
                     live_grep = {
-                        additional_args = function(opts) return { "--hidden" } end,
+                        additional_args = function(opts)
+                            return { "--hidden" }
+                        end,
                         glob_pattern = "!.git",
                     },
                 },
@@ -404,6 +354,11 @@ return require("packer").startup(function(use)
                 --     },
                 -- },
                 filesystem = {
+                    window = {
+                        mappings = {
+                            ["s"] = "none",
+                        },
+                    },
                     filtered_items = {
                         hide_gitignored = false,
                         hide_dotfiles = false,
@@ -414,7 +369,9 @@ return require("packer").startup(function(use)
     })
     use({
         "lewis6991/gitsigns.nvim",
-        config = function() require("gitsigns").setup() end,
+        config = function()
+            require("gitsigns").setup()
+        end,
     })
     use({
         "nvim-lualine/lualine.nvim",
@@ -437,8 +394,8 @@ return require("packer").startup(function(use)
                 sections = {
                     lualine_b = {
                         "branch",
-                        { "diff", },
-                        { "diagnostics", },
+                        { "diff" },
+                        { "diagnostics" },
                     },
                     lualine_c = {
                         {
@@ -488,40 +445,48 @@ return require("packer").startup(function(use)
         end,
     })
 
-
     use("EdenEast/nightfox.nvim")
 
-    use({
-        "bennypowers/nvim-regexplainer",
-        requires = {
-            "nvim-lua/plenary.nvim",
-            "MunifTanjim/nui.nvim",
-        },
-        config = function() require("regexplainer").setup() end,
-    })
+    -- use({
+    --     "bennypowers/nvim-regexplainer",
+    --     requires = {
+    --         "nvim-lua/plenary.nvim",
+    --         "MunifTanjim/nui.nvim",
+    --     },
+    --     config = function() require("regexplainer").setup() end,
+    -- })
 
     -- use("mfussenegger/nvim-dap")
     -- use("mfussenegger/nvim-dap-python")
 
     use({
         "antoinemadec/FixCursorHold.nvim",
-        config = function() vim.g.cursorhold_updatetime = 100 end,
-    })
-
-    use({
-        "echasnovski/mini.nvim",
-        branch = "stable",
         config = function()
-            require("mini.trailspace").setup({})
-            -- require("mini.surround").setup({})
+            vim.g.cursorhold_updatetime = 100
         end,
     })
 
-    use({ 'kylechui/nvim-surround', config = function() require("nvim-surround").setup {} end })
+    -- use({
+    --     "echasnovski/mini.nvim",
+    --     branch = "stable",
+    --     config = function()
+    --         require("mini.trailspace").setup({})
+    --         -- require("mini.surround").setup({})
+    --     end,
+    -- })
+
+    use({
+        "kylechui/nvim-surround",
+        config = function()
+            require("nvim-surround").setup({})
+        end,
+    })
 
     use({
         "numToStr/Comment.nvim",
-        config = function() require("Comment").setup({}) end,
+        config = function()
+            require("Comment").setup({})
+        end,
     })
 
     use({
@@ -577,27 +542,28 @@ return require("packer").startup(function(use)
                     javascript = { "string", "template_string" },
                     java = false,
                 },
-                disable_filetype = { "TelescopePrompt", },
+                disable_filetype = { "TelescopePrompt" },
             })
         end,
     })
     use({
         "tiagovla/scope.nvim",
-        config = function() require("scope").setup({}) end,
+        config = function()
+            require("scope").setup({})
+        end,
     })
     use({
         "rcarriga/nvim-notify",
-        config = function() vim.notify = require("notify") end,
+        config = function()
+            vim.notify = require("notify")
+        end,
     })
-    use("stevearc/stickybuf.nvim")
     use({
         "phaazon/hop.nvim",
-        config = function() require("hop").setup({}) end,
+        config = function()
+            require("hop").setup({})
+        end,
     })
-    -- use({
-    --     "mizlan/iswap.nvim",
-    --     config = function() require("iswap").setup({}) end,
-    -- })
     use({
         "luukvbaal/stabilize.nvim",
         config = function()
@@ -612,40 +578,64 @@ return require("packer").startup(function(use)
             require("lsp_signature").setup({ hi_parameter = "IncSearch" })
         end,
     })
-    use({ "ray-x/go.nvim", config = function() require("go").setup({}) end })
-    use("ray-x/guihua.lua")
     use({
-        "stevearc/dressing.nvim",
-        config = function() require("dressing").setup({}) end,
+        "ray-x/go.nvim",
+        config = function()
+            require("go").setup({})
+        end,
     })
 
-    use { 'akinsho/git-conflict.nvim', config = function()
-        require('git-conflict').setup()
-    end }
+    use({
+        "stevearc/dressing.nvim",
+        config = function()
+            require("dressing").setup({})
+        end,
+    })
 
-    use({ 'karb94/neoscroll.nvim', config = function() require('neoscroll').setup() end })
-    use({ 'nvim-treesitter/nvim-treesitter-textobjects', config = function()
-        require('nvim-treesitter.configs').setup {
-            textobjects = {
-                select = {
-                    enable = true,
+    use({
+        "akinsho/git-conflict.nvim",
+        config = function()
+            require("git-conflict").setup()
+        end,
+    })
 
-                    -- Automatically jump forward to textobj, similar to targets.vim
-                    lookahead = true,
+    use({
+        "karb94/neoscroll.nvim",
+        config = function()
+            require("neoscroll").setup()
+        end,
+    })
+    use({
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                textobjects = {
+                    select = {
+                        enable = true,
 
-                    keymaps = {
-                        -- You can use the capture groups defined in textobjects.scm
-                        ["af"] = "@function.outer",
-                        ["if"] = "@function.inner",
-                        ["ac"] = "@class.outer",
-                        ["ic"] = "@class.inner",
+                        -- Automatically jump forward to textobj, similar to targets.vim
+                        lookahead = true,
+
+                        keymaps = {
+                            -- You can use the capture groups defined in textobjects.scm
+                            ["af"] = "@function.outer",
+                            ["if"] = "@function.inner",
+                            ["ac"] = "@class.outer",
+                            ["ic"] = "@class.inner",
+                        },
                     },
                 },
-            },
+            })
+        end,
+    })
+    use({
+        "b0o/incline.nvim",
+        config = function()
+            require("incline").setup({})
+        end,
+    })
 
-        }
-    end })
-    use({ "b0o/incline.nvim", config = function() require('incline').setup {} end })
-
-    if packer_bootstrap then require("packer").sync() end
+    if packer_bootstrap then
+        require("packer").sync()
+    end
 end)

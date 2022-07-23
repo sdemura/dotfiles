@@ -18,6 +18,8 @@ local function table_to_string(tbl)
         result = result .. ","
     end
     -- Remove leading commas from the result
-    if result ~= "" then result = result:sub(1, result:len() - 1) end
+    if result ~= "" then
+        result = result:sub(1, result:len() - 1)
+    end
     return result .. "}"
 end

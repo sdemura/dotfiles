@@ -1,5 +1,6 @@
 local set = vim.opt
 local g = vim.g
+local api = vim.api
 
 --  use lua filetype detection
 g.did_load_filetypes = 0
@@ -30,7 +31,7 @@ set.langmenu = "en"
 set.lazyredraw = true
 set.linebreak = true
 set.list = true
--- set.listchars:append("tab:>-")
+set.listchars:append("trail:.")
 set.magic = true
 set.mouse = "a"
 set.backup = false
@@ -52,8 +53,7 @@ set.tabstop = 4
 set.termguicolors = true
 set.timeoutlen = 1500
 set.undofile = true
-set.wildignore = set.wildignore
-    + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
+set.wildignore = set.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
 
 --- autocmmands
 vim.cmd([[
@@ -115,8 +115,7 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 function OrgImports(wait_ms)
     local params = vim.lsp.util.make_range_params()
     params.context = { only = { "source.organizeImports" } }
-    local result =
-    vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
     for _, res in pairs(result or {}) do
         for _, r in pairs(res.result or {}) do
             if r.edit then
@@ -132,6 +131,7 @@ vim.cmd([[autocmd BufWritePre *.go lua OrgImports(1000) ]])
 
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
-vim.cmd(
-    [[au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500}]]
-)
+vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500}]])
+
+-- trail whitespace on save
+api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })

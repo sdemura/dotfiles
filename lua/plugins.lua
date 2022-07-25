@@ -96,11 +96,13 @@ return require("packer").startup(function(use)
     use("nathom/filetype.nvim")
 
     use({
-        "williamboman/nvim-lsp-installer",
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
         {
             "neovim/nvim-lspconfig",
             config = function()
-                require("nvim-lsp-installer").setup()
+                require("mason").setup()
+                require("mason-lspconfig").setup()
                 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
                 local opts = { noremap = true, silent = true }
                 vim.api.nvim_set_keymap(

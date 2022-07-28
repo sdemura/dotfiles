@@ -6,7 +6,7 @@ local api = vim.api
 g.did_load_filetypes = 0
 
 -- global statusline
-set.laststatus = 3
+set.laststatus = 2
 
 -- disable providers I don't want
 g.loaded_python_provider = 0

@@ -27,8 +27,11 @@ map("n", "<leader>G", ":Neotree toggle git_status<CR>", opts)
 map("n", "<leader>s", ":AerialToggle!<CR>", opts)
 map("n", "<leader>t", ":TroubleToggle<CR>", opts)
 -- map("n", "<leader>s", '<cmd> lua require("telescope.builtin").treesitter()<CR>', opts)
-map("n", "<leader>nv", ":e ~/.dotfiles/init.lua<CR>", opts)
-map("n", "<leader>i", ":e ~/.dotfiles/lua/plugins.lua<CR>", opts)
+map("n", "<leader>ii", ":e ~/.dotfiles/init.lua<CR>", opts)
+map("n", "<leader>ip", ":e ~/.dotfiles/lua/plugins.lua<CR>", opts)
+map("n", "<leader>io", ":e ~/.dotfiles/lua/options.lua<CR>", opts)
+map("n", "<leader>il", ":e ~/.dotfiles/lua/lsp.lua<CR>", opts)
+map("n", "<leader>ic", ":e ~/.dotfiles/lua/other.lua<CR>", opts)
 
 map("n", "]t", "gT", opts)
 map("n", "[t", "gt", opts)
@@ -40,44 +43,32 @@ map("t", "<esc><esc>", [[<C-\><C-N><CR><C-l><CR>]], opts)
 map(
     "",
     "f",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>"
+    ,
     {}
 )
 vim.api.nvim_set_keymap(
     "",
     "F",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
+    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>"
+    ,
     {}
 )
 map(
     "",
     "t",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>",
+    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>"
+    ,
     {}
 )
 map(
     "",
     "T",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>",
+    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>"
+    ,
     {}
 )
 map("n", "s", ":HopWord<cr>", opts)
--- map("n", "s", ":HopAnywhere<cr>", opts)
-
--- -- make it easier to bounce back and forth between terminals
--- function _G.set_terminal_keymaps()
---     -- local opts = {noremap = true}
---     vim.api.nvim_buf_set_keymap(0, "t", "<C-w>h", [[<C-\><C-n><C-W>h]], opts)
---     vim.api.nvim_buf_set_keymap(0, "t", "<C-w>j", [[<C-\><C-n><C-W>j]], opts)
---     vim.api.nvim_buf_set_keymap(0, "t", "<C-w>k", [[<C-\><C-n><C-W>k]], opts)
---     vim.api.nvim_buf_set_keymap(0, "t", "<C-w>l", [[<C-\><C-n><C-W>l]], opts)
--- end
-
--- if you only want these mappings for toggle term use term://*toggleterm#* instead
--- vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-
--- https://www.reddit.com/r/neovim/comments/tjvs4z/alt_click_for_multiple_cursors/
--- map("n", "cg*", 'N"_cgn', opts)
 
 -- bufferline
 map("n", "]b", ":BufferLineCycleNext<CR>", opts)

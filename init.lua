@@ -1,5 +1,7 @@
 require("options")
 require("plugins")
+require("other")
+require("lsp")
 require("keymap")
 require("theme")
 require("util")

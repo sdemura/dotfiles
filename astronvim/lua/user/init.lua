@@ -84,7 +84,7 @@ local config = {
 		-- Add plugins, the packer syntax without the "use"
 		init = {
 			-- You can disable default plugins as follows:
-			-- ["goolord/alpha-nvim"] = { disable = true },
+			["goolord/alpha-nvim"] = { disable = true },
 			["declancm/cinnamon.nvim"] = { disable = true },
 
 			-- You can also add new plugins here as well:
@@ -144,23 +144,155 @@ local config = {
 					require("incline").setup()
 				end,
 			},
+			{
+				"ray-x/guihua.lua",
+			},
+			{
+				"ray-x/go.nvim",
+				config = function()
+					require("go").setup()
+				end,
+			},
+			{
+				"stevearc/stickybuf.nvim",
+				config = function()
+					require("stickybuf").setup({
+						filetype = { "neo-tree" },
+					})
+				end,
+			},
 		},
 		-- All other entries override the setup() call for default plugins
+		["aerial"] = function()
+			local aerial = require("aerial")
+			aerial.setup({
+				close_behavior = "global",
+				backends = { "lsp", "treesitter", "markdown" },
+				min_width = 28,
+				show_guides = true,
+				filter_kind = false,
+				icons = {
+					Array = "",
+					Boolean = "⊨",
+					Class = "",
+					Constant = "",
+					Constructor = "",
+					Key = "",
+					Function = "",
+					Method = "ƒ",
+					Namespace = "",
+					Null = "NULL",
+					Number = "#",
+					Object = "⦿",
+					Property = "",
+					TypeParameter = "𝙏",
+					Variable = "",
+					Enum = "ℰ",
+					Package = "",
+					EnumMember = "",
+					File = "",
+					Module = "",
+					Field = "",
+					Interface = "ﰮ",
+					String = "𝓐",
+					Struct = "𝓢",
+					Event = "",
+					Operator = "+",
+				},
+				guides = {
+					mid_item = "├ ",
+					last_item = "└ ",
+					nested_top = "│ ",
+					whitespace = "  ",
+				},
+			})
+		end,
 		["telescope"] = function()
 			local telescope = require("telescope")
-			local telescope_actions = require("telescope.actions")
-
+			local actions = require("telescope.actions")
 			telescope.setup({
 				defaults = {
-					layout_config = { prompt_position = "bottom" },
-				},
-				mappings = {
-					i = {
-						["<C-j>"] = telescope_actions.cycle_history_next,
-						["<C-k>"] = telescope_actions.cycle_history_prev,
 
-						["<C-n>"] = telescope_actions.move_selection_next,
-						["<C-p>"] = telescope_actions.move_selection_previous,
+					prompt_prefix = " ",
+					selection_caret = "❯ ",
+					path_display = { "truncate" },
+					selection_strategy = "reset",
+					sorting_strategy = "descending",
+					layout_strategy = "horizontal",
+					layout_config = {
+						horizontal = {
+							prompt_position = "bottom",
+							preview_width = 0.55,
+							results_width = 0.8,
+						},
+						vertical = {
+							mirror = false,
+						},
+						width = 0.87,
+						height = 0.80,
+						preview_cutoff = 120,
+					},
+
+					mappings = {
+						i = {
+							["<C-n>"] = actions.cycle_history_next,
+							["<C-p>"] = actions.cycle_history_prev,
+
+							["<C-j>"] = actions.move_selection_next,
+							["<C-k>"] = actions.move_selection_previous,
+
+							["<C-c>"] = actions.close,
+
+							["<Down>"] = actions.move_selection_next,
+							["<Up>"] = actions.move_selection_previous,
+
+							["<CR>"] = actions.select_default,
+							["<C-x>"] = actions.select_horizontal,
+							["<C-v>"] = actions.select_vertical,
+							["<C-t>"] = actions.select_tab,
+
+							["<C-u>"] = actions.preview_scrolling_up,
+							["<C-d>"] = actions.preview_scrolling_down,
+
+							["<PageUp>"] = actions.results_scrolling_up,
+							["<PageDown>"] = actions.results_scrolling_down,
+
+							["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+							["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+							["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+							["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+							["<C-l>"] = actions.complete_tag,
+						},
+
+						n = {
+							["<esc>"] = actions.close,
+							["<CR>"] = actions.select_default,
+							["<C-x>"] = actions.select_horizontal,
+							["<C-v>"] = actions.select_vertical,
+							["<C-t>"] = actions.select_tab,
+
+							["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+							["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+							["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+							["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+
+							["j"] = actions.move_selection_next,
+							["k"] = actions.move_selection_previous,
+							["H"] = actions.move_to_top,
+							["M"] = actions.move_to_middle,
+							["L"] = actions.move_to_bottom,
+
+							["<Down>"] = actions.move_selection_next,
+							["<Up>"] = actions.move_selection_previous,
+							["gg"] = actions.move_to_top,
+							["G"] = actions.move_to_bottom,
+
+							["<C-u>"] = actions.preview_scrolling_up,
+							["<C-d>"] = actions.preview_scrolling_down,
+
+							["<PageUp>"] = actions.results_scrolling_up,
+							["<PageDown>"] = actions.results_scrolling_down,
+						},
 					},
 				},
 				pickers = {
@@ -219,6 +351,83 @@ local config = {
 		},
 		["nvim-lsp-installer"] = {
 			ensure_installed = { "sumneko_lua", "gopls", "pyright", "bash-language-server" },
+		},
+		["neo-tree"] = {
+			close_if_last_window = true,
+			popup_border_style = "rounded",
+			enable_diagnostics = false,
+			default_component_configs = {
+				indent = {
+					padding = 0,
+					with_expanders = false,
+				},
+				icon = {
+					folder_closed = "",
+					folder_open = "",
+					folder_empty = "",
+					default = "",
+				},
+				git_status = {
+					symbols = {
+						added = "",
+						deleted = "",
+						modified = "",
+						renamed = "➜",
+						untracked = "★",
+						ignored = "◌",
+						unstaged = "✗",
+						staged = "✓",
+						conflict = "",
+					},
+				},
+			},
+			window = {
+				-- width = 25,
+				mappings = {
+					["s"] = "none",
+				},
+			},
+			filesystem = {
+				filtered_items = {
+					visible = false,
+					hide_dotfiles = false,
+					hide_gitignored = false,
+					hide_by_name = {
+						".DS_Store",
+						"thumbs.db",
+						"node_modules",
+						"__pycache__",
+					},
+				},
+				follow_current_file = true,
+				hijack_netrw_behavior = "open_current",
+				use_libuv_file_watcher = true,
+			},
+			git_status = {
+				window = {
+					position = "float",
+				},
+			},
+			event_handlers = {
+				{
+					event = "neo_tree_buffer_enter",
+					handler = function(_)
+						vim.opt_local.signcolumn = "auto"
+					end,
+				},
+			},
+			-- close_if_last_window = true,
+			-- filesystem = {
+			-- 	window = {
+			-- 		mappings = {
+			-- 			["s"] = "none",
+			-- 		},
+			-- 	},
+			-- 	filtered_items = {
+			-- 		hide_gitignored = false,
+			-- 		hide_dotfiles = false,
+			-- 	},
+			-- },
 		},
 		packer = {
 			compile_path = vim.fn.stdpath("data") .. "/packer_compiled.lua",
@@ -340,11 +549,16 @@ local config = {
 			["s"] = { ":HopWord<cr>", desc = "Hopword" },
 			["]b"] = { ":BufferLineCycleNext<CR>", desc = "Next in bufferline" },
 			["[b"] = { ":BufferLineCyclePrev<CR>", desc = "Previous in bufferline" },
-
-			["]t"] = { "gT", desc = "Previous Tab" },
-			["[t"] = { "gt", desc = "Next Tab" },
+			["]t"] = { "gt", desc = "Next Tab" },
+			["[t"] = { "gT", desc = "Previous Tab" },
 			["<leader>r"] = { ":Neotree reveal<cr>", desc = "Reveal file in editor" },
 			["<leader>c"] = { ":e ~/.config/astronvim/lua/user/init.lua<cr>", desc = "Edit AstroNvim Config File" },
+			["<leader>h"] = false,
+			["<S-h>"] = false,
+			["<S-l>"] = false,
+			["<leader>e"] = false,
+			["<leader>o"] = { ":Neotree toggle<cr>", desc = "Toggle File Explorer" },
+			["<esc><esc>"] = { "<cmd>nohlsearch<cr>", desc = "No highlight" },
 		},
 		t = {
 			-- setting a mapping to false will disable it
@@ -379,15 +593,6 @@ local config = {
 		})
 		vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500}]])
 	end,
-
-	header = {
-		"██╗      ██████╗  ██████╗ ██████╗ ██████╗  █████╗  ██████╗██╗  ██╗███████╗███████╗ █████╗ ███╗   ██╗",
-		"██║     ██╔═══██╗██╔═══██╗██╔══██╗██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██╔════╝██╔════╝██╔══██╗████╗  ██║",
-		"██║     ██║   ██║██║   ██║██████╔╝██████╔╝███████║██║     █████╔╝ ███████╗█████╗  ███████║██╔██╗ ██║",
-		"██║     ██║   ██║██║   ██║██╔═══╝ ██╔══██╗██╔══██║██║     ██╔═██╗ ╚════██║██╔══╝  ██╔══██║██║╚██╗██║",
-		"███████╗╚██████╔╝╚██████╔╝██║     ██████╔╝██║  ██║╚██████╗██║  ██╗███████║███████╗██║  ██║██║ ╚████║",
-		"╚══════╝ ╚═════╝  ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝",
-	},
 }
 
 return config

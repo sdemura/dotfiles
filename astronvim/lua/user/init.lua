@@ -19,7 +19,7 @@ local config = {
 
 	-- Set colorscheme
 	-- colorscheme = "default_theme",
-	colorscheme = "dawnfox",
+	colorscheme = "catppuccin",
 
 	-- Override highlight groups in any theme
 	highlights = {
@@ -162,6 +162,13 @@ local config = {
 					require("stickybuf").setup({
 						filetype = { "neo-tree" },
 					})
+				end,
+			},
+			{
+				"catppuccin/nvim",
+				as = "catppuccin",
+				config = function()
+					require("catppuccin").setup()
 				end,
 			},
 		},

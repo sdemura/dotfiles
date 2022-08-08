@@ -19,7 +19,7 @@ local config = {
 
 	-- Set colorscheme
 	-- colorscheme = "default_theme",
-	colorscheme = "nordfox",
+	colorscheme = "dawnfox",
 
 	-- Override highlight groups in any theme
 	highlights = {
@@ -134,6 +134,9 @@ local config = {
 				config = function()
 					require("treesitter-context").setup()
 				end,
+			},
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
 			},
 			{
 				"tpope/vim-fugitive",

@@ -171,6 +171,12 @@ local config = {
 					require("catppuccin").setup()
 				end,
 			},
+			{
+				"akinsho/git-conflict.nvim",
+				config = function()
+					require("git-conflict").setup()
+				end,
+			},
 		},
 		-- All other entries override the setup() call for default plugins
 		["aerial"] = function()

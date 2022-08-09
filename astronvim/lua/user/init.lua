@@ -39,6 +39,7 @@ local config = {
 		opt = {
 			relativenumber = true, -- sets vim.opt.relativenumber
 			wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" },
+			laststatus = 2,
 		},
 		g = {
 			mapleader = " ", -- sets vim.g.mapleader

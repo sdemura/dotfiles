@@ -87,6 +87,8 @@ local config = {
 			-- You can disable default plugins as follows:
 			["goolord/alpha-nvim"] = { disable = true },
 			["declancm/cinnamon.nvim"] = { disable = true },
+			["akinsho/bufferline.nvim"] = { disable = true },
+			["akinsho/toggleterm.nvim"] = { disable = true },
 
 			-- You can also add new plugins here as well:
 			-- { "andweeb/presence.nvim" },
@@ -180,50 +182,6 @@ local config = {
 			},
 		},
 		-- All other entries override the setup() call for default plugins
-		["aerial"] = function()
-			local aerial = require("aerial")
-			aerial.setup({
-				close_behavior = "global",
-				backends = { "lsp", "treesitter", "markdown" },
-				min_width = 28,
-				show_guides = true,
-				filter_kind = false,
-				icons = {
-					Array = "",
-					Boolean = "⊨",
-					Class = "",
-					Constant = "",
-					Constructor = "",
-					Key = "",
-					Function = "",
-					Method = "ƒ",
-					Namespace = "",
-					Null = "NULL",
-					Number = "#",
-					Object = "⦿",
-					Property = "",
-					TypeParameter = "𝙏",
-					Variable = "",
-					Enum = "ℰ",
-					Package = "",
-					EnumMember = "",
-					File = "",
-					Module = "",
-					Field = "",
-					Interface = "ﰮ",
-					String = "𝓐",
-					Struct = "𝓢",
-					Event = "",
-					Operator = "+",
-				},
-				guides = {
-					mid_item = "├ ",
-					last_item = "└ ",
-					nested_top = "│ ",
-					whitespace = "  ",
-				},
-			})
-		end,
 		["telescope"] = function()
 			local telescope = require("telescope")
 			local actions = require("telescope.actions")
@@ -485,9 +443,9 @@ local config = {
 	cmp = {
 		source_priority = {
 			nvim_lsp = 1000,
-			luasnip = 250,
 			buffer = 750,
 			path = 500,
+			luasnip = false,
 		},
 	},
 
@@ -564,8 +522,8 @@ local config = {
 				"<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>",
 			},
 			["s"] = { ":HopWord<cr>", desc = "Hopword" },
-			["]b"] = { ":BufferLineCycleNext<CR>", desc = "Next in bufferline" },
-			["[b"] = { ":BufferLineCyclePrev<CR>", desc = "Previous in bufferline" },
+			-- ["]b"] = { ":BufferLineCycleNext<CR>", desc = "Next in bufferline" },
+			-- ["[b"] = { ":BufferLineCyclePrev<CR>", desc = "Previous in bufferline" },
 			["]t"] = { "gt", desc = "Next Tab" },
 			["[t"] = { "gT", desc = "Previous Tab" },
 			["<leader>r"] = { ":Neotree reveal<cr>", desc = "Reveal file in editor" },

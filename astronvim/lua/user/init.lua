@@ -86,7 +86,7 @@ local config = {
 		init = {
 			-- You can disable default plugins as follows:
 			["goolord/alpha-nvim"] = { disable = true },
-			["declancm/cinnamon.nvim"] = { disable = true },
+			--[[ ["declancm/cinnamon.nvim"] = { disable = true }, ]]
 			["akinsho/bufferline.nvim"] = { disable = true },
 			["akinsho/toggleterm.nvim"] = { disable = true },
 
@@ -106,12 +106,12 @@ local config = {
 				end,
 			},
 			{ "EdenEast/nightfox.nvim" },
-			{
-				"karb94/neoscroll.nvim",
-				config = function()
-					require("neoscroll").setup()
-				end,
-			},
+			--[[ { ]]
+			--[[ 	"karb94/neoscroll.nvim", ]]
+			--[[ 	config = function() ]]
+			--[[ 		require("neoscroll").setup() ]]
+			--[[ 	end, ]]
+			--[[ }, ]]
 			{
 				"luukvbaal/stabilize.nvim",
 				config = function()

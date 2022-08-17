@@ -145,6 +145,9 @@ local config = {
 				"tpope/vim-fugitive",
 			},
 			{
+				"tpope/vim-repeat",
+			},
+			{
 				"b0o/incline.nvim",
 				config = function()
 					require("incline").setup()
@@ -534,6 +537,7 @@ local config = {
 			["<leader>e"] = false,
 			["<leader>o"] = { ":Neotree toggle<cr>", desc = "Toggle File Explorer" },
 			["<esc><esc>"] = { "<cmd>nohlsearch<cr>", desc = "No highlight" },
+			["gC"] = { ":GitConflictListQf", desc = "Show git conflicts in quicklist" },
 		},
 		t = {
 			-- setting a mapping to false will disable it

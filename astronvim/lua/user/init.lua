@@ -87,7 +87,7 @@ local config = {
 			-- You can disable default plugins as follows:
 			["goolord/alpha-nvim"] = { disable = true },
 			--[[ ["declancm/cinnamon.nvim"] = { disable = true }, ]]
-			["akinsho/bufferline.nvim"] = { disable = true },
+			-- ["akinsho/bufferline.nvim"] = { disable = true },
 			["akinsho/toggleterm.nvim"] = { disable = true },
 
 			-- You can also add new plugins here as well:
@@ -147,12 +147,12 @@ local config = {
 			{
 				"tpope/vim-repeat",
 			},
-			{
-				"b0o/incline.nvim",
-				config = function()
-					require("incline").setup()
-				end,
-			},
+			-- {
+			-- 	"b0o/incline.nvim",
+			-- 	config = function()
+			-- 		require("incline").setup()
+			-- 	end,
+			-- },
 			{
 				"ray-x/guihua.lua",
 			},
@@ -448,7 +448,7 @@ local config = {
 			nvim_lsp = 1000,
 			buffer = 750,
 			path = 500,
-			luasnip = false,
+			luasnip = 250,
 		},
 	},
 
@@ -525,8 +525,8 @@ local config = {
 				"<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>",
 			},
 			["s"] = { ":HopWord<cr>", desc = "Hopword" },
-			-- ["]b"] = { ":BufferLineCycleNext<CR>", desc = "Next in bufferline" },
-			-- ["[b"] = { ":BufferLineCyclePrev<CR>", desc = "Previous in bufferline" },
+			["]b"] = { ":BufferLineCycleNext<CR>", desc = "Next in bufferline" },
+			["[b"] = { ":BufferLineCyclePrev<CR>", desc = "Previous in bufferline" },
 			["]t"] = { "gt", desc = "Next Tab" },
 			["[t"] = { "gT", desc = "Previous Tab" },
 			["<leader>r"] = { ":Neotree reveal<cr>", desc = "Reveal file in editor" },
@@ -537,7 +537,7 @@ local config = {
 			["<leader>e"] = false,
 			["<leader>o"] = { ":Neotree toggle<cr>", desc = "Toggle File Explorer" },
 			["<esc><esc>"] = { "<cmd>nohlsearch<cr>", desc = "No highlight" },
-			["gC"] = { ":GitConflictListQf", desc = "Show git conflicts in quicklist" },
+			["<leader>gC"] = { ":GitConflictListQf<cr>", desc = "Show git conflicts in quicklist" },
 		},
 		t = {
 			-- setting a mapping to false will disable it

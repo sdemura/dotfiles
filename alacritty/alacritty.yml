@@ -362,6 +362,9 @@ draw_bold_text_with_bright_colors: true
 #   - | Beam
 #shape: Block
 
+cursor:
+  style: Beam
+
 # Cursor blinking state
 #
 # Values for `blinking`:
@@ -981,9 +984,63 @@ schemes:
       magenta: "#df69ba"
       cyan: "#35a77c"
       white: "#dfddc8"
+  solarized_light: &solarized_light
+    # Default colors
+    primary:
+      background: '0xfdf6e3'
+      foreground: '0x586e75'
+
+    # Normal colors
+    normal:
+      black:   '0x073642'
+      red:     '0xdc322f'
+      green:   '0x859900'
+      yellow:  '0xb58900'
+      blue:    '0x268bd2'
+      magenta: '0xd33682'
+      cyan:    '0x2aa198'
+      white:   '0xeee8d5'
+
+    # Bright colors
+    bright:
+      black:   '0x002b36'
+      red:     '0xcb4b16'
+      green:   '0x586e75'
+      yellow:  '0x657b83'
+      blue:    '0x839496'
+      magenta: '0x6c71c4'
+      cyan:    '0x93a1a1'
+      white:   '0xfdf6e3'
+  solarized_dark: &solarized_dark
+    # Default colors
+    primary:
+      background: '0x002b36'
+      foreground: '0x839496'
+
+    # Normal colors
+    normal:
+      black:   '0x073642'
+      red:     '0xdc322f'
+      green:   '0x859900'
+      yellow:  '0xb58900'
+      blue:    '0x268bd2'
+      magenta: '0xd33682'
+      cyan:    '0x2aa198'
+      white:   '0xeee8d5'
+
+    # Bright colors
+    bright:
+      black:   '0x002b36'
+      red:     '0xcb4b16'
+      green:   '0x586e75'
+      yellow:  '0x657b83'
+      blue:    '0x839496'
+      magenta: '0x6c71c4'
+      cyan:    '0x93a1a1'
+      white:   '0xfdf6e3'
 
 # Apply
-colors: *everforest_dark_medium
+colors: *solarized_light
 
 env:
   TERM: xterm-256color

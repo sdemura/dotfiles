@@ -1,0 +1,25 @@
+[[language]]
+name = "yaml"
+scope = "source.yaml"
+file-types = ["yml", "yaml"]
+roots = []
+comment-token = "#"
+indent = { tab-width = 2, unit = "  " }
+language-server = { command = "yaml-language-server", args = ["--stdio"] }
+injection-regex = "yml|yaml"
+config = { yaml.customTags = ["!reference sequence"] }
+
+[[grammar]]
+name = "dockerfile"
+source = { git = "https://github.com/camdencheek/tree-sitter-dockerfile", rev = "25c71d6a24cdba8f0c74ef40d4d2d93defd7e196" }
+
+
+# [[language]]
+# name = "dockerfile"
+# scope = "source.dockerfile"
+# injection-regex = "docker|dockerfile"
+# roots = ["Dockerfile"]
+# file-types = ["Dockerfile", "dockerfile"]
+# comment-token = "#"
+# indent = { tab-width = 2, unit = "  " }
+# language-server = { command = "docker-ls", args = ["--stdio"] }

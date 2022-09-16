@@ -1,4 +1,4 @@
-# Everforest (Dark Hard) Custom
+# Everforest (Dark Hard)
 # Author: CptPotato
 
 # Original Author:
@@ -62,9 +62,10 @@
 "ui.linenr.selected" = "fg"
 "ui.cursorline" = { bg = "bg1" }
 "ui.statusline" = { fg = "grey2", bg = "bg2" }
-"ui.statusline.inactive" = { fg = "grey0", bg = "light-black" }
-"ui.statusline.active" = { fg = "grey2", bg = "blue" }
-"ui.statusline.insert" = { fg = "grey2", bg = "green" }
+"ui.statusline.normal" = { fg = "grey0", bg = "bg1" }
+"ui.statusline.insert" = { fg = "grey0", bg = "green" }
+"ui.statusline.select" = { fg = "grey0", bg = "blue" }
+
 "ui.popup" = { fg = "grey2", bg = "bg1" }
 "ui.window" = { fg = "grey2", bg = "bg1" }
 "ui.help" = { fg = "fg", bg = "bg1" }

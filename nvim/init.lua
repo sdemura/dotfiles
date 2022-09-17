@@ -9,7 +9,7 @@ vim.opt.ignorecase = true
 vim.opt.inccommand = "nosplit"
 vim.opt.lazyredraw = true
 vim.opt.linebreak = true
-vim.opt.list = true
+-- vim.opt.list = true
 vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = false
@@ -35,7 +35,7 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 
 -- keymaps
-vim.g.mapleader = " "
+-- vim.g.mapleader = " "
 
 local opts = { noremap = true, silent = true }
 
@@ -44,7 +44,7 @@ vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>:Neotree toggle<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>r", "<cmd>:Neotree toggle reveal<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>:AerialToggle<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>p", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>w", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>s", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
 vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)

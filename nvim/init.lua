@@ -49,10 +49,13 @@ vim.api.nvim_set_keymap("n", "<leader>fb", '<cmd>lua require("telescope.builtin"
 vim.api.nvim_set_keymap("n", "<leader>fs", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
 vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
 
-vim.api.nvim_set_keymap("n", "<space>Y", '"*y', opts)
-vim.api.nvim_set_keymap("n", "<space>Y", '"*y', opts)
-vim.api.nvim_set_keymap("v", "<space>P", '"*p', opts)
-vim.api.nvim_set_keymap("v", "<space>P", '"*p', opts)
+vim.api.nvim_set_keymap("n", "<leader>Y", '"*y', opts)
+vim.api.nvim_set_keymap("n", "<leader>Y", '"*y', opts)
+vim.api.nvim_set_keymap("v", "<leader>P", '"*p', opts)
+vim.api.nvim_set_keymap("v", "<leader>P", '"*p', opts)
+
+vim.api.nvim_set_keymap("n", "<leader>ci", ":e ~/.config/nvim/init.lua<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>cp", ":e ~/.config/nvim/lua/plugins.lua<CR>", opts)
 --
 -- place this in one of your configuration file(s)
 vim.api.nvim_set_keymap(

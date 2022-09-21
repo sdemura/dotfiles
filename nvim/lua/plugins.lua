@@ -204,8 +204,8 @@ return require("packer").startup({
 						},
 					},
 					sections = {
-						lualine_a = { { "mode", separator = { left = "", right = "" } } },
-						lualine_z = { { "location", separator = { left = "", right = "" } } },
+						lualine_a = { { "mode", separator = { right = "" } } },
+						lualine_z = { { "location", separator = { left = "" } } },
 					},
 					winbar = {
 

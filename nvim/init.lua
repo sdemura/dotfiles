@@ -40,8 +40,8 @@ vim.g.mapleader = " "
 local opts = { noremap = true, silent = true }
 
 vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>n", "<cmd>:Neotree toggle<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>N", "<cmd>:Neotree toggle reveal<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>:Neotree toggle<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>E", "<cmd>:Neotree toggle reveal<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>:AerialToggle<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>ff", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>fw", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)

@@ -190,6 +190,8 @@ return require("packer").startup({
 				require("lualine").setup({
 					options = {
 						globalstatus = true,
+						component_separators = { right = "|" },
+						section_separators = { left = "", right = "" },
 						disabled_filetypes = {
 							statusline = {
 								"aerial",
@@ -201,13 +203,19 @@ return require("packer").startup({
 							},
 						},
 					},
+					sections = {
+						lualine_a = { { "mode", separator = { left = "", right = "" } } },
+						lualine_z = { { "location", separator = { left = "", right = "" } } },
+					},
 					winbar = {
+
 						lualine_c = { { navic.get_location, cond = navic.is_available } },
 						lualine_z = {
 							{
 								"filename",
 								file_status = true,
 								path = 1,
+								separator = { left = "", right = "" },
 							},
 						},
 					},

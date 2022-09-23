@@ -96,8 +96,8 @@ vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
-local navic = require("nvim-navic")
-vim.g.navic_silence = true
+-- local navic = require("nvim-navic")
+-- vim.g.navic_silence = true
 --
 -- vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
@@ -134,8 +134,8 @@ local on_attach = function(client, bufnr)
 		})
 	end
 	-- setup aerial
-	require("aerial").on_attach(client, bufnr)
-	navic.attach(client, bufnr)
+	-- require("aerial").on_attach(client, bufnr)
+	-- navic.attach(client, bufnr)
 end
 
 local lsp_flags = {

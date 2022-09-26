@@ -6,7 +6,7 @@ shell = ["zsh", "-c"]
 cursorline = true
 color-modes = true
 completion-trigger-len = 1
-# bufferline = "multiple"
+bufferline = "multiple"
 
 [editor.file-picker]
 hidden = false
@@ -28,8 +28,8 @@ render = true
 "{" = ["goto_prev_paragraph", "collapse_selection"]
 "}" = ["goto_next_paragraph", "collapse_selection"]
 X = "extend_line_above"
-"m" = "select_textobject_inner"
-"M" = "select_textobject_around"
+# "m" = "select_textobject_inner"
+# "M" = "select_textobject_around"
 
 # Currently broken
 # C-c = "no_op"

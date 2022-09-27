@@ -22,7 +22,7 @@ vim.opt.splitright = true
 vim.opt.switchbuf = "useopen"
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
-vim.opt.undofile = true
+vim.opt.undofile = false
 vim.opt.wrap = false
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
 

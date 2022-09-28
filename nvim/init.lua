@@ -90,6 +90,7 @@ vim.api.nvim_set_keymap("v", "<LeftRelease>", '"*ygv', opts)
 
 vim.api.nvim_set_keymap("i", "<C-r>", "<cmd>:Telescope registers<cr>", opts)
 vim.api.nvim_set_keymap("n", '""', "<cmd>:Telescope registers<cr>", opts)
+vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
 
 vim.opt.background = "dark"
 vim.g.catppuccin_flavour = "mocha"

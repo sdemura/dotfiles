@@ -46,10 +46,10 @@ vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts
 vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>:Neotree toggle<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>E", "<cmd>:Neotree toggle reveal<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>:AerialToggle<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>ff", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>fw", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>fs", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>f", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>s", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
 vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
 
 vim.api.nvim_set_keymap("n", "<leader>Y", '"*y', opts)
@@ -131,7 +131,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
     vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, bufopts)
+    vim.keymap.set("n", "<leader>F", vim.lsp.buf.format, bufopts)
 
     if client.server_capabilities.documentFormattingProvider then
         vim.api.nvim_create_autocmd("BufWritePre", {

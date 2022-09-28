@@ -63,7 +63,7 @@ return require("packer").startup({
 		use({
 			"nvim-telescope/telescope.nvim",
 			tag = "0.1.0",
-			requires = { "nvim-lua/plenary.nvim" },
+			requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-live-grep-args.nvim" },
 			config = function()
 				local telescope = require("telescope")
 				local actions = require("telescope.actions")
@@ -103,6 +103,7 @@ return require("packer").startup({
 					},
 				})
 				require("telescope").load_extension("fzf")
+				require("telescope").load_extension("live_grep_args")
 			end,
 		})
 
@@ -363,6 +364,7 @@ return require("packer").startup({
 			require("packer").sync()
 		end
 	end,
+
 	config = {
 		display = {
 			open_fn = function()

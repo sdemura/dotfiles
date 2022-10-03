@@ -54,7 +54,7 @@ vim.api.nvim_set_keymap("n", "<leader>Y", '"*y', opts)
 vim.api.nvim_set_keymap("v", "<leader>P", '"*p', opts)
 vim.api.nvim_set_keymap("v", "<leader>P", '"*p', opts)
 
-vim.api.nvim_set_keymap("n", "<leader>ci", ":e ~/.config/nvim/init.lua<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>cc", ":e ~/.config/nvim/init.lua<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>cp", ":e ~/.config/nvim/lua/plugins.lua<CR>", opts)
 --
 -- place this in one of your configuration file(s)

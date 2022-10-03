@@ -45,25 +45,11 @@ return require("packer").startup({
 				require("mason-lspconfig").setup()
 			end,
 		})
-		-- Lua
-		-- use({
-		-- 	"folke/which-key.nvim",
-		-- 	config = function()
-		-- 		require("which-key").setup({
-		-- 			-- your configuration comes here
-		-- 			-- or leave it empty to use the default settings
-		-- 			-- refer to the configuration section below
-		-- 		})
-		-- 	end,
-		-- })
-
-		use("sainnhe/everforest")
 
 		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 		use({
 			"nvim-telescope/telescope.nvim",
 			tag = "0.1.0",
-			requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-live-grep-args.nvim" },
 			config = function()
 				local telescope = require("telescope")
 				local actions = require("telescope.actions")
@@ -103,7 +89,6 @@ return require("packer").startup({
 					},
 				})
 				require("telescope").load_extension("fzf")
-				require("telescope").load_extension("live_grep_args")
 			end,
 		})
 
@@ -248,12 +233,12 @@ return require("packer").startup({
 			end,
 		})
 
-		use({
-			"tiagovla/scope.nvim",
-			config = function()
-				require("scope").setup()
-			end,
-		})
+		-- use({
+		-- 	"tiagovla/scope.nvim",
+		-- 	config = function()
+		-- 		require("scope").setup()
+		-- 	end,
+		-- })
 
 		use({ "tpope/vim-fugitive" })
 		use({ "tpope/vim-unimpaired" })
@@ -296,19 +281,19 @@ return require("packer").startup({
 			end,
 		})
 
-		use({
-			"stevearc/aerial.nvim",
-			config = function()
-				require("aerial").setup()
-			end,
-		})
+		-- use({
+		-- 	"stevearc/aerial.nvim",
+		-- 	config = function()
+		-- 		require("aerial").setup()
+		-- 	end,
+		-- })
 
-		use({
-			"antoinemadec/FixCursorHold.nvim",
-			config = function()
-				vim.g.cursorhold_updatetime = 100
-			end,
-		})
+		-- use({
+		-- 	"antoinemadec/FixCursorHold.nvim",
+		-- 	config = function()
+		-- 		vim.g.cursorhold_updatetime = 100
+		-- 	end,
+		-- })
 
 		use({
 			"kylechui/nvim-surround",

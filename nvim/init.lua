@@ -26,9 +26,6 @@ vim.opt.undofile = true
 vim.opt.wrap = false
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
 
--- neovide stuff because why not?
-vim.opt.guifont = { "FiraCode Nerd Font", "h14" }
-
 vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500}]])
 
 -- Unless you are still migrating, remove the deprecated commands from v1.x
@@ -131,15 +128,19 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
 	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-	vim.keymap.set("n", "<leader>F", vim.lsp.buf.format, bufopts)
 
-	if client.server_capabilities.documentFormattingProvider then
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			callback = function()
-				vim.lsp.buf.format()
-			end,
-		})
-	end
+	vim.keymap.set("n", "gq", function()
+		vim.lsp.buf.format({ async = true })
+	end, bufopts)
+
+	-- format on save.
+	-- if client.server_capabilities.documentFormattingProvider then
+	-- 	vim.api.nvim_create_autocmd("BufWritePre", {
+	-- 		callback = function()
+	-- 			vim.lsp.buf.format()
+	-- 		end,
+	-- 	})
+	-- end
 	-- setup aerial
 	-- require("aerial").on_attach(client, bufnr)
 	-- navic.attach(client, bufnr)

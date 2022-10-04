@@ -171,8 +171,6 @@ return require("packer").startup({
 		use({
 			"nvim-lualine/lualine.nvim",
 			config = function()
-				-- local navic = require("nvim-navic")
-
 				require("lualine").setup({
 					options = {
 						globalstatus = false,
@@ -201,27 +199,6 @@ return require("packer").startup({
 						lualine_x = { "aerial" },
 						lualine_z = { { "location", separator = { left = "" } } },
 					},
-					-- winbar = {
-					--
-					-- 	lualine_c = { { navic.get_location, cond = navic.is_available } },
-					-- lualine_z = {
-					--     {
-					--         "filename",
-					--         file_status = true,
-					--         path = 1,
-					--         separator = { left = "" },
-					--     },
-					-- },
-					-- },
-					-- inactive_winbar = {
-					--     lualine_z = {
-					--         {
-					--             "filename",
-					--             file_status = true,
-					--             path = 1,
-					--         },
-					--     },
-					-- },
 				})
 			end,
 		})
@@ -232,13 +209,6 @@ return require("packer").startup({
 				require("gitsigns").setup()
 			end,
 		})
-
-		-- use({
-		-- 	"tiagovla/scope.nvim",
-		-- 	config = function()
-		-- 		require("scope").setup()
-		-- 	end,
-		-- })
 
 		use({ "tpope/vim-fugitive" })
 		use({ "tpope/vim-unimpaired" })
@@ -281,20 +251,6 @@ return require("packer").startup({
 			end,
 		})
 
-		-- use({
-		-- 	"stevearc/aerial.nvim",
-		-- 	config = function()
-		-- 		require("aerial").setup()
-		-- 	end,
-		-- })
-
-		-- use({
-		-- 	"antoinemadec/FixCursorHold.nvim",
-		-- 	config = function()
-		-- 		vim.g.cursorhold_updatetime = 100
-		-- 	end,
-		-- })
-
 		use({
 			"kylechui/nvim-surround",
 			tag = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -313,7 +269,6 @@ return require("packer").startup({
 			end,
 		})
 
-		-- init.lua
 		use({
 			"lukas-reineke/indent-blankline.nvim",
 			config = function()
@@ -325,15 +280,6 @@ return require("packer").startup({
 
 		use({ "catppuccin/nvim", as = "catppuccin" })
 
-		-- use({
-		-- 	"SmiteshP/nvim-navic",
-		-- 	config = function()
-		-- 		require("nvim-navic").setup({
-		-- 			highlight = false,
-		-- 		})
-		-- 	end,
-		-- })
-
 		use({
 			"akinsho/toggleterm.nvim",
 			tag = "*",
@@ -344,46 +290,6 @@ return require("packer").startup({
 				})
 			end,
 		})
-
-		-- use({
-		-- 	"gelguy/wilder.nvim",
-		-- 	config = function()
-		-- 		-- config goes here
-		-- 		local wilder = require("wilder")
-		-- 		wilder.setup({ modes = { ":", "/", "?" } })
-		--
-		-- 		wilder.set_option("pipeline", {
-		-- 			wilder.branch(
-		-- 				wilder.cmdline_pipeline({
-		-- 					fuzzy = 1,
-		-- 					set_pcre2_pattern = 1,
-		-- 				}),
-		-- 				wilder.python_search_pipeline({
-		-- 					pattern = "fuzzy",
-		-- 				})
-		-- 			),
-		-- 		})
-		--
-		-- 		local highlighters = {
-		-- 			wilder.pcre2_highlighter(),
-		-- 			wilder.basic_highlighter(),
-		-- 		}
-		--
-		-- 		wilder.set_option(
-		-- 			"renderer",
-		-- 			wilder.renderer_mux({
-		-- 				[":"] = wilder.popupmenu_renderer({
-		-- 					highlighter = highlighters,
-		-- 					left = { " ", wilder.popupmenu_devicons() },
-		-- 					right = { " ", wilder.popupmenu_scrollbar() },
-		-- 				}),
-		-- 				["/"] = wilder.wildmenu_renderer({
-		-- 					highlighter = highlighters,
-		-- 				}),
-		-- 			})
-		-- 		)
-		-- 	end,
-		-- })
 
 		if packer_bootstrap then
 			require("packer").sync()

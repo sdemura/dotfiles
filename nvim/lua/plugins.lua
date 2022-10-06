@@ -280,17 +280,6 @@ return require("packer").startup({
 
 		use({ "catppuccin/nvim", as = "catppuccin" })
 
-		use({
-			"akinsho/toggleterm.nvim",
-			tag = "*",
-			config = function()
-				require("toggleterm").setup({
-					open_mapping = [[<c-\>]],
-					direction = "float",
-				})
-			end,
-		})
-
 		if packer_bootstrap then
 			require("packer").sync()
 		end

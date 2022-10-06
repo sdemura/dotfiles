@@ -1,7 +1,7 @@
 theme = "catppuccin_mocha"
 
 [editor]
-# line-number = "relative"
+line-number = "relative"
 shell = ["zsh", "-c"]
 cursorline = true
 color-modes = true
@@ -28,9 +28,3 @@ render = true
 "{" = ["goto_prev_paragraph", "collapse_selection"]
 "}" = ["goto_next_paragraph", "collapse_selection"]
 X = "extend_line_above"
-# "m" = "select_textobject_inner"
-# "M" = "select_textobject_around"
-
-# Currently broken
-# C-c = "no_op"
-# "C-/" = "toggle_comments"

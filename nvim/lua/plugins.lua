@@ -56,77 +56,69 @@ return require("packer").startup({
 
 				telescope.setup({
 					defaults = {
-                        mappings = {
-              i = {
-                ["<C-c>"] = actions.close,
+						mappings = {
+							i = {
+								["<C-c>"] = actions.close,
 
-                ["<C-j>"] = actions.cycle_history_next,
-                ["<C-k>"] = actions.cycle_history_prev,
+								["<C-j>"] = actions.cycle_history_next,
+								["<C-k>"] = actions.cycle_history_prev,
 
-                ["<C-n>"] = actions.move_selection_next,
-                ["<C-p>"] = actions.move_selection_previous,
+								["<C-n>"] = actions.move_selection_next,
+								["<C-p>"] = actions.move_selection_previous,
 
-                -- ["<C-n>"] = actions.cycle_history_next,
-                -- ["<C-p>"] = actions.cycle_history_prev,
-                --
-                -- ["<C-j>"] = actions.move_selection_next,
-                -- ["<C-k>"] = actions.move_selection_previous,
+								["<Down>"] = actions.move_selection_next,
+								["<Up>"] = actions.move_selection_previous,
 
-                ["<C-c>"] = actions.close,
+								["<CR>"] = actions.select_default,
+								["<C-x>"] = actions.select_horizontal,
+								["<C-v>"] = actions.select_vertical,
+								["<C-t>"] = actions.select_tab,
 
-                ["<Down>"] = actions.move_selection_next,
-                ["<Up>"] = actions.move_selection_previous,
+								["<C-u>"] = actions.preview_scrolling_up,
+								["<C-d>"] = actions.preview_scrolling_down,
 
-                ["<CR>"] = actions.select_default,
-                ["<C-x>"] = actions.select_horizontal,
-                ["<C-v>"] = actions.select_vertical,
-                ["<C-t>"] = actions.select_tab,
+								["<PageUp>"] = actions.results_scrolling_up,
+								["<PageDown>"] = actions.results_scrolling_down,
 
-                ["<C-u>"] = actions.preview_scrolling_up,
-                ["<C-d>"] = actions.preview_scrolling_down,
+								["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+								["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+								["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+								["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+								["<C-l>"] = actions.complete_tag,
+							},
 
-                ["<PageUp>"] = actions.results_scrolling_up,
-                ["<PageDown>"] = actions.results_scrolling_down,
+							n = {
+								["<C-c>"] = actions.close,
+								["<esc>"] = actions.close,
+								["<CR>"] = actions.select_default,
+								["<C-x>"] = actions.select_horizontal,
+								["<C-v>"] = actions.select_vertical,
+								["<C-t>"] = actions.select_tab,
 
-                ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-                ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-                ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-                ["<C-l>"] = actions.complete_tag,
-              },
+								["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+								["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+								["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+								["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 
-              n = {
-                ["<C-c>"] = actions.close,
-                ["<esc>"] = actions.close,
-                ["<CR>"] = actions.select_default,
-                ["<C-x>"] = actions.select_horizontal,
-                ["<C-v>"] = actions.select_vertical,
-                ["<C-t>"] = actions.select_tab,
+								["j"] = actions.move_selection_next,
+								["k"] = actions.move_selection_previous,
+								["H"] = actions.move_to_top,
+								["M"] = actions.move_to_middle,
+								["L"] = actions.move_to_bottom,
 
-                ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-                ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-                ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+								["<Down>"] = actions.move_selection_next,
+								["<Up>"] = actions.move_selection_previous,
+								["gg"] = actions.move_to_top,
+								["G"] = actions.move_to_bottom,
 
-                ["j"] = actions.move_selection_next,
-                ["k"] = actions.move_selection_previous,
-                ["H"] = actions.move_to_top,
-                ["M"] = actions.move_to_middle,
-                ["L"] = actions.move_to_bottom,
+								["<C-u>"] = actions.preview_scrolling_up,
+								["<C-d>"] = actions.preview_scrolling_down,
 
-                ["<Down>"] = actions.move_selection_next,
-                ["<Up>"] = actions.move_selection_previous,
-                ["gg"] = actions.move_to_top,
-                ["G"] = actions.move_to_bottom,
-
-                ["<C-u>"] = actions.preview_scrolling_up,
-                ["<C-d>"] = actions.preview_scrolling_down,
-
-                ["<PageUp>"] = actions.results_scrolling_up,
-                ["<PageDown>"] = actions.results_scrolling_down,
-              },
-             },
-         },
+								["<PageUp>"] = actions.results_scrolling_up,
+								["<PageDown>"] = actions.results_scrolling_down,
+							},
+						},
+					},
 					pickers = {
 						find_files = {
 							find_command = {

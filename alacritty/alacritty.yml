@@ -1129,6 +1129,7 @@ key_bindings:
   - { key: Key6, mods: Control, chars: "\x1e" }
   - { key: Right, mods: Alt, chars: "\x1BF" }
   - { key: Left,  mods: Alt, chars: "\x1BB" }
+  - { key: N, mods: Command, action: CreateNewWindow }
 
 selection:
     save_to_clipboard: true

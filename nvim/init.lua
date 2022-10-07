@@ -34,19 +34,24 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 
 -- keymaps
--- vim.g.mapleader = " "
+vim.g.mapleader = ","
+
 
 local opts = { noremap = true, silent = true }
 
 vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>:Neotree toggle<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>E", "<cmd>:Neotree toggle reveal<CR>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>:AerialToggle<CR>", opts)
+vim.api.nvim_set_keymap("n", "-", "<cmd>:Neotree toggle<CR>", opts)
+vim.api.nvim_set_keymap("n", "_", "<cmd>:Neotree toggle reveal<CR>", opts)
+
+vim.api.nvim_set_keymap("i", "<C-r>", "<cmd>:Telescope registers<cr>", opts)
+vim.api.nvim_set_keymap("n", '""', "<cmd>:Telescope registers<cr>", opts)
+vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
+
+vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>f", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>s", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
-vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
+
 
 vim.api.nvim_set_keymap("n", "<leader>y", '"*y', opts)
 vim.api.nvim_set_keymap("n", "<leader>p", '"*p', opts)
@@ -57,7 +62,8 @@ vim.api.nvim_set_keymap("v", "<leader>p", '"*p', opts)
 vim.api.nvim_set_keymap("n", "<leader>cc", ":e ~/.config/nvim/init.lua<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>cp", ":e ~/.config/nvim/lua/plugins.lua<CR>", opts)
 
--- place this in one of your configuration file(s)
+-- Hop configuration
+vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
 vim.api.nvim_set_keymap(
 	"",
 	"f",
@@ -84,10 +90,6 @@ vim.api.nvim_set_keymap(
 )
 
 -- vim.api.nvim_set_keymap("v", "<LeftRelease>", '"*ygv', opts)
-
-vim.api.nvim_set_keymap("i", "<C-r>", "<cmd>:Telescope registers<cr>", opts)
-vim.api.nvim_set_keymap("n", '""', "<cmd>:Telescope registers<cr>", opts)
-vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
 
 vim.opt.background = "dark"
 vim.g.catppuccin_flavour = "mocha"

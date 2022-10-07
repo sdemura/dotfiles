@@ -59,6 +59,7 @@ return require("packer").startup({
 						mappings = {
 							i = {
 								["<C-c>"] = actions.close,
+								["<Esc>"] = actions.close,
 
 								["<C-j>"] = actions.cycle_history_next,
 								["<C-k>"] = actions.cycle_history_prev,
@@ -89,7 +90,8 @@ return require("packer").startup({
 
 							n = {
 								["<C-c>"] = actions.close,
-								["<esc>"] = actions.close,
+								["<Esc>"] = actions.close,
+
 								["<CR>"] = actions.select_default,
 								["<C-x>"] = actions.select_horizontal,
 								["<C-v>"] = actions.select_vertical,

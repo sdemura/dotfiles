@@ -89,6 +89,9 @@ vim.api.nvim_set_keymap(
 	{}
 )
 
+-- I never use macros. RIP macros.
+vim.api.nvim_set_keymap("", "q", "<Nop>", {})
+
 -- vim.api.nvim_set_keymap("v", "<LeftRelease>", '"*ygv', opts)
 
 vim.opt.background = "dark"

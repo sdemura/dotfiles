@@ -52,15 +52,14 @@ vim.api.nvim_set_keymap("n", "<leader>f", '<cmd>lua require("telescope.builtin")
 vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>s", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
 
-
 vim.api.nvim_set_keymap("n", "<leader>y", '"*y', opts)
 vim.api.nvim_set_keymap("n", "<leader>p", '"*p', opts)
 
 vim.api.nvim_set_keymap("v", "<leader>y", '"*y', opts)
 vim.api.nvim_set_keymap("v", "<leader>p", '"*p', opts)
 
-vim.api.nvim_set_keymap("n", "<leader>cc", ":e ~/.config/nvim/init.lua<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>cp", ":e ~/.config/nvim/lua/plugins.lua<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>nc", ":e ~/.config/nvim/init.lua<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>np", ":e ~/.config/nvim/lua/plugins.lua<CR>", opts)
 
 -- Hop configuration
 vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)

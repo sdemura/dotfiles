@@ -34,7 +34,7 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 
 -- keymaps
-vim.g.mapleader = ","
+vim.g.mapleader = " "
 
 
 local opts = { noremap = true, silent = true }
@@ -136,7 +136,7 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
 
-	vim.keymap.set("n", "<space>f", function()
+	vim.keymap.set("n", "<space>F", function()
 		vim.lsp.buf.format({ async = false })
 	end, bufopts)
 end

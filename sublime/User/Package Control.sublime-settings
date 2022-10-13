@@ -1,0 +1,26 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"Dockerfile Syntax Highlighting",
+		"Gomod",
+		"Keymaps",
+		"LSP",
+		"LSP-bash",
+		"LSP-dockerfile",
+		"LSP-gopls",
+		"LSP-yaml",
+		"MarkdownPreview",
+		"Package Control",
+		"SideBarTools",
+		"SublimeLinter",
+		"SublimeLinter-annotations",
+		"Taskfile",
+		"Terraform",
+		"TOML",
+	],
+}

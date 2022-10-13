@@ -1,0 +1,12 @@
+// SublimeLinter Settings - User
+{
+	// "debug": true,
+	
+	"linters": {
+		
+	},
+
+	"styles": [
+		{"mark_style": "solid_underline"}
+	]
+}

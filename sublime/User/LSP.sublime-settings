@@ -1,0 +1,20 @@
+// Settings in here override those in "LSP/LSP.sublime-settings"
+{
+	// "clients": {
+	// 	"gopls": {
+	// 		"command": ["gopls"],
+	// 		"selector": "source.go",
+	// 					"env": {
+	// 			"GOPATH": "/Users/sean/go",
+	// 			"PATH": "/Users/sean/go/bin:$PATH"
+	// 		}
+	// 	}
+	// }
+
+    "lsp_format_on_save": true,
+    "lsp_code_actions_on_save": {
+        "source.fixAll": true,
+        "source.organizeImports": true
+    },
+    "semantic_highlighting": true
+}

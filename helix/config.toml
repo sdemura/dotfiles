@@ -3,7 +3,7 @@ theme = "catppuccin_mocha"
 [editor]
 line-number = "relative"
 shell = ["zsh", "-c"]
-cursorline = true
+cursorline = false
 color-modes = true
 completion-trigger-len = 1
 bufferline = "multiple"

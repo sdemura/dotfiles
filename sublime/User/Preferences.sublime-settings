@@ -13,5 +13,5 @@
 	"autocomplete_include_snippets": false,
 	"rulers": [100],
 	"highlight_line": true,
-	"bold_folder_labels": true
+	"bold_folder_labels": true,
 }

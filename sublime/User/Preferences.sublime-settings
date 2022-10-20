@@ -5,7 +5,7 @@
 	],
 	"theme": "Adaptive.sublime-theme",
 	"color_scheme": "Mariana.sublime-color-scheme",
-	"font_face": "FiraCode Nerd Font",
+	"font_face": "Hack Nerd Font",
 	"font_size": 13,
 		"scroll_past_end": true,
 	"find_selected_text": true,

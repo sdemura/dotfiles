@@ -22,6 +22,7 @@
 		"SublimeLinter",
 		"SublimeLinter-annotations",
 		"Taskfile",
+		"Terminus",
 		"Terraform",
 		"TOML",
 	],

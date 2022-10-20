@@ -1,0 +1,10 @@
+{
+	"rules": [
+		{
+		"selector": "source.shell.bash",
+		"cmd": ["shfmt"],
+		"format_on_save": true,
+		"merge_type": "replace"
+}
+	]
+}

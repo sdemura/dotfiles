@@ -92,7 +92,6 @@ window:
   #instance: Alacritty
   # General application class
   #general: Alacritty
-
   # GTK theme variant (Linux/BSD only)
   #
   # Override the variant of the GTK theme. Commonly supported values are `dark`
@@ -110,7 +109,7 @@ window:
 # Font configuration
 font:
   normal:
-    family: Hack Nerd Font
+    family: JetBrainsMono Nerd Font
     # style: Regular
 
   # bold:
@@ -134,20 +133,17 @@ font:
   # offset:
   #   x: 0
   #   y: 3
-
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
   # right, increasing `y` moves the glyph upward.
   #glyph_offset:
   #  x: 0
   #  y: 0
-
   # Thin stroke font rendering (macOS only)
   #
   # Thin strokes are suitable for retina displays, but for non-retina screens
   # it is recommended to set `use_thin_strokes` to `false`.
   # use_thin_strokes: true
-
   # Use built-in font for box drawing characters.
   #
   # If `true`, Alacritty will use a custom built-in font for box drawing
@@ -364,6 +360,7 @@ draw_bold_text_with_bright_colors: true
 
 cursor:
   style: Beam
+  blinking: On
 
 # Cursor blinking state
 #
@@ -854,82 +851,82 @@ cursor:
 schemes:
   catppuccin_mocha: &catppuccin_mocha
     primary:
-        background: "#1E1E2E" # base
-        foreground: "#CDD6F4" # text
-        # Bright and dim foreground colors
-        dim_foreground: "#CDD6F4" # text
-        bright_foreground: "#CDD6F4" # text
+      background: "#1E1E2E" # base
+      foreground: "#CDD6F4" # text
+      # Bright and dim foreground colors
+      dim_foreground: "#CDD6F4" # text
+      bright_foreground: "#CDD6F4" # text
 
     # Cursor colors
     cursor:
-        text: "#1E1E2E" # base
-        cursor: "#F5E0DC" # rosewater
+      text: "#1E1E2E" # base
+      cursor: "#F5E0DC" # rosewater
     vi_mode_cursor:
-        text: "#1E1E2E" # base
-        cursor: "#B4BEFE" # lavender
+      text: "#1E1E2E" # base
+      cursor: "#B4BEFE" # lavender
 
     # Search colors
     search:
-        matches:
-            foreground: "#1E1E2E" # base
-            background: "#A6ADC8" # subtext0
-        focused_match:
-            foreground: "#1E1E2E" # base
-            background: "#A6E3A1" # green
-        footer_bar:
-            foreground: "#1E1E2E" # base
-            background: "#A6ADC8" # subtext0
+      matches:
+        foreground: "#1E1E2E" # base
+        background: "#A6ADC8" # subtext0
+      focused_match:
+        foreground: "#1E1E2E" # base
+        background: "#A6E3A1" # green
+      footer_bar:
+        foreground: "#1E1E2E" # base
+        background: "#A6ADC8" # subtext0
 
     # Keyboard regex hints
     hints:
-        start:
-            foreground: "#1E1E2E" # base
-            background: "#F9E2AF" # yellow
-        end:
-            foreground: "#1E1E2E" # base
-            background: "#A6ADC8" # subtext0
+      start:
+        foreground: "#1E1E2E" # base
+        background: "#F9E2AF" # yellow
+      end:
+        foreground: "#1E1E2E" # base
+        background: "#A6ADC8" # subtext0
 
     # Selection colors
     selection:
-        text: "#1E1E2E" # base
-        background: "#F5E0DC" # rosewater
+      text: "#1E1E2E" # base
+      background: "#F5E0DC" # rosewater
 
     # Normal colors
     normal:
-        black: "#45475A" # surface1
-        red: "#F38BA8" # red
-        green: "#A6E3A1" # green
-        yellow: "#F9E2AF" # yellow
-        blue: "#89B4FA" # blue
-        magenta: "#F5C2E7" # pink
-        cyan: "#94E2D5" # teal
-        white: "#BAC2DE" # subtext1
+      black: "#45475A" # surface1
+      red: "#F38BA8" # red
+      green: "#A6E3A1" # green
+      yellow: "#F9E2AF" # yellow
+      blue: "#89B4FA" # blue
+      magenta: "#F5C2E7" # pink
+      cyan: "#94E2D5" # teal
+      white: "#BAC2DE" # subtext1
 
     # Bright colors
     bright:
-        black: "#585B70" # surface2
-        red: "#F38BA8" # red
-        green: "#A6E3A1" # green
-        yellow: "#F9E2AF" # yellow
-        blue: "#89B4FA" # blue
-        magenta: "#F5C2E7" # pink
-        cyan: "#94E2D5" # teal
-        white: "#A6ADC8" # subtext0
+      black: "#585B70" # surface2
+      red: "#F38BA8" # red
+      green: "#A6E3A1" # green
+      yellow: "#F9E2AF" # yellow
+      blue: "#89B4FA" # blue
+      magenta: "#F5C2E7" # pink
+      cyan: "#94E2D5" # teal
+      white: "#A6ADC8" # subtext0
 
     # Dim colors
     dim:
-        black: "#45475A" # surface1
-        red: "#F38BA8" # red
-        green: "#A6E3A1" # green
-        yellow: "#F9E2AF" # yellow
-        blue: "#89B4FA" # blue
-        magenta: "#F5C2E7" # pink
-        cyan: "#94E2D5" # teal
-        white: "#BAC2DE" # subtext1
+      black: "#45475A" # surface1
+      red: "#F38BA8" # red
+      green: "#A6E3A1" # green
+      yellow: "#F9E2AF" # yellow
+      blue: "#89B4FA" # blue
+      magenta: "#F5C2E7" # pink
+      cyan: "#94E2D5" # teal
+      white: "#BAC2DE" # subtext1
 
     indexed_colors:
-        - { index: 16, color: "#FAB387" }
-        - { index: 17, color: "#F5E0DC" }
+      - { index: 16, color: "#FAB387" }
+      - { index: 17, color: "#F5E0DC" }
 
   everforest_dark_hard: &everforest_dark_hard
     primary:
@@ -1063,60 +1060,58 @@ schemes:
       magenta: "#df69ba"
       cyan: "#35a77c"
       white: "#dfddc8"
-  solarized_light: &solarized_light
-    # Default colors
+  solarized_light: &solarized_light # Default colors
     primary:
-      background: '0xfdf6e3'
-      foreground: '0x586e75'
+      background: "0xfdf6e3"
+      foreground: "0x586e75"
 
     # Normal colors
     normal:
-      black:   '0x073642'
-      red:     '0xdc322f'
-      green:   '0x859900'
-      yellow:  '0xb58900'
-      blue:    '0x268bd2'
-      magenta: '0xd33682'
-      cyan:    '0x2aa198'
-      white:   '0xeee8d5'
+      black: "0x073642"
+      red: "0xdc322f"
+      green: "0x859900"
+      yellow: "0xb58900"
+      blue: "0x268bd2"
+      magenta: "0xd33682"
+      cyan: "0x2aa198"
+      white: "0xeee8d5"
 
     # Bright colors
     bright:
-      black:   '0x002b36'
-      red:     '0xcb4b16'
-      green:   '0x586e75'
-      yellow:  '0x657b83'
-      blue:    '0x839496'
-      magenta: '0x6c71c4'
-      cyan:    '0x93a1a1'
-      white:   '0xfdf6e3'
-  solarized_dark: &solarized_dark
-    # Default colors
+      black: "0x002b36"
+      red: "0xcb4b16"
+      green: "0x586e75"
+      yellow: "0x657b83"
+      blue: "0x839496"
+      magenta: "0x6c71c4"
+      cyan: "0x93a1a1"
+      white: "0xfdf6e3"
+  solarized_dark: &solarized_dark # Default colors
     primary:
-      background: '0x002b36'
-      foreground: '0x839496'
+      background: "0x002b36"
+      foreground: "0x839496"
 
     # Normal colors
     normal:
-      black:   '0x073642'
-      red:     '0xdc322f'
-      green:   '0x859900'
-      yellow:  '0xb58900'
-      blue:    '0x268bd2'
-      magenta: '0xd33682'
-      cyan:    '0x2aa198'
-      white:   '0xeee8d5'
+      black: "0x073642"
+      red: "0xdc322f"
+      green: "0x859900"
+      yellow: "0xb58900"
+      blue: "0x268bd2"
+      magenta: "0xd33682"
+      cyan: "0x2aa198"
+      white: "0xeee8d5"
 
     # Bright colors
     bright:
-      black:   '0x002b36'
-      red:     '0xcb4b16'
-      green:   '0x586e75'
-      yellow:  '0x657b83'
-      blue:    '0x839496'
-      magenta: '0x6c71c4'
-      cyan:    '0x93a1a1'
-      white:   '0xfdf6e3'
+      black: "0x002b36"
+      red: "0xcb4b16"
+      green: "0x586e75"
+      yellow: "0x657b83"
+      blue: "0x839496"
+      magenta: "0x6c71c4"
+      cyan: "0x93a1a1"
+      white: "0xfdf6e3"
 
 # Apply
 colors: *catppuccin_mocha
@@ -1128,16 +1123,16 @@ key_bindings:
   # ctrl-6 behavior for vim
   - { key: Key6, mods: Control, chars: "\x1e" }
   - { key: Right, mods: Alt, chars: "\x1BF" }
-  - { key: Left,  mods: Alt, chars: "\x1BB" }
+  - { key: Left, mods: Alt, chars: "\x1BB" }
   - { key: N, mods: Command, action: CreateNewWindow }
 
 selection:
-    save_to_clipboard: true
+  save_to_clipboard: true
 
 hints:
   enabled:
     - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
-              [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+        [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
       hyperlinks: true
       command: open
       post_processing: true

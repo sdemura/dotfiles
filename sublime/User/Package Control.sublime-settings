@@ -6,6 +6,7 @@
 	"installed_packages":
 	[
 		"A File Icon",
+		"BracketHighlighter",
 		"Dockerfile Syntax Highlighting",
 		"Fmt",
 		"Gomod",
@@ -14,6 +15,7 @@
 		"LSP-bash",
 		"LSP-dockerfile",
 		"LSP-gopls",
+		"LSP-json",
 		"LSP-yaml",
 		"MarkdownPreview",
 		"Origami",

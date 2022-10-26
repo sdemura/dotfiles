@@ -1,17 +1,29 @@
 {
-	"ignored_packages":
-	[
+	"ignored_packages": [
 		"Vintage",
 	],
 	"theme": "Adaptive.sublime-theme",
 	"color_scheme": "Mariana.sublime-color-scheme",
-	"font_face": "Hack Nerd Font",
-	"font_size": 13,
-		"scroll_past_end": true,
+	"font_face": "JetBrainsMono Nerd Font",
+	"font_size": 14,
+	"font_options": [
+		"no_italic"
+	],
+	"scroll_past_end": true,
 	"find_selected_text": true,
 	"hardware_acceleration": "opengl",
 	"autocomplete_include_snippets": false,
-	"rulers": [100],
+	"rulers": [
+		100
+	],
 	"highlight_line": true,
 	"bold_folder_labels": true,
+	"fold_buttons": false,
+	"indent_guide_options": [
+		"draw_normal",
+		"draw_active"
+	],
+	"drag_text": false,
+	// "adaptive_dividers": true,
+	"indent_to_bracket": true,
 }

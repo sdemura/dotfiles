@@ -3,25 +3,25 @@
         "background": "#303841"
     }, 
     "variables": {
+        "light_cyan": "color(#5fb4b4 l(+ 15%))", 
+        "white": "#a6acb9", 
         "green": "#99c794", 
+        "light_brown": "color(#f9ae58 l(+ 15%))", 
+        "light_red": "color(#ec5f66 l(+ 15%))", 
+        "red": "#ec5f66", 
         "light_magenta": "color(#c695c6 l(+ 15%))", 
-        "light_green": "color(#99c794 l(+ 15%))", 
+        "caret": "#d8dee9", 
         "light_black": "color(#a6acb9 l(+ 15%))", 
         "background": "#303842", 
-        "white": "#a6acb9", 
         "foreground": "#d8dee9", 
-        "light_cyan": "color(#5fb4b4 l(+ 15%))", 
-        "light_brown": "color(#f9ae58 l(+ 15%))", 
-        "light_blue": "color(#6699cc l(+ 15%))", 
+        "blue": "#6699cc", 
+        "light_green": "color(#99c794 l(+ 15%))", 
         "brown": "#f9ae58", 
-        "red": "#ec5f66", 
+        "cyan": "#5fb4b4", 
+        "magenta": "#c695c6", 
         "black": "#000000", 
         "light_white": "#ffffff", 
-        "blue": "#6699cc", 
-        "cyan": "#5fb4b4", 
-        "caret": "#d8dee9", 
-        "magenta": "#c695c6", 
-        "light_red": "color(#ec5f66 l(+ 15%))"
+        "light_blue": "color(#6699cc l(+ 15%))"
     }, 
     "name": "Terminus"
 }

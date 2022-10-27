@@ -13,6 +13,7 @@
 	"find_selected_text": true,
 	"hardware_acceleration": "opengl",
 	"autocomplete_include_snippets": false,
+	"auto_complete_include_snippets_when_typing": false,
 	"rulers": [
 		100
 	],
@@ -24,6 +25,8 @@
 		"draw_active"
 	],
 	"drag_text": false,
-	// "adaptive_dividers": true,
 	"indent_to_bracket": true,
+	"highlight_modified_tabs": true,
+	"adaptive_dividers": false,
+	// "show_tab_close_buttons_on_left": true
 }

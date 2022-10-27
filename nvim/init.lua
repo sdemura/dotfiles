@@ -50,16 +50,14 @@ vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>f", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>s", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>s", '<cmd>lua require("telescope.builtin").lsp_document_symbols{show_line=false}<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>c", '<cmd>lua require("telescope.builtin").find_files{hidden=true, cwd="/Users/sean/.dotfiles"}<CR>', opts)
 
 vim.api.nvim_set_keymap("n", "<leader>y", '"*y', opts)
 vim.api.nvim_set_keymap("n", "<leader>p", '"*p', opts)
 
 vim.api.nvim_set_keymap("v", "<leader>y", '"*y', opts)
 vim.api.nvim_set_keymap("v", "<leader>p", '"*p', opts)
-
-vim.api.nvim_set_keymap("n", "<leader>nc", ":e ~/.config/nvim/init.lua<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>np", ":e ~/.config/nvim/lua/plugins.lua<CR>", opts)
 
 -- Hop configuration
 vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
@@ -91,8 +89,6 @@ vim.api.nvim_set_keymap(
 -- I never use macros. RIP macros.
 vim.api.nvim_set_keymap("", "q", "<Nop>", {})
 
--- vim.api.nvim_set_keymap("v", "<LeftRelease>", '"*ygv', opts)
-
 vim.opt.background = "dark"
 vim.g.catppuccin_flavour = "mocha"
 vim.cmd("colorscheme catppuccin")
@@ -103,11 +99,6 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-
--- local navic = require("nvim-navic")
--- vim.g.navic_silence = true
---
--- vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer

@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Change all occurrences",
+        "command": "find_all_under"
+    }
+]

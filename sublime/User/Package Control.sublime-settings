@@ -17,6 +17,7 @@
 		"LSP-dockerfile",
 		"LSP-gopls",
 		"LSP-json",
+		"LSP-pylsp",
 		"LSP-yaml",
 		"MarkdownPreview",
 		"Origami",

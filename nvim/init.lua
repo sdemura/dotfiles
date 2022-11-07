@@ -54,10 +54,17 @@ vim.api.nvim_set_keymap("n", "<leader>s", '<cmd>lua require("telescope.builtin")
 vim.api.nvim_set_keymap("n", "<leader>c", '<cmd>lua require("telescope.builtin").find_files{hidden=true, cwd="/Users/sean/.dotfiles"}<CR>', opts)
 
 vim.api.nvim_set_keymap("n", "<leader>y", '"*y', opts)
+vim.api.nvim_set_keymap("n", "<leader>Y", '"*Y', opts)
+
 vim.api.nvim_set_keymap("n", "<leader>p", '"*p', opts)
+vim.api.nvim_set_keymap("n", "<leader>P", '"*P', opts)
 
 vim.api.nvim_set_keymap("v", "<leader>y", '"*y', opts)
+vim.api.nvim_set_keymap("v", "<leader>Y", '"*Y', opts)
 vim.api.nvim_set_keymap("v", "<leader>p", '"*p', opts)
+vim.api.nvim_set_keymap("v", "<leader>P", '"*P', opts)
+
+-- vim.api.set_nvim_keymap("n", "w", "W", opts)
 
 -- Hop configuration
 vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
@@ -132,10 +139,7 @@ local on_attach = function(client, bufnr)
 	end, bufopts)
 end
 
-local lsp_flags = {
-	-- This is the default in Nvim 0.7+
-	debounce_text_changes = 150,
-}
+local lsp_flags = {}
 require("lspconfig")["pyright"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -244,4 +248,6 @@ local function smart_dd()
 end
 
 vim.keymap.set("n", "dd", smart_dd, { noremap = true, expr = true })
+
+--- for some theme? I don't remember
 vim.cmd("highlight NeoTreeTitleBar guibg=#FFFFFF")

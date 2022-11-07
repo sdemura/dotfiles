@@ -1,5 +1,5 @@
 [
-	    // Goto Definition
+    // Goto Definition
     {
         "command": "lsp_symbol_definition",
         "args": {
@@ -119,11 +119,11 @@
         "keys": [
             "UNBOUND"
         ],
-         "context": [
-             {
-                 "key": "setting.lsp_active"
-             }
-         ]
+        "context": [
+            {
+                "key": "setting.lsp_active"
+            }
+        ]
     },
     // Jump to previous Diagnostic in Tab
     {
@@ -131,11 +131,11 @@
         "keys": [
             "UNBOUND"
         ],
-         "context": [
-             {
-                 "key": "setting.lsp_active"
-             }
-         ]
+        "context": [
+            {
+                "key": "setting.lsp_active"
+            }
+        ]
     },
     // Rename
     {
@@ -249,11 +249,11 @@
             }
         ]
     },
-
-
     // Toggle Terminus Panel
-    { 
-        "keys": ["ctrl+\\"], "command": "toggle_terminus_panel"
+    {
+        "keys": [
+            "ctrl+\\"
+        ],
+        "command": "toggle_terminus_panel"
     }
-
 ]

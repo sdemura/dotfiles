@@ -1,4 +1,7 @@
 {
 	"256color": true,
-	"unix_term": "xterm-256color"
+	"unix_term": "xterm-256color",
+	"view_settings": {
+		"rulers": [],
+	}
 }

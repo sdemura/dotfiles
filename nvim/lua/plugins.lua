@@ -257,7 +257,6 @@ return require("packer").startup({
                                 path = 1,
                             },
                         },
-                        lualine_x = { "aerial" },
                         lualine_z = { { "location", separator = { left = "" } } },
                     },
                 })

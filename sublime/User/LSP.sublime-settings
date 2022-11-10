@@ -15,7 +15,7 @@
 		"source.fixAll": true,
 		"source.organizeImports": true
 	},
-	"semantic_highlighting": true,
+	"semantic_highlighting": false,
 	"show_diagnostics_count_in_view_status": true,
 	"inhibit_snippet_completions": true,
 }

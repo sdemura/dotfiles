@@ -5,7 +5,7 @@
 	"theme": "Adaptive.sublime-theme",
 	"color_scheme": "Mariana.sublime-color-scheme",
 	"font_face": "JetBrainsMono Nerd Font",
-	"font_size": 14,
+	"font_size": 13,
 	"font_options": [
 		"no_italic"
 	],
@@ -25,8 +25,12 @@
 		"draw_active"
 	],
 	"drag_text": false,
-	"indent_to_bracket": true,
+	"indent_to_bracket": false,
 	"highlight_modified_tabs": true,
 	"adaptive_dividers": false,
 	// "show_tab_close_buttons_on_left": true
+	"show_rel_path": true,
+	"auto_complete_commit_on_tab": true,
+	"auto_complete_use_history": true,
+	"auto_indent": true,
 }

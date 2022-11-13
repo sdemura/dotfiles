@@ -33,4 +33,5 @@
 	"auto_complete_commit_on_tab": true,
 	"auto_complete_use_history": true,
 	"auto_indent": true,
+	// "ui_scale": 1.1,
 }

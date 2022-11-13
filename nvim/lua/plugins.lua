@@ -32,11 +32,17 @@ return require("packer").startup({
     function(use)
         use("wbthomason/packer.nvim")
         use("kyazdani42/nvim-web-devicons")
-        use("neovim/nvim-lspconfig")
+
         use({
             "williamboman/mason.nvim",
             config = function()
                 require("mason").setup()
+            end,
+        })
+        use({
+            "lukas-reineke/lsp-format.nvim",
+            config = function()
+                require("lsp-format").setup()
             end,
         })
         use({
@@ -52,6 +58,9 @@ return require("packer").startup({
                 require("mason-null-ls").setup()
             end,
         })
+
+        use("neovim/nvim-lspconfig")
+
 
         use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
         use({
@@ -279,8 +288,8 @@ return require("packer").startup({
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-nvim-lsp",
                 "hrsh7th/cmp-path",
-                "L3MON4D3/LuaSnip",
-                "saadparwaiz1/cmp_luasnip",
+                -- "L3MON4D3/LuaSnip",
+                -- "saadparwaiz1/cmp_luasnip",
             },
         })
 

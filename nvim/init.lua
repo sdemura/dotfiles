@@ -22,10 +22,21 @@ vim.opt.switchbuf = "useopen"
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
 vim.opt.undofile = true
+vim.opt.updatetime = 250
 vim.opt.wrap = false
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
 
-vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500}]])
+-- vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500}]])
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+    group = highlight_group,
+    pattern = '*',
+})
 
 -- Unless you are still migrating, remove the deprecated commands from v1.x
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
@@ -33,8 +44,15 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 -- trail whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 
--- keymaps
-vim.g.mapleader = " "
+-- Set <space> as the leader key
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 
 local opts = { noremap = true, silent = true }
@@ -148,39 +166,44 @@ local on_attach = function(client, bufnr)
     require("lsp-format").on_attach(client)
 end
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local lsp_flags = {}
-require("lspconfig")["pyright"].setup({
+
+local servers = { 'pyright', 'gopls', 'bashls', 'dockerls', 'yamlls' }
+for _, lsp in ipairs(servers) do
+    require('lspconfig')[lsp].setup {
+        on_attach = on_attach,
+        flags = lsp_flags,
+        capabilities = capabilities
+    }
+end
+
+-- Make runtime files discoverable to the server
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
+
+require('lspconfig').sumneko_lua.setup {
     on_attach = on_attach,
     flags = lsp_flags,
-})
-require("lspconfig")["gopls"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-})
-require("lspconfig")["bashls"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-})
-require("lspconfig")["dockerls"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-})
-require("lspconfig")["sumneko_lua"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
+    capabilities = capabilities,
     settings = {
         Lua = {
-            version = "LuaJIT",
-            diagnostics = {
-                globals = { "vim", "describe", "it", "before_each", "after_each", "pending" },
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = runtime_path,
             },
+            diagnostics = {
+                globals = { 'vim' },
+            },
+            workspace = { library = vim.api.nvim_get_runtime_file('', true) },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = { enable = false },
         },
     },
-})
-require("lspconfig")["yamlls"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-})
+}
 
 -- disable virtual_text (inline) diagnostics and use floating window
 -- format the message such that it shows source, message and

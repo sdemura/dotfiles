@@ -4,7 +4,8 @@ local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 local packer_bootstrap
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+    packer_bootstrap =
+    fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
     print("Installing packer. Restart Neovim")
 end
 
@@ -25,7 +26,13 @@ if not ok then
     return
 end
 
-packer.init({})
+packer.init({
+    display = {
+        open_fn = function()
+            return require("packer.util").float({ border = "single" })
+        end,
+    },
+})
 
 -- stylua: ignore start
 require('packer').startup(function(use)
@@ -59,7 +66,8 @@ require('packer').startup(function(use)
     if packer_bootstrap then
         require('packer').sync()
     end
-end)
+end
+)
 -- stylua: ignore end
 
 -- When we are bootstrapping a configuration, it doesn't
@@ -75,13 +83,12 @@ if packer_bootstrap then
     return
 end
 
-
 -- Automatically source and re-compile packer whenever you save this init.lua
-local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', {
-  command = 'source <afile> | PackerCompile',
-  group = packer_group,
-  pattern = vim.fn.expand '$MYVIMRC',
+local packer_group = vim.api.nvim_create_augroup("Packer", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+    command = "source <afile> | PackerCompile",
+    group = packer_group,
+    pattern = vim.fn.expand("$MYVIMRC"),
 })
 
 vim.opt.background = "dark"
@@ -235,6 +242,7 @@ require("neo-tree").setup({
 require("gitsigns").setup()
 require("Comment").setup()
 require("hop").setup()
+require("neoscroll").setup()
 require("nvim-surround").setup({})
 require("git-conflict").setup()
 require("toggleterm").setup({ open_mapping = [[<c-\>]] })
@@ -617,4 +625,3 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 --- for some theme? I don't remember
 vim.cmd("highlight NeoTreeTitleBar guibg=#FFFFFF")
-

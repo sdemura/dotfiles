@@ -1,5 +1,10 @@
 {
     "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.diagnostics.globals": [
+        "vim",
+        "lfs"
+    ],
+    "Lua.workspace.checkThirdParty": false,
     "Lua.workspace.library": [
         "/Users/sean/.config/nvim",
         "/Users/sean/.local/share/nvim/site",
@@ -40,6 +45,7 @@
         "/Users/sean/.local/share/nvim/site/pack/packer/start/cmp-buffer/after",
         "/Users/sean/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after",
         "/Users/sean/.local/share/nvim/site/pack/packer/start/cmp-path/after",
-        "${3rd}/luassert/library"
+        "${3rd}/luassert/library",
+        "${3rd}/lfs/library"
     ]
 }

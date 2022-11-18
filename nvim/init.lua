@@ -34,41 +34,42 @@ packer.init({
     },
 })
 
--- stylua: ignore start
-require('packer').startup(function(use)
-    use 'lukas-reineke/indent-blankline.nvim'
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'numToStr/Comment.nvim'
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-unimpaired'
-    use 'wbthomason/packer.nvim' -- Package manager
-    use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-    use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+require("packer").startup(function(use)
+    use("lukas-reineke/indent-blankline.nvim")
+    use("nvim-treesitter/nvim-treesitter")
+    use("numToStr/Comment.nvim")
+    use("tpope/vim-fugitive")
+    use("tpope/vim-unimpaired")
+    use("wbthomason/packer.nvim") -- Package manager
+    use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
+    use({ "nvim-telescope/telescope.nvim", branch = "0.1.x", requires = { "nvim-lua/plenary.nvim" } })
+    use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
     use("akinsho/git-conflict.nvim")
     use("jayp0521/mason-null-ls.nvim")
     use("kyazdani42/nvim-web-devicons")
     use("neovim/nvim-lspconfig")
     use("williamboman/mason-lspconfig.nvim")
     use("williamboman/mason.nvim")
-    use('jose-elias-alvarez/null-ls.nvim')
-    use('karb94/neoscroll.nvim')
-    use('nvim-lualine/lualine.nvim')
-    use('windwp/nvim-autopairs')
-    use({ "akinsho/toggleterm.nvim", tag = "*", })
+    use("jose-elias-alvarez/null-ls.nvim")
+    use("karb94/neoscroll.nvim")
+    use("nvim-lualine/lualine.nvim")
+    use("windwp/nvim-autopairs")
+    use({ "akinsho/toggleterm.nvim", tag = "*" })
     use({ "catppuccin/nvim", as = "catppuccin" })
-    use({ "hrsh7th/nvim-cmp", requires = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-path", }, })
+    use({ "hrsh7th/nvim-cmp", requires = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-path" } })
     use({ "kylechui/nvim-surround", tag = "*" })
-    use({ "nvim-neo-tree/neo-tree.nvim", branch = "v2.x",
-        requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "MunifTanjim/nui.nvim" }, })
-    use({ 'phaazon/hop.nvim', branch = "v2" })
+    use({
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "MunifTanjim/nui.nvim" },
+    })
+    use({ "phaazon/hop.nvim", branch = "v2" })
+    use("ray-x/go.nvim")
 
     if packer_bootstrap then
-        require('packer').sync()
+        require("packer").sync()
     end
-end
-)
--- stylua: ignore end
+end)
 
 -- When we are bootstrapping a configuration, it doesn't
 -- make sense to execute the rest of the init.lua.
@@ -121,9 +122,6 @@ vim.opt.updatetime = 250
 vim.opt.wrap = false
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
 
--- vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500}]])
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
@@ -171,7 +169,7 @@ vim.api.nvim_set_keymap(
 )
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>c",
+    "<leader>C",
     '<cmd>lua require("telescope.builtin").find_files{hidden=true, cwd="/Users/sean/.dotfiles"}<CR>',
     opts
 )
@@ -239,6 +237,7 @@ require("neo-tree").setup({
     },
 })
 
+require("go").setup()
 require("gitsigns").setup()
 require("Comment").setup()
 require("hop").setup()
@@ -602,9 +601,6 @@ cmp.setup({
     sources = {
         {
             name = "nvim_lsp",
-        },
-        {
-            name = "buffer",
         },
         {
             name = "path",

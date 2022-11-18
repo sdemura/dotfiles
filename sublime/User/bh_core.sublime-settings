@@ -1,0 +1,5 @@
+{
+	"show_in_minimap": true,
+	// "ignore_threshold": true,
+	"search_threshold": 20000,
+}

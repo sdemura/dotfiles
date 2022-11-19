@@ -37,6 +37,7 @@ packer.init({
 require("packer").startup(function(use)
     use("lukas-reineke/indent-blankline.nvim")
     use("nvim-treesitter/nvim-treesitter")
+    use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } }
     use("numToStr/Comment.nvim")
     use("tpope/vim-fugitive")
     use("tpope/vim-unimpaired")
@@ -159,11 +160,12 @@ vim.api.nvim_set_keymap("n", '""', "<cmd>:Telescope registers<cr>", opts)
 vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
 
 vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>f", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
+vim.api.nvim_set_keymap("n", "<C-p>", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>t", '<cmd>:Telescope<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>s",
+    "<leader>r",
     '<cmd>lua require("telescope.builtin").lsp_document_symbols{show_line=false}<CR>',
     opts
 )

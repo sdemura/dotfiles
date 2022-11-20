@@ -1142,3 +1142,6 @@ hints:
       binding:
         key: U
         mods: Control|Shift
+
+include:
+  - /Users/sean/.dotfiles/alacritty/keys.yml

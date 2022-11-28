@@ -37,7 +37,7 @@ packer.init({
 require("packer").startup(function(use)
     use("lukas-reineke/indent-blankline.nvim")
     use("nvim-treesitter/nvim-treesitter")
-    use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } }
+    use({ "nvim-treesitter/nvim-treesitter-textobjects", after = { "nvim-treesitter" } })
     use("numToStr/Comment.nvim")
     use("tpope/vim-fugitive")
     use("tpope/vim-unimpaired")
@@ -65,6 +65,7 @@ require("packer").startup(function(use)
         requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "MunifTanjim/nui.nvim" },
     })
     use({ "phaazon/hop.nvim", branch = "v2" })
+
     use("ray-x/go.nvim")
 
     if packer_bootstrap then
@@ -159,18 +160,18 @@ vim.api.nvim_set_keymap("i", "<C-r>", "<cmd>:Telescope registers<cr>", opts)
 vim.api.nvim_set_keymap("n", '""', "<cmd>:Telescope registers<cr>", opts)
 vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
 
-vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>f", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>sb", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>sf", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>sg", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>r",
+    "<leader>ss",
     '<cmd>lua require("telescope.builtin").lsp_document_symbols{show_line=false}<CR>',
     opts
 )
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>C",
+    "<leader>sc",
     '<cmd>lua require("telescope.builtin").find_files{hidden=true, cwd="/Users/sean/.dotfiles"}<CR>',
     opts
 )
@@ -186,41 +187,35 @@ vim.api.nvim_set_keymap("v", "<leader>Y", '"*Y', opts)
 vim.api.nvim_set_keymap("v", "<leader>p", '"*p', opts)
 vim.api.nvim_set_keymap("v", "<leader>P", '"*P', opts)
 
--- vim.api.set_nvim_keymap("n", "w", "W", opts)
-
--- Hop configuration
-vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
-vim.api.nvim_set_keymap(
-    "",
-    "f",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>"
-    ,
-    {}
-)
-vim.api.nvim_set_keymap(
-    "",
-    "F",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>"
-    ,
-    {}
-)
-vim.api.nvim_set_keymap(
-    "",
-    "t",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>"
-    ,
-    {}
-)
-vim.api.nvim_set_keymap(
-    "",
-    "T",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>"
-    ,
-    {}
-)
+-- paste with correct indent
+-- nmap("p", "]p")
+vim.api.nvim_set_keymap("n", "p", "]p", opts)
+vim.api.nvim_set_keymap("n", "P", "]P", opts)
 
 -- I never use macros. RIP macros.
 vim.api.nvim_set_keymap("", "q", "<Nop>", {})
+
+-- Hop configuration
+vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
+
+-- place this in one of your configuration file(s)
+local hop = require("hop")
+local directions = require("hop.hint").HintDirection
+hop.setup({
+    multi_windows = true,
+})
+vim.keymap.set("", "f", function()
+    hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set("", "F", function()
+    hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set("", "t", function()
+    hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+end, { remap = true })
+vim.keymap.set("", "T", function()
+    hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+end, { remap = true })
 
 require("neo-tree").setup({
     popup_border_style = "rounded",
@@ -241,7 +236,6 @@ require("neo-tree").setup({
 require("go").setup()
 require("gitsigns").setup()
 require("Comment").setup()
-require("hop").setup()
 require("neoscroll").setup()
 require("nvim-surround").setup({})
 require("git-conflict").setup()
@@ -496,8 +490,6 @@ local on_attach = function(client, bufnr)
     nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
     nmap("gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
     nmap("gr", require("telescope.builtin").lsp_references)
-    nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-    nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
     -- See `:help K` for why this keymap
     nmap("K", vim.lsp.buf.hover, "Hover Documentation")
@@ -512,14 +504,9 @@ local on_attach = function(client, bufnr)
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, "[W]orkspace [L]ist Folders")
 
-    -- Create a command `:Format` local to the LSP buffer
-    vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-        if vim.lsp.buf.format then
-            vim.lsp.buf.format()
-        elseif vim.lsp.buf.formatting then
-            vim.lsp.buf.formatting()
-        end
-    end, { desc = "Format current buffer with LSP" })
+    nmap("<space>f", function()
+        vim.lsp.buf.format({ async = true })
+    end)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())

@@ -5,7 +5,7 @@ shell = ["zsh", "-c"]
 cursorline = false
 color-modes = true
 completion-trigger-len = 1
-bufferline = "multiple"
+# bufferline = "multiple"
 
 [editor.file-picker]
 hidden = false
@@ -13,7 +13,12 @@ ignore = false
 git-ignore = false
 
 [editor.lsp]
-display-messages = true
+display-messages = false
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -22,8 +27,12 @@ select = "underline"
 
 [editor.indent-guides]
 render = true
+skip-levels = 1
 
 [keys.normal]
-"{" = ["goto_prev_paragraph", "collapse_selection"]
-"}" = ["goto_next_paragraph", "collapse_selection"]
+"{" = ["goto_prev_paragraph"]
+# "{" = ["goto_prev_paragraph", "collapse_selection"]
+"}" = ["goto_next_paragraph"]
+# "}" = ["goto_next_paragraph", "collapse_selection"]
 X = "extend_line_above"
+

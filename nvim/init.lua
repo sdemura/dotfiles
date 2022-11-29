@@ -160,9 +160,9 @@ vim.api.nvim_set_keymap("i", "<C-r>", "<cmd>:Telescope registers<cr>", opts)
 vim.api.nvim_set_keymap("n", '""', "<cmd>:Telescope registers<cr>", opts)
 vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
 
-vim.api.nvim_set_keymap("n", "<leader>sb", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>sf", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>sg", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>ff", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>fg", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
 vim.api.nvim_set_keymap(
     "n",
     "<leader>ss",

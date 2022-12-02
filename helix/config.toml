@@ -1,11 +1,11 @@
 theme = "catppuccin_mocha"
 
 [editor]
+line-number = "relative"
 shell = ["zsh", "-c"]
 cursorline = false
 color-modes = true
 completion-trigger-len = 1
-# bufferline = "multiple"
 
 [editor.file-picker]
 hidden = false
@@ -13,7 +13,7 @@ ignore = false
 git-ignore = false
 
 [editor.lsp]
-display-messages = false
+display-messages = true
 
 [editor.statusline]
 mode.normal = "NORMAL"
@@ -31,8 +31,13 @@ skip-levels = 1
 
 [keys.normal]
 "{" = ["goto_prev_paragraph"]
-# "{" = ["goto_prev_paragraph", "collapse_selection"]
 "}" = ["goto_next_paragraph"]
-# "}" = ["goto_next_paragraph", "collapse_selection"]
-X = "extend_line_above"
+"X" = "extend_line_above"
 
+# basically a shortcut for X_c
+L = ["extend_to_line_bounds", "delete_selection_noyank", "open_above"]
+
+"C-c" = "no_op"
+
+[keys.normal.space]
+"c" = "toggle_comments"

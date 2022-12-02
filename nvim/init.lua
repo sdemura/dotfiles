@@ -165,13 +165,13 @@ vim.api.nvim_set_keymap("n", "<leader>ff", '<cmd>lua require("telescope.builtin"
 vim.api.nvim_set_keymap("n", "<leader>fg", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>ss",
+    "<leader>fs",
     '<cmd>lua require("telescope.builtin").lsp_document_symbols{show_line=false}<CR>',
     opts
 )
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>sc",
+    "<leader>fc",
     '<cmd>lua require("telescope.builtin").find_files{hidden=true, cwd="/Users/sean/.dotfiles"}<CR>',
     opts
 )

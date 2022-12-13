@@ -12,6 +12,7 @@
 		"Dockerfile Syntax Highlighting",
 		"Fmt",
 		"Gomod",
+		"Jinja2",
 		"Keymaps",
 		"LSP",
 		"LSP-bash",

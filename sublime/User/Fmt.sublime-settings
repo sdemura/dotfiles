@@ -8,5 +8,16 @@
 			"format_on_save": true,
 			"merge_type": "replace"
 		},
+		{
+			"selector": "source.yaml ",
+			"cmd": [
+				"/opt/homebrew/bin/node",
+				"/opt/homebrew/bin/prettier",
+				"--parser",
+				"yaml"
+			],
+			"format_on_save": true,
+			"merge_type": "replace",
+		}
 	]
 }

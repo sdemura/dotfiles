@@ -67,6 +67,7 @@ require("packer").startup(function(use)
     use({ "phaazon/hop.nvim", branch = "v2" })
 
     use("ray-x/go.nvim")
+    use("folke/which-key.nvim")
 
     if packer_bootstrap then
         require("packer").sync()
@@ -119,6 +120,7 @@ vim.opt.splitright = true
 vim.opt.switchbuf = "useopen"
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
+vim.opt.timeoutlen = 500
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.wrap = false
@@ -160,18 +162,18 @@ vim.api.nvim_set_keymap("i", "<C-r>", "<cmd>:Telescope registers<cr>", opts)
 vim.api.nvim_set_keymap("n", '""', "<cmd>:Telescope registers<cr>", opts)
 vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
 
-vim.api.nvim_set_keymap("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>ff", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>fg", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>f", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>fs",
+    "<leader>s",
     '<cmd>lua require("telescope.builtin").lsp_document_symbols{show_line=false}<CR>',
     opts
 )
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>fc",
+    "<leader>c",
     '<cmd>lua require("telescope.builtin").find_files{hidden=true, cwd="/Users/sean/.dotfiles"}<CR>',
     opts
 )
@@ -220,6 +222,10 @@ end, { remap = true })
 require("neo-tree").setup({
     popup_border_style = "rounded",
     close_if_last_window = true,
+    source_selector = {
+        winbar = true,
+        statusline = false,
+    },
     filesystem = {
         window = {
             mappings = {
@@ -233,6 +239,7 @@ require("neo-tree").setup({
     },
 })
 
+require("which-key").setup()
 require("go").setup()
 require("gitsigns").setup()
 require("Comment").setup()
@@ -504,7 +511,7 @@ local on_attach = function(client, bufnr)
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, "[W]orkspace [L]ist Folders")
 
-    nmap("<space>f", function()
+    nmap("<leader>F", function()
         vim.lsp.buf.format({ async = true })
     end)
 end

@@ -43,8 +43,6 @@ require("packer").startup(function(use)
     use("tpope/vim-unimpaired")
     use("wbthomason/packer.nvim") -- Package manager
     use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
-    use({ "nvim-telescope/telescope.nvim", branch = "0.1.x", requires = { "nvim-lua/plenary.nvim" } })
-    use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
     use("akinsho/git-conflict.nvim")
     use("jayp0521/mason-null-ls.nvim")
     use("kyazdani42/nvim-web-devicons")
@@ -68,6 +66,11 @@ require("packer").startup(function(use)
 
     use("ray-x/go.nvim")
     use("folke/which-key.nvim")
+    use({
+        "ibhagwan/fzf-lua",
+        -- optional for icon support
+        requires = { "nvim-tree/nvim-web-devicons" },
+    })
 
     if packer_bootstrap then
         require("packer").sync()
@@ -158,25 +161,15 @@ vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts
 vim.api.nvim_set_keymap("n", "-", "<cmd>:Neotree toggle<CR>", opts)
 vim.api.nvim_set_keymap("n", "_", "<cmd>:Neotree toggle reveal<CR>", opts)
 
-vim.api.nvim_set_keymap("i", "<C-r>", "<cmd>:Telescope registers<cr>", opts)
-vim.api.nvim_set_keymap("n", '""', "<cmd>:Telescope registers<cr>", opts)
-vim.api.nvim_set_keymap("n", "'", "<cmd>:Telescope marks<cr>", opts)
+vim.api.nvim_set_keymap("i", "<C-r>", "<cmd>:FzfLua registers<cr>", opts)
+vim.api.nvim_set_keymap("n", '""', "<cmd>:FzfLua registers<cr>", opts)
+vim.api.nvim_set_keymap("n", "'", "<cmd>:FzfLua marks<cr>", opts)
 
-vim.api.nvim_set_keymap("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>f", '<cmd>lua require("telescope.builtin").find_files{hidden=true}<CR>', opts)
-vim.api.nvim_set_keymap("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>s",
-    '<cmd>lua require("telescope.builtin").lsp_document_symbols{show_line=false}<CR>',
-    opts
-)
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>c",
-    '<cmd>lua require("telescope.builtin").find_files{hidden=true, cwd="/Users/sean/.dotfiles"}<CR>',
-    opts
-)
+vim.api.nvim_set_keymap("n", "<leader>b", ":FzfLua buffers<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>f", ":FzfLua files<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>g", ":FzfLua live_grep<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>s", ":FzfLua lsp_document_symbols<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>c", ":FzfLua files cwd=~/.config<CR>", opts)
 
 vim.api.nvim_set_keymap("n", "<leader>y", '"*y', opts)
 vim.api.nvim_set_keymap("n", "<leader>Y", '"*Y', opts)
@@ -239,6 +232,13 @@ require("neo-tree").setup({
     },
 })
 
+local actions = require("fzf-lua.actions")
+require("fzf-lua").setup({
+    fzf_opts = {
+        ["--info"] = "default",
+    },
+})
+
 require("which-key").setup()
 require("go").setup()
 require("gitsigns").setup()
@@ -256,8 +256,10 @@ require("indent_blankline").setup({
 require("lualine").setup({
     options = {
         globalstatus = false,
-        component_separators = { right = "|" },
-        section_separators = { left = "", right = "" },
+        section_separators = "",
+        component_separators = "",
+        -- component_separators = { right = "|" },
+        -- section_separators = { left = "", right = "" },
         disabled_filetypes = {
             statusline = {
                 "aerial",
@@ -270,7 +272,7 @@ require("lualine").setup({
         },
     },
     sections = {
-        lualine_a = { { "mode", separator = { right = "" } } },
+        -- lualine_a = { { "mode", separator = { right = "" } } },
         lualine_c = {
             {
                 "filename",
@@ -278,104 +280,9 @@ require("lualine").setup({
                 path = 1,
             },
         },
-        lualine_z = { { "location", separator = { left = "" } } },
+        -- lualine_z = { { "location", separator = { left = "" } } },
     },
 })
-
---- telescope
-
-local telescope = require("telescope")
-local actions = require("telescope.actions")
-
-telescope.setup({
-    defaults = {
-        mappings = {
-            i = {
-                ["<C-c>"] = actions.close,
-                ["<Esc>"] = actions.close,
-
-                ["<C-j>"] = actions.cycle_history_next,
-                ["<C-k>"] = actions.cycle_history_prev,
-
-                ["<C-n>"] = actions.move_selection_next,
-                ["<C-p>"] = actions.move_selection_previous,
-
-                ["<Down>"] = actions.move_selection_next,
-                ["<Up>"] = actions.move_selection_previous,
-
-                ["<CR>"] = actions.select_default,
-                ["<C-x>"] = actions.select_horizontal,
-                ["<C-v>"] = actions.select_vertical,
-                ["<C-t>"] = actions.select_tab,
-
-                ["<C-u>"] = actions.preview_scrolling_up,
-                ["<C-d>"] = actions.preview_scrolling_down,
-
-                ["<PageUp>"] = actions.results_scrolling_up,
-                ["<PageDown>"] = actions.results_scrolling_down,
-
-                ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-                ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-                ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-                ["<C-l>"] = actions.complete_tag,
-            },
-
-            n = {
-                ["<C-c>"] = actions.close,
-                ["<Esc>"] = actions.close,
-
-                ["<CR>"] = actions.select_default,
-                ["<C-x>"] = actions.select_horizontal,
-                ["<C-v>"] = actions.select_vertical,
-                ["<C-t>"] = actions.select_tab,
-
-                ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-                ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-                ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-
-                ["j"] = actions.move_selection_next,
-                ["k"] = actions.move_selection_previous,
-                ["H"] = actions.move_to_top,
-                ["M"] = actions.move_to_middle,
-                ["L"] = actions.move_to_bottom,
-
-                ["<Down>"] = actions.move_selection_next,
-                ["<Up>"] = actions.move_selection_previous,
-                ["gg"] = actions.move_to_top,
-                ["G"] = actions.move_to_bottom,
-
-                ["<C-u>"] = actions.preview_scrolling_up,
-                ["<C-d>"] = actions.preview_scrolling_down,
-
-                ["<PageUp>"] = actions.results_scrolling_up,
-                ["<PageDown>"] = actions.results_scrolling_down,
-            },
-        },
-    },
-    pickers = {
-        find_files = {
-            find_command = {
-                "fd",
-                ".",
-                "--type",
-                "file",
-                "--hidden",
-                "--strip-cwd-prefix",
-                "--exclude",
-                ".git",
-            },
-        },
-        live_grep = {
-            additional_args = function(opts)
-                return { "--hidden" }
-            end,
-            glob_pattern = "!.git",
-        },
-    },
-})
-require("telescope").load_extension("fzf")
 
 -- treesitter
 
@@ -496,7 +403,8 @@ local on_attach = function(client, bufnr)
 
     nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
     nmap("gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-    nmap("gr", require("telescope.builtin").lsp_references)
+    -- nmap("gr", require("fzf-lua").lsp_references)
+    nmap("gr", vim.lsp.buf.references, "[G]oto [R]eferences")
 
     -- See `:help K` for why this keymap
     nmap("K", vim.lsp.buf.hover, "Hover Documentation")
@@ -519,7 +427,7 @@ end
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local lsp_flags = {}
 
-local servers = { "pyright", "gopls", "bashls", "dockerls", "yamlls" }
+local servers = { "pyright", "gopls", "bashls", "dockerls" }
 for _, lsp in ipairs(servers) do
     require("lspconfig")[lsp].setup({
         on_attach = on_attach,
@@ -551,6 +459,19 @@ require("lspconfig").sumneko_lua.setup({
             workspace = { library = vim.api.nvim_get_runtime_file("", true) },
             -- Do not send telemetry data containing a randomized but unique identifier
             telemetry = { enable = false },
+        },
+    },
+})
+
+require("lspconfig").yamlls.setup({
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+    settings = {
+        yaml = {
+            customTags = {
+                "!reference sequence",
+            },
         },
     },
 })

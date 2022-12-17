@@ -1,0 +1,15 @@
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[user]
+	name = Sean Demura
+	email = sean.demura@corelight.com
+[core]
+	editor = subl -w -n
+	pager = cat
+
+[alias]
+    recent = !git for-each-ref --sort=committerdate refs/heads --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always|column -ts'|'
+    cleanup = "!git branch --merged | grep  -v '\\*\\|main' | xargs -n 1 -r git branch -d"

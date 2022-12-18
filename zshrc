@@ -7,6 +7,12 @@ fi
 
 source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # set hist size to something large, as zsh doesn't
 # accept empty string like bash does...
 export HISTFILE=~/.zsh_history
@@ -15,11 +21,8 @@ export SAVEHIST=$HISTSIZE
 
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
-# Reloads the history whenever you use it
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
-
-# allow # for comments in zsh
 setopt INTERACTIVECOMMENTS
 
 # https://gpanders.com/blog/the-definitive-guide-to-using-tmux-256color-on-macos/
@@ -33,12 +36,6 @@ if [ "$TERM_PROGRAM" = "Terminus-Sublime" ]; then
 else
     alias ls='lsd -a'
 fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # tmux options
 tabo()  { tmux kill-window -a; }

@@ -67,6 +67,8 @@ require("packer").startup(function(use)
 
     use("ray-x/go.nvim")
     use({ "ibhagwan/fzf-lua", requires = { "nvim-tree/nvim-web-devicons" } })
+    use("folke/todo-comments.nvim")
+    use("folke/trouble.nvim")
 
     if packer_bootstrap then
         require("packer").sync()
@@ -192,6 +194,9 @@ vim.api.nvim_set_keymap("", "q", "<Nop>", {})
 -- Hop configuration
 vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
 
+-- Trouble
+vim.api.nvim_set_keymap("n", "<leader>t", ":TroubleToggle<CR>", opts)
+
 -- place this in one of your configuration file(s)
 local hop = require("hop")
 local directions = require("hop.hint").HintDirection
@@ -210,6 +215,14 @@ end, { remap = true })
 vim.keymap.set("", "T", function()
     hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
 end, { remap = true })
+
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
 
 require("neo-tree").setup({
     popup_border_style = "rounded",
@@ -238,6 +251,8 @@ require("fzf-lua").setup({
     },
 })
 
+require("trouble").setup()
+require("todo-comments").setup()
 require("go").setup()
 require("gitsigns").setup()
 require("Comment").setup()
@@ -276,17 +291,7 @@ require("lualine").setup({
 -- treesitter
 
 require("nvim-treesitter.configs").setup({
-    ensure_installed = {
-        "yaml",
-        "go",
-        "hcl",
-        "lua",
-        "python",
-        "bash",
-        "markdown",
-        "dockerfile",
-        "json",
-    },
+    ensure_installed = { "yaml", "go", "hcl", "lua", "python", "bash", "markdown", "dockerfile", "json", },
     highlight = { enable = true, use_languagetree = true },
     indent = { enable = true },
     incremental_selection = {

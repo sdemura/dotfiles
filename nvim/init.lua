@@ -103,6 +103,7 @@ vim.g.catppuccin_flavour = "mocha"
 vim.cmd("colorscheme catppuccin")
 --
 --- options
+vim.opt.cmdheight = 0
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.cursorline = true
 vim.opt.expandtab = true
@@ -241,7 +242,6 @@ require("fzf-lua").setup({
     },
 })
 
-require("which-key").setup()
 require("go").setup()
 require("gitsigns").setup()
 require("Comment").setup()
@@ -257,32 +257,31 @@ require("indent_blankline").setup({
 -- lualine
 require("lualine").setup({
     options = {
-        globalstatus = false,
+        globalstatus = true,
         section_separators = "",
         component_separators = "",
-        -- component_separators = { right = "|" },
-        -- section_separators = { left = "", right = "" },
-        disabled_filetypes = {
-            statusline = {
-                "aerial",
-                "neo-tree",
-            },
-            winbar = {
-                "aerial",
-                "neo-tree",
-            },
-        },
+        -- disabled_filetypes = {
+        --     statusline = {
+        --         "aerial",
+        --         "neo-tree",
+        --     },
+        --     winbar = {
+        --         "aerial",
+        --         "neo-tree",
+        --     },
+        -- },
     },
     sections = {
-        -- lualine_a = { { "mode", separator = { right = "" } } },
-        lualine_c = {
-            {
-                "filename",
-                file_status = true,
-                path = 1,
-            },
-        },
-        -- lualine_z = { { "location", separator = { left = "" } } },
+        -- lualine_c = { { "filename", file_status = true, path = 1, }, },
+        lualine_b = { "branch", "diff" },
+        lualine_c = {},
+    },
+    winbar = {
+        lualine_y = { "diagnostics" },
+        lualine_c = { { "filename", file_status = true, path = 1 } },
+    },
+    inactive_winbar = {
+        lualine_c = { { "filename", file_status = true, path = 1 } },
     },
 })
 

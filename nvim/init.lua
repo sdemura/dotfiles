@@ -67,8 +67,8 @@ require("packer").startup(function(use)
 
     use("ray-x/go.nvim")
     use({ "ibhagwan/fzf-lua", requires = { "nvim-tree/nvim-web-devicons" } })
-    use("folke/todo-comments.nvim")
-    use("folke/trouble.nvim")
+    -- use("folke/todo-comments.nvim")
+    -- use("folke/trouble.nvim")
 
     if packer_bootstrap then
         require("packer").sync()
@@ -194,8 +194,8 @@ vim.api.nvim_set_keymap("", "q", "<Nop>", {})
 -- Hop configuration
 vim.api.nvim_set_keymap("n", "s", ":HopWord<CR>", opts)
 
--- Trouble
-vim.api.nvim_set_keymap("n", "<leader>t", ":TroubleToggle<CR>", opts)
+-- -- Trouble
+-- vim.api.nvim_set_keymap("n", "<leader>t", ":TroubleToggle<CR>", opts)
 
 -- place this in one of your configuration file(s)
 local hop = require("hop")
@@ -216,13 +216,13 @@ vim.keymap.set("", "T", function()
     hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
 end, { remap = true })
 
-vim.keymap.set("n", "]t", function()
-  require("todo-comments").jump_next()
-end, { desc = "Next todo comment" })
-
-vim.keymap.set("n", "[t", function()
-  require("todo-comments").jump_prev()
-end, { desc = "Previous todo comment" })
+-- vim.keymap.set("n", "]t", function()
+--   require("todo-comments").jump_next()
+-- end, { desc = "Next todo comment" })
+--
+-- vim.keymap.set("n", "[t", function()
+--   require("todo-comments").jump_prev()
+-- end, { desc = "Previous todo comment" })
 
 require("neo-tree").setup({
     popup_border_style = "rounded",
@@ -249,10 +249,15 @@ require("fzf-lua").setup({
     fzf_opts = {
         ["--info"] = "default",
     },
+    keymap = {
+        fzf = {
+            ["ctrl-q"] = "select-all+accept",
+        },
+    },
 })
 
-require("trouble").setup()
-require("todo-comments").setup()
+-- require("trouble").setup()
+-- require("todo-comments").setup()
 require("go").setup()
 require("gitsigns").setup()
 require("Comment").setup()
@@ -268,30 +273,30 @@ require("indent_blankline").setup({
 -- lualine
 require("lualine").setup({
     options = {
-        globalstatus = true,
+        globalstatus = false,
         section_separators = "",
         component_separators = "",
         disabled_filetypes = { statusline = { "neo-tree" }, winbar = { "neo-tree" } },
         ignore_focus = { "neo-tree" },
     },
     sections = {
-        -- lualine_c = { { "filename", file_status = true, path = 1, }, },
-        lualine_b = { "branch", "diff" },
-        lualine_c = {},
-    },
-    winbar = {
-        lualine_y = { "diagnostics" },
         lualine_c = { { "filename", file_status = true, path = 1 } },
+        -- lualine_b = { "branch", "diff" },
+        -- lualine_c = {},
     },
-    inactive_winbar = {
-        lualine_c = { { "filename", file_status = true, path = 1 } },
-    },
+    -- winbar = {
+    --     lualine_y = { "diagnostics" },
+    --     lualine_c = { { "filename", file_status = true, path = 1 } },
+    -- },
+    -- inactive_winbar = {
+    --     lualine_c = { { "filename", file_status = true, path = 1 } },
+    -- },
 })
 
 -- treesitter
 
 require("nvim-treesitter.configs").setup({
-    ensure_installed = { "yaml", "go", "hcl", "lua", "python", "bash", "markdown", "dockerfile", "json", },
+    ensure_installed = { "yaml", "go", "hcl", "lua", "python", "bash", "markdown", "dockerfile", "json" },
     highlight = { enable = true, use_languagetree = true },
     indent = { enable = true },
     incremental_selection = {

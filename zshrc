@@ -1,0 +1,51 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+
+# set hist size to something large, as zsh doesn't
+# accept empty string like bash does...
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000000
+export SAVEHIST=$HISTSIZE
+
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+# Reloads the history whenever you use it
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+
+# allow # for comments in zsh
+setopt INTERACTIVECOMMENTS
+
+# https://gpanders.com/blog/the-definitive-guide-to-using-tmux-256color-on-macos/
+export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
+
+if [ "$TERM_PROGRAM" = "Terminus-Sublime" ]; then
+    bindkey "\e[1;3C" forward-word
+    bindkey "\e[1;3D" backward-word
+
+    alias ls='lsd -a --color=never'
+else
+    alias ls='lsd -a'
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# tmux options
+tabo()  { tmux kill-window -a; }
+
+alias ranger='TERM=xterm-256color ranger'
+alias rg="rg --hidden -g '!.git'"
+alias ely='cd ~/src/gitlab.com/corelight/engineering/elysium'
+alias pick='thumbs -u -r | pbcopy'
+
+[[ ! -f ~/.env.zsh ]] || source ~/.env.zsh

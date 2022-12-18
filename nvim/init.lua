@@ -41,6 +41,7 @@ require("packer").startup(function(use)
     use("numToStr/Comment.nvim")
     use("tpope/vim-fugitive")
     use("tpope/vim-unimpaired")
+    use("tpope/vim-eunuch")
     use("wbthomason/packer.nvim") -- Package manager
     use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
     use("akinsho/git-conflict.nvim")
@@ -65,12 +66,7 @@ require("packer").startup(function(use)
     use({ "phaazon/hop.nvim", branch = "v2" })
 
     use("ray-x/go.nvim")
-    use("folke/which-key.nvim")
-    use({
-        "ibhagwan/fzf-lua",
-        -- optional for icon support
-        requires = { "nvim-tree/nvim-web-devicons" },
-    })
+    use({ "ibhagwan/fzf-lua", requires = { "nvim-tree/nvim-web-devicons" } })
 
     if packer_bootstrap then
         require("packer").sync()
@@ -249,7 +245,7 @@ require("neoscroll").setup()
 require("nvim-surround").setup({})
 require("git-conflict").setup()
 require("toggleterm").setup({ open_mapping = [[<c-\>]] })
-require("nvim-autopairs").setup({ ignored_next_char = "[%w%.]" })
+require("nvim-autopairs").setup({ ignored_next_char = "[%w%.]", check_ts = true })
 require("indent_blankline").setup({
     show_current_context = true,
 })
@@ -260,16 +256,8 @@ require("lualine").setup({
         globalstatus = true,
         section_separators = "",
         component_separators = "",
-        -- disabled_filetypes = {
-        --     statusline = {
-        --         "aerial",
-        --         "neo-tree",
-        --     },
-        --     winbar = {
-        --         "aerial",
-        --         "neo-tree",
-        --     },
-        -- },
+        disabled_filetypes = { statusline = { "neo-tree" }, winbar = { "neo-tree" } },
+        ignore_focus = { "neo-tree" },
     },
     sections = {
         -- lualine_c = { { "filename", file_status = true, path = 1, }, },
@@ -497,13 +485,11 @@ vim.diagnostic.config({
 })
 
 local cmp = require("cmp")
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 cmp.setup({
     preselect = cmp.PreselectMode.None,
-    snippet = {
-        -- expand = function(args)
-        --     require("luasnip").lsp_expand(args.body)
-        -- end,
-    },
+    snippet = {},
     mapping = {
         ["<C-p>"] = cmp.mapping.select_prev_item(),
         ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -511,18 +497,9 @@ cmp.setup({
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ["<C-y>"] = cmp.mapping.confirm({
-            select = true,
-        }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
     },
-    sources = {
-        {
-            name = "nvim_lsp",
-        },
-        {
-            name = "path",
-        },
-    },
+    sources = { { name = "nvim_lsp" }, { name = "path" } },
 })
 
 --- custom diagnostics signs for the gutter

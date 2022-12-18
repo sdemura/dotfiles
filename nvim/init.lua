@@ -69,6 +69,8 @@ require("packer").startup(function(use)
     use({ "ibhagwan/fzf-lua", requires = { "nvim-tree/nvim-web-devicons" } })
     -- use("folke/todo-comments.nvim")
     -- use("folke/trouble.nvim")
+    use("L3MON4D3/LuaSnip")
+    use("saadparwaiz1/cmp_luasnip")
 
     if packer_bootstrap then
         require("packer").sync()
@@ -499,7 +501,11 @@ local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 cmp.setup({
     preselect = cmp.PreselectMode.None,
-    snippet = {},
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
     mapping = {
         ["<C-p>"] = cmp.mapping.select_prev_item(),
         ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -509,7 +515,7 @@ cmp.setup({
         ["<C-e>"] = cmp.mapping.close(),
         ["<C-y>"] = cmp.mapping.confirm({ select = true }),
     },
-    sources = { { name = "nvim_lsp" }, { name = "path" } },
+    sources = { { name = "nvim_lsp" }, { name = "path" }, { name = "luasnip" } },
 })
 
 --- custom diagnostics signs for the gutter

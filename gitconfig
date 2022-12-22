@@ -8,7 +8,7 @@
 	email = sean.demura@corelight.com
 [core]
 	editor = subl -w -n
-	pager = cat
+	; pager = cat
 
 [alias]
     recent = !git for-each-ref --sort=committerdate refs/heads --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always|column -ts'|'

@@ -171,6 +171,7 @@ vim.api.nvim_set_keymap("n", "<leader>f", ":FzfLua files<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>g", ":FzfLua live_grep<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>s", ":FzfLua lsp_document_symbols<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>c", ":FzfLua files cwd=~/.config<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>z", ":FzfLua<CR>", opts)
 
 vim.api.nvim_set_keymap("n", "<leader>m", ":GitConflictListQf<CR>", opts)
 

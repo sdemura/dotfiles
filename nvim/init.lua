@@ -186,11 +186,6 @@ vim.api.nvim_set_keymap("v", "<leader>Y", '"*Y', opts)
 vim.api.nvim_set_keymap("v", "<leader>p", '"*p', opts)
 vim.api.nvim_set_keymap("v", "<leader>P", '"*P', opts)
 
--- paste with correct indent
--- nmap("p", "]p")
-vim.api.nvim_set_keymap("n", "p", "]p", opts)
-vim.api.nvim_set_keymap("n", "P", "]P", opts)
-
 -- I never use macros. RIP macros.
 vim.api.nvim_set_keymap("", "q", "<Nop>", {})
 

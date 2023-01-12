@@ -40,9 +40,21 @@ fi
 # tmux options
 tabo()  { tmux kill-window -a; }
 
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
+
 alias ranger='TERM=xterm-256color ranger'
 alias rg="rg --hidden -g '!.git'"
 alias ely='cd ~/src/gitlab.com/corelight/engineering/elysium'
 alias pick='thumbs -u -r | pbcopy'
 
-[[ ! -f ~/.env.zsh ]] || source ~/.env.zsh
+[[ -f ~/.env.zsh ]] && source ~/.env.zsh

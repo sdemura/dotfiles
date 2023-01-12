@@ -17,6 +17,65 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 require("lazy").setup({
+	{ "tpope/vim-fugitive" },
+	{ "tpope/vim-unimpaired" },
+	{ "tpope/vim-eunuch" },
+	{
+		"phaazon/hop.nvim",
+		config = function()
+			require("hop").setup()
+		end,
+		keys = {
+			{ "S", "<cmd>:HopWord<CR>" },
+		},
+	},
+	{
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		config = function()
+			require("indent_blankline").setup({
+				show_current_context = true,
+				colored_indent_levels = false,
+			})
+		end,
+	},
+	{
+		"romainchapou/nostalgic-term.nvim",
+		config = function()
+			require("nostalgic-term").setup({
+				mappings = {
+					{ "<c-w>h", "h" },
+					{ "<c-w>j", "j" },
+					{ "<c-w>k", "k" },
+					{ "<c-w>l", "l" },
+				},
+				add_normal_mode_mappings = true,
+			})
+		end,
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("lualine").setup({
+				options = {
+					globalstatus = false,
+					section_separators = "",
+					component_separators = "",
+					disabled_filetypes = { statusline = { "neo-tree" }, winbar = { "neo-tree" } },
+					-- ignore_focus = { "neo-tree" },
+				},
+				sections = {
+					lualine_c = { { "filename", file_status = true, path = 1 } },
+				},
+			})
+		end,
+	},
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
@@ -26,8 +85,9 @@ require("lazy").setup({
 				integrations = {
 					mini = true,
 					neotree = true,
-                    mason = true,
-                    treesitter = true,
+					mason = true,
+					treesitter = true,
+					hop = true,
 				},
 			})
 			vim.cmd("colorscheme catppuccin")
@@ -37,21 +97,8 @@ require("lazy").setup({
 		"echasnovski/mini.nvim",
 		config = function()
 			require("mini.ai").setup({})
-			require("mini.statusline").setup({})
 			require("mini.comment").setup({})
 			require("mini.cursorword").setup({})
-			require("mini.indentscope").setup({
-				symbol = "|",
-			})
-			require("mini.pairs").setup({})
-			-- require("mini.animate").setup({})
-			require("mini.tabline").setup({})
-			require("mini.jump").setup({})
-			require("mini.jump2d").setup({
-				mappings = {
-					start_jumping = "S",
-				},
-			})
 			require("mini.surround").setup({})
 		end,
 	},
@@ -76,9 +123,11 @@ require("lazy").setup({
 			{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
 			{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
 			{ "<leader>c", "<cmd>:FzfLua files cwd=~/.config<CR>" },
+			{ "<leader>e", "<cmd>:FzfLua files cwd=~/src/gitlab.com/corelight/engineering/elysium/<CR>" },
+			{ "<leader>b", "<cmd>:FzfLua buffers<cr>"},
 			{ "<leader>z", "<cmd>:FzfLua<CR>" },
-			{ '"', "<cmd>:FzfLua registers<cr>" },
-			{ "'", "<cmd>:FzfLua marks<cr>" },
+			{ '<leader>"', "<cmd>:FzfLua registers<cr>" },
+			{ "<leader>'", "<cmd>:FzfLua marks<cr>" },
 			{ "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },
 		},
 	},
@@ -116,6 +165,20 @@ require("lazy").setup({
 		config = function()
 			local lsp = require("lsp-zero")
 			lsp.preset("recommended")
+
+			local cmp = require("cmp")
+			lsp.setup_nvim_cmp({
+				preselect = "none",
+				mapping = {
+					["<C-p>"] = cmp.mapping.select_prev_item(),
+					["<C-n>"] = cmp.mapping.select_next_item(),
+					["<C-d>"] = cmp.mapping.scroll_docs(-4),
+					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<C-Space>"] = cmp.mapping.complete(),
+					["<C-e>"] = cmp.mapping.close(),
+					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+				},
+			})
 			lsp.setup()
 
 			require("mason-null-ls").setup()
@@ -210,16 +273,6 @@ local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
 
 vim.api.nvim_set_keymap("n", "<leader>lu", "<cmd>:Lazy update<cr>", opts)
-
--- yanky stuff
-vim.api.nvim_set_keymap("n", "<leader>p", '"*p', opts)
-vim.api.nvim_set_keymap("n", "<leader>P", '"*P', opts)
-vim.api.nvim_set_keymap("n", "<leader>y", '"*y', opts)
-vim.api.nvim_set_keymap("n", "<leader>Y", '"*Y', opts)
-vim.api.nvim_set_keymap("v", "<leader>p", '"*p', opts)
-vim.api.nvim_set_keymap("v", "<leader>P", '"*P', opts)
-vim.api.nvim_set_keymap("v", "<leader>y", '"*y', opts)
-vim.api.nvim_set_keymap("v", "<leader>Y", '"*Y', opts)
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {

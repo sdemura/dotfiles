@@ -177,6 +177,7 @@ require("lazy").setup({
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.close(),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+                    ["<tab>"] = cmp.mapping.confirm({ select = true }),
 				},
 			})
 			lsp.setup()
@@ -247,15 +248,14 @@ vim.opt.cmdheight = 0
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.cursorline = true
 vim.opt.expandtab = true
--- vim.opt.ignorecase = true
 vim.opt.inccommand = "nosplit"
 vim.opt.lazyredraw = true
 vim.opt.linebreak = true
 vim.opt.number = true
 vim.opt.relativenumber = false
+vim.opt.scrolloff = 8
 vim.opt.shiftwidth = 4
 vim.opt.signcolumn = "yes"
--- vim.opt.smartcase = true
 vim.opt.softtabstop = 4
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -288,5 +288,3 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
 -- trail whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
-
--- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])

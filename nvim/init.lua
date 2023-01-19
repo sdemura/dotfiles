@@ -227,6 +227,7 @@ require("lazy").setup({
 					window = {
 						mappings = {
 							["s"] = "none",
+							["S"] = "none",
 						},
 					},
 					filtered_items = {

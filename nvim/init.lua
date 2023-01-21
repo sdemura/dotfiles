@@ -260,6 +260,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.softtabstop = 4
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.swapfile = false
 vim.opt.switchbuf = "useopen"
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true

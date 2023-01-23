@@ -21,6 +21,15 @@ require("lazy").setup({
 	{ "tpope/vim-unimpaired" },
 	{ "tpope/vim-eunuch" },
 	{
+		"stevearc/aerial.nvim",
+		config = function()
+			require("aerial").setup()
+		end,
+		keys = {
+			{ "<leader>o", "<cmd>:AerialToggle<cr>" },
+		},
+	},
+	{
 		"phaazon/hop.nvim",
 		config = function()
 			require("hop").setup()
@@ -67,7 +76,7 @@ require("lazy").setup({
 					globalstatus = false,
 					section_separators = "",
 					component_separators = "",
-					disabled_filetypes = { statusline = { "neo-tree" }, winbar = { "neo-tree" } },
+					disabled_filetypes = { statusline = { "neo-tree", "aerial" }, winbar = { "neo-tree" } },
 					-- ignore_focus = { "neo-tree" },
 				},
 				sections = {
@@ -177,7 +186,7 @@ require("lazy").setup({
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.close(),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                    ["<tab>"] = cmp.mapping.confirm({ select = true }),
+					["<tab>"] = cmp.mapping.confirm({ select = true }),
 				},
 			})
 			lsp.setup()
@@ -211,7 +220,7 @@ require("lazy").setup({
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				highlight = { enable = true, use_languagetree = true },
-				indent = { enable = true, disable = { "python" } },
+				indent = { enable = true, disable = { "python", "yaml" } },
 			})
 		end,
 	},

@@ -223,6 +223,23 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("nvim-treesitter.configs").setup({
+				ensure_installed = {
+					"dockerfile",
+					"gitcommit",
+					"go",
+					"gomod",
+					"gowork",
+					"hcl",
+					"ini",
+					"json",
+					"make",
+					"markdown",
+					"python",
+					"terraform",
+					"toml",
+					"yaml",
+				},
+				auto_install = true,
 				highlight = { enable = true, use_languagetree = true },
 				indent = { enable = true, disable = { "python", "yaml" } },
 			})

@@ -132,7 +132,7 @@ require("lazy").setup({
             })
         end,
         keys = {
-            { "<leader>f", "<cmd>:FzfLua files<CR>" },
+            { "<leader>p", "<cmd>:FzfLua files<CR>" },
             { "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
             { "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
             { "<leader>c", "<cmd>:FzfLua files cwd=~/.config<CR>" },
@@ -216,7 +216,7 @@ require("lazy").setup({
             })
         end,
         keys = {
-            { "<leader>F", "<cmd>:LspZeroFormat<cr>" },
+            { "<leader>f", "<cmd>:LspZeroFormat<cr>" },
         },
     },
     {

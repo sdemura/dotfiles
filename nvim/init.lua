@@ -99,7 +99,7 @@ require("lazy").setup({
                     hop = true,
                 },
             })
-            vim.cmd("colorscheme catppuccin-frappe")
+            vim.cmd("colorscheme catppuccin-latte")
         end,
     },
     { "RRethy/vim-illuminate" },
@@ -132,10 +132,10 @@ require("lazy").setup({
             })
         end,
         keys = {
-            { "<leader>p", "<cmd>:FzfLua files<CR>" },
+            { "<leader>f", "<cmd>:FzfLua files<CR>" },
             { "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
             { "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
-            { "<leader>c", "<cmd>:FzfLua files cwd=~/.config<CR>" },
+            { "<leader>d", "<cmd>:FzfLua files cwd=~/.config<CR>" },
             { "<leader>e", "<cmd>:FzfLua files cwd=~/src/gitlab.com/corelight/engineering/elysium/<CR>" },
             { "<leader>b", "<cmd>:FzfLua buffers<cr>" },
             { "<leader>z", "<cmd>:FzfLua<CR>" },
@@ -179,6 +179,35 @@ require("lazy").setup({
             local lsp = require("lsp-zero")
             lsp.preset("recommended")
 
+            lsp.set_preferences({
+            	set_lsp_keymaps = { omit = { "<F2>", "<F4>", "gl" } },
+            })
+
+            lsp.on_attach(function(client, bufnr)
+                local map = function(mode, lhs, rhs)
+                    local opts = { remap = false, buffer = bufnr }
+                    vim.keymap.set(mode, lhs, rhs, opts)
+                end
+
+                -- LSP actions
+                map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>")
+                map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>")
+                map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>")
+                map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>")
+                map("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<cr>")
+                map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>")
+                map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>")
+                map("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>")
+                map("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>")
+                map("x", "<space>ca", "<cmd>lua vim.lsp.buf.range_code_action()<cr>")
+                map("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<cr>")
+
+                -- Diagnostics
+                map("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<cr>")
+                map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
+                map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>")
+            end)
+
             local cmp = require("cmp")
             lsp.setup_nvim_cmp({
                 preselect = "none",
@@ -216,7 +245,7 @@ require("lazy").setup({
             })
         end,
         keys = {
-            { "<leader>f", "<cmd>:LspZeroFormat<cr>" },
+            { "<leader>F", "<cmd>:LspZeroFormat<cr>" },
         },
     },
     {

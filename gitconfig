@@ -7,7 +7,8 @@
 	name = Sean Demura
 	email = sean.demura@corelight.com
 [core]
-	editor = subl -w -n
+	; editor = subl -w -n
+    editor = nvim
 	; pager = cat
 
 [alias]

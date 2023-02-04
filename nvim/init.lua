@@ -271,16 +271,16 @@ require("lazy").setup({
 				on_attach = function(client, bufnr)
 					null_opts.on_attach(client, bufnr)
 				end,
+				diagnostics_format = "[#{c}] #{m} (#{s})",
 				sources = {
 					null_ls.builtins.formatting.stylua,
 					null_ls.builtins.formatting.shfmt,
 					null_ls.builtins.formatting.black,
 					null_ls.builtins.formatting.isort,
 					null_ls.builtins.formatting.prettier,
-					null_ls.builtins.diagnostics.yamllint,
+					-- null_ls.builtins.diagnostics.yamllint,
 					null_ls.builtins.diagnostics.shellcheck,
 					null_ls.builtins.diagnostics.hadolint,
-					diagnostics_format = "[#{c}] #{m} (#{s})",
 				},
 			})
 		end,
@@ -317,8 +317,16 @@ require("lazy").setup({
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
-		dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
+			"s1n7ax/nvim-window-picker",
+		},
 		config = function()
+			require("window-picker").setup({
+				fg_color = "#eff1f5",
+			})
 			require("neo-tree").setup({
 				-- popup_border_style = "rounded",
 				close_if_last_window = true,
@@ -337,8 +345,9 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-			{ "-", "<cmd>:Neotree toggle<CR>" },
-			{ "_", "<cmd>:Neotree toggle reveal<CR>" },
+			{ "-", "<cmd>:Neotree<CR>" },
+			{ "_", "<cmd>:Neotree reveal<CR>" },
+			{ "<leader>t", "<cmd>:Neotree toggle<CR>" },
 		},
 	},
 })

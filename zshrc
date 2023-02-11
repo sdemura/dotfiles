@@ -75,4 +75,6 @@ alias rg="rg --hidden -g '!.git'"
 alias ely='cd ~/src/gitlab.com/corelight/engineering/elysium'
 alias pick='thumbs -u -r | pbcopy'
 
+export PATH=~/bin:$PATH
+
 [[ -f ~/.env.zsh ]] && source ~/.env.zsh

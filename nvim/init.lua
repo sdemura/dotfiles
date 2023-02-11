@@ -26,15 +26,9 @@ require("lazy").setup({
         config = function()
             require("go").setup()
         end,
-    },
-    {
-        "stevearc/aerial.nvim",
-        config = function()
-            require("aerial").setup()
-        end,
-        keys = {
-            { "<leader>o", "<cmd>:AerialToggle<cr>" },
-        },
+        event = { "CmdlineEnter" },
+        ft = { "go", "gomod" },
+        build = ":lua require('go.install').update_all_sync()",
     },
     {
         "phaazon/hop.nvim",
@@ -89,7 +83,7 @@ require("lazy").setup({
                 sections = {
                     lualine_c = { { "filename", file_status = true, path = 1 } },
                 },
-                extensions = { "aerial", "fugitive", "quickfix" },
+                extensions = { "fugitive", "quickfix" },
             })
         end,
     },
@@ -161,16 +155,16 @@ require("lazy").setup({
             })
         end,
         keys = {
-            { "<leader>f", "<cmd>:FzfLua files<CR>" },
-            { "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
-            { "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
+            { "<leader>f",  "<cmd>:FzfLua files<CR>" },
+            { "<leader>g",  "<cmd>:FzfLua live_grep<CR>" },
+            { "<leader>s",  "<cmd>:FzfLua lsp_document_symbols<CR>" },
             { "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
-            { "<leader>e", "<cmd>:FzfLua files cwd=~/src/gitlab.com/corelight/engineering/elysium/<CR>" },
-            { "<leader>b", "<cmd>:FzfLua buffers<cr>" },
-            { "<leader>z", "<cmd>:FzfLua<CR>" },
-            { '<leader>"', "<cmd>:FzfLua registers<cr>" },
-            { "<leader>'", "<cmd>:FzfLua marks<cr>" },
-            { "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },
+            { "<leader>e",  "<cmd>:FzfLua files cwd=~/src/gitlab.com/corelight/engineering/elysium/<CR>" },
+            { "<leader>b",  "<cmd>:FzfLua buffers<cr>" },
+            { "<leader>z",  "<cmd>:FzfLua<CR>" },
+            { '<leader>"',  "<cmd>:FzfLua registers<cr>" },
+            { "<leader>'",  "<cmd>:FzfLua marks<cr>" },
+            { "<C-r>",      "<cmd>:FzfLua registers<cr>",                                                mode = "i" },
         },
     },
     {
@@ -255,7 +249,7 @@ require("lazy").setup({
                 mapping = {
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
                     ["<C-n>"] = cmp.mapping.select_next_item(),
-                    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-d>"] = cmp.mapping.scroll_docs( -4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.close(),
@@ -346,8 +340,8 @@ require("lazy").setup({
             })
         end,
         keys = {
-            { "-", "<cmd>:Neotree<CR>" },
-            { "_", "<cmd>:Neotree reveal<CR>" },
+            { "-",         "<cmd>:Neotree<CR>" },
+            { "_",         "<cmd>:Neotree reveal<CR>" },
             { "<leader>t", "<cmd>:Neotree toggle<CR>" },
         },
     },

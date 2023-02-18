@@ -40,6 +40,15 @@ require("lazy").setup({
 		},
 	},
 	{
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("toggleterm").setup({
+				open_mapping = [[<c-\>]],
+                shade_terminals = false
+			})
+		end,
+	},
+	{
 		"windwp/nvim-autopairs",
 		config = function()
 			require("nvim-autopairs").setup({})

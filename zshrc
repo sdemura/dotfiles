@@ -52,29 +52,40 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# mocha
-# export FZF_DEFAULT_OPTS=" \
-# --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-# --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-# --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
-
-# frappe
-# export FZF_DEFAULT_OPTS=" \
-# --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
-# --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
-# --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
-
-# latte
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
---color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
---color=marker:#dc8a78,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39"
-
 alias ranger='TERM=xterm-256color ranger'
 alias rg="rg --hidden -g '!.git'"
 alias ely='cd ~/src/gitlab.com/corelight/engineering/elysium'
 alias pick='thumbs -u -r | pbcopy'
 
 export PATH=~/bin:$PATH
+
+function theme() {
+    case $1 in
+        dark)
+            yq -i '.import[0] = "~/.dotfiles/alacritty/themes/catppuccin_mocha.yml"' ~/.dotfiles/alacritty/alacritty.yml
+            sd -s 'colorscheme catppuccin-latte' 'colorscheme catppuccin-mocha' ~/.dotfiles/nvim/init.lua
+            export FZF_DEFAULT_OPTS=" \
+                --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+                --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+                --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+            echo "set catppuccin-mocha theme"
+            ;;
+
+        light)
+            yq -i '.import[0] = "~/.dotfiles/alacritty/themes/catppuccin_latte.yml"' ~/.dotfiles/alacritty/alacritty.yml
+            sd -s 'colorscheme catppuccin-mocha' 'colorscheme catppuccin-latte' ~/.dotfiles/nvim/init.lua
+            export FZF_DEFAULT_OPTS=" \
+                --color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
+                --color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
+                --color=marker:#dc8a78,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39"
+
+            echo "set catppuccin-latte theme"
+            ;;
+        *)
+            ;;
+    esac
+
+}
 
 [[ -f ~/.env.zsh ]] && source ~/.env.zsh

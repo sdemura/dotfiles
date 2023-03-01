@@ -124,7 +124,7 @@ require("lazy").setup({
 					hop = true,
 				},
 			})
-			vim.cmd("colorscheme catppuccin-latte")
+			vim.cmd("colorscheme catppuccin-mocha")
 		end,
 	},
 	{ "RRethy/vim-illuminate" },

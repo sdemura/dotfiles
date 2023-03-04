@@ -124,7 +124,7 @@ require("lazy").setup({
 					hop = true,
 				},
 			})
-			vim.cmd("colorscheme catppuccin-mocha")
+			vim.cmd("colorscheme catppuccin-latte")
 		end,
 	},
 	{ "RRethy/vim-illuminate" },
@@ -188,13 +188,13 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-			{ "<leader>ff", "<cmd>:FzfLua files<CR>" },
-			{ "<leader>fg", "<cmd>:FzfLua live_grep<CR>" },
-			{ "<leader>fs", "<cmd>:FzfLua lsp_document_symbols<CR>" },
+			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
+			{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
+			{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
 			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
 			-- { "<leader>e", "<cmd>:FzfLua files cwd=~/src/gitlab.com/corelight/engineering/elysium/<CR>" },
-			{ "<leader>fb", "<cmd>:FzfLua buffers<cr>" },
-			{ "<leader>fz", "<cmd>:FzfLua<CR>" },
+			{ "<leader>b", "<cmd>:FzfLua buffers<cr>" },
+			{ "<leader>z", "<cmd>:FzfLua<CR>" },
 			{ '<leader>"', "<cmd>:FzfLua registers<cr>" },
 			{ "<leader>'", "<cmd>:FzfLua marks<cr>" },
 			{ "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },

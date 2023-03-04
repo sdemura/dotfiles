@@ -25,4 +25,4 @@ key_bindings:
 selection:
   save_to_clipboard: true
 import:
-  - ~/.dotfiles/alacritty/themes/catppuccin_mocha.yml
+  - ~/.dotfiles/alacritty/themes/catppuccin_latte.yml

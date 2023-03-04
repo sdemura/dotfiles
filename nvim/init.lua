@@ -191,7 +191,7 @@ require("lazy").setup({
 			{ "<leader>ff", "<cmd>:FzfLua files<CR>" },
 			{ "<leader>fg", "<cmd>:FzfLua live_grep<CR>" },
 			{ "<leader>fs", "<cmd>:FzfLua lsp_document_symbols<CR>" },
-			{ "<leader>fc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
+			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
 			-- { "<leader>e", "<cmd>:FzfLua files cwd=~/src/gitlab.com/corelight/engineering/elysium/<CR>" },
 			{ "<leader>fb", "<cmd>:FzfLua buffers<cr>" },
 			{ "<leader>fz", "<cmd>:FzfLua<CR>" },
@@ -318,6 +318,9 @@ require("lazy").setup({
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
+		-- dependencies = {
+		-- 	"HiPhish/nvim-ts-rainbow2",
+		-- },
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				ensure_installed = {
@@ -339,6 +342,15 @@ require("lazy").setup({
 				auto_install = true,
 				highlight = { enable = true, use_languagetree = true },
 				indent = { enable = true, disable = { "python", "yaml" } },
+				-- rainbow = {
+				-- 	enable = true,
+				-- 	-- list of languages you want to disable the plugin for
+				-- 	disable = { "jsx", "cpp" },
+				-- 	-- Which query to use for finding delimiters
+				-- 	query = "rainbow-parens",
+				-- 	-- Highlight the entire buffer all at once
+				-- 	strategy = require("ts-rainbow.strategy.global"),
+				-- },
 			})
 		end,
 	},

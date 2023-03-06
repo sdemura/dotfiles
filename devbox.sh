@@ -12,7 +12,7 @@ fi
 mkdir -p ~/.config
 ln -sf ~/.dotfiles/nvim ~/.config/nvim
 
-sudo snap install task --classic
+sudo snap install task --classic || sudo snap refresh task --classic
 sudo apt install -y awscli jq git-lfs nodejs npm
 
 sudo curl -sSLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.30.6/yq_linux_amd64
@@ -50,4 +50,4 @@ sudo mv kustomize /usr/local/bin
 sudo chmod +x /usr/local/bin/kustomize
 rm -f kustomize.tar.gz
 
-sudo snap install --classic ripgrep
+sudo snap install --classic ripgrep || sudo snap refresh --classic ripgrep

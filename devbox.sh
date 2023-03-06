@@ -6,8 +6,8 @@ sudo curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/late
 sudo chmod +x /usr/local/bin/nvim
 
 if [[ ! -d ~/.dotfiles ]]; then
-    git clone git@github.com:sdemura/dotfiles.git ~/.dotfiles
-    ln -sf ~/.dotfiles/nvim ~/.config/nvim
+	git clone git@github.com:sdemura/dotfiles.git ~/.dotfiles
+	ln -sf ~/.dotfiles/nvim ~/.config/nvim
 fi
 
 sudo snap install task --classic
@@ -31,7 +31,7 @@ sudo apt-get install -y \
 	lsb-release
 
 sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo 'yes | gpg --dearmor -o /etc/apt/keyrings/docker.gpg'
 
 echo \
 	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
@@ -42,7 +42,10 @@ sudo apt-get install -y docker-ce docker-ce-cli
 sudo apt-get install -y fd-find
 sudo ln -s /usr/bin/fdfind /usr/bin/fd
 
-curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+curl -fsSLo kustomize.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.7/kustomize_v4.5.7_linux_amd64.tar.gz
+tar zvfx kustomize.tar.gz kustomize
 sudo mv kustomize /usr/local/bin
+sudo chmod +x /usr/local/bin/kustomize
+rm -f kustomize.tar.gz
 
 sudo snap install --classic ripgrep

@@ -3,6 +3,7 @@
 window:
   dynamic_padding: true
   dynamic_title: true
+  decorations_theme_variant: Dark
 # Font configuration
 font:
   normal:

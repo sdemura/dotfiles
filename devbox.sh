@@ -7,8 +7,9 @@ sudo chmod +x /usr/local/bin/nvim
 
 if [[ ! -d ~/.dotfiles ]]; then
 	git clone git@github.com:sdemura/dotfiles.git ~/.dotfiles
-	ln -sf ~/.dotfiles/nvim ~/.config/nvim
 fi
+
+ln -sf ~/.dotfiles/nvim ~/.config/nvim
 
 sudo snap install task --classic
 sudo apt install -y awscli jq git-lfs nodejs npm
@@ -40,7 +41,7 @@ echo \
 sudo apt-get install -y docker-ce docker-ce-cli
 
 sudo apt-get install -y fd-find
-sudo ln -s /usr/bin/fdfind /usr/bin/fd
+sudo ln -sf /usr/bin/fdfind /usr/bin/fd
 
 curl -fsSLo kustomize.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.7/kustomize_v4.5.7_linux_amd64.tar.gz
 tar zvfx kustomize.tar.gz kustomize

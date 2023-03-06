@@ -5,8 +5,10 @@ set -exo pipefail
 sudo curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 sudo chmod +x /usr/local/bin/nvim
 
-git clone git@github.com:sdemura/dotfiles.git ~/.dotfiles
-ln -sf ~/.dotfiles/nvim ~/.config/nvim
+if [[ ! -d ~/.dotfiles ]]; then
+    git clone git@github.com:sdemura/dotfiles.git ~/.dotfiles
+    ln -sf ~/.dotfiles/nvim ~/.config/nvim
+fi
 
 sudo snap install task --classic
 sudo apt install -y awscli jq git-lfs nodejs npm

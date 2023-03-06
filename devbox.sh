@@ -9,6 +9,7 @@ if [[ ! -d ~/.dotfiles ]]; then
 	git clone git@github.com:sdemura/dotfiles.git ~/.dotfiles
 fi
 
+mkdir -p ~/.config
 ln -sf ~/.dotfiles/nvim ~/.config/nvim
 
 sudo snap install task --classic

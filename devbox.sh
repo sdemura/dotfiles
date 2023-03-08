@@ -39,9 +39,12 @@ echo \
 	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
-sudo apt-get install -y docker-ce docker-ce-cli
-
-sudo apt-get install -y fd-find
+sudo apt-get install -y \
+    docker-ce \
+    docker-ce-cli \
+    build-essential \
+    fd-find \
+    zsh
 sudo ln -sf /usr/bin/fdfind /usr/bin/fd
 
 curl -fsSLo kustomize.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.7/kustomize_v4.5.7_linux_amd64.tar.gz

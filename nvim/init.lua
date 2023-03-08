@@ -43,7 +43,7 @@ require("lazy").setup({
 		"akinsho/toggleterm.nvim",
 		config = function()
 			require("toggleterm").setup({
-				open_mapping = [[<leader>,]],
+				open_mapping = [[<C-_>]],
 				shade_terminals = false,
 			})
 		end,
@@ -63,20 +63,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-	-- {
-	-- 	"romainchapou/nostalgic-term.nvim",
-	-- 	config = function()
-	-- 		require("nostalgic-term").setup({
-	-- 			mappings = {
-	-- 				{ "<c-w>h", "h" },
-	-- 				{ "<c-w>j", "j" },
-	-- 				{ "<c-w>k", "k" },
-	-- 				{ "<c-w>l", "l" },
-	-- 			},
-	-- 			add_normal_mode_mappings = true,
-	-- 		})
-	-- 	end,
-	-- },
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -124,7 +110,7 @@ require("lazy").setup({
 					hop = true,
 				},
 			})
-			vim.cmd("colorscheme catppuccin-latte")
+			vim.cmd("colorscheme catppuccin-mocha")
 		end,
 	},
 	{ "RRethy/vim-illuminate" },
@@ -278,7 +264,7 @@ require("lazy").setup({
 
 			local cmp = require("cmp")
 			lsp.setup_nvim_cmp({
-				preselect = "none",
+				-- preselect = "none",
 				mapping = {
 					["<C-p>"] = cmp.mapping.select_prev_item(),
 					["<C-n>"] = cmp.mapping.select_next_item(),
@@ -289,6 +275,11 @@ require("lazy").setup({
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 					["<tab>"] = cmp.mapping.confirm({ select = true }),
 				},
+				-- sources = {
+				--     { name = "path" },
+				--     { name = "nvim_lsp", keyword_length = 3 },
+				--     { name = "buffer",   keyword_length = 5 },
+				-- },
 			})
 			lsp.setup()
 
@@ -318,9 +309,6 @@ require("lazy").setup({
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
-		-- dependencies = {
-		-- 	"HiPhish/nvim-ts-rainbow2",
-		-- },
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				ensure_installed = {
@@ -342,15 +330,6 @@ require("lazy").setup({
 				auto_install = true,
 				highlight = { enable = true, use_languagetree = true },
 				indent = { enable = true, disable = { "python", "yaml" } },
-				-- rainbow = {
-				-- 	enable = true,
-				-- 	-- list of languages you want to disable the plugin for
-				-- 	disable = { "jsx", "cpp" },
-				-- 	-- Which query to use for finding delimiters
-				-- 	query = "rainbow-parens",
-				-- 	-- Highlight the entire buffer all at once
-				-- 	strategy = require("ts-rainbow.strategy.global"),
-				-- },
 			})
 		end,
 	},
@@ -378,6 +357,7 @@ require("lazy").setup({
 						},
 					},
 					filtered_items = {
+                        visible = true,
 						hide_gitignored = false,
 						hide_dotfiles = false,
 					},
@@ -385,9 +365,21 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-			{ "-", "<cmd>:Neotree<CR>" },
-			{ "_", "<cmd>:Neotree reveal<CR>" },
-			{ "<leader>t", "<cmd>:Neotree toggle<CR>" },
+			{ "-", "<cmd>:Neotree toggle<CR>" },
+			{ "_", "<cmd>:Neotree toggle reveal<CR>" },
+			-- { "<leader>t", "<cmd>:Neotree toggle<CR>" },
+		},
+	},
+	{
+		"utilyre/barbecue.nvim",
+		name = "barbecue",
+		version = "*",
+		dependencies = {
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		opts = {
+			-- configurations go here
 		},
 	},
 })
@@ -423,15 +415,6 @@ vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts
 
 vim.api.nvim_set_keymap("n", "<leader>lu", "<cmd>:Lazy update<cr>", opts)
 
--- local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
--- vim.api.nvim_create_autocmd("TextYankPost", {
--- 	callback = function()
--- 		vim.highlight.on_yank()
--- 	end,
--- 	group = highlight_group,
--- 	pattern = "*",
--- })
---
 -- Unless you are still migrating, remove the deprecated commands from v1.x
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 

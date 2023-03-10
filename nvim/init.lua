@@ -77,20 +77,20 @@ require("lazy").setup({
                 },
                 sections = {
                     lualine_c = { { "filename", file_status = true, path = 1 } },
-                    lualine_x = {
-                        function()
-                            local output = vim.fn.systemlist({ "git", "rev-parse", "--show-toplevel" })
-                            local fatal = string.find(output[1], "fatal")
-                            if fatal then
-                                return ""
-                            end
-
-                            return vim.fn.systemlist({ "basename", output[1] })[1]
-                        end,
-                        "encoding",
-                        "fileformat",
-                        "filetype",
-                    },
+                    -- lualine_x = {
+                    --     function()
+                    --         local output = vim.fn.systemlist({ "git", "rev-parse", "--show-toplevel" })
+                    --         local fatal = string.find(output[1], "fatal")
+                    --         if fatal then
+                    --             return ""
+                    --         end
+                    --
+                    --         return vim.fn.systemlist({ "basename", output[1] })[1]
+                    --     end,
+                    --     "encoding",
+                    --     "fileformat",
+                    --     "filetype",
+                    -- },
                 },
                 extensions = { "fugitive", "quickfix" },
             })

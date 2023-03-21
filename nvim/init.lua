@@ -108,7 +108,7 @@ require("lazy").setup({
 					hop = true,
 				},
 			})
-			vim.cmd("colorscheme catppuccin-mocha")
+			vim.cmd("colorscheme catppuccin-latte")
 		end,
 	},
 	{ "RRethy/vim-illuminate" },
@@ -216,6 +216,9 @@ require("lazy").setup({
 			{ "L3MON4D3/LuaSnip" },
 			-- Snippet Collection (Optional)
 			{ "rafamadriz/friendly-snippets" },
+
+			-- Signature support
+			{ "ray-x/lsp_signature.nvim" },
 		},
 		config = function()
 			local lsp = require("lsp-zero")
@@ -248,6 +251,13 @@ require("lazy").setup({
 				map("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<cr>")
 				map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
 				map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>")
+
+				-- Signature
+				require("lsp_signature").on_attach({
+					hint_enable = false,
+					noice = false,
+                    doc_lines = 0,
+				}, bufnr)
 			end)
 
 			lsp.configure("gopls", {

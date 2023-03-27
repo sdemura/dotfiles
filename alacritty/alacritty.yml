@@ -1,7 +1,7 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 ---
 window:
-  dynamic_padding: true
+  dynamic_padding: false
   dynamic_title: true
   decorations_theme_variant: Dark
 # Font configuration

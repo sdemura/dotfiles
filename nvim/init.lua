@@ -43,6 +43,7 @@ require("lazy").setup({
 			require("toggleterm").setup({
 				open_mapping = [[<C-_>]],
 				shade_terminals = false,
+                direction = "float",
 			})
 		end,
 	},

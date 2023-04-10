@@ -16,7 +16,7 @@
 				"--parser",
 				"yaml"
 			],
-			"format_on_save": true,
+			"format_on_save": false,
 			"merge_type": "replace",
 		}
 	]

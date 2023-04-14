@@ -116,7 +116,7 @@ require("lazy").setup({
                     -- }
                 },
             })
-            vim.cmd("colorscheme catppuccin-mocha")
+            vim.cmd("colorscheme catppuccin-latte")
         end,
     },
     { "RRethy/vim-illuminate" },
@@ -172,6 +172,9 @@ require("lazy").setup({
             require("fzf-lua").setup({
                 fzf_opts = {
                     ["--info"] = "default",
+                },
+                grep = {
+                    rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case --max-columns=4096",
                 },
                 keymap = {
                     fzf = {
@@ -237,7 +240,9 @@ require("lazy").setup({
             })
 
             lsp.on_attach(function(client, bufnr)
-                local map = function(mode, lhs, rhs) local opts = { remap = false, buffer = bufnr } vim.keymap.set(mode, lhs, rhs, opts)
+                local map = function(mode, lhs, rhs)
+                    local opts = { remap = false, buffer = bufnr }
+                    vim.keymap.set(mode, lhs, rhs, opts)
                 end
 
                 -- LSP actions

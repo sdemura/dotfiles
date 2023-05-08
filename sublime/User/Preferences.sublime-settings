@@ -4,8 +4,8 @@
 	],
 	"theme": "Adaptive.sublime-theme",
 	"color_scheme": "Mariana.sublime-color-scheme",
-	"font_face": "JetBrainsMono Nerd Font",
-	/*"font_size": 11,*/
+	"font_face": "JetbrainsMono Nerd Font",
+	"font_size": 13,
 	"font_options": [
 		"no_italic"
 	],
@@ -40,4 +40,5 @@
 	"match_brackets_content": false,
 	"match_brackets_square": false,
 	"match_tags": false,
+	"find_in_files_supress_errors": true,
 }

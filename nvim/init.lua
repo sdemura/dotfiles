@@ -174,7 +174,7 @@ require("lazy").setup({
 					["--info"] = "default",
 				},
 				grep = {
-					rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case --max-columns=4096",
+					rg_opts = [[--hidden --column -g "!.git" --line-number --no-heading --color=always --smart-case --max-columns=4096]],
 				},
 				keymap = {
 					fzf = {
@@ -434,7 +434,7 @@ require("lazy").setup({
 })
 
 --- options
-vim.opt.cmdheight = 0
+vim.opt.cmdheight = 1
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.cursorline = true
 vim.opt.expandtab = true
@@ -462,6 +462,12 @@ local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
 
 vim.api.nvim_set_keymap("n", "<leader>lu", "<cmd>:Lazy update<cr>", opts)
+
+vim.api.nvim_set_keymap("n", "cp", [["*y]], opts)
+vim.api.nvim_set_keymap("n", "cv", [["*y]], opts)
+
+vim.api.nvim_set_keymap("v", "cp", [["*y]], opts)
+vim.api.nvim_set_keymap("v", "cv", [["*y]], opts)
 
 -- Unless you are still migrating, remove the deprecated commands from v1.x
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])

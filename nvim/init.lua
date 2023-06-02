@@ -17,6 +17,7 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 require("lazy").setup({
+	{ "projekt0n/github-nvim-theme" },
 	{ "tpope/vim-fugitive" },
 	{ "tpope/vim-unimpaired" },
 	{ "tpope/vim-eunuch" },
@@ -24,7 +25,9 @@ require("lazy").setup({
 		"ray-x/go.nvim",
 		dependencies = { "ray-x/guihua.lua" },
 		config = function()
-			require("go").setup()
+			require("go").setup({
+				max_line_len = 100,
+			})
 		end,
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod" },
@@ -43,7 +46,7 @@ require("lazy").setup({
 			require("toggleterm").setup({
 				open_mapping = [[<C-_>]],
 				shade_terminals = false,
-				direction = "float",
+				-- direction = "float",
 			})
 		end,
 	},
@@ -68,6 +71,7 @@ require("lazy").setup({
 		config = function()
 			require("lualine").setup({
 				options = {
+					theme = "catppuccin",
 					globalstatus = false,
 					section_separators = "",
 					component_separators = "",
@@ -91,7 +95,7 @@ require("lazy").setup({
 					--     "filetype",
 					-- },
 				},
-				extensions = { "fugitive", "quickfix" },
+				extensions = { "fugitive", "neo-tree" },
 			})
 		end,
 	},
@@ -116,7 +120,6 @@ require("lazy").setup({
 					-- }
 				},
 			})
-			vim.cmd("colorscheme catppuccin-mocha")
 		end,
 	},
 	{ "RRethy/vim-illuminate" },
@@ -277,7 +280,7 @@ require("lazy").setup({
 						desc = "Auto format before save",
 						pattern = "<buffer>",
 						callback = function()
-							require("go.format").goimport()
+							require("go.format").gofmt()
 						end,
 					})
 				end,
@@ -442,7 +445,7 @@ vim.opt.inccommand = "nosplit"
 vim.opt.linebreak = true
 vim.opt.number = true
 vim.opt.relativenumber = false
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 10
 vim.opt.shiftwidth = 4
 vim.opt.signcolumn = "yes"
 vim.opt.softtabstop = 4
@@ -474,3 +477,5 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
 -- trail whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
+
+vim.cmd("colorscheme catppuccin-latte")

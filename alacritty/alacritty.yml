@@ -3,7 +3,7 @@
 window:
   dynamic_padding: false
   dynamic_title: true
-  decorations_theme_variant: Dark
+  decorations_theme_variant: Light
 # Font configuration
 font:
   normal:
@@ -26,4 +26,4 @@ key_bindings:
 selection:
   save_to_clipboard: true
 import:
-  - ~/.dotfiles/alacritty/themes/catppuccin_mocha.yml
+  - ~/.dotfiles/alacritty/themes/catppuccin_latte.yml

@@ -34,7 +34,7 @@ require("lazy").setup({
 		build = ":lua require('go.install').update_all_sync()",
 	},
 	{
-		"phaazon/hop.nvim",
+		"smoka7/hop.nvim",
 		config = function()
 			require("hop").setup()
 		end,

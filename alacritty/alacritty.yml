@@ -4,6 +4,7 @@ window:
   dynamic_padding: false
   dynamic_title: true
   decorations_theme_variant: Light
+  option_as_alt: OnlyLeft
 # Font configuration
 font:
   normal:

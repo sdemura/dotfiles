@@ -1,11 +1,13 @@
-theme = "catppuccin_mocha"
+theme = "catppuccin_latte"
 
 [editor]
 line-number = "relative"
 shell = ["zsh", "-c"]
-cursorline = false
+cursorline = true
 color-modes = true
 completion-trigger-len = 1
+idle-timeout = 0
+bufferline = "always"
 
 [editor.file-picker]
 hidden = false
@@ -32,13 +34,5 @@ skip-levels = 1
 [keys.normal]
 "{" = ["goto_prev_paragraph"]
 "}" = ["goto_next_paragraph"]
-"X" = "extend_line_above"
-
-# basically a shortcut for X_c
-L = ["extend_to_line_bounds", "delete_selection_noyank", "open_above"]
-# "*" = ["move_prev_word_start", "move_next_word_end", "search_selection", "search_next"]
-
-# "C-c" = "no_op"
-
-# [keys.normal.space]
-# "c" = "toggle_comments"
+# "Space-c" = "toggle_comments"
+# "X" = "extend_line_above"

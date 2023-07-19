@@ -17,7 +17,6 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 require("lazy").setup({
-	{ "projekt0n/github-nvim-theme" },
 	{ "tpope/vim-fugitive" },
 	{ "tpope/vim-unimpaired" },
 	{ "tpope/vim-eunuch" },
@@ -33,23 +32,61 @@ require("lazy").setup({
 		ft = { "go", "gomod" },
 		build = ":lua require('go.install').update_all_sync()",
 	},
+	-- {
+	-- 	"smoka7/hop.nvim",
+	-- 	config = function()
+	-- 		require("hop").setup()
+	-- 	end,
+	-- 	keys = { { "s", "<cmd>:HopWord<CR>" } },
+	-- },
 	{
-		"smoka7/hop.nvim",
-		config = function()
-			require("hop").setup()
-		end,
-		keys = { { "s", "<cmd>:HopWord<CR>" } },
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		---@type Flash.Config
+		opts = {},
+        -- stylua: ignore
+        keys = {
+            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+            {
+                "S",
+                mode = { "n", "o", "x" },
+                function() require("flash").treesitter() end,
+                desc =
+                "Flash Treesitter"
+            },
+            {
+                "r",
+                mode = "o",
+                function() require("flash").remote() end,
+                desc =
+                "Remote Flash"
+            },
+            {
+                "R",
+                mode = { "o", "x" },
+                function() require("flash").treesitter_search() end,
+                desc =
+                "Treesitter Search"
+            },
+            {
+                "<c-s>",
+                mode = { "c" },
+                function() require("flash").toggle() end,
+                desc =
+                "Toggle Flash Search"
+            },
+        },
 	},
-	{
-		"akinsho/toggleterm.nvim",
-		config = function()
-			require("toggleterm").setup({
-				open_mapping = [[<C-_>]],
-				shade_terminals = false,
-				-- direction = "float",
-			})
-		end,
-	},
+	-- {
+	-- 	"akinsho/toggleterm.nvim",
+	-- 	config = function()
+	-- 		require("toggleterm").setup({
+	-- 			open_mapping = [[<C-_>]],
+	-- 			shade_terminals = false,
+	-- 			-- direction = "float",
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"windwp/nvim-autopairs",
 		config = function()
@@ -280,7 +317,7 @@ require("lazy").setup({
 						desc = "Auto format before save",
 						pattern = "<buffer>",
 						callback = function()
-							require("go.format").gofmt()
+							require("go.format").goimport()
 						end,
 					})
 				end,
@@ -371,7 +408,7 @@ require("lazy").setup({
 	},
 	{
 		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v2.x",
+		branch = "v3.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
@@ -478,4 +515,4 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 -- trail whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 
-vim.cmd("colorscheme catppuccin-latte")
+vim.cmd("colorscheme catppuccin-frappe")

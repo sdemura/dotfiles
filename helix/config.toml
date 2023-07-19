@@ -1,4 +1,4 @@
-theme = "catppuccin_latte"
+theme = "catppuccin_frappe"
 
 [editor]
 line-number = "relative"
@@ -7,7 +7,7 @@ cursorline = true
 color-modes = true
 completion-trigger-len = 1
 idle-timeout = 0
-bufferline = "always"
+bufferline = "multiple"
 
 [editor.file-picker]
 hidden = false
@@ -16,11 +16,15 @@ git-ignore = false
 
 [editor.lsp]
 display-messages = true
+snippets = false
+display-inlay-hints = true
 
 [editor.statusline]
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
+
+left = ["mode", "spinner", "version-control", "file-name", "file-modification-indicator"]
 
 [editor.cursor-shape]
 insert = "bar"
@@ -34,5 +38,4 @@ skip-levels = 1
 [keys.normal]
 "{" = ["goto_prev_paragraph"]
 "}" = ["goto_next_paragraph"]
-# "Space-c" = "toggle_comments"
-# "X" = "extend_line_above"
+"#" = "toggle_comments"

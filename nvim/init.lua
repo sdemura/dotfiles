@@ -32,13 +32,6 @@ require("lazy").setup({
         ft = { "go", "gomod" },
         build = ":lua require('go.install').update_all_sync()",
     },
-    -- {
-    -- 	"smoka7/hop.nvim",
-    -- 	config = function()
-    -- 		require("hop").setup()
-    -- 	end,
-    -- 	keys = { { "s", "<cmd>:HopWord<CR>" } },
-    -- },
     {
         "folke/flash.nvim",
         event = "VeryLazy",
@@ -77,16 +70,6 @@ require("lazy").setup({
             },
         },
     },
-    -- {
-    -- 	"akinsho/toggleterm.nvim",
-    -- 	config = function()
-    -- 		require("toggleterm").setup({
-    -- 			open_mapping = [[<C-_>]],
-    -- 			shade_terminals = false,
-    -- 			-- direction = "float",
-    -- 		})
-    -- 	end,
-    -- },
     {
         "windwp/nvim-autopairs",
         config = function()
@@ -117,20 +100,6 @@ require("lazy").setup({
                 },
                 sections = {
                     lualine_c = { { "filename", file_status = true, path = 1 } },
-                    -- lualine_x = {
-                    --     function()
-                    --         local output = vim.fn.systemlist({ "git", "rev-parse", "--show-toplevel" })
-                    --         local fatal = string.find(output[1], "fatal")
-                    --         if fatal then
-                    --             return ""
-                    --         end
-                    --
-                    --         return vim.fn.systemlist({ "basename", output[1] })[1]
-                    --     end,
-                    --     "encoding",
-                    --     "fileformat",
-                    --     "filetype",
-                    -- },
                 },
                 extensions = { "fugitive", "neo-tree" },
             })
@@ -147,7 +116,6 @@ require("lazy").setup({
                     neotree = false,
                     mason = true,
                     treesitter = true,
-                    hop = true,
                     indent_blankline = {
                         enabled = true,
                     },
@@ -194,12 +162,6 @@ require("lazy").setup({
             require("Comment").setup()
         end,
     },
-    -- {
-    --     "romainchapou/nostalgic-term.nvim",
-    --     config = function()
-    --         require("nostalgic-term").setup({ add_vim_ctrl_w = true })
-    --     end,
-    -- },
     {
         "junegunn/fzf",
         build = "./install --bin",
@@ -261,6 +223,8 @@ require("lazy").setup({
             -- Autocompletion
             { "hrsh7th/nvim-cmp" },     -- Required
             { "hrsh7th/cmp-nvim-lsp" }, -- Required
+            { "hrsh7th/cmp-buffer" },   -- Required
+            { "hrsh7th/cmp-path" },     -- Required
             { "L3MON4D3/LuaSnip" },     -- Required
         },
         config = function()
@@ -275,7 +239,20 @@ require("lazy").setup({
                 vim.keymap.set({ 'n', 'x' }, '<leader>F', function()
                     vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
                 end, opts)
+
+                vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', { buffer = true })
+                vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', { buffer = true })
+                vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', { buffer = true })
+
+                lsp.buffer_autoformat()
             end)
+            --
+            -- lsp.configure("gopls", {
+            require('lspconfig').gopls.setup({
+                settings = {
+                    gopls = { gofumpt = true }
+                }
+            })
 
             lsp.set_sign_icons({
                 error = '✘',
@@ -283,20 +260,49 @@ require("lazy").setup({
                 hint = '⚑',
                 info = '»'
             })
+
+            -- lsp.format_on_save({
+            --     format_opts = {
+            --         async      = false,
+            --         timeout_ms = 10000,
+            --     },
+            --     servers = {
+            --         ['gopls'] = { 'go' }
+            --     }
+            -- })
+
             lsp.setup()
 
-            -- other stuff
-            local cmp = require("cmp")
+            local cmp = require('cmp')
+
             cmp.setup({
-                ["<C-p>"] = cmp.mapping.select_prev_item(),
-                ["<C-n>"] = cmp.mapping.select_next_item(),
-                ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-                ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                ["<C-Space>"] = cmp.mapping.complete(),
-                ["<C-e>"] = cmp.mapping.close(),
-                ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                ["<tab>"] = cmp.mapping.confirm({ select = true }),
+                preselect = 'item',
+                mapping = {
+                    ['<tab>'] = cmp.mapping.confirm({ select = false }),
+                },
+                sources = {
+                    { name = 'path' },
+                    { name = 'nvim_lsp' },
+                    { name = 'nvim_lua' },
+                    { name = 'buffer',  keyword_length = 3 },
+                    { name = 'luasnip', keyword_length = 2 },
+                },
             })
+
+            -- other stuff
+            -- local cmp = require("cmp")
+            -- local cmp_action = require('lsp-zero').cmp_action()
+            --
+            -- cmp.setup({
+            --     ["<C-p>"] = cmp_action.select_prev_item(),
+            --     ["<C-n>"] = cmp_action.select_next_item(),
+            --     ["<C-d>"] = cmp_action.scroll_docs(-4),
+            --     ["<C-f>"] = cmp_action.scroll_docs(4),
+            --     ["<C-Space>"] = cmp_action.complete(),
+            --     ["<C-e>"] = cmp_action.close(),
+            --     ["<C-y>"] = cmp_action.confirm({ select = true }),
+            --     ["<tab>"] = cmp_action.confirm({ select = true }),
+            -- })
         end,
     },
     -- {
@@ -518,6 +524,14 @@ require("lazy").setup({
             require("treesj").setup({})
         end,
     },
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {},
+        keys = {
+            { "<leader>t", "<cmd>:TroubleToggle<cr>" },
+        },
+    }
     -- {
     --     "akinsho/git-conflict.nvim",
     --     config = function()

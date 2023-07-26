@@ -585,4 +585,4 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 -- trail whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 
-vim.cmd("colorscheme catppuccin-frappe")
+vim.cmd("colorscheme catppuccin-latte")

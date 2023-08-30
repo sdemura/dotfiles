@@ -10,7 +10,7 @@
 	// 		}
 	// 	}
 	// }
-	"lsp_format_on_save": true,
+	"lsp_format_on_save": false,
 	"lsp_code_actions_on_save": {
 		"source.fixAll": true,
 		"source.organizeImports": true
@@ -18,4 +18,6 @@
 	"semantic_highlighting": false,
 	"show_diagnostics_count_in_view_status": true,
 	"inhibit_snippet_completions": true,
+	"show_code_actions": "bulb",
+	"show_inlay_hints": true,
 }

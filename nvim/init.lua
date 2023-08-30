@@ -21,53 +21,21 @@ require("lazy").setup({
 	{ "tpope/vim-unimpaired" },
 	{ "tpope/vim-eunuch" },
 	{
-		"ray-x/go.nvim",
-		dependencies = { "ray-x/guihua.lua" },
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
-			require("go").setup({
-				max_line_len = 100,
-			})
+			require("todo-comments").setup({})
 		end,
-		event = { "CmdlineEnter" },
-		ft = { "go", "gomod" },
-		build = ":lua require('go.install').update_all_sync()",
+		keys = {
+			{ "<leader>T", "<cmd>:TroubleToggle todo<cr>" },
+		},
 	},
 	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		opts = {},
-        -- stylua: ignore
-        keys = {
-            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-            {
-                "S",
-                mode = { "n", "o", "x" },
-                function() require("flash").treesitter() end,
-                desc =
-                "Flash Treesitter"
-            },
-            {
-                "r",
-                mode = "o",
-                function() require("flash").remote() end,
-                desc =
-                "Remote Flash"
-            },
-            {
-                "R",
-                mode = { "o", "x" },
-                function() require("flash").treesitter_search() end,
-                desc =
-                "Treesitter Search"
-            },
-            {
-                "<c-s>",
-                mode = { "c" },
-                function() require("flash").toggle() end,
-                desc =
-                "Toggle Flash Search"
-            },
-        },
+		"smoka7/hop.nvim",
+		config = function()
+			require("hop").setup()
+		end,
+		keys = { { "s", "<cmd>:HopWord<CR>" } },
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -104,6 +72,7 @@ require("lazy").setup({
 			})
 		end,
 	},
+	{ "EdenEast/nightfox.nvim" },
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
@@ -111,7 +80,8 @@ require("lazy").setup({
 		config = function()
 			require("catppuccin").setup({
 				integrations = {
-					flash = true,
+					-- flash = true,
+					hop = true,
 					gitsigns = true,
 					cmp = true,
 					mini = true,
@@ -238,22 +208,13 @@ require("lazy").setup({
 				local opts = { buffer = bufnr }
 
 				vim.keymap.set("n", "<leader>F", function()
-					vim.lsp.buf.format({ async = true, timeout_ms = 10000 })
+					vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
 				end, opts)
 
 				vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", { buffer = true })
 				vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
 				vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
-
-				lsp.buffer_autoformat()
 			end)
-			--
-			-- lsp.configure("gopls", {
-			require("lspconfig").gopls.setup({
-				settings = {
-					gopls = { gofumpt = true },
-				},
-			})
 
 			lsp.set_sign_icons({
 				error = "✘",
@@ -270,10 +231,8 @@ require("lazy").setup({
 			null_ls.setup({
 				sources = {
 					null_ls.builtins.diagnostics.hadolint,
-					-- null_ls.builtins.diagnostics.shellcheck,
 					null_ls.builtins.formatting.black,
 					null_ls.builtins.formatting.isort,
-					null_ls.builtins.formatting.prettier,
 					null_ls.builtins.formatting.prettier,
 					null_ls.builtins.formatting.shfmt,
 					null_ls.builtins.formatting.stylua,
@@ -511,18 +470,21 @@ require("lazy").setup({
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {},
+		config = function()
+			require("trouble").setup({})
+		end,
 		keys = {
 			{ "<leader>t", "<cmd>:TroubleToggle<cr>" },
 		},
 	},
-	-- {
-	-- 	"akinsho/git-conflict.nvim",
-	-- 	version = "*",
-	-- 	config = true,
-	-- 	keys = {
-	-- 		{ "<leader>gc", "<cmd>:GitConflictListQf<cr>" },
-	-- 	},
-	-- },
+	{
+		"akinsho/git-conflict.nvim",
+		version = "*",
+		config = true,
+		keys = {
+			{ "<leader>Gc", "<cmd>:GitConflictListQf<cr>" },
+		},
+	},
 })
 
 --- options
@@ -569,4 +531,9 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 -- trail whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 
-vim.cmd("colorscheme catppuccin-frappe")
+-- disable inline diagnostics
+vim.diagnostic.config({
+	virtual_text = false,
+})
+
+vim.cmd("colorscheme catppuccin-mocha")

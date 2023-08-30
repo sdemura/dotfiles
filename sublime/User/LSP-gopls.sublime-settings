@@ -1,6 +1,6 @@
 // Settings in here override those in "LSP-gopls/LSP-gopls.sublime-settings"
 {
-	"gopls.gofumpt": true,
+	"gopls.gofumpt": false,
 	"runTestsInPanel": false,
 	"gopls.staticcheck": true,
 }

@@ -14,9 +14,9 @@
 	"hardware_acceleration": "opengl",
 	"autocomplete_include_snippets": false,
 	"auto_complete_include_snippets_when_typing": false,
-	"rulers": [
-		100
-	],
+	// "rulers": [
+	// 	100
+	// ],
 	"highlight_line": true,
 	"bold_folder_labels": true,
 	"fold_buttons": false,

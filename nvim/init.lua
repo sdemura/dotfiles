@@ -17,6 +17,42 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 require("lazy").setup({
+	{
+		"RRethy/nvim-treesitter-endwise",
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				endwise = {
+					enable = true,
+				},
+			})
+		end,
+	},
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = "nvim-tree/nvim-web-devicons",
+		after = "catppuccin",
+		config = function()
+			require("bufferline").setup({
+				highlights = require("catppuccin.groups.integrations.bufferline").get(),
+				options = {
+					mode = "tabs",
+					always_show_bufferline = false,
+					show_buffer_icons = false,
+					enforce_regular_tabs = true,
+					offsets = {
+						{
+							filetype = "neo-tree",
+							text = "File Explorer",
+							-- highlight = "directory",
+							text_align = "left",
+							separator = true,
+						},
+					},
+				},
+			})
+		end,
+	},
 	{ "tpope/vim-fugitive" },
 	{ "tpope/vim-unimpaired" },
 	{ "tpope/vim-eunuch" },
@@ -35,7 +71,7 @@ require("lazy").setup({
 		config = function()
 			require("hop").setup()
 		end,
-		keys = { { "s", "<cmd>:HopWord<CR>" } },
+		keys = { { "s", "<cmd>:HopWord<CR>" }, { "S", "<cmd>:HopAnywhere<CR>" } },
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -197,6 +233,7 @@ require("lazy").setup({
 			{ "L3MON4D3/LuaSnip" }, -- Required
 			{ "jose-elias-alvarez/null-ls.nvim" },
 			{ "jayp0521/mason-null-ls.nvim" },
+			{ "onsails/lspkind.nvim" },
 		},
 		config = function()
 			local lsp = require("lsp-zero").preset({})
@@ -214,6 +251,9 @@ require("lazy").setup({
 				vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", { buffer = true })
 				vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
 				vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
+				vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+
+				lsp.buffer_autoformat()
 			end)
 
 			lsp.set_sign_icons({
@@ -243,6 +283,9 @@ require("lazy").setup({
 
 			cmp.setup({
 				preselect = "item",
+				completion = {
+					completeopt = "menu,menuone,noinsert",
+				},
 				mapping = {
 					["<tab>"] = cmp.mapping.confirm({ select = false }),
 				},
@@ -252,7 +295,15 @@ require("lazy").setup({
 					{ name = "nvim_lsp_signature_help" },
 					{ name = "nvim_lua" },
 					{ name = "buffer", keyword_length = 3 },
-					{ name = "luasnip", keyword_length = 2 },
+					{ name = "luasnip", keyword_length = 4 },
+				},
+				formatting = {
+					fields = { "abbr", "kind", "menu" },
+					format = require("lspkind").cmp_format({
+						mode = "symbol_text", -- show only symbol annotations
+						maxwidth = 50, -- prevent the popup from showing more than provided characters
+						ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+					}),
 				},
 			})
 		end,

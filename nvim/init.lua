@@ -17,6 +17,13 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 require("lazy").setup({
+	{ "ellisonleao/gruvbox.nvim", priority = 1000 },
+	{
+		"vladdoster/remember.nvim",
+		config = function()
+			require("remember")
+		end,
+	},
 	{
 		"RRethy/nvim-treesitter-endwise",
 		config = function()
@@ -54,6 +61,7 @@ require("lazy").setup({
 		end,
 	},
 	{ "tpope/vim-fugitive" },
+	{ "shumphrey/fugitive-gitlab.vim" },
 	{ "tpope/vim-unimpaired" },
 	{ "tpope/vim-eunuch" },
 	{
@@ -108,7 +116,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{ "EdenEast/nightfox.nvim" },
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
@@ -128,6 +135,11 @@ require("lazy").setup({
 						enabled = true,
 					},
 					native_lsp = { enabled = true },
+					illuminate = {
+						enabled = true,
+						lsp = true,
+					},
+					window_picker = true,
 				},
 			})
 		end,
@@ -192,7 +204,7 @@ require("lazy").setup({
 		keys = {
 			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
 			{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
-			{ "<leader>G", "<cmd>:FzfLua live_grep_resume<CR>" },
+			{ "<leader>G", "<cmd>:FzfLua git_status<CR>" },
 			{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
 			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
 			-- { "<leader>e", "<cmd>:FzfLua files cwd=~/src/gitlab.com/corelight/engineering/elysium/<CR>" },
@@ -253,7 +265,7 @@ require("lazy").setup({
 				vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
 				vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
 
-				lsp.buffer_autoformat()
+				-- lsp.buffer_autoformat()
 			end)
 
 			lsp.set_sign_icons({
@@ -261,6 +273,30 @@ require("lazy").setup({
 				warn = "▲",
 				hint = "⚑",
 				info = "»",
+			})
+
+			-- lsp.configure("gopls", {
+			-- 	on_attach = function(client, bufnr)
+			-- 		vim.api.nvim_create_autocmd("BufWritePre", {
+			-- 			desc = "Auto format before save",
+			-- 			pattern = "<buffer>",
+			-- 			callback = function()
+			-- 				require("go.format").goimport()
+			-- 			end,
+			-- 		})
+			-- 	end,
+			-- })
+			lsp.configure("yamlls", {
+				settings = {
+					yaml = {
+						format = {
+							enable = false,
+							-- printWidth = 100,
+							-- bracketSpacing = false,
+						},
+						keyOrdering = false,
+					},
+				},
 			})
 
 			lsp.setup()
@@ -283,6 +319,10 @@ require("lazy").setup({
 
 			cmp.setup({
 				preselect = "item",
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+				},
 				completion = {
 					completeopt = "menu,menuone,noinsert",
 				},
@@ -503,8 +543,10 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-			{ "-", "<cmd>:Neotree toggle<CR>" },
-			{ "_", "<cmd>:Neotree toggle reveal<CR>" },
+			{ "-", "<cmd>:Neotree  toggle<CR>" },
+			{ "_", "<cmd>:Neotree  toggle reveal<CR>" },
+			-- { "-", "<cmd>:Neotree position=float toggle<CR>" },
+			-- { "_", "<cmd>:Neotree position=float toggle reveal<CR>" },
 		},
 	},
 	{
@@ -576,6 +618,9 @@ vim.api.nvim_set_keymap("n", "cy", [["*y]], opts)
 vim.api.nvim_set_keymap("v", "cy", [["*y]], opts)
 -- vim.api.nvim_set_keymap("v", "cp", [["*p]], opts)
 
+vim.api.nvim_set_keymap("n", "H", ":tabprev<cr>", opts)
+vim.api.nvim_set_keymap("n", "L", ":tabnext<cr>", opts)
+
 -- Unless you are still migrating, remove the deprecated commands from v1.x
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
@@ -588,3 +633,4 @@ vim.diagnostic.config({
 })
 
 vim.cmd("colorscheme catppuccin-mocha")
+-- vim.cmd("colorscheme catppuccin-mocha")

@@ -17,7 +17,75 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 require("lazy").setup({
-	{ "ellisonleao/gruvbox.nvim", priority = 1000 },
+	-- lazy.nvim
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+		config = function()
+			require("noice").setup({
+				lsp = {
+					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true,
+					},
+				},
+				-- you can enable a preset for easier configuration
+				presets = {
+					bottom_search = true, -- use a classic bottom cmdline for search
+					command_palette = false, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = false, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = false, -- add a border to hover docs and signature help
+				},
+				-- cmdline = {
+				--     view = "popup",
+				-- },
+				views = {
+					cmdline_popup = {
+						position = {
+							row = 5,
+							col = "50%",
+						},
+						size = {
+							width = 60,
+							height = "auto",
+						},
+					},
+					popupmenu = {
+						relative = "editor",
+						position = {
+							row = 8,
+							col = "50%",
+						},
+						size = {
+							width = 60,
+							height = 10,
+						},
+						border = {
+							style = "rounded",
+							padding = { 0, 1 },
+						},
+						win_options = {
+							winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+						},
+					},
+				},
+			})
+		end,
+	},
 	{
 		"vladdoster/remember.nvim",
 		config = function()
@@ -199,6 +267,12 @@ require("lazy").setup({
 						["ctrl-q"] = "select-all+accept",
 					},
 				},
+				-- winopts = {
+				--     border = false,
+				--     preview = {
+				--         border = false,
+				--     },
+				-- },
 			})
 		end,
 		keys = {
@@ -319,10 +393,10 @@ require("lazy").setup({
 
 			cmp.setup({
 				preselect = "item",
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
+				-- window = {
+				-- 	completion = cmp.config.window.bordered(),
+				-- 	documentation = cmp.config.window.bordered(),
+				-- },
 				completion = {
 					completeopt = "menu,menuone,noinsert",
 				},
@@ -525,7 +599,7 @@ require("lazy").setup({
 				fg_color = "#eff1f5",
 			})
 			require("neo-tree").setup({
-				-- popup_border_style = "rounded",
+				popup_border_style = "rounded",
 				close_if_last_window = true,
 				filesystem = {
 					window = {

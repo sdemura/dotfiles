@@ -17,75 +17,8 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 require("lazy").setup({
+	{ "ellisonleao/gruvbox.nvim", priority = 1000 },
 	-- lazy.nvim
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		opts = {
-			-- add any options here
-		},
-		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
-		},
-		config = function()
-			require("noice").setup({
-				lsp = {
-					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-					override = {
-						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-						["vim.lsp.util.stylize_markdown"] = true,
-						["cmp.entry.get_documentation"] = true,
-					},
-				},
-				-- you can enable a preset for easier configuration
-				presets = {
-					bottom_search = true, -- use a classic bottom cmdline for search
-					command_palette = false, -- position the cmdline and popupmenu together
-					long_message_to_split = true, -- long messages will be sent to a split
-					inc_rename = false, -- enables an input dialog for inc-rename.nvim
-					lsp_doc_border = false, -- add a border to hover docs and signature help
-				},
-				-- cmdline = {
-				--     view = "popup",
-				-- },
-				views = {
-					cmdline_popup = {
-						position = {
-							row = 5,
-							col = "50%",
-						},
-						size = {
-							width = 60,
-							height = "auto",
-						},
-					},
-					popupmenu = {
-						relative = "editor",
-						position = {
-							row = 8,
-							col = "50%",
-						},
-						size = {
-							width = 60,
-							height = 10,
-						},
-						border = {
-							style = "rounded",
-							padding = { 0, 1 },
-						},
-						win_options = {
-							winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-						},
-					},
-				},
-			})
-		end,
-	},
 	{
 		"vladdoster/remember.nvim",
 		config = function()
@@ -106,10 +39,10 @@ require("lazy").setup({
 		"akinsho/bufferline.nvim",
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
-		after = "catppuccin",
+		after = "gruvbox",
 		config = function()
 			require("bufferline").setup({
-				highlights = require("catppuccin.groups.integrations.bufferline").get(),
+				-- highlights = require("catppuccin.groups.integrations.bufferline").get(),
 				options = {
 					mode = "tabs",
 					always_show_bufferline = false,
@@ -130,7 +63,7 @@ require("lazy").setup({
 	},
 	{ "tpope/vim-fugitive" },
 	{ "shumphrey/fugitive-gitlab.vim" },
-	{ "tpope/vim-unimpaired" },
+	-- { "tpope/vim-unimpaired" },
 	{ "tpope/vim-eunuch" },
 	{
 		"folke/todo-comments.nvim",
@@ -147,7 +80,7 @@ require("lazy").setup({
 		config = function()
 			require("hop").setup()
 		end,
-		keys = { { "s", "<cmd>:HopWord<CR>" }, { "S", "<cmd>:HopAnywhere<CR>" } },
+		keys = { { "<CR>", "<cmd>:HopWord<CR>" }, { "S", "<cmd>:HopAnywhere<CR>" } },
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -155,22 +88,26 @@ require("lazy").setup({
 			require("nvim-autopairs").setup({})
 		end,
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		config = function()
-			require("indent_blankline").setup({
-				show_current_context = true,
-				colored_indent_levels = false,
-			})
-		end,
-	},
+	-- {
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	main = "ibl",
+	-- 	opts = {},
+	-- 	config = function()
+	-- 		require("ibl").setup({
+	-- 			show_current_context = true,
+	-- 			colored_indent_levels = true,
+	-- 		})
+	-- 	end,
+	-- },
+
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
+		after = "gruvbox",
 		config = function()
 			require("lualine").setup({
 				options = {
-					theme = "catppuccin",
+					theme = "gruvbox",
 					globalstatus = false,
 					section_separators = "",
 					component_separators = "",
@@ -212,7 +149,7 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{ "RRethy/vim-illuminate" },
+	-- { "RRethy/vim-illuminate" },
 	{
 		"kylechui/nvim-surround",
 		config = function()
@@ -220,8 +157,22 @@ require("lazy").setup({
 		end,
 	},
 	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	},
+	{
 		"echasnovski/mini.nvim",
 		config = function()
+			require("mini.bracketed").setup({})
+			require("mini.indentscope").setup({
+				symbol = "│",
+				draw = { animation = require("mini.indentscope").gen_animation.none() },
+			})
+			require("mini.cursorword").setup({
+				delay = 50,
+			})
 			require("mini.ai").setup({})
 			require("mini.splitjoin").setup({})
 			require("mini.basics").setup({
@@ -230,7 +181,7 @@ require("lazy").setup({
 					extra_ui = false,
 				},
 				mappings = {
-					basic = false,
+					basic = true,
 					move_with_alt = false,
 				},
 				autocommands = {
@@ -238,12 +189,10 @@ require("lazy").setup({
 					relnum_in_visual_mode = true,
 				},
 			})
-		end,
-	},
-	{
-		"numToStr/Comment.nvim",
-		config = function()
-			require("Comment").setup()
+			-- disable <C-s>
+			vim.keymap.del("n", "<C-s>")
+			vim.keymap.del("v", "<C-s>")
+			vim.keymap.del("i", "<C-s>")
 		end,
 	},
 	{
@@ -631,7 +580,7 @@ require("lazy").setup({
 			"SmiteshP/nvim-navic",
 			"nvim-tree/nvim-web-devicons", -- optional dependency
 		},
-		opts = { theme = "catppuccin" },
+		opts = { theme = "gruvbox" },
 	},
 	{
 		"folke/trouble.nvim",
@@ -676,6 +625,7 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
+vim.opt.winblend = 30
 vim.opt.wrap = false
 
 -- keymaps
@@ -706,5 +656,6 @@ vim.diagnostic.config({
 	virtual_text = false,
 })
 
-vim.cmd("colorscheme catppuccin-mocha")
--- vim.cmd("colorscheme catppuccin-mocha")
+vim.opt.background = "dark"
+vim.cmd("colorscheme gruvbox")
+-- vim.cmd("colorscheme catppuccin-latte")

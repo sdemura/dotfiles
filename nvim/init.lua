@@ -39,7 +39,8 @@ require("lazy").setup({
 		"akinsho/bufferline.nvim",
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
-		after = "gruvbox",
+		-- after gruvbox
+		priority = 1001,
 		config = function()
 			require("bufferline").setup({
 				-- highlights = require("catppuccin.groups.integrations.bufferline").get(),
@@ -80,7 +81,7 @@ require("lazy").setup({
 		config = function()
 			require("hop").setup()
 		end,
-		keys = { { "<CR>", "<cmd>:HopWord<CR>" }, { "S", "<cmd>:HopAnywhere<CR>" } },
+		keys = { { "s", "<cmd>:HopWord<CR>" }, { "S", "<cmd>:HopAnywhere<CR>" } },
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -99,11 +100,11 @@ require("lazy").setup({
 	-- 		})
 	-- 	end,
 	-- },
-
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		after = "gruvbox",
+		-- after gruvbox
+		priority = 1002,
 		config = function()
 			require("lualine").setup({
 				options = {
@@ -225,6 +226,7 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
+            { "<leader><leader>", "<cmd>:FzfLua<cr>"},
 			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
 			{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
 			{ "<leader>G", "<cmd>:FzfLua git_status<CR>" },
@@ -339,19 +341,18 @@ require("lazy").setup({
 			})
 
 			local cmp = require("cmp")
-
+			local cmp_action = require("lsp-zero").cmp_action()
 			cmp.setup({
-				preselect = "item",
-				-- window = {
-				-- 	completion = cmp.config.window.bordered(),
-				-- 	documentation = cmp.config.window.bordered(),
-				-- },
-				completion = {
-					completeopt = "menu,menuone,noinsert",
-				},
-				mapping = {
-					["<tab>"] = cmp.mapping.confirm({ select = false }),
-				},
+				mapping = cmp.mapping.preset.insert({
+					-- confirm completion
+					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+
+					-- scroll up and down the documentation window
+					["<C-u>"] = cmp.mapping.scroll_docs(-4),
+					["<C-d>"] = cmp.mapping.scroll_docs(4),
+					["<Tab>"] = cmp_action.tab_complete(),
+					["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
+				}),
 				sources = {
 					{ name = "path" },
 					{ name = "nvim_lsp" },
@@ -360,15 +361,37 @@ require("lazy").setup({
 					{ name = "buffer", keyword_length = 3 },
 					{ name = "luasnip", keyword_length = 4 },
 				},
-				formatting = {
-					fields = { "abbr", "kind", "menu" },
-					format = require("lspkind").cmp_format({
-						mode = "symbol_text", -- show only symbol annotations
-						maxwidth = 50, -- prevent the popup from showing more than provided characters
-						ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
-					}),
-				},
 			})
+
+			-- cmp.setup({
+			-- 	preselect = "item",
+			-- 	-- window = {
+			-- 	-- 	completion = cmp.config.window.bordered(),
+			-- 	-- 	documentation = cmp.config.window.bordered(),
+			-- 	-- },
+			-- 	completion = {
+			-- 		completeopt = "menu,menuone,noinsert",
+			-- 	},
+			-- 	-- mapping = {
+			-- 	-- 	["<tab>"] = cmp.mapping.confirm({ select = true }),
+			-- 	-- },
+			-- 	sources = {
+			-- 		{ name = "path" },
+			-- 		{ name = "nvim_lsp" },
+			-- 		{ name = "nvim_lsp_signature_help" },
+			-- 		{ name = "nvim_lua" },
+			-- 		{ name = "buffer", keyword_length = 3 },
+			-- 		{ name = "luasnip", keyword_length = 4 },
+			-- 	},
+			-- 	formatting = {
+			-- 		fields = { "abbr", "kind", "menu" },
+			-- 		format = require("lspkind").cmp_format({
+			-- 			mode = "symbol_text", -- show only symbol annotations
+			-- 			maxwidth = 50, -- prevent the popup from showing more than provided characters
+			-- 			ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+			-- 		}),
+			-- 	},
+			-- })
 		end,
 	},
 	-- {
@@ -625,7 +648,7 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
-vim.opt.winblend = 30
+-- vim.opt.winblend = 30
 vim.opt.wrap = false
 
 -- keymaps

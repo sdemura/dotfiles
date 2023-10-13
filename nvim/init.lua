@@ -226,7 +226,7 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-            { "<leader><leader>", "<cmd>:FzfLua<cr>"},
+			{ "<leader><leader>", "<cmd>:FzfLua<cr>" },
 			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
 			{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
 			{ "<leader>G", "<cmd>:FzfLua git_status<CR>" },
@@ -300,24 +300,11 @@ require("lazy").setup({
 				info = "»",
 			})
 
-			-- lsp.configure("gopls", {
-			-- 	on_attach = function(client, bufnr)
-			-- 		vim.api.nvim_create_autocmd("BufWritePre", {
-			-- 			desc = "Auto format before save",
-			-- 			pattern = "<buffer>",
-			-- 			callback = function()
-			-- 				require("go.format").goimport()
-			-- 			end,
-			-- 		})
-			-- 	end,
-			-- })
 			lsp.configure("yamlls", {
 				settings = {
 					yaml = {
 						format = {
 							enable = false,
-							-- printWidth = 100,
-							-- bracketSpacing = false,
 						},
 						keyOrdering = false,
 					},
@@ -363,174 +350,8 @@ require("lazy").setup({
 				},
 			})
 
-			-- cmp.setup({
-			-- 	preselect = "item",
-			-- 	-- window = {
-			-- 	-- 	completion = cmp.config.window.bordered(),
-			-- 	-- 	documentation = cmp.config.window.bordered(),
-			-- 	-- },
-			-- 	completion = {
-			-- 		completeopt = "menu,menuone,noinsert",
-			-- 	},
-			-- 	-- mapping = {
-			-- 	-- 	["<tab>"] = cmp.mapping.confirm({ select = true }),
-			-- 	-- },
-			-- 	sources = {
-			-- 		{ name = "path" },
-			-- 		{ name = "nvim_lsp" },
-			-- 		{ name = "nvim_lsp_signature_help" },
-			-- 		{ name = "nvim_lua" },
-			-- 		{ name = "buffer", keyword_length = 3 },
-			-- 		{ name = "luasnip", keyword_length = 4 },
-			-- 	},
-			-- 	formatting = {
-			-- 		fields = { "abbr", "kind", "menu" },
-			-- 		format = require("lspkind").cmp_format({
-			-- 			mode = "symbol_text", -- show only symbol annotations
-			-- 			maxwidth = 50, -- prevent the popup from showing more than provided characters
-			-- 			ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
-			-- 		}),
-			-- 	},
-			-- })
 		end,
 	},
-	-- {
-	-- 	"VonHeikemen/lsp-zero.nvim",
-	-- 	branch = "v1.x",
-	-- 	lazy = false,
-	-- 	dependencies = {
-	-- 		-- LSP Support
-	-- 		{ "neovim/nvim-lspconfig" },
-	-- 		{ "williamboman/mason.nvim" },
-	-- 		{ "williamboman/mason-lspconfig.nvim" },
-	-- 		{ "jose-elias-alvarez/null-ls.nvim" },
-	-- 		{ "jayp0521/mason-null-ls.nvim" },
-	--
-	-- 		-- Autocompletion
-	-- 		{ "hrsh7th/nvim-cmp" },
-	-- 		{ "hrsh7th/cmp-buffer" },
-	-- 		{ "hrsh7th/cmp-path" },
-	-- 		{ "saadparwaiz1/cmp_luasnip" },
-	-- 		{ "hrsh7th/cmp-nvim-lsp" },
-	-- 		{ "hrsh7th/cmp-nvim-lua" },
-	--
-	-- 		-- Snippets
-	-- 		{ "L3MON4D3/LuaSnip" },
-	-- 		-- Snippet Collection (Optional)
-	-- 		{ "rafamadriz/friendly-snippets" },
-	--
-	-- 		-- Signature support
-	-- 		{ "ray-x/lsp_signature.nvim" },
-	-- 	},
-	-- 	config = function()
-	-- 		local lsp = require("lsp-zero")
-	-- 		lsp.preset("recommended")
-	--
-	-- 		lsp.set_preferences({
-	-- 			set_lsp_keymaps = { omit = { "<F2>", "<F4>", "gl" } },
-	-- 		})
-	--
-	-- 		lsp.on_attach(function(client, bufnr)
-	-- 			local map = function(mode, lhs, rhs)
-	-- 				local opts = { remap = false, buffer = bufnr }
-	-- 				vim.keymap.set(mode, lhs, rhs, opts)
-	-- 			end
-	--
-	-- 			-- LSP actions
-	-- 			map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>")
-	-- 			map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>")
-	-- 			map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>")
-	-- 			map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>")
-	-- 			map("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<cr>")
-	-- 			map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>")
-	-- 			map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>")
-	-- 			map("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>")
-	-- 			map("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>")
-	-- 			map("x", "<space>ca", "<cmd>lua vim.lsp.buf.range_code_action()<cr>")
-	-- 			map("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<cr>")
-	--
-	-- 			-- Diagnostics
-	-- 			map("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<cr>")
-	-- 			map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
-	-- 			map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>")
-	--
-	-- 			-- Signature
-	-- 			require("lsp_signature").on_attach({
-	-- 				hint_enable = false,
-	-- 				noice = false,
-	-- 				doc_lines = 0,
-	-- 			}, bufnr)
-	-- 		end)
-	--
-	-- 		lsp.configure("gopls", {
-	-- 			on_attach = function(client, bufnr)
-	-- 				vim.api.nvim_create_autocmd("BufWritePre", {
-	-- 					desc = "Auto format before save",
-	-- 					pattern = "<buffer>",
-	-- 					callback = function()
-	-- 						require("go.format").goimport()
-	-- 					end,
-	-- 				})
-	-- 			end,
-	-- 		})
-	--
-	-- 		lsp.configure("yamlls", {
-	-- 			settings = {
-	-- 				yaml = {
-	-- 					format = {
-	-- 						printWidth = 100,
-	-- 						bracketSpacing = false,
-	-- 					},
-	-- 					keyOrdering = false,
-	-- 				},
-	-- 			},
-	-- 		})
-	--
-	-- 		local cmp = require("cmp")
-	-- 		lsp.setup_nvim_cmp({
-	-- 			-- preselect = "none",
-	-- 			mapping = {
-	-- 				["<C-p>"] = cmp.mapping.select_prev_item(),
-	-- 				["<C-n>"] = cmp.mapping.select_next_item(),
-	-- 				["<C-d>"] = cmp.mapping.scroll_docs(-4),
-	-- 				["<C-f>"] = cmp.mapping.scroll_docs(4),
-	-- 				["<C-Space>"] = cmp.mapping.complete(),
-	-- 				["<C-e>"] = cmp.mapping.close(),
-	-- 				["<C-y>"] = cmp.mapping.confirm({ select = true }),
-	-- 				["<tab>"] = cmp.mapping.confirm({ select = true }),
-	-- 			},
-	-- 			-- sources = {
-	-- 			--     { name = "path" },
-	-- 			--     { name = "nvim_lsp", keyword_length = 3 },
-	-- 			--     { name = "buffer",   keyword_length = 5 },
-	-- 			-- },
-	-- 		})
-	-- 		lsp.setup()
-	--
-	-- 		require("mason-null-ls").setup()
-	-- 		local null_ls = require("null-ls")
-	-- 		local null_opts = lsp.build_options("null-ls", {})
-	-- 		null_ls.setup({
-	-- 			on_attach = function(client, bufnr)
-	-- 				null_opts.on_attach(client, bufnr)
-	-- 			end,
-	-- 			diagnostics_format = "[#{c}] #{m} (#{s})",
-	-- 			sources = {
-	-- 				null_ls.builtins.formatting.stylua,
-	-- 				null_ls.builtins.formatting.shfmt,
-	-- 				null_ls.builtins.formatting.black,
-	-- 				null_ls.builtins.formatting.isort,
-	-- 				null_ls.builtins.formatting.prettier,
-	-- 				-- null_ls.builtins.diagnostics.yamllint,
-	-- 				null_ls.builtins.diagnostics.shellcheck,
-	-- 				null_ls.builtins.diagnostics.hadolint,
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- 	keys = {
-	-- 		{ "<leader>F", "<cmd>:LspZeroFormat<cr>" },
-	-- 	},
-	-- },
 	{
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
@@ -591,8 +412,6 @@ require("lazy").setup({
 		keys = {
 			{ "-", "<cmd>:Neotree  toggle<CR>" },
 			{ "_", "<cmd>:Neotree  toggle reveal<CR>" },
-			-- { "-", "<cmd>:Neotree position=float toggle<CR>" },
-			-- { "_", "<cmd>:Neotree position=float toggle reveal<CR>" },
 		},
 	},
 	{
@@ -657,8 +476,6 @@ vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts
 
 vim.api.nvim_set_keymap("n", "<leader>lu", "<cmd>:Lazy update<cr>", opts)
 
--- vim.api.nvim_set_keymap("n", "<leader>F", "<cmd>:Format<cr>", opts)
-
 vim.api.nvim_set_keymap("n", "cy", [["*y]], opts)
 -- vim.api.nvim_set_keymap("n", "cp", [["*p]], opts)
 
@@ -681,4 +498,3 @@ vim.diagnostic.config({
 
 vim.opt.background = "dark"
 vim.cmd("colorscheme gruvbox")
--- vim.cmd("colorscheme catppuccin-latte")

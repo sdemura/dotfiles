@@ -15,3 +15,5 @@
     recent = !git for-each-ref --sort=committerdate refs/heads --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always|column -ts'|'
     cleanup = "!git branch --merged | grep  -v '\\*\\|main' | xargs -n 1 -r git branch -d"
     br = !git branch --show-current
+[safe]
+	directory = /private/tmp

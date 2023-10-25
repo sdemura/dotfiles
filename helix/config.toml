@@ -8,6 +8,7 @@ color-modes = true
 completion-trigger-len = 1
 idle-timeout = 0
 bufferline = "multiple"
+mouse = true
 
 [editor.file-picker]
 hidden = false
@@ -24,7 +25,13 @@ mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
 
-left = ["mode", "spinner", "version-control", "file-name", "file-modification-indicator"]
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+tab = "→"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -39,3 +46,12 @@ skip-levels = 1
 "{" = ["goto_prev_paragraph"]
 "}" = ["goto_next_paragraph"]
 "#" = "toggle_comments"
+"C-6" = ["goto_last_accessed_file"]
+
+[keys.insert]
+C-h = "delete_char_backward" # Most terminals do this by default.
+C-l = "move_char_right" # Useful to jump over closing parenthesis.
+"C-[" = "normal_mode"
+
+[keys.select]
+"C-[" = "normal_mode"

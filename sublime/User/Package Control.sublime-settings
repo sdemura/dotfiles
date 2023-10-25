@@ -6,7 +6,7 @@
 	"installed_packages":
 	[
 		"A File Icon",
-		"ayu",
+		"AdvancedNewFile",
 		"BracketHighlighter",
 		"Catppuccin color schemes",
 		"ChordPro",
@@ -26,9 +26,9 @@
 		"Origami",
 		"Package Control",
 		"SideBarTools",
+		"Solarized Color Scheme",
 		"SublimeLinter-annotations",
 		"Terminal",
-		"Terminus",
 		"Terraform",
 		"TOML",
 	],

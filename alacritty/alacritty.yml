@@ -4,6 +4,7 @@ import:
   - ~/.dotfiles/alacritty/themes/gruvbox_dark.yaml
 
 window:
+  option_as_alt: Both
   # dynamic_padding: false
   dynamic_title: true
   decorations_theme_variant: Dark

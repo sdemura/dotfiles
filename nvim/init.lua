@@ -15,6 +15,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- start plugins
   "tpope/vim-fugitive",
   "shumphrey/fugitive-gitlab.vim",
   "tpope/vim-sleuth",
@@ -50,20 +51,19 @@ require("lazy").setup({
   {
     "ellisonleao/gruvbox.nvim",
     priority = 1000,
-    config = function()
-      vim.cmd.colorscheme("gruvbox")
-    end,
   },
   {
     "nvim-lualine/lualine.nvim",
-    opts = {
-      options = {
-        icons_enabled = true,
-        theme = "gruvbox",
-        component_separators = "|",
-        section_separators = "",
-      },
-    },
+    config = function()
+      require("lualine").setup({
+        options = {
+          icons_enabled = true,
+          theme = "gruvbox",
+          component_separators = "|",
+          section_separators = "",
+        },
+      })
+    end,
   },
   { "numToStr/Comment.nvim",   opts = {} },
   {
@@ -93,7 +93,6 @@ require("lazy").setup({
       { "<leader>G",        "<cmd>:FzfLua git_status<CR>" },
       { "<leader>s",        "<cmd>:FzfLua lsp_document_symbols<CR>" },
       { "<leader>cc",       "<cmd>:FzfLua files cwd=~/.config<CR>" },
-      -- { "<leader>e", "<cmd>:FzfLua files cwd=~/src/gitlab.com/corelight/engineering/elysium/<CR>" },
       { "<leader>b",        "<cmd>:FzfLua buffers<cr>" },
       { "<leader>z",        "<cmd>:FzfLua<CR>" },
       { '<leader>"',        "<cmd>:FzfLua registers<cr>" },
@@ -237,17 +236,16 @@ require("lazy").setup({
       require("nvim-surround").setup({})
     end,
   },
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
-
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = "nvim-tree/nvim-web-devicons",
+  },
+  {
+    "mawkler/modicator.nvim",
+    opts = {},
+  },
+  -- End plugins
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
 }, {})
@@ -272,11 +270,9 @@ vim.opt.swapfile = false
 vim.opt.switchbuf = "useopen"
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
-vim.opt.timeoutlen = 300
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
--- vim.opt.winblend = 30
 vim.opt.wrap = false
 
 -- Keymaps for better default experience
@@ -351,14 +347,16 @@ lsp_zero.on_attach(function(client, bufnr)
   -- to learn the available actions
   lsp_zero.default_keymaps({ buffer = bufnr })
 
-  vim.keymap.set("n", "<leader>F", function()
-    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-    print("lsp formatted buffer")
-  end, opts)
-
   vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", { buffer = true })
   vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
   vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+    vim.lsp.buf.format({ async = true, timeout_ms = 10000 })
+  end, { desc = "Format current buffer with LSP" })
+
+  vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
 end)
 
 require("mason").setup({})
@@ -366,9 +364,27 @@ require("mason-lspconfig").setup({
   ensure_installed = {},
   handlers = {
     lsp_zero.default_setup,
+    ["lua_ls"] = function()
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({
+        settings = {
+          Lua = {
+            workspace = { checkThirdParty = false },
+            telemetry = { enable = false },
+            diagnostics = {
+              globals = { "vim" },
+            },
+          },
+        },
+      })
+    end,
   },
 })
 -- end lsp config
+
+-- setup bufferline _after_ setting theme
+vim.cmd.colorscheme("gruvbox")
+require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

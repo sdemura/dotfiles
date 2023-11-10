@@ -22,36 +22,95 @@ require("lazy").setup({
   "tpope/vim-eunuch",
 
   -- lsp zero start
-  { "VonHeikemen/lsp-zero.nvim",        branch = "v3.x" },
+  { "VonHeikemen/lsp-zero.nvim",          branch = "v3.x" },
   { "williamboman/mason.nvim" },
   { "williamboman/mason-lspconfig.nvim" },
   { "neovim/nvim-lspconfig" },
   { "hrsh7th/cmp-nvim-lsp" },
   { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-nvim-lsp-signature-help" },
   { "hrsh7th/cmp-buffer" }, -- Required
   { "L3MON4D3/LuaSnip" },
   { "nvimtools/none-ls.nvim" },
   { "jayp0521/mason-null-ls.nvim" },
-  { "folke/neodev.nvim",                opts = {} },
+  { "folke/neodev.nvim",                  opts = {} },
   {
     "j-hui/fidget.nvim",
     tag = "legacy",
     event = "LspAttach",
-    opts = {},
+    opts = {
+      -- window = { blend = 0 },
+    },
   },
+  {
+    "ray-x/go.nvim",
+    dependencies = { -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    event = { "CmdlineEnter" },
+    ft = { "go", "gomod" },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  },
+  { "onsails/lspkind.nvim" },
   -- lsp zero end
 
-  { "lewis6991/gitsigns.nvim", opts = {} },
+  { "lewis6991/gitsigns.nvim", opts = {}, priority = 1002 },
   {
     "vladdoster/remember.nvim",
     config = function()
       require("remember")
     end,
   },
-  {
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000,
-  },
+  { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   priority = 1000,
+  --   opts = {
+  --     integrations = {
+  --       barbecue = {
+  --         dim_dirname = true, -- directory name is dimmed by default
+  --         bold_basename = true,
+  --         dim_context = false,
+  --         alt_background = false,
+  --       },
+  --       fidget = true,
+  --       mason = true,
+  --       neotree = true,
+  --       -- cmp = true,
+  --       window_picker = true,
+  --       gitsigns = true,
+  --       mini = {
+  --         enabled = true,
+  --         indentscope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+  --       },
+  --       -- native_lsp = {
+  --       --   enabled = true,
+  --       --   virtual_text = {
+  --       --     errors = { "italic" },
+  --       --     hints = { "italic" },
+  --       --     warnings = { "italic" },
+  --       --     information = { "italic" },
+  --       --   },
+  --       --   underlines = {
+  --       --     errors = { "underline" },
+  --       --     hints = { "underline" },
+  --       --     warnings = { "underline" },
+  --       --     information = { "underline" },
+  --       --   },
+  --       --   inlay_hints = {
+  --       --     background = true,
+  --       --   },
+  --       -- },
+  --     },
+  --   },
+  -- },
+  { "maxmx03/solarized.nvim",   priority = 1000 },
   {
     "nvim-lualine/lualine.nvim",
     config = function()
@@ -65,7 +124,7 @@ require("lazy").setup({
       })
     end,
   },
-  { "numToStr/Comment.nvim",   opts = {} },
+  { "numToStr/Comment.nvim",       opts = {} },
   {
     "ibhagwan/fzf-lua",
     lazy = false,
@@ -92,12 +151,13 @@ require("lazy").setup({
       { "<leader>g",        "<cmd>:FzfLua live_grep<CR>" },
       { "<leader>G",        "<cmd>:FzfLua git_status<CR>" },
       { "<leader>s",        "<cmd>:FzfLua lsp_document_symbols<CR>" },
+      { "<leader>d",        "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
       { "<leader>cc",       "<cmd>:FzfLua files cwd=~/.config<CR>" },
       { "<leader>b",        "<cmd>:FzfLua buffers<cr>" },
       { "<leader>z",        "<cmd>:FzfLua<CR>" },
       { '<leader>"',        "<cmd>:FzfLua registers<cr>" },
       { "<leader>'",        "<cmd>:FzfLua marks<cr>" },
-      { "<C-r>",            "<cmd>:FzfLua registers<cr>",           mode = "i" },
+      { "<C-r>",            "<cmd>:FzfLua registers<cr>",                mode = "i" },
     },
   },
   {
@@ -141,6 +201,12 @@ require("lazy").setup({
   {
     "echasnovski/mini.nvim",
     config = function()
+      require("mini.jump2d").setup({
+        -- Module mappings. Use `''` (empty string) to disable one.
+        mappings = {
+          start_jumping = "s",
+        },
+      })
       require("mini.bracketed").setup({})
       require("mini.indentscope").setup({
         symbol = "│",
@@ -165,10 +231,7 @@ require("lazy").setup({
           relnum_in_visual_mode = true,
         },
       })
-      -- disable <C-s>
-      vim.keymap.del("n", "<C-s>")
-      vim.keymap.del("v", "<C-s>")
-      vim.keymap.del("i", "<C-s>")
+      vim.keymap.del({ "n", "v", "i" }, "<C-s>")
     end,
   },
   {
@@ -218,13 +281,6 @@ require("lazy").setup({
     opts = { theme = "gruvbox" },
   },
   {
-    "smoka7/hop.nvim",
-    config = function()
-      require("hop").setup()
-    end,
-    keys = { { "s", "<cmd>:HopWord<CR>" }, { "S", "<cmd>:HopAnywhere<CR>" } },
-  },
-  {
     "windwp/nvim-autopairs",
     config = function()
       require("nvim-autopairs").setup({})
@@ -241,10 +297,7 @@ require("lazy").setup({
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
   },
-  {
-    "mawkler/modicator.nvim",
-    opts = {},
-  },
+  { "mawkler/modicator.nvim",      opts = {} },
   -- End plugins
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
@@ -288,16 +341,32 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- disable macros
+vim.keymap.set("n", "q", "<Nop>")
+-- vim.keymap.del({ "n", "v", "i" }, "q")
+
 -- trail whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 
+-- Run gofmt + goimport on save
+local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+    require("go.format").goimport()
+  end,
+  group = format_sync_grp,
+})
+
 -- start lsp config
+
 require("mason-null-ls").setup()
 local null_ls = require("null-ls")
 
 null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.isort,
     null_ls.builtins.formatting.prettier,
@@ -313,7 +382,7 @@ require("mason-null-ls").setup({
 
 local lsp_zero = require("lsp-zero")
 local cmp = require("cmp")
-local cmp_action = require("lsp-zero").cmp_action()
+-- local cmp_format = require("lsp-zero").cmp_format()
 
 lsp_zero.set_sign_icons({
   error = "✘",
@@ -323,6 +392,10 @@ lsp_zero.set_sign_icons({
 })
 
 cmp.setup({
+  preselect = "item",
+  completion = {
+    completeopt = "menu,menuone,noinsert",
+  },
   mapping = cmp.mapping.preset.insert({
     -- confirm completion
     ["<C-y>"] = cmp.mapping.confirm({ select = true }),
@@ -330,19 +403,28 @@ cmp.setup({
     -- scroll up and down the documentation window
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
-    ["<Tab>"] = cmp_action.tab_complete(),
-    ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
+    ["<Tab>"] = cmp.mapping.confirm({ select = true }),
   }),
   sources = {
+    { name = "nvim_lsp_signature_help" },
     { name = "path" },
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
-    { name = "buffer",  keyword_length = 3 },
-    { name = "luasnip", keyword_length = 4 },
+    { name = "buffer",                 keyword_length = 3 },
+    { name = "luasnip",                keyword_length = 4 },
+  },
+  -- formatting = cmp_format,
+  formatting = {
+    fields = { "abbr", "kind", "menu" },
+    format = require("lspkind").cmp_format({
+      mode = "symbol",    -- show only symbol annotations
+      maxwidth = 50,      -- prevent the popup from showing more than provided characters
+      ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+    }),
   },
 })
 
-lsp_zero.on_attach(function(client, bufnr)
+lsp_zero.on_attach(function(_, bufnr)
   -- see :help lsp-zero-keybindings
   -- to learn the available actions
   lsp_zero.default_keymaps({ buffer = bufnr })
@@ -357,6 +439,11 @@ lsp_zero.on_attach(function(client, bufnr)
   end, { desc = "Format current buffer with LSP" })
 
   vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
+
+  vim.diagnostic.config({
+    virtual_text = false,
+    update_in_insert = true,
+  })
 end)
 
 require("mason").setup({})
@@ -369,7 +456,7 @@ require("mason-lspconfig").setup({
       lspconfig.lua_ls.setup({
         settings = {
           Lua = {
-            workspace = { checkThirdParty = false },
+            workspace = { checkThirdParty = "Disable" },
             telemetry = { enable = false },
             diagnostics = {
               globals = { "vim" },
@@ -380,11 +467,27 @@ require("mason-lspconfig").setup({
     end,
   },
 })
--- end lsp config
 
--- setup bufferline _after_ setting theme
+-- theme
+vim.o.background = "dark"
+-- https://github.com/ellisonleao/gruvbox.nvim/issues/230
+require("gruvbox").setup({
+  overrides = {
+    SignColumn = { link = "Normal" },
+    -- GruvboxGreenSign = { bg = "" },
+    -- GruvboxOrangeSign = { bg = "" },
+    -- GruvboxPurpleSign = { bg = "" },
+    -- GruvboxYellowSign = { bg = "" },
+    -- GruvboxRedSign = { bg = "" },
+    -- GruvboxBlueSign = { bg = "" },
+    -- GruvboxAquaSign = { bg = "" },
+  },
+})
 vim.cmd.colorscheme("gruvbox")
 require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
+
+-- gruvbox bg=dark0 fg=bright_orange
+vim.cmd("hi MiniJump2dSpot guibg=#282828 guifg=#fe8019 gui=bold")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

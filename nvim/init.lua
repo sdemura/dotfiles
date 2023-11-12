@@ -18,7 +18,7 @@ require("lazy").setup({
   -- start plugins
   "tpope/vim-fugitive",
   "shumphrey/fugitive-gitlab.vim",
-  "tpope/vim-sleuth",
+  "tpope/vim-rhubarb",
   "tpope/vim-eunuch",
 
   -- lsp zero start
@@ -34,14 +34,7 @@ require("lazy").setup({
   { "nvimtools/none-ls.nvim" },
   { "jayp0521/mason-null-ls.nvim" },
   { "folke/neodev.nvim",                  opts = {} },
-  {
-    "j-hui/fidget.nvim",
-    tag = "legacy",
-    event = "LspAttach",
-    opts = {
-      -- window = { blend = 0 },
-    },
-  },
+  { "j-hui/fidget.nvim",                  tag = "legacy", event = "LspAttach", opts = {} },
   {
     "ray-x/go.nvim",
     dependencies = { -- optional packages
@@ -67,50 +60,6 @@ require("lazy").setup({
     end,
   },
   { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
-  -- {
-  --   "catppuccin/nvim",
-  --   name = "catppuccin",
-  --   priority = 1000,
-  --   opts = {
-  --     integrations = {
-  --       barbecue = {
-  --         dim_dirname = true, -- directory name is dimmed by default
-  --         bold_basename = true,
-  --         dim_context = false,
-  --         alt_background = false,
-  --       },
-  --       fidget = true,
-  --       mason = true,
-  --       neotree = true,
-  --       -- cmp = true,
-  --       window_picker = true,
-  --       gitsigns = true,
-  --       mini = {
-  --         enabled = true,
-  --         indentscope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-  --       },
-  --       -- native_lsp = {
-  --       --   enabled = true,
-  --       --   virtual_text = {
-  --       --     errors = { "italic" },
-  --       --     hints = { "italic" },
-  --       --     warnings = { "italic" },
-  --       --     information = { "italic" },
-  --       --   },
-  --       --   underlines = {
-  --       --     errors = { "underline" },
-  --       --     hints = { "underline" },
-  --       --     warnings = { "underline" },
-  --       --     information = { "underline" },
-  --       --   },
-  --       --   inlay_hints = {
-  --       --     background = true,
-  --       --   },
-  --       -- },
-  --     },
-  --   },
-  -- },
-  { "maxmx03/solarized.nvim",   priority = 1000 },
   {
     "nvim-lualine/lualine.nvim",
     config = function()
@@ -124,7 +73,7 @@ require("lazy").setup({
       })
     end,
   },
-  { "numToStr/Comment.nvim",       opts = {} },
+  { "numToStr/Comment.nvim",    opts = {} },
   {
     "ibhagwan/fzf-lua",
     lazy = false,
@@ -280,24 +229,14 @@ require("lazy").setup({
     },
     opts = { theme = "gruvbox" },
   },
-  {
-    "windwp/nvim-autopairs",
-    config = function()
-      require("nvim-autopairs").setup({})
-    end,
-  },
-  {
-    "kylechui/nvim-surround",
-    config = function()
-      require("nvim-surround").setup({})
-    end,
-  },
+  { "windwp/nvim-autopairs",  opts = {} },
+  { "kylechui/nvim-surround", opts = {} },
   {
     "akinsho/bufferline.nvim",
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
   },
-  { "mawkler/modicator.nvim",      opts = {} },
+  { "mawkler/modicator.nvim", opts = {} },
   -- End plugins
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
@@ -311,6 +250,7 @@ vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.inccommand = "nosplit"
 vim.opt.linebreak = true
+vim.opt.list = true
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.scrolloff = 10
@@ -487,7 +427,7 @@ vim.cmd.colorscheme("gruvbox")
 require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 
 -- gruvbox bg=dark0 fg=bright_orange
-vim.cmd("hi MiniJump2dSpot guibg=#282828 guifg=#fe8019 gui=bold")
+vim.cmd("hi MiniJump2dSpot guibg=#282828 guifg=#fe8019")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

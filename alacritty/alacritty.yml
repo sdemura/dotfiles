@@ -1,7 +1,7 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 ---
 import:
-  - ~/.dotfiles/alacritty/themes/gruvbox_dark.yaml
+  - ~/.dotfiles/alacritty/themes/terafox.yaml
 
 window:
   option_as_alt: Both

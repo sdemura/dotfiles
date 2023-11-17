@@ -34,7 +34,15 @@ require("lazy").setup({
   { "nvimtools/none-ls.nvim" },
   { "jayp0521/mason-null-ls.nvim" },
   { "folke/neodev.nvim",                  opts = {} },
-  { "j-hui/fidget.nvim",                  tag = "legacy", event = "LspAttach", opts = {} },
+  {
+    "j-hui/fidget.nvim",
+    event = "LspAttach",
+    opts = {
+      notification = {
+        override_vim_notify = true,
+      },
+    },
+  },
   {
     "ray-x/go.nvim",
     dependencies = { -- optional packages
@@ -59,20 +67,27 @@ require("lazy").setup({
       require("remember")
     end,
   },
-  { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+  { "ellisonleao/gruvbox.nvim",   priority = 1000, config = true },
+  { "norcalli/nvim-colorizer.lua" },
+  { "EdenEast/nightfox.nvim",     priority = 1000 },
   {
-    "nvim-lualine/lualine.nvim",
+    "projekt0n/github-nvim-theme",
+    priority = 1000,
+    lazy = false,
     config = function()
-      require("lualine").setup({
+      require("github-theme").setup({
         options = {
-          icons_enabled = true,
-          theme = "gruvbox",
-          component_separators = "|",
-          section_separators = "",
+          darken = {
+            sidebars = {
+              enable = true,
+              list = { "neo-tree" },
+            },
+          },
         },
       })
     end,
   },
+  { "nvim-lualine/lualine.nvim" },
   { "numToStr/Comment.nvim",    opts = {} },
   {
     "ibhagwan/fzf-lua",
@@ -305,13 +320,22 @@ local null_ls = require("null-ls")
 
 null_ls.setup({
   sources = {
-    null_ls.builtins.diagnostics.hadolint,
-    null_ls.builtins.diagnostics.shellcheck,
+    null_ls.builtins.diagnostics.hadolint.with({
+      diagnostic_config = {
+        virtual_text = false,
+        update_in_insert = true,
+      },
+    }),
+    null_ls.builtins.diagnostics.shellcheck.with({
+      diagnostic_config = {
+        virtual_text = false,
+        update_in_insert = true,
+      },
+    }),
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.isort,
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.shfmt,
-    null_ls.builtins.formatting.stylua,
   },
 })
 
@@ -357,8 +381,8 @@ cmp.setup({
   formatting = {
     fields = { "abbr", "kind", "menu" },
     format = require("lspkind").cmp_format({
-      mode = "symbol",    -- show only symbol annotations
-      maxwidth = 50,      -- prevent the popup from showing more than provided characters
+      mode = "symbol",       -- show only symbol annotations
+      maxwidth = 50,         -- prevent the popup from showing more than provided characters
       ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
     }),
   },
@@ -409,25 +433,28 @@ require("mason-lspconfig").setup({
 })
 
 -- theme
-vim.o.background = "dark"
+-- vim.o.background = "light"
 -- https://github.com/ellisonleao/gruvbox.nvim/issues/230
 require("gruvbox").setup({
   overrides = {
     SignColumn = { link = "Normal" },
-    -- GruvboxGreenSign = { bg = "" },
-    -- GruvboxOrangeSign = { bg = "" },
-    -- GruvboxPurpleSign = { bg = "" },
-    -- GruvboxYellowSign = { bg = "" },
-    -- GruvboxRedSign = { bg = "" },
-    -- GruvboxBlueSign = { bg = "" },
-    -- GruvboxAquaSign = { bg = "" },
   },
 })
-vim.cmd.colorscheme("gruvbox")
+vim.cmd.colorscheme("terafox")
 require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 
+-- setup lualine at the end to inherit colors
+require("lualine").setup({
+  options = {
+    icons_enabled = true,
+    component_separators = "|",
+    section_separators = "",
+  },
+})
+
 -- gruvbox bg=dark0 fg=bright_orange
-vim.cmd("hi MiniJump2dSpot guibg=#282828 guifg=#fe8019")
+-- vim.cmd("hi MiniJump2dSpot guifg=#282828 guibg=#fbf1c7")
+vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

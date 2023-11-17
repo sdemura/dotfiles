@@ -92,13 +92,14 @@ require("lazy").setup({
 	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
-    opts = {
-      persist_mode = false,
-      start_in_insert = true,
-    },
+		opts = {
+			persist_mode = false,
+			start_in_insert = true,
+		},
 		keys = {
 			{ "<C-space>", "<cmd>:ToggleTerm<cr>" },
 			{ "<C-space>", "<C-\\><C-n><cmd>:ToggleTerm<cr>", mode = "t" },
+			{ "<C-w>", [[<C-\><C-n><C-w>]], mode = "t" },
 		},
 	},
 	{

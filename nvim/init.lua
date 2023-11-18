@@ -87,7 +87,17 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{ "nvim-lualine/lualine.nvim" },
+	{
+		"nvim-lualine/lualine.nvim",
+		lazy = false,
+		opts = {
+			options = {
+				icons_enabled = true,
+				component_separators = "|",
+				section_separators = "",
+			},
+		},
+	},
 	{ "numToStr/Comment.nvim", opts = {} },
 	{
 		"akinsho/toggleterm.nvim",
@@ -464,13 +474,13 @@ vim.cmd.colorscheme("terafox")
 require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 
 -- setup lualine at the end to inherit colors
-require("lualine").setup({
-	options = {
-		icons_enabled = true,
-		component_separators = "|",
-		section_separators = "",
-	},
-})
+-- require("lualine").setup({
+-- 	options = {
+-- 		icons_enabled = true,
+-- 		component_separators = "|",
+-- 		section_separators = "",
+-- 	},
+-- })
 
 -- gruvbox bg=dark0 fg=bright_orange
 -- vim.cmd("hi MiniJump2dSpot guifg=#282828 guibg=#fbf1c7")

@@ -11,7 +11,7 @@ window:
 # Font configuration
 font:
   normal:
-    family: JetBrainsMono Nerd Font
+    family: JetBrainsMono NF
     # family: Hack Nerd Font
     # family: FiraCode Nerd Font
     # family: SauceCodePro Nerd Font

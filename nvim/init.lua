@@ -50,9 +50,7 @@ require("lazy").setup({
 			"neovim/nvim-lspconfig",
 			"nvim-treesitter/nvim-treesitter",
 		},
-		config = function()
-			require("go").setup()
-		end,
+		opts = {},
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
@@ -61,32 +59,9 @@ require("lazy").setup({
 	-- lsp zero end
 
 	{ "lewis6991/gitsigns.nvim", opts = {}, priority = 1002 },
-	{
-		"vladdoster/remember.nvim",
-		config = function()
-			require("remember")
-		end,
-	},
-	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+	{ "vladdoster/remember.nvim", opts = {} },
 	{ "norcalli/nvim-colorizer.lua" },
 	{ "EdenEast/nightfox.nvim", priority = 1000 },
-	{
-		"projekt0n/github-nvim-theme",
-		priority = 1000,
-		lazy = false,
-		config = function()
-			require("github-theme").setup({
-				options = {
-					darken = {
-						sidebars = {
-							enable = true,
-							list = { "neo-tree" },
-						},
-					},
-				},
-			})
-		end,
-	},
 	{
 		"nvim-lualine/lualine.nvim",
 		lazy = false,
@@ -99,19 +74,6 @@ require("lazy").setup({
 		},
 	},
 	{ "numToStr/Comment.nvim", opts = {} },
-	{
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		opts = {
-			persist_mode = false,
-			start_in_insert = true,
-		},
-		keys = {
-			{ "<C-space>", "<cmd>:ToggleTerm<cr>" },
-			{ "<C-space>", "<C-\\><C-n><cmd>:ToggleTerm<cr>", mode = "t" },
-			{ "<C-w>", [[<C-\><C-n><C-w>]], mode = "t" },
-		},
-	},
 	{
 		"ibhagwan/fzf-lua",
 		lazy = false,
@@ -202,7 +164,6 @@ require("lazy").setup({
 				delay = 50,
 			})
 			require("mini.ai").setup({})
-			require("mini.splitjoin").setup({})
 			require("mini.basics").setup({
 				options = {
 					basic = false,
@@ -217,6 +178,7 @@ require("lazy").setup({
 					relnum_in_visual_mode = true,
 				},
 			})
+			-- keymaps I don't want
 			vim.keymap.del({ "n", "v", "i" }, "<C-s>")
 		end,
 	},
@@ -230,9 +192,7 @@ require("lazy").setup({
 			"s1n7ax/nvim-window-picker",
 		},
 		config = function()
-			require("window-picker").setup({
-				fg_color = "#eff1f5",
-			})
+			require("window-picker").setup({})
 			require("neo-tree").setup({
 				popup_border_style = "rounded",
 				close_if_last_window = true,
@@ -264,7 +224,7 @@ require("lazy").setup({
 			"SmiteshP/nvim-navic",
 			"nvim-tree/nvim-web-devicons", -- optional dependency
 		},
-		opts = { theme = "gruvbox" },
+		opts = {},
 	},
 	{ "windwp/nvim-autopairs", opts = {} },
 	{ "kylechui/nvim-surround", opts = {} },
@@ -274,6 +234,7 @@ require("lazy").setup({
 		dependencies = "nvim-tree/nvim-web-devicons",
 	},
 	{ "mawkler/modicator.nvim", opts = {} },
+	{ "gelguy/wilder.nvim", opts = {} },
 	-- End plugins
 	--    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
 	-- { import = 'custom.plugins' },
@@ -349,12 +310,6 @@ null_ls.setup({
 			},
 		}),
 		null_ls.builtins.diagnostics.shellcheck.with({
-			diagnostic_config = {
-				virtual_text = false,
-				update_in_insert = true,
-			},
-		}),
-		null_ls.builtins.diagnostics.golangci_lint.with({
 			diagnostic_config = {
 				virtual_text = false,
 				update_in_insert = true,
@@ -463,27 +418,10 @@ require("mason-lspconfig").setup({
 })
 
 -- theme
--- vim.o.background = "light"
--- https://github.com/ellisonleao/gruvbox.nvim/issues/230
-require("gruvbox").setup({
-	overrides = {
-		SignColumn = { link = "Normal" },
-	},
-})
 vim.cmd.colorscheme("terafox")
 require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 
--- setup lualine at the end to inherit colors
--- require("lualine").setup({
--- 	options = {
--- 		icons_enabled = true,
--- 		component_separators = "|",
--- 		section_separators = "",
--- 	},
--- })
-
--- gruvbox bg=dark0 fg=bright_orange
--- vim.cmd("hi MiniJump2dSpot guifg=#282828 guibg=#fbf1c7")
+-- make it look nice with terafox
 vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
 
 -- The line beneath this is called `modeline`. See `:help modeline`

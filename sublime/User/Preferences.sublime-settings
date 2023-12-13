@@ -41,4 +41,5 @@
 	"match_brackets_square": false,
 	"match_tags": false,
 	"find_in_files_supress_errors": true,
+	"index_files": true,
 }

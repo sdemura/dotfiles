@@ -296,8 +296,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	group = format_sync_grp,
 })
 
--- start lsp config
+-- theme
+vim.cmd.colorscheme("terafox")
+require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 
+-- make it look nice with terafox
+vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
+
+-- start lsp config
 require("mason-null-ls").setup()
 local null_ls = require("null-ls")
 
@@ -416,13 +422,6 @@ require("mason-lspconfig").setup({
 		end,
 	},
 })
-
--- theme
-vim.cmd.colorscheme("terafox")
-require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
-
--- make it look nice with terafox
-vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -28,6 +28,7 @@ require("lazy").setup({
 	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/nvim-cmp" },
+	{ "hrsh7th/cmp-path" },
 	{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 	{ "hrsh7th/cmp-buffer" }, -- Required
 	{ "L3MON4D3/LuaSnip" },
@@ -36,7 +37,7 @@ require("lazy").setup({
 	{ "folke/neodev.nvim", opts = {} },
 	{
 		"j-hui/fidget.nvim",
-		event = "LspAttach",
+		-- event = "LspAttach",
 		opts = {
 			notification = {
 				override_vim_notify = true,
@@ -80,6 +81,11 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("fzf-lua").setup({
+				winopts = {
+					preview = {
+						layout = "vertical",
+					},
+				},
 				fzf_opts = {
 					["--info"] = "default",
 				},
@@ -240,6 +246,13 @@ require("lazy").setup({
 	-- { import = 'custom.plugins' },
 }, {})
 
+-- theme
+vim.cmd.colorscheme("terafox")
+require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
+
+-- make it look nice with terafox
+vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
+
 --- options
 vim.o.breakindent = true
 vim.opt.cmdheight = 1
@@ -296,12 +309,15 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	group = format_sync_grp,
 })
 
--- theme
-vim.cmd.colorscheme("terafox")
-require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
+-- quickly move back to git root
+vim.api.nvim_create_user_command("CdGitRoot", function()
+	local git_root = vim.fn.system("git rev-parse --show-toplevel")
+	git_root = git_root:match("^%s*(.-)%s*$")
+	vim.api.nvim_set_current_dir(git_root)
+	vim.notify("changed dir to " .. git_root)
+end, {})
 
--- make it look nice with terafox
-vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
+vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", {})
 
 -- start lsp config
 require("mason-null-ls").setup()
@@ -361,7 +377,7 @@ cmp.setup({
 	}),
 	sources = {
 		{ name = "nvim_lsp_signature_help" },
-		{ name = "path" },
+		{ name = "path", options = { trailing_slash = true } },
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lua" },
 		{ name = "buffer", keyword_length = 3 },

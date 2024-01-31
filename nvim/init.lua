@@ -279,6 +279,29 @@ vim.opt.updatetime = 250
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
 vim.opt.wrap = false
 
+-- disable some builtin plugins we don't use
+vim.g.editorconfig = false
+vim.g.loaded_man = false
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_remote_plugins = 1
+vim.g.loaded_shada_plugin = 1
+vim.g.loaded_spellfile_plugin = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_tutor_mode_plugin = 1
+
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0
+
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 local opts = { noremap = true, silent = true }

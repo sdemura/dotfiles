@@ -1,0 +1,51 @@
+import = ["/Users/sean/.dotfiles/alacritty/themes/terafox.toml"]
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[cursor]
+blink_interval = 500
+
+[cursor.style]
+blinking = "Always"
+shape = "Block"
+
+[font]
+size = 12.0
+
+[font.normal]
+# family = "JetBrainsMono NF"
+family = "FiraCode Nerd Font"
+
+[[keyboard.bindings]]
+chars = "\u001E"
+key = "Key6"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001E"
+key = "Key6"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001BF"
+key = "Right"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001BB"
+key = "Left"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "N"
+mods = "Command"
+
+[selection]
+save_to_clipboard = true
+
+[window]
+decorations_theme_variant = "Dark"
+dynamic_title = true
+option_as_alt = "Both"

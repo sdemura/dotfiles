@@ -14,8 +14,7 @@ shape = "Block"
 size = 12.0
 
 [font.normal]
-# family = "JetBrainsMono NF"
-family = "FiraCode Nerd Font"
+family = "JetBrainsMono NF"
 
 [[keyboard.bindings]]
 chars = "\u001E"

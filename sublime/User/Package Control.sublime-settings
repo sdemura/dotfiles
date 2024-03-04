@@ -2,6 +2,7 @@
 	"bootstrapped": true,
 	"in_process_packages":
 	[
+		"Package Control",
 	],
 	"installed_packages":
 	[
@@ -13,6 +14,7 @@
 		"Dockerfile Syntax Highlighting",
 		"Fmt",
 		"Gomod",
+		"Ignore Unable to Open File Error",
 		"Jinja2",
 		"LSP",
 		"LSP-bash",

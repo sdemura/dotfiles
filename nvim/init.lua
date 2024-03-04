@@ -1,3 +1,6 @@
+-- Prepend mise shims to PATH
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -108,7 +111,6 @@ require("lazy").setup({
 			{ "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
 			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
 			{ "<leader>b", "<cmd>:FzfLua buffers<cr>" },
-			{ "<leader>z", "<cmd>:FzfLua<CR>" },
 			{ '<leader>"', "<cmd>:FzfLua registers<cr>" },
 			{ "<leader>'", "<cmd>:FzfLua marks<cr>" },
 			{ "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },
@@ -241,6 +243,21 @@ require("lazy").setup({
 	},
 	{ "mawkler/modicator.nvim", opts = {} },
 	{ "gelguy/wilder.nvim", opts = {} },
+	{
+		"stevearc/aerial.nvim",
+		opts = {},
+		-- Optional dependencies
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("aerial").setup()
+		end,
+		keys = {
+			{ "<leader>a", "<cmd>:AerialToggle!<CR>" },
+		},
+	},
 	-- End plugins
 	--    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
 	-- { import = 'custom.plugins' },
@@ -284,8 +301,8 @@ vim.g.editorconfig = false
 vim.g.loaded_man = false
 vim.g.loaded_matchit = 1
 vim.g.loaded_matchparen = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_remote_plugins = 1
 vim.g.loaded_shada_plugin = 1
 vim.g.loaded_spellfile_plugin = 1
@@ -354,17 +371,18 @@ null_ls.setup({
 				update_in_insert = true,
 			},
 		}),
-		null_ls.builtins.diagnostics.shellcheck.with({
-			diagnostic_config = {
-				virtual_text = false,
-				update_in_insert = true,
-			},
-		}),
-		null_ls.builtins.formatting.black,
+		-- null_ls.builtins.diagnostics.shellcheck.with({
+		-- 	diagnostic_config = {
+		-- 		virtual_text = false,
+		-- 		update_in_insert = true,
+		-- 	},
+		-- }),
+		-- null_ls.builtins.formatting.black,
 		null_ls.builtins.formatting.isort,
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.shfmt,
 		null_ls.builtins.formatting.stylua,
+		-- null_ls.builtins.formatting.ruff,
 	},
 })
 

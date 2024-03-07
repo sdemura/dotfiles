@@ -258,6 +258,26 @@ require("lazy").setup({
 			{ "<leader>a", "<cmd>:AerialToggle!<CR>" },
 		},
 	},
+	{
+		"danymat/neogen",
+		config = function()
+			require("neogen").setup({
+				enabled = true,
+				languages = {
+					python = {
+						template = {
+							annotation_convention = "google_docstrings",
+						},
+					},
+				},
+			})
+		end,
+		keys = {
+			{ "<leader>n", "<cmd>:Neogen<CR>" },
+		},
+		-- Uncomment next line if you want to follow only stable versions
+		-- version = "*"
+	},
 	-- End plugins
 	--    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
 	-- { import = 'custom.plugins' },

@@ -7,7 +7,6 @@
 	"installed_packages":
 	[
 		"A File Icon",
-		"AdvancedNewFile",
 		"BracketHighlighter",
 		"Catppuccin color schemes",
 		"ChordPro",
@@ -27,7 +26,7 @@
 		"MarkdownPreview",
 		"Origami",
 		"Package Control",
-		"SideBarTools",
+		"SideBarEnhancements",
 		"Solarized Color Scheme",
 		"SublimeLinter-annotations",
 		"Terminal",

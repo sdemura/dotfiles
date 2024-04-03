@@ -1,4 +1,4 @@
-theme = "gruvbox"
+theme = "catppuccin_mocha"
 
 [editor]
 line-number = "relative"
@@ -45,7 +45,6 @@ skip-levels = 1
 [keys.normal]
 "{" = ["goto_prev_paragraph"]
 "}" = ["goto_next_paragraph"]
-"#" = "toggle_comments"
 "C-6" = ["goto_last_accessed_file"]
 
 [keys.insert]

@@ -204,6 +204,12 @@ require("lazy").setup({
 			require("neo-tree").setup({
 				popup_border_style = "rounded",
 				close_if_last_window = true,
+				-- sources = {
+				-- 	"filesystem",
+				-- 	"buffers",
+				-- 	"git_status",
+				-- 	"document_symbols",
+				-- },
 				filesystem = {
 					window = {
 						mappings = {
@@ -222,6 +228,7 @@ require("lazy").setup({
 		keys = {
 			{ "-", "<cmd>:Neotree  toggle<CR>" },
 			{ "_", "<cmd>:Neotree  toggle reveal<CR>" },
+			-- { "<leader>S", "<cmd>:Neotree toggle document_symbols<CR>" },
 		},
 	},
 	{
@@ -385,24 +392,11 @@ local null_ls = require("null-ls")
 
 null_ls.setup({
 	sources = {
-		null_ls.builtins.diagnostics.hadolint.with({
-			diagnostic_config = {
-				virtual_text = false,
-				update_in_insert = true,
-			},
-		}),
-		-- null_ls.builtins.diagnostics.shellcheck.with({
-		-- 	diagnostic_config = {
-		-- 		virtual_text = false,
-		-- 		update_in_insert = true,
-		-- 	},
-		-- }),
-		-- null_ls.builtins.formatting.black,
+		null_ls.builtins.diagnostics.hadolint,
 		null_ls.builtins.formatting.isort,
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.shfmt,
 		null_ls.builtins.formatting.stylua,
-		-- null_ls.builtins.formatting.ruff,
 	},
 })
 
@@ -413,7 +407,6 @@ require("mason-null-ls").setup({
 
 local lsp_zero = require("lsp-zero")
 local cmp = require("cmp")
--- local cmp_format = require("lsp-zero").cmp_format()
 
 lsp_zero.set_sign_icons({
 	error = "✘",
@@ -455,28 +448,6 @@ cmp.setup({
 	},
 })
 
-lsp_zero.on_attach(function(_, bufnr)
-	-- see :help lsp-zero-keybindings
-	-- to learn the available actions
-	lsp_zero.default_keymaps({ buffer = bufnr })
-
-	vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", { buffer = true })
-	vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
-	vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
-
-	-- Create a command `:Format` local to the LSP buffer
-	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		vim.lsp.buf.format({ async = true, timeout_ms = 10000 })
-	end, { desc = "Format current buffer with LSP" })
-
-	vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
-
-	vim.diagnostic.config({
-		virtual_text = false,
-		update_in_insert = true,
-	})
-end)
-
 require("mason").setup({})
 require("mason-lspconfig").setup({
 	ensure_installed = {},
@@ -500,5 +471,42 @@ require("mason-lspconfig").setup({
 	},
 })
 
+lsp_zero.on_attach(function(_, bufnr)
+	-- see :help lsp-zero-keybindings
+	-- to learn the available actions
+	lsp_zero.default_keymaps({ buffer = bufnr })
+
+	vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", { buffer = true })
+	vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
+	vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+
+	-- Create a command `:Format` local to the LSP buffer
+	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+		vim.lsp.buf.format({ async = true, timeout_ms = 10000 })
+	end, { desc = "Format current buffer with LSP" })
+
+	vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
+
+	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+		virtual_text = false,
+		update_in_insert = true,
+		underline = false,
+	})
+end)
+
+-- not sure why I have to set this in three places...
+-- supposedly you can just do
+-- so we have to go 'old school...
+-- vim.diagnostic.config({
+--   virtual_text = false,
+--   update_in_insert = true,
+-- }),
+-- but that doesn't work in all cases,
+
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+-- 	virtual_text = false,
+-- 	update_in_insert = true,
+-- 	underline = false,
+-- })
+
 -- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et

@@ -9,6 +9,7 @@
 [core]
 	; editor = subl -w -n
     editor = nvim
+	excludesfile = ~/.dotfiles/gitignore
 	; pager = cat
 
 [alias]

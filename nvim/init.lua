@@ -24,6 +24,95 @@ require("lazy").setup({
 	"tpope/vim-rhubarb",
 	"tpope/vim-eunuch",
 
+	-- telescope
+	{
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+			},
+		},
+		config = function()
+			-- To get fzf loaded and working with telescope, you need to call
+			-- load_extension, somewhere after setup function:
+			require("telescope").load_extension("fzf")
+			local actions = require("telescope.actions")
+
+			require("telescope").setup({
+				pickers = {
+					find_files = {
+						hidden = true,
+						no_ignore = true,
+						follow = true,
+					},
+					grep_string = {
+						additional_args = { "--hidden" },
+					},
+					live_grep = {
+						additional_args = { "--hidden" },
+					},
+					lsp_document_symbols = {
+						symbol_width = 75,
+					},
+				},
+				defaults = {
+					mappings = {
+						i = {
+							["<esc>"] = actions.close,
+							["<C-c>"] = actions.close,
+						},
+					},
+					sorting_strategy = "ascending", -- display results top->bottom
+					layout_config = {
+						prompt_position = "top", -- search bar at the top
+					},
+				},
+			})
+		end,
+	},
+
+	-- -- trouble
+	-- {
+	-- 	"folke/trouble.nvim",
+	-- 	branch = "dev", -- IMPORTANT!
+	-- 	keys = {
+	-- 		{
+	-- 			"<leader>xx",
+	-- 			"<cmd>Trouble diagnostics toggle<cr>",
+	-- 			desc = "Diagnostics (Trouble)",
+	-- 		},
+	-- 		{
+	-- 			"<leader>xX",
+	-- 			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+	-- 			desc = "Buffer Diagnostics (Trouble)",
+	-- 		},
+	-- 		{
+	-- 			"<leader>cs",
+	-- 			"<cmd>Trouble symbols toggle focus=false<cr>",
+	-- 			desc = "Symbols (Trouble)",
+	-- 		},
+	-- 		{
+	-- 			"<leader>cl",
+	-- 			"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+	-- 			desc = "LSP Definitions / references / ... (Trouble)",
+	-- 		},
+	-- 		{
+	-- 			"<leader>xL",
+	-- 			"<cmd>Trouble loclist toggle<cr>",
+	-- 			desc = "Location List (Trouble)",
+	-- 		},
+	-- 		{
+	-- 			"<leader>xQ",
+	-- 			"<cmd>Trouble qflist toggle<cr>",
+	-- 			desc = "Quickfix List (Trouble)",
+	-- 		},
+	-- 	},
+	-- 	opts = {}, -- for default options, refer to the configuration section for custom setup.
+	-- },
+
 	-- lsp zero start
 	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
 	{ "williamboman/mason.nvim" },
@@ -78,44 +167,44 @@ require("lazy").setup({
 		},
 	},
 	{ "numToStr/Comment.nvim", opts = {} },
-	{
-		"ibhagwan/fzf-lua",
-		lazy = false,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("fzf-lua").setup({
-				winopts = {
-					preview = {
-						layout = "vertical",
-					},
-				},
-				fzf_opts = {
-					["--info"] = "default",
-				},
-				grep = {
-					rg_opts = [[--hidden --column -g "!.git" --line-number --no-heading --color=always --smart-case --max-columns=4096]],
-				},
-				keymap = {
-					fzf = {
-						["ctrl-q"] = "select-all+accept",
-					},
-				},
-			})
-		end,
-		keys = {
-			{ "<leader><leader>", "<cmd>:FzfLua<cr>" },
-			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
-			{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
-			{ "<leader>G", "<cmd>:FzfLua git_status<CR>" },
-			{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
-			{ "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
-			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
-			{ "<leader>b", "<cmd>:FzfLua buffers<cr>" },
-			{ '<leader>"', "<cmd>:FzfLua registers<cr>" },
-			{ "<leader>'", "<cmd>:FzfLua marks<cr>" },
-			{ "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },
-		},
-	},
+	-- {
+	-- 	"ibhagwan/fzf-lua",
+	-- 	lazy = false,
+	-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	-- 	config = function()
+	-- 		require("fzf-lua").setup({
+	-- 			winopts = {
+	-- 				preview = {
+	-- 					layout = "vertical",
+	-- 				},
+	-- 			},
+	-- 			fzf_opts = {
+	-- 				["--info"] = "default",
+	-- 			},
+	-- 			grep = {
+	-- 				rg_opts = [[--hidden --column -g "!.git" --line-number --no-heading --color=always --smart-case --max-columns=4096]],
+	-- 			},
+	-- 			keymap = {
+	-- 				fzf = {
+	-- 					["ctrl-q"] = "select-all+accept",
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- 	keys = {
+	-- 		{ "<leader><leader>", "<cmd>:FzfLua<cr>" },
+	-- 		{ "<leader>f", "<cmd>:FzfLua files<CR>" },
+	-- 		{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
+	-- 		{ "<leader>G", "<cmd>:FzfLua git_status<CR>" },
+	-- 		{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
+	-- 		{ "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
+	-- 		{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
+	-- 		{ "<leader>b", "<cmd>:FzfLua buffers<cr>" },
+	-- 		{ '<leader>"', "<cmd>:FzfLua registers<cr>" },
+	-- 		{ "<leader>'", "<cmd>:FzfLua marks<cr>" },
+	-- 		{ "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },
+	-- 	},
+	-- },
 	{
 		-- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
@@ -204,12 +293,6 @@ require("lazy").setup({
 			require("neo-tree").setup({
 				popup_border_style = "rounded",
 				close_if_last_window = true,
-				-- sources = {
-				-- 	"filesystem",
-				-- 	"buffers",
-				-- 	"git_status",
-				-- 	"document_symbols",
-				-- },
 				filesystem = {
 					window = {
 						mappings = {
@@ -228,7 +311,6 @@ require("lazy").setup({
 		keys = {
 			{ "-", "<cmd>:Neotree  toggle<CR>" },
 			{ "_", "<cmd>:Neotree  toggle reveal<CR>" },
-			-- { "<leader>S", "<cmd>:Neotree toggle document_symbols<CR>" },
 		},
 	},
 	{
@@ -510,3 +592,16 @@ end)
 -- })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
+--
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader><leader>", "<cmd>:Telescope<cr>", {})
+vim.keymap.set("n", "<leader>g", builtin.live_grep, {})
+vim.keymap.set("n", "<leader>f", builtin.find_files, {})
+vim.keymap.set("n", "<leader>b", builtin.buffers, {})
+vim.keymap.set("n", "<leader>d", builtin.diagnostics, {})
+vim.keymap.set("n", "<leader>s", builtin.lsp_document_symbols, {})
+vim.keymap.set("n", "<leader>cc", function()
+	-- builtin.find_files({ search_dirs = { "~/.dotfiles/" } })
+	builtin.find_files({ cwd = "~/.dotfiles/" })
+end, {})
+-- vim.keymap.set(“n”, “<leader>cc”, function() builtin.find_files({no_ignore = true}) end, {})

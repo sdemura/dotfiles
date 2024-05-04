@@ -23,7 +23,12 @@ require("lazy").setup({
 	"shumphrey/fugitive-gitlab.vim",
 	"tpope/vim-rhubarb",
 	"tpope/vim-eunuch",
-
+	{
+		"yorickpeterse/nvim-tree-pairs",
+		config = function()
+			require("tree-pairs").setup()
+		end,
+	},
 	-- telescope
 	{
 		"nvim-telescope/telescope.nvim",
@@ -59,6 +64,10 @@ require("lazy").setup({
 					},
 				},
 				defaults = {
+					file_ignore_patterns = {
+						".venv/",
+						".git/",
+					},
 					mappings = {
 						i = {
 							["<esc>"] = actions.close,
@@ -605,3 +614,4 @@ vim.keymap.set("n", "<leader>cc", function()
 	builtin.find_files({ cwd = "~/.dotfiles/" })
 end, {})
 -- vim.keymap.set(“n”, “<leader>cc”, function() builtin.find_files({no_ignore = true}) end, {})
+--

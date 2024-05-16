@@ -23,16 +23,11 @@ require("lazy").setup({
 	"shumphrey/fugitive-gitlab.vim",
 	"tpope/vim-rhubarb",
 	"tpope/vim-eunuch",
-	{
-		"yorickpeterse/nvim-tree-pairs",
-		config = function()
-			require("tree-pairs").setup()
-		end,
-	},
+	{ "yorickpeterse/nvim-tree-pairs", opts = {} },
 	-- telescope
 	{
 		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
+		-- branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -60,7 +55,7 @@ require("lazy").setup({
 						additional_args = { "--hidden" },
 					},
 					lsp_document_symbols = {
-						symbol_width = 75,
+						symbol_width = 50,
 					},
 				},
 				defaults = {
@@ -82,45 +77,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-	-- -- trouble
-	-- {
-	-- 	"folke/trouble.nvim",
-	-- 	branch = "dev", -- IMPORTANT!
-	-- 	keys = {
-	-- 		{
-	-- 			"<leader>xx",
-	-- 			"<cmd>Trouble diagnostics toggle<cr>",
-	-- 			desc = "Diagnostics (Trouble)",
-	-- 		},
-	-- 		{
-	-- 			"<leader>xX",
-	-- 			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-	-- 			desc = "Buffer Diagnostics (Trouble)",
-	-- 		},
-	-- 		{
-	-- 			"<leader>cs",
-	-- 			"<cmd>Trouble symbols toggle focus=false<cr>",
-	-- 			desc = "Symbols (Trouble)",
-	-- 		},
-	-- 		{
-	-- 			"<leader>cl",
-	-- 			"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-	-- 			desc = "LSP Definitions / references / ... (Trouble)",
-	-- 		},
-	-- 		{
-	-- 			"<leader>xL",
-	-- 			"<cmd>Trouble loclist toggle<cr>",
-	-- 			desc = "Location List (Trouble)",
-	-- 		},
-	-- 		{
-	-- 			"<leader>xQ",
-	-- 			"<cmd>Trouble qflist toggle<cr>",
-	-- 			desc = "Quickfix List (Trouble)",
-	-- 		},
-	-- 	},
-	-- 	opts = {}, -- for default options, refer to the configuration section for custom setup.
-	-- },
 
 	-- lsp zero start
 	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
@@ -152,7 +108,11 @@ require("lazy").setup({
 			"neovim/nvim-lspconfig",
 			"nvim-treesitter/nvim-treesitter",
 		},
-		opts = {},
+		opts = {
+			lsp_inlay_hints = {
+				enable = false,
+			},
+		},
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
@@ -175,7 +135,8 @@ require("lazy").setup({
 			},
 		},
 	},
-	{ "numToStr/Comment.nvim", opts = {} },
+	-- { "numToStr/Comment.nvim", opts = {} },
+
 	-- {
 	-- 	"ibhagwan/fzf-lua",
 	-- 	lazy = false,
@@ -559,6 +520,24 @@ require("mason-lspconfig").setup({
 				},
 			})
 		end,
+		["gopls"] = function()
+			local lspconfig = require("lspconfig")
+			lspconfig.gopls.setup({
+				settings = {
+					gopls = {
+						hints = {
+							assignVariableTypes = true,
+							compositeLiteralFields = true,
+							compositeLiteralTypes = true,
+							constantValues = true,
+							functionTypeParameters = true,
+							parameterNames = true,
+							rangeVariableTypes = true,
+						},
+					},
+				},
+			})
+		end,
 	},
 })
 
@@ -576,7 +555,12 @@ lsp_zero.on_attach(function(_, bufnr)
 		vim.lsp.buf.format({ async = true, timeout_ms = 10000 })
 	end, { desc = "Format current buffer with LSP" })
 
+	vim.api.nvim_buf_create_user_command(bufnr, "ToggleInlayHints", function(_)
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), { bufnr })
+	end, { desc = "Toggle Inlay Hints" })
+
 	vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
+	vim.keymap.set("n", "<leader>I", "<cmd>:ToggleInlayHints<CR>", { buffer = true })
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 		virtual_text = false,
@@ -614,4 +598,5 @@ vim.keymap.set("n", "<leader>cc", function()
 	builtin.find_files({ cwd = "~/.dotfiles/" })
 end, {})
 -- vim.keymap.set(“n”, “<leader>cc”, function() builtin.find_files({no_ignore = true}) end, {})
+--
 --

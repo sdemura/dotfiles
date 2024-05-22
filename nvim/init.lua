@@ -24,16 +24,14 @@ require("lazy").setup({
 	"tpope/vim-rhubarb",
 	"tpope/vim-eunuch",
 	{ "yorickpeterse/nvim-tree-pairs", opts = {} },
+
 	-- telescope
 	{
 		"nvim-telescope/telescope.nvim",
 		-- branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-			},
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 		config = function()
 			-- To get fzf loaded and working with telescope, you need to call
@@ -78,6 +76,15 @@ require("lazy").setup({
 		end,
 	},
 
+	-- -- dropbar
+	-- {
+	-- 	"Bekaboo/dropbar.nvim",
+	-- 	-- optional, but required for fuzzy finder support
+	-- 	dependencies = {
+	-- 		"nvim-telescope/telescope-fzf-native.nvim",
+	-- 	},
+	-- },
+
 	-- lsp zero start
 	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
 	{ "williamboman/mason.nvim" },
@@ -86,7 +93,7 @@ require("lazy").setup({
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/nvim-cmp" },
 	{ "hrsh7th/cmp-path" },
-	{ "hrsh7th/cmp-nvim-lsp-signature-help" },
+	-- { "hrsh7th/cmp-nvim-lsp-signature-help" },
 	{ "hrsh7th/cmp-buffer" }, -- Required
 	{ "L3MON4D3/LuaSnip" },
 	{ "nvimtools/none-ls.nvim" },
@@ -122,7 +129,7 @@ require("lazy").setup({
 
 	{ "lewis6991/gitsigns.nvim", opts = {}, priority = 1002 },
 	{ "vladdoster/remember.nvim", opts = {} },
-	{ "norcalli/nvim-colorizer.lua" },
+	-- { "norcalli/nvim-colorizer.lua" },
 	{ "EdenEast/nightfox.nvim", priority = 1000 },
 	{
 		"nvim-lualine/lualine.nvim",
@@ -300,7 +307,7 @@ require("lazy").setup({
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
 	},
-	{ "mawkler/modicator.nvim", opts = {} },
+	-- { "mawkler/modicator.nvim", opts = {} },
 	{ "gelguy/wilder.nvim", opts = {} },
 	{
 		"stevearc/aerial.nvim",
@@ -344,7 +351,7 @@ require("lazy").setup({
 
 -- theme
 vim.cmd.colorscheme("terafox")
-require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
+-- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 
 -- make it look nice with terafox
 vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
@@ -482,7 +489,7 @@ cmp.setup({
 		["<Tab>"] = cmp.mapping.confirm({ select = true }),
 	}),
 	sources = {
-		{ name = "nvim_lsp_signature_help" },
+		-- { name = "nvim_lsp_signature_help" },
 		{ name = "path", options = { trailing_slash = true } },
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lua" },
@@ -560,7 +567,7 @@ lsp_zero.on_attach(function(_, bufnr)
 	end, { desc = "Toggle Inlay Hints" })
 
 	vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
-	vim.keymap.set("n", "<leader>I", "<cmd>:ToggleInlayHints<CR>", { buffer = true })
+	vim.keymap.set("n", "<leader>li", "<cmd>:ToggleInlayHints<CR>", { buffer = true })
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 		virtual_text = false,

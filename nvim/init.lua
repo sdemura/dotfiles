@@ -19,71 +19,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- start plugins
-	"tpope/vim-fugitive",
-	"shumphrey/fugitive-gitlab.vim",
+	-- "tpope/vim-fugitive",
+	-- "shumphrey/fugitive-gitlab.vim",
 	"tpope/vim-rhubarb",
 	"tpope/vim-eunuch",
 	{ "yorickpeterse/nvim-tree-pairs", opts = {} },
-
-	-- telescope
-	{
-		"nvim-telescope/telescope.nvim",
-		-- branch = "0.1.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		},
-		config = function()
-			-- To get fzf loaded and working with telescope, you need to call
-			-- load_extension, somewhere after setup function:
-			require("telescope").load_extension("fzf")
-			local actions = require("telescope.actions")
-
-			require("telescope").setup({
-				pickers = {
-					find_files = {
-						hidden = true,
-						no_ignore = true,
-						follow = true,
-					},
-					grep_string = {
-						additional_args = { "--hidden" },
-					},
-					live_grep = {
-						additional_args = { "--hidden" },
-					},
-					lsp_document_symbols = {
-						symbol_width = 50,
-					},
-				},
-				defaults = {
-					file_ignore_patterns = {
-						".venv/",
-						".git/",
-					},
-					mappings = {
-						i = {
-							["<esc>"] = actions.close,
-							["<C-c>"] = actions.close,
-						},
-					},
-					sorting_strategy = "ascending", -- display results top->bottom
-					layout_config = {
-						prompt_position = "top", -- search bar at the top
-					},
-				},
-			})
-		end,
-	},
-
-	-- -- dropbar
-	-- {
-	-- 	"Bekaboo/dropbar.nvim",
-	-- 	-- optional, but required for fuzzy finder support
-	-- 	dependencies = {
-	-- 		"nvim-telescope/telescope-fzf-native.nvim",
-	-- 	},
-	-- },
 
 	-- lsp zero start
 	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
@@ -93,6 +33,7 @@ require("lazy").setup({
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/nvim-cmp" },
 	{ "hrsh7th/cmp-path" },
+
 	-- { "hrsh7th/cmp-nvim-lsp-signature-help" },
 	{ "hrsh7th/cmp-buffer" }, -- Required
 	{ "L3MON4D3/LuaSnip" },
@@ -131,6 +72,8 @@ require("lazy").setup({
 	{ "vladdoster/remember.nvim", opts = {} },
 	-- { "norcalli/nvim-colorizer.lua" },
 	{ "EdenEast/nightfox.nvim", priority = 1000 },
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{ "projekt0n/github-nvim-theme", priority = 1000 },
 	{
 		"nvim-lualine/lualine.nvim",
 		lazy = false,
@@ -144,44 +87,44 @@ require("lazy").setup({
 	},
 	-- { "numToStr/Comment.nvim", opts = {} },
 
-	-- {
-	-- 	"ibhagwan/fzf-lua",
-	-- 	lazy = false,
-	-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	-- 	config = function()
-	-- 		require("fzf-lua").setup({
-	-- 			winopts = {
-	-- 				preview = {
-	-- 					layout = "vertical",
-	-- 				},
-	-- 			},
-	-- 			fzf_opts = {
-	-- 				["--info"] = "default",
-	-- 			},
-	-- 			grep = {
-	-- 				rg_opts = [[--hidden --column -g "!.git" --line-number --no-heading --color=always --smart-case --max-columns=4096]],
-	-- 			},
-	-- 			keymap = {
-	-- 				fzf = {
-	-- 					["ctrl-q"] = "select-all+accept",
-	-- 				},
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- 	keys = {
-	-- 		{ "<leader><leader>", "<cmd>:FzfLua<cr>" },
-	-- 		{ "<leader>f", "<cmd>:FzfLua files<CR>" },
-	-- 		{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
-	-- 		{ "<leader>G", "<cmd>:FzfLua git_status<CR>" },
-	-- 		{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
-	-- 		{ "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
-	-- 		{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
-	-- 		{ "<leader>b", "<cmd>:FzfLua buffers<cr>" },
-	-- 		{ '<leader>"', "<cmd>:FzfLua registers<cr>" },
-	-- 		{ "<leader>'", "<cmd>:FzfLua marks<cr>" },
-	-- 		{ "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },
-	-- 	},
-	-- },
+	{
+		"ibhagwan/fzf-lua",
+		lazy = false,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("fzf-lua").setup({
+				winopts = {
+					preview = {
+						layout = "vertical",
+					},
+				},
+				fzf_opts = {
+					["--info"] = "default",
+				},
+				grep = {
+					rg_opts = [[--hidden --column -g "!.git" --line-number --no-heading --color=always --smart-case --max-columns=4096]],
+				},
+				keymap = {
+					fzf = {
+						["ctrl-q"] = "select-all+accept",
+					},
+				},
+			})
+		end,
+		keys = {
+			{ "<leader><leader>", "<cmd>:FzfLua<cr>" },
+			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
+			{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
+			{ "<leader>G", "<cmd>:FzfLua git_status<CR>" },
+			{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
+			{ "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
+			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
+			{ "<leader>b", "<cmd>:FzfLua buffers<cr>" },
+			{ '<leader>"', "<cmd>:FzfLua registers<cr>" },
+			{ "<leader>'", "<cmd>:FzfLua marks<cr>" },
+			{ "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },
+		},
+	},
 	{
 		-- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
@@ -220,15 +163,74 @@ require("lazy").setup({
 			})
 		end,
 	},
+	-- {
+	-- 	"folke/flash.nvim",
+	-- 	event = "VeryLazy",
+	-- 	---@type Flash.Config
+	-- 	opts = {},
+	-- 	keys = {
+	-- 		{
+	-- 			"s",
+	-- 			mode = { "n", "x", "o" },
+	-- 			function()
+	-- 				require("flash").jump()
+	-- 			end,
+	-- 			desc = "Flash",
+	-- 		},
+	-- 		{
+	-- 			"S",
+	-- 			mode = { "n", "x", "o" },
+	-- 			function()
+	-- 				require("flash").treesitter()
+	-- 			end,
+	-- 			desc = "Flash Treesitter",
+	-- 		},
+	-- 		{
+	-- 			"r",
+	-- 			mode = "o",
+	-- 			function()
+	-- 				require("flash").remote()
+	-- 			end,
+	-- 			desc = "Remote Flash",
+	-- 		},
+	-- 		{
+	-- 			"R",
+	-- 			mode = { "o", "x" },
+	-- 			function()
+	-- 				require("flash").treesitter_search()
+	-- 			end,
+	-- 			desc = "Treesitter Search",
+	-- 		},
+	-- 		{
+	-- 			"<c-s>",
+	-- 			mode = { "c" },
+	-- 			function()
+	-- 				require("flash").toggle()
+	-- 			end,
+	-- 			desc = "Toggle Flash Search",
+	-- 		},
+	-- 	},
+	-- },
+	{
+		"smoka7/hop.nvim",
+		version = "*",
+		opts = {
+			keys = "etovxqpdygfblzhckisuran",
+		},
+		keys = {
+			{ "s", "<cmd>:HopWord<CR>" },
+		},
+	},
 	{
 		"echasnovski/mini.nvim",
 		config = function()
-			require("mini.jump2d").setup({
-				-- Module mappings. Use `''` (empty string) to disable one.
-				mappings = {
-					start_jumping = "s",
-				},
-			})
+			require("mini.git").setup({})
+			-- require("mini.jump2d").setup({
+			-- 	-- Module mappings. Use `''` (empty string) to disable one.
+			-- 	mappings = {
+			-- 		start_jumping = "s",
+			-- 	},
+			-- })
 			require("mini.bracketed").setup({})
 			require("mini.indentscope").setup({
 				symbol = "│",
@@ -308,7 +310,24 @@ require("lazy").setup({
 		dependencies = "nvim-tree/nvim-web-devicons",
 	},
 	-- { "mawkler/modicator.nvim", opts = {} },
-	{ "gelguy/wilder.nvim", opts = {} },
+	{
+		"gelguy/wilder.nvim",
+		config = function()
+			local wilder = require("wilder")
+			wilder.setup({ modes = { ":", "/", "?" } })
+
+			wilder.set_option("pipeline", {
+				wilder.branch(wilder.cmdline_pipeline(), wilder.search_pipeline()),
+			})
+
+			wilder.set_option(
+				"renderer",
+				wilder.wildmenu_renderer({
+					highlighter = wilder.basic_highlighter(),
+				})
+			)
+		end,
+	},
 	{
 		"stevearc/aerial.nvim",
 		opts = {},
@@ -324,33 +343,33 @@ require("lazy").setup({
 			{ "<leader>a", "<cmd>:AerialToggle!<CR>" },
 		},
 	},
-	{
-		"danymat/neogen",
-		config = function()
-			require("neogen").setup({
-				enabled = true,
-				languages = {
-					python = {
-						template = {
-							annotation_convention = "google_docstrings",
-						},
-					},
-				},
-			})
-		end,
-		keys = {
-			{ "<leader>n", "<cmd>:Neogen<CR>" },
-		},
-		-- Uncomment next line if you want to follow only stable versions
-		-- version = "*"
-	},
+	-- {
+	-- 	"danymat/neogen",
+	-- 	config = function()
+	-- 		require("neogen").setup({
+	-- 			enabled = true,
+	-- 			languages = {
+	-- 				python = {
+	-- 					template = {
+	-- 						annotation_convention = "google_docstrings",
+	-- 					},
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- 	keys = {
+	-- 		{ "<leader>n", "<cmd>:Neogen<CR>" },
+	-- 	},
+	-- 	-- Uncomment next line if you want to follow only stable versions
+	-- 	-- version = "*"
+	-- },
 	-- End plugins
 	--    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
 	-- { import = 'custom.plugins' },
 }, {})
 
 -- theme
-vim.cmd.colorscheme("terafox")
+vim.cmd.colorscheme("dawnfox")
 -- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 
 -- make it look nice with terafox
@@ -467,12 +486,13 @@ require("mason-null-ls").setup({
 local lsp_zero = require("lsp-zero")
 local cmp = require("cmp")
 
-lsp_zero.set_sign_icons({
-	error = "✘",
-	warn = "▲",
-	hint = "⚑",
-	info = "»",
-})
+-- doesn't work
+-- lsp_zero.set_sign_icons({
+-- 	error = "✘",
+-- 	warn = "▲",
+-- 	hint = "⚑",
+-- 	info = "»",
+-- })
 
 cmp.setup({
 	preselect = "item",
@@ -576,34 +596,18 @@ lsp_zero.on_attach(function(_, bufnr)
 	})
 end)
 
--- not sure why I have to set this in three places...
--- supposedly you can just do
--- so we have to go 'old school...
--- vim.diagnostic.config({
---   virtual_text = false,
---   update_in_insert = true,
--- }),
--- but that doesn't work in all cases,
+-- use :G for mini.git instead like fugitive
+local expand_g = function()
+	return (vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == "G") and "Git" or "G"
+end
+vim.keymap.set("ca", "G", expand_g, { expr = true })
 
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
--- 	virtual_text = false,
--- 	update_in_insert = true,
--- 	underline = false,
--- })
+-- set sign icons
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
--- The line beneath this is called `modeline`. See `:help modeline`
---
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader><leader>", "<cmd>:Telescope<cr>", {})
-vim.keymap.set("n", "<leader>g", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>f", builtin.find_files, {})
-vim.keymap.set("n", "<leader>b", builtin.buffers, {})
-vim.keymap.set("n", "<leader>d", builtin.diagnostics, {})
-vim.keymap.set("n", "<leader>s", builtin.lsp_document_symbols, {})
-vim.keymap.set("n", "<leader>cc", function()
-	-- builtin.find_files({ search_dirs = { "~/.dotfiles/" } })
-	builtin.find_files({ cwd = "~/.dotfiles/" })
-end, {})
--- vim.keymap.set(“n”, “<leader>cc”, function() builtin.find_files({no_ignore = true}) end, {})
---
---
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, { callback = function() vim.w.is_current=true end, })
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, { callback = function() vim.w.is_current=false end, })

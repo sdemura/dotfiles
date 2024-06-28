@@ -1,7 +1,7 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 ---
 import:
-  - ~/.dotfiles/alacritty/themes/catppuccin_mocha.toml
+  - ~/.dotfiles/alacritty/themes/terafox.toml
 
 window:
   option_as_alt: Both

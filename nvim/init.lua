@@ -1,6 +1,4 @@
--- Prepend mise shims to PATH
-vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
-
+-- set leader to space
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -19,8 +17,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- start plugins
-	-- "tpope/vim-fugitive",
-	-- "shumphrey/fugitive-gitlab.vim",
+	"tpope/vim-fugitive",
+	"shumphrey/fugitive-gitlab.vim",
 	"tpope/vim-rhubarb",
 	"tpope/vim-eunuch",
 	{ "yorickpeterse/nvim-tree-pairs", opts = {} },
@@ -85,8 +83,6 @@ require("lazy").setup({
 			},
 		},
 	},
-	-- { "numToStr/Comment.nvim", opts = {} },
-
 	{
 		"ibhagwan/fzf-lua",
 		lazy = false,
@@ -163,54 +159,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-	-- {
-	-- 	"folke/flash.nvim",
-	-- 	event = "VeryLazy",
-	-- 	---@type Flash.Config
-	-- 	opts = {},
-	-- 	keys = {
-	-- 		{
-	-- 			"s",
-	-- 			mode = { "n", "x", "o" },
-	-- 			function()
-	-- 				require("flash").jump()
-	-- 			end,
-	-- 			desc = "Flash",
-	-- 		},
-	-- 		{
-	-- 			"S",
-	-- 			mode = { "n", "x", "o" },
-	-- 			function()
-	-- 				require("flash").treesitter()
-	-- 			end,
-	-- 			desc = "Flash Treesitter",
-	-- 		},
-	-- 		{
-	-- 			"r",
-	-- 			mode = "o",
-	-- 			function()
-	-- 				require("flash").remote()
-	-- 			end,
-	-- 			desc = "Remote Flash",
-	-- 		},
-	-- 		{
-	-- 			"R",
-	-- 			mode = { "o", "x" },
-	-- 			function()
-	-- 				require("flash").treesitter_search()
-	-- 			end,
-	-- 			desc = "Treesitter Search",
-	-- 		},
-	-- 		{
-	-- 			"<c-s>",
-	-- 			mode = { "c" },
-	-- 			function()
-	-- 				require("flash").toggle()
-	-- 			end,
-	-- 			desc = "Toggle Flash Search",
-	-- 		},
-	-- 	},
-	-- },
 	{
 		"smoka7/hop.nvim",
 		version = "*",
@@ -224,13 +172,6 @@ require("lazy").setup({
 	{
 		"echasnovski/mini.nvim",
 		config = function()
-			require("mini.git").setup({})
-			-- require("mini.jump2d").setup({
-			-- 	-- Module mappings. Use `''` (empty string) to disable one.
-			-- 	mappings = {
-			-- 		start_jumping = "s",
-			-- 	},
-			-- })
 			require("mini.bracketed").setup({})
 			require("mini.indentscope").setup({
 				symbol = "│",
@@ -309,25 +250,6 @@ require("lazy").setup({
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
 	},
-	-- { "mawkler/modicator.nvim", opts = {} },
-	{
-		"gelguy/wilder.nvim",
-		config = function()
-			local wilder = require("wilder")
-			wilder.setup({ modes = { ":", "/", "?" } })
-
-			wilder.set_option("pipeline", {
-				wilder.branch(wilder.cmdline_pipeline(), wilder.search_pipeline()),
-			})
-
-			wilder.set_option(
-				"renderer",
-				wilder.wildmenu_renderer({
-					highlighter = wilder.basic_highlighter(),
-				})
-			)
-		end,
-	},
 	{
 		"stevearc/aerial.nvim",
 		opts = {},
@@ -343,23 +265,6 @@ require("lazy").setup({
 			{ "<leader>a", "<cmd>:AerialToggle!<CR>" },
 		},
 	},
-	-- {
-	-- 	"danymat/neogen",
-	-- 	config = function()
-	-- 		require("neogen").setup({
-	-- 			enabled = true,
-	-- 			languages = {
-	-- 				python = {
-	-- 					template = {
-	-- 						annotation_convention = "google_docstrings",
-	-- 					},
-	-- 				},
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- 	keys = {
-	-- 		{ "<leader>n", "<cmd>:Neogen<CR>" },
-	-- 	},
 	-- 	-- Uncomment next line if you want to follow only stable versions
 	-- 	-- version = "*"
 	-- },
@@ -369,8 +274,20 @@ require("lazy").setup({
 }, {})
 
 -- theme
-vim.cmd.colorscheme("dawnfox")
+vim.cmd.colorscheme("terafox")
 -- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
+require("bufferline").setup({
+	options = {
+		offsets = {
+			{
+				filetype = "neo-tree",
+				text = "Neo-tree",
+				highlight = "Directory",
+				text_align = "left",
+			},
+		},
+	},
+})
 
 -- make it look nice with terafox
 vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
@@ -486,7 +403,7 @@ require("mason-null-ls").setup({
 local lsp_zero = require("lsp-zero")
 local cmp = require("cmp")
 
--- doesn't work
+-- doesn't work, but sometimes it does even when not set...
 -- lsp_zero.set_sign_icons({
 -- 	error = "✘",
 -- 	warn = "▲",
@@ -596,18 +513,9 @@ lsp_zero.on_attach(function(_, bufnr)
 	})
 end)
 
--- use :G for mini.git instead like fugitive
-local expand_g = function()
-	return (vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == "G") and "Git" or "G"
-end
-vim.keymap.set("ca", "G", expand_g, { expr = true })
-
 -- set sign icons
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
-
-vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, { callback = function() vim.w.is_current=true end, })
-vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, { callback = function() vim.w.is_current=false end, })

@@ -8,9 +8,12 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 
+-- performance
+config.front_end = "WebGpu"
+
 -- Appearance
 config.color_scheme = "terafox"
--- config.hide_tab_bar_if_only_one_tab = true
+config.default_cursor_style = "BlinkingBlock"
 config.show_new_tab_button_in_tab_bar = false
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
@@ -52,13 +55,14 @@ config.colors = {
 	},
 }
 config.window_padding = {
-	left = 1,
-	right = 1,
-	top = 1,
-	bottom = 1,
+	left = 0,
+	right = 0,
+	top = 0,
+	bottom = 0,
 }
 
 -- leader key like tmux
+-- config.disable_default_key_bindings = true
 config.leader = { key = "b", mods = "CTRL" }
 config.keys = {
 	-- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
@@ -72,7 +76,6 @@ config.keys = {
 	{ key = "\\", mods = "LEADER", action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 	{ key = "s", mods = "LEADER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 	{ key = "v", mods = "LEADER", action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
-	{ key = "o", mods = "LEADER", action = "TogglePaneZoomState" },
 	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
 	{ key = "c", mods = "LEADER", action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
 	{ key = "h", mods = "LEADER", action = wezterm.action({ ActivatePaneDirection = "Left" }) },
@@ -102,7 +105,7 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.PromptInputLine({
 			description = "Enter new name for tab",
-			action = wezterm.action_callback(function(window, pane, line)
+			action = wezterm.action_callback(function(window, _, line)
 				-- line will be `nil` if they hit escape without entering anything
 				-- An empty string if they just hit enter
 				-- Or the actual line of text they wrote
@@ -115,6 +118,21 @@ config.keys = {
 
 	-- pane select
 	{ key = "q", mods = "LEADER", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
+
+	-- close all but current pane
+	{
+		key = "O",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(win, pane)
+			local tab = win:active_tab()
+			for _, p in ipairs(tab:panes()) do
+				if p:pane_id() ~= pane:pane_id() then
+					p:activate()
+					win:perform_action(wezterm.action.CloseCurrentPane({ confirm = false }), p)
+				end
+			end
+		end),
+	},
 	-- end tmux emulation mode
 }
 

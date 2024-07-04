@@ -245,11 +245,11 @@ require("lazy").setup({
 	},
 	{ "windwp/nvim-autopairs", opts = {} },
 	{ "kylechui/nvim-surround", opts = {} },
-	{
-		"akinsho/bufferline.nvim",
-		version = "*",
-		dependencies = "nvim-tree/nvim-web-devicons",
-	},
+	-- {
+	-- 	"akinsho/bufferline.nvim",
+	-- 	version = "*",
+	-- 	dependencies = "nvim-tree/nvim-web-devicons",
+	-- },
 	{
 		"stevearc/aerial.nvim",
 		opts = {},
@@ -276,18 +276,18 @@ require("lazy").setup({
 -- theme
 vim.cmd.colorscheme("terafox")
 -- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
-require("bufferline").setup({
-	options = {
-		offsets = {
-			{
-				filetype = "neo-tree",
-				text = "Neo-tree",
-				highlight = "Directory",
-				text_align = "left",
-			},
-		},
-	},
-})
+-- require("bufferline").setup({
+-- 	options = {
+-- 		offsets = {
+-- 			{
+-- 				filetype = "neo-tree",
+-- 				text = "Neo-tree",
+-- 				highlight = "Directory",
+-- 				text_align = "left",
+-- 			},
+-- 		},
+-- 	},
+-- })
 
 -- make it look nice with terafox
 vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")

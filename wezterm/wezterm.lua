@@ -1,6 +1,41 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
 
+-- update left status with zoom indicator
+wezterm.on("update-status", function(window, pane)
+	local our_tab = pane:tab()
+	local is_zoomed = false
+	if our_tab ~= nil then
+		for _, pane_attributes in pairs(our_tab:panes_with_info()) do
+			is_zoomed = pane_attributes["is_zoomed"] or is_zoomed
+		end
+	end
+	if is_zoomed then
+		window:set_left_status(wezterm.format({
+			{ Attribute = { Underline = "Single" } },
+			{ Background = { Color = "#254147" } },
+			{ Foreground = { Color = "#ebebeb" } },
+			{ Text = "-- ZOOMED --" },
+		}))
+		-- the below assumes you have written a handler that forces tabs to be open
+		-- I do this aggressively to force my UI to remind me that I am zoomed
+		wezterm.emit("force-tabs-shown", window, pane)
+	else
+		window:set_left_status("")
+	end
+
+	--- whatever else you want to do with your update-status
+end)
+
+-- update right status when leader pressed
+wezterm.on("update-right-status", function(window, pane)
+	local leader = ""
+	if window:leader_is_active() then
+		leader = "-- LEADER --"
+	end
+	window:set_right_status(leader)
+end)
+
 local TAB_BAR_BACKGROUND = "#254147"
 
 -- This will hold the configuration.
@@ -10,6 +45,7 @@ local config = wezterm.config_builder()
 
 -- performance
 config.front_end = "WebGpu"
+config.window_close_confirmation = "NeverPrompt"
 
 -- Appearance
 config.color_scheme = "terafox"
@@ -17,15 +53,31 @@ config.default_cursor_style = "BlinkingBlock"
 config.show_new_tab_button_in_tab_bar = false
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
+config.tab_max_width = 25
+
 config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.font_size = 11
 config.window_frame = {
 	font = wezterm.font({ family = "JetBrainsMono Nerd Font", weight = "Bold" }),
 	font_size = 12,
 }
+
+-- only for fancy
+config.window_frame = {
+	font = wezterm.font({ family = "JetBrainsMono", weight = "Bold" }),
+	inactive_titlebar_bg = "#254147",
+	active_titlebar_bg = "#254147",
+}
+
 config.colors = {
+	-- change the cursor color when a dead key or leader key is active
+	-- doesn't seem to actually work...
+	-- compose_cursor = "#fdb292",
+	compose_cursor = "orange",
 	tab_bar = {
-		-- background = "#254147",
+		-- applicable for fancy
+		inactive_tab_edge = "#254147",
+		-- only works for retry
 		background = "#254147",
 		active_tab = {
 			bg_color = TAB_BAR_BACKGROUND,
@@ -55,15 +107,15 @@ config.colors = {
 	},
 }
 config.window_padding = {
-	left = 0,
-	right = 0,
-	top = 0,
-	bottom = 0,
+	left = 5,
+	right = 5,
+	top = 5,
+	bottom = 5,
 }
 
 -- leader key like tmux
 -- config.disable_default_key_bindings = true
-config.leader = { key = "b", mods = "CTRL" }
+config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 2000 }
 config.keys = {
 	-- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
 	{ key = "LeftArrow", mods = "OPT", action = wezterm.action({ SendString = "\x1bb" }) },
@@ -71,7 +123,7 @@ config.keys = {
 	{ key = "RightArrow", mods = "OPT", action = wezterm.action({ SendString = "\x1bf" }) },
 
 	-- start tmux emulation mode
-	{ key = "b", mods = "LEADER|CTRL", action = wezterm.action({ SendString = "\x01" }) },
+	-- { key = "b", mods = "LEADER|CTRL", action = wezterm.action({ SendString = "\x01" }) },
 	{ key = "-", mods = "LEADER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 	{ key = "\\", mods = "LEADER", action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 	{ key = "s", mods = "LEADER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
@@ -101,7 +153,7 @@ config.keys = {
 
 	-- rename tabs
 	{
-		key = "r",
+		key = ",",
 		mods = "LEADER",
 		action = wezterm.action.PromptInputLine({
 			description = "Enter new name for tab",
@@ -117,7 +169,7 @@ config.keys = {
 	},
 
 	-- pane select
-	{ key = "q", mods = "LEADER", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
+	{ key = " ", mods = "LEADER", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
 
 	-- close all but current pane
 	{

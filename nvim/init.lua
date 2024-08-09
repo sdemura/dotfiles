@@ -274,7 +274,7 @@ require("lazy").setup({
 }, {})
 
 -- theme
-vim.cmd.colorscheme("terafox")
+vim.cmd.colorscheme("catppuccin-latte")
 -- bufferline for tabs only
 -- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 require("bufferline").setup({
@@ -405,14 +405,6 @@ require("mason-null-ls").setup({
 
 local lsp_zero = require("lsp-zero")
 local cmp = require("cmp")
-
--- doesn't work, but sometimes it does even when not set...
--- lsp_zero.set_sign_icons({
--- 	error = "✘",
--- 	warn = "▲",
--- 	hint = "⚑",
--- 	info = "»",
--- })
 
 cmp.setup({
 	preselect = "item",

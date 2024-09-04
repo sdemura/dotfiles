@@ -17,6 +17,14 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- start plugins
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		opts = {
+			open_mapping = [[<c-\>]],
+		},
+	},
+	{ "towolf/vim-helm", ft = "helm" },
 	"tpope/vim-fugitive",
 	"shumphrey/fugitive-gitlab.vim",
 	"tpope/vim-rhubarb",
@@ -274,7 +282,7 @@ require("lazy").setup({
 }, {})
 
 -- theme
-vim.cmd.colorscheme("catppuccin-latte")
+vim.cmd.colorscheme("catppuccin-mocha")
 -- bufferline for tabs only
 -- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 require("bufferline").setup({
@@ -352,6 +360,14 @@ vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts
 vim.api.nvim_set_keymap("n", "<leader>lu", "<cmd>:Lazy update<cr>", opts)
 
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+
+-- yank filepath
+vim.keymap.set(
+	"n",
+	"<leader>yf",
+	':let @+ = expand("%:p")<cr>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
+	{ desc = "Copy current file name and path", silent = false }
+)
 
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -472,6 +488,18 @@ require("mason-lspconfig").setup({
 							functionTypeParameters = true,
 							parameterNames = true,
 							rangeVariableTypes = true,
+						},
+					},
+				},
+			})
+		end,
+		["helm_ls"] = function()
+			local lspconfig = require("lspconfig")
+			lspconfig.helm_ls.setup({
+				settings = {
+					["helm-ls"] = {
+						yamlls = {
+							path = "yaml-language-server",
 						},
 					},
 				},

@@ -1,4 +1,4 @@
-import = ["/Users/sean/.dotfiles/alacritty/themes/catppuccin_latte.toml"]
+import = ["/Users/sean/.dotfiles/alacritty/themes/catppuccin_mocha.toml"]
 
 [colors]
 draw_bold_text_with_bright_colors = true
@@ -45,6 +45,6 @@ mods = "Command"
 save_to_clipboard = true
 
 [window]
-decorations_theme_variant = "Dark"
+# decorations_theme_variant = "Dark"
 dynamic_title = true
 option_as_alt = "Both"

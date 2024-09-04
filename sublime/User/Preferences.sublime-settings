@@ -3,9 +3,9 @@
 		"Vintage",
 	],
 	"theme": "Adaptive.sublime-theme",
-	"color_scheme": "Mariana.sublime-color-scheme",
+	"color_scheme": "Catppuccin Mocha.sublime-color-scheme",
 	"font_face": "JetbrainsMono Nerd Font",
-	"font_size": 11,
+	"font_size": 13,
 	"font_options": [
 		"no_italic"
 	],

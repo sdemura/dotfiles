@@ -2,8 +2,6 @@
 {
 	"settings": {
 		"yaml.format.enable": false,
-		"yaml.customTags": [
-			"!reference sequence"
-		]
-	}
+	},
+	"selector": "source.yml | source.yaml & -source.yaml.helm"
 }

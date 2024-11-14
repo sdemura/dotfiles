@@ -17,6 +17,20 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- start plugins
+	-- {
+	-- 	"folke/snacks.nvim",
+	-- 	priority = 1000,
+	-- 	lazy = false,
+	-- 	opts = {
+	-- 		styles = {},
+	-- 		bigfile = { enabled = true },
+	-- 		notifier = { enabled = true },
+	-- 		quickfile = { enabled = true },
+	-- 		statuscolumn = { enabled = true },
+	-- 		words = { enabled = true },
+	--            gitbrowse = {enabled = true},
+	-- 	},
+	-- },
 	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
@@ -76,7 +90,6 @@ require("lazy").setup({
 
 	{ "lewis6991/gitsigns.nvim", opts = {}, priority = 1002 },
 	{ "vladdoster/remember.nvim", opts = {} },
-	-- { "norcalli/nvim-colorizer.lua" },
 	{ "EdenEast/nightfox.nvim", priority = 1000 },
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{ "projekt0n/github-nvim-theme", priority = 1000 },
@@ -118,8 +131,8 @@ require("lazy").setup({
 		keys = {
 			{ "<leader><leader>", "<cmd>:FzfLua<cr>" },
 			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
-			{ "<leader>g", "<cmd>:FzfLua live_grep<CR>" },
-			{ "<leader>G", "<cmd>:FzfLua git_status<CR>" },
+			{ "<leader>g", "<cmd>:FzfLua live_grep_resume<CR>" },
+			{ "<leader>G", "<cmd>:FzfLua live_grep_glob<CR>" },
 			{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
 			{ "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
 			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
@@ -272,6 +285,12 @@ require("lazy").setup({
 		keys = {
 			{ "<leader>a", "<cmd>:AerialToggle!<CR>" },
 		},
+	},
+	{
+		"tiagovla/scope.nvim",
+		config = function()
+			require("scope").setup()
+		end,
 	},
 	-- 	-- Uncomment next line if you want to follow only stable versions
 	-- 	-- version = "*"
@@ -500,6 +519,11 @@ require("mason-lspconfig").setup({
 					["helm-ls"] = {
 						yamlls = {
 							path = "yaml-language-server",
+							config = {
+								schemas = {
+									["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.28.11-standalone-strict/_definitions.json"] = "**/templates/**",
+								},
+							},
 						},
 					},
 				},

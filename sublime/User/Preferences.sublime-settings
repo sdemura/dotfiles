@@ -5,13 +5,12 @@
 	"theme": "Adaptive.sublime-theme",
 	"color_scheme": "Catppuccin Mocha.sublime-color-scheme",
 	"font_face": "JetbrainsMono Nerd Font",
-	"font_size": 13,
+	"font_size": 12,
 	"font_options": [
 		"no_italic"
 	],
 	"scroll_past_end": true,
 	"find_selected_text": true,
-	"hardware_acceleration": "opengl",
 	"autocomplete_include_snippets": false,
 	"auto_complete_include_snippets_when_typing": false,
 	// "rulers": [
@@ -22,7 +21,7 @@
 	"fold_buttons": false,
 	"indent_guide_options": [
 		"draw_normal",
-		"draw_active"
+		"draw_active",
 	],
 	"drag_text": false,
 	"indent_to_bracket": false,
@@ -34,6 +33,7 @@
 	"auto_complete_use_history": true,
 	"auto_indent": true,
 	// "ui_scale": 1.1,
+	// why?
 	"match_brackets": false,
 	"match_brackets_angle": false,
 	"match_brackets_braces": false,
@@ -42,4 +42,8 @@
 	"match_tags": false,
 	"find_in_files_supress_errors": true,
 	"index_files": false,
+	"neovintageous_build_version": 13200,
+	"word_separators": "./\\()\"':,.;<>~!@#$%^&*|+=[]{}`~?",
+	"sub_word_separators": "-_",
+	// "draw_white_space": ["all_tabs", "selection"]
 }

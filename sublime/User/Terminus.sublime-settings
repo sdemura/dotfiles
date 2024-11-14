@@ -1,9 +1,4 @@
 {
 	"256color": true,
-	"unix_term": "xterm-256color",
-	"brighten_bold_text": true,
-	"view_settings": {
-		"rulers": [],
-	},
-	"theme": "adaptive",
+	"unix_term": "linux"
 }

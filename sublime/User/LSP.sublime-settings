@@ -4,16 +4,18 @@
     "source.fixAll": true,
     "source.organizeImports": true
   },
+  "show_code_actions_in_hover": true,
   "semantic_highlighting": true,
   "show_diagnostics_count_in_view_status": true,
+  "show_references_in_quick_panel": false,
   "inhibit_snippet_completions": true,
-  "show_code_actions": "bulb",
+  // "show_code_actions": "bulb",
   "show_inlay_hints": true,
   "clients": {
     "helm-ls": {
       "enabled": true,
       "command": [
-        "/opt/homebrew/bin/helm_ls"
+        "/opt/homebrew/bin/helm_ls", "serve"
       ],
       "selector": "source.yaml.helm",
       "settings": {
@@ -29,7 +31,7 @@
             "path": "/opt/homebrew/bin/yaml-language-server",
             "config": {
               "schemas": {
-                "kubernetes": "**/templates/**"
+                "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.28.11-standalone-strict/_definitions.json": "**/templates/**"
               },
               "completion": true,
               "hover": true

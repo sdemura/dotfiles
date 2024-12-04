@@ -26,15 +26,15 @@ chars = "\u001E"
 key = "Key6"
 mods = "Control|Shift"
 
-[[keyboard.bindings]]
-chars = "\u001BF"
-key = "Right"
-mods = "Alt"
+ [[keyboard.bindings]]
+ chars = "\u001bF"
+ key = "Right"
+ mods = "Alt"
 
-[[keyboard.bindings]]
-chars = "\u001BB"
-key = "Left"
-mods = "Alt"
+ [[keyboard.bindings]]
+ chars = "\u001bB"
+ key = "Left"
+ mods = "Alt"
 
 [[keyboard.bindings]]
 action = "CreateNewWindow"

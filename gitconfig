@@ -8,7 +8,7 @@
 	email = sean.demura@corelight.com
 [core]
 	; editor = subl -w -n
-	editor = subl -n -w
+	editor = nvim
 	excludesfile = ~/.dotfiles/gitignore
 	; pager = cat
 

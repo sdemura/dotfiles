@@ -16,27 +16,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	-- start plugins
-	-- {
-	-- 	"folke/snacks.nvim",
-	-- 	priority = 1000,
-	-- 	lazy = false,
-	-- 	opts = {
-	-- 		styles = {},
-	-- 		bigfile = { enabled = true },
-	-- 		notifier = { enabled = true },
-	-- 		quickfile = { enabled = true },
-	-- 		statuscolumn = { enabled = true },
-	-- 		words = { enabled = true },
-	--            gitbrowse = {enabled = true},
-	-- 	},
-	-- },
 	{
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		opts = {
-			open_mapping = [[<c-\>]],
+		"hedyhli/outline.nvim",
+		lazy = true,
+		cmd = { "Outline", "OutlineOpen" },
+		keys = { -- Example mapping to toggle outline
+			{ "<leader>a", "<cmd>Outline<CR>", desc = "Toggle outline" },
 		},
+		opts = {},
 	},
 	{ "towolf/vim-helm", ft = "helm" },
 	"tpope/vim-fugitive",
@@ -131,8 +118,8 @@ require("lazy").setup({
 		keys = {
 			{ "<leader><leader>", "<cmd>:FzfLua<cr>" },
 			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
-			{ "<leader>g", "<cmd>:FzfLua live_grep_resume<CR>" },
-			{ "<leader>G", "<cmd>:FzfLua live_grep_glob<CR>" },
+			{ "<leader>g", "<cmd>:FzfLua live_grep_glob<CR>" },
+			{ "<leader>G", "<cmd>:FzfLua live_grep_resume<CR>" },
 			{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
 			{ "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
 			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
@@ -193,7 +180,7 @@ require("lazy").setup({
 	{
 		"echasnovski/mini.nvim",
 		config = function()
-			require("mini.bracketed").setup({})
+			-- require("mini.bracketed").setup({})
 			require("mini.indentscope").setup({
 				symbol = "│",
 				draw = { animation = require("mini.indentscope").gen_animation.none() },
@@ -270,21 +257,6 @@ require("lazy").setup({
 		"akinsho/bufferline.nvim",
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
-	},
-	{
-		"stevearc/aerial.nvim",
-		opts = {},
-		-- Optional dependencies
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-		},
-		config = function()
-			require("aerial").setup()
-		end,
-		keys = {
-			{ "<leader>a", "<cmd>:AerialToggle!<CR>" },
-		},
 	},
 	{
 		"tiagovla/scope.nvim",

@@ -1,4 +1,3 @@
-
 [colors]
 draw_bold_text_with_bright_colors = true
 
@@ -14,7 +13,8 @@ size = 12.0
 offset.y = 1
 
 [font.normal]
-family = "JetBrainsMono NF"
+# family = "JetBrainsMono NF"
+family = "Hack Nerd Font"
 
 [[keyboard.bindings]]
 chars = "\u001E"
@@ -26,15 +26,15 @@ chars = "\u001E"
 key = "Key6"
 mods = "Control|Shift"
 
- [[keyboard.bindings]]
- chars = "\u001bF"
- key = "Right"
- mods = "Alt"
+[[keyboard.bindings]]
+chars = "\u001bF"
+key = "Right"
+mods = "Alt"
 
- [[keyboard.bindings]]
- chars = "\u001bB"
- key = "Left"
- mods = "Alt"
+[[keyboard.bindings]]
+chars = "\u001bB"
+key = "Left"
+mods = "Alt"
 
 [[keyboard.bindings]]
 action = "CreateNewWindow"

@@ -1,0 +1,18 @@
+// Your settings for FileManager. See the default file to see the different options. 
+{
+	"terminals": [
+		{
+			"name": "iTerm",
+			"cmd": [
+				"open",
+				"-a",
+				"iTerm",
+				"$cwd"
+			],
+			"platform": "osx"
+		},
+	],
+	"reveal_in_sidebar": true,
+	"show_open_in_browser_command": false,
+	"ask_for_confirmation_on_delete": false,
+}

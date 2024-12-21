@@ -222,6 +222,9 @@ require("lazy").setup({
 				popup_border_style = "rounded",
 				close_if_last_window = true,
 				filesystem = {
+					follow_current_file = {
+						enabled = true,
+					},
 					window = {
 						mappings = {
 							["s"] = "none",
@@ -278,7 +281,7 @@ vim.cmd.colorscheme("catppuccin-mocha")
 -- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 require("bufferline").setup({
 	options = {
-		mode = "tabs",
+		-- mode = "tabs",
 		always_show_bufferline = false,
 		offsets = {
 			{
@@ -291,8 +294,8 @@ require("bufferline").setup({
 	},
 })
 
--- make it look nice with terafox
-vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
+-- -- make it look nice with terafox
+-- vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
 
 --- options
 vim.o.breakindent = true
@@ -361,8 +364,8 @@ vim.keymap.set(
 )
 
 -- Remap for dealing with word wrap
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+-- vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+-- vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- disable macros
 vim.keymap.set("n", "q", "<Nop>")
@@ -538,3 +541,10 @@ for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+-- gbrowse
+vim.api.nvim_create_user_command("Browse", function(opts)
+	vim.fn.system({ "open", opts.fargs[1] })
+end, { nargs = 1 })
+
+

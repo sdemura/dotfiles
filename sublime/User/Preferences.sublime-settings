@@ -4,7 +4,8 @@
 	],
 	"theme": "Adaptive.sublime-theme",
 	"color_scheme": "Catppuccin Mocha.sublime-color-scheme",
-	"font_face": "JetbrainsMono Nerd Font",
+	"font_face": "Hack Nerd Font",
+	// "font_face": "JetbrainsMono Nerd Font",
 	"font_size": 12,
 	"font_options": [
 		"no_italic"

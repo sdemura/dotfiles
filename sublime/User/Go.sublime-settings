@@ -1,0 +1,4 @@
+// These settings override both User and Default settings for the Go syntax
+{
+	"lsp_format_on_save": true,
+}

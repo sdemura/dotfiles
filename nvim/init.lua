@@ -276,7 +276,7 @@ require("lazy").setup({
 }, {})
 
 -- theme
-vim.cmd.colorscheme("catppuccin-mocha")
+vim.cmd.colorscheme("catppuccin-macchiato")
 -- bufferline for tabs only
 -- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 require("bufferline").setup({

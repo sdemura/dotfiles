@@ -21,7 +21,7 @@ require("lazy").setup({
 		lazy = true,
 		cmd = { "Outline", "OutlineOpen" },
 		keys = { -- Example mapping to toggle outline
-			{ "<leader>a", "<cmd>Outline<CR>", desc = "Toggle outline" },
+			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
 		},
 		opts = {},
 	},
@@ -41,7 +41,6 @@ require("lazy").setup({
 	{ "hrsh7th/nvim-cmp" },
 	{ "hrsh7th/cmp-path" },
 
-	-- { "hrsh7th/cmp-nvim-lsp-signature-help" },
 	{ "hrsh7th/cmp-buffer" }, -- Required
 	{ "L3MON4D3/LuaSnip" },
 	{ "nvimtools/none-ls.nvim" },
@@ -49,7 +48,6 @@ require("lazy").setup({
 	{ "folke/neodev.nvim", opts = {} },
 	{
 		"j-hui/fidget.nvim",
-		-- event = "LspAttach",
 		opts = {
 			notification = {
 				override_vim_notify = true,
@@ -189,6 +187,7 @@ require("lazy").setup({
 				delay = 50,
 			})
 			require("mini.ai").setup({})
+			require("mini.trailspace").setup({})
 			require("mini.basics").setup({
 				options = {
 					basic = false,
@@ -240,8 +239,8 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-			{ "-", "<cmd>:Neotree  toggle<CR>" },
-			{ "_", "<cmd>:Neotree  toggle reveal<CR>" },
+			{ "-", "<cmd>:Neotree toggle<CR>" },
+			{ "_", "<cmd>:Neotree toggle reveal<CR>" },
 		},
 	},
 	{
@@ -281,7 +280,7 @@ vim.cmd.colorscheme("catppuccin-macchiato")
 -- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 require("bufferline").setup({
 	options = {
-		-- mode = "tabs",
+		mode = "tabs",
 		always_show_bufferline = false,
 		offsets = {
 			{
@@ -293,9 +292,6 @@ require("bufferline").setup({
 		},
 	},
 })
-
--- -- make it look nice with terafox
--- vim.cmd("hi MiniJump2dSpot guifg=#eaeeee gui=bold,italic,underline")
 
 --- options
 vim.o.breakindent = true
@@ -346,33 +342,9 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
-
-vim.api.nvim_set_keymap("n", "<leader>lu", "<cmd>:Lazy update<cr>", opts)
-
-vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
-
--- yank filepath
-vim.keymap.set(
-	"n",
-	"<leader>yf",
-	':let @+ = expand("%:p")<cr>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
-	{ desc = "Copy current file name and path", silent = false }
-)
-
--- Remap for dealing with word wrap
--- vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
--- vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- disable macros
-vim.keymap.set("n", "q", "<Nop>")
--- vim.keymap.del({ "n", "v", "i" }, "q")
-
 -- trail whitespace on save
-vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
+-- vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
+vim.api.nvim_create_autocmd("BufWritePre", { command = ":lua MiniTrailspace.trim()" })
 
 -- Run gofmt + goimport on save
 local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
@@ -391,8 +363,6 @@ vim.api.nvim_create_user_command("CdGitRoot", function()
 	vim.api.nvim_set_current_dir(git_root)
 	vim.notify("changed dir to " .. git_root)
 end, {})
-
-vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", {})
 
 -- start lsp config
 require("mason-null-ls").setup()
@@ -541,10 +511,39 @@ for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+-- end lsp config
 
--- gbrowse
-vim.api.nvim_create_user_command("Browse", function(opts)
-	vim.fn.system({ "open", opts.fargs[1] })
+-- gbrowse to work with gitlab
+vim.api.nvim_create_user_command("Browse", function(gopts)
+	vim.fn.system({ "open", gopts.fargs[1] })
 end, { nargs = 1 })
 
 
+-- keymaps
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
+
+vim.api.nvim_set_keymap("n", "<leader>lu", "<cmd>:Lazy update<cr>", opts)
+
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+
+-- yank filepath
+vim.keymap.set(
+	"n",
+	"<leader>yf",
+	':let @+ = expand("%:p")<cr>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
+	{ desc = "Copy current file name and path", silent = false }
+)
+
+-- Remap for dealing with word wrap
+-- vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+-- vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- disable macros
+vim.keymap.set("n", "q", "<Nop>")
+-- vim.keymap.del({ "n", "v", "i" }, "q")
+
+-- set shortcut for cdgitroot
+vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", {})

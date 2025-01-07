@@ -2,6 +2,11 @@
 	"bootstrapped": true,
 	"in_process_packages":
 	[
+		"FindInFiles-addon",
+		"Jinja2",
+		"LSP-bash",
+		"LSP-json",
+		"LSP-pyright",
 	],
 	"installed_packages":
 	[

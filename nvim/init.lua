@@ -266,6 +266,8 @@ require("lazy").setup({
 			require("scope").setup()
 		end,
 	},
+	-- { "nvzone/volt", lazy = true },
+	-- { "nvzone/menu", lazy = true },
 	-- 	-- Uncomment next line if you want to follow only stable versions
 	-- 	-- version = "*"
 	-- },
@@ -518,7 +520,6 @@ vim.api.nvim_create_user_command("Browse", function(gopts)
 	vim.fn.system({ "open", gopts.fargs[1] })
 end, { nargs = 1 })
 
-
 -- keymaps
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -547,3 +548,17 @@ vim.keymap.set("n", "q", "<Nop>")
 
 -- set shortcut for cdgitroot
 vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", {})
+
+-- menu stuff
+-- mouse users + nvimtree users!
+-- vim.keymap.set({ "n", "v" }, "<RightMouse>", function()
+--   require('menu.utils').delete_old_menus()
+--
+--   vim.cmd.exec '"normal! \\<RightMouse>"'
+--
+--   -- clicked buf
+--   local buf = vim.api.nvim_win_get_buf(vim.fn.getmousepos().winid)
+--   local options = vim.bo[buf].ft == "NvimTree" and "nvimtree" or "default"
+--
+--   require("menu").open(options, { mouse = true })
+-- end, {})

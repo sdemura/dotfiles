@@ -20,16 +20,13 @@ require("lazy").setup({
 		"hedyhli/outline.nvim",
 		lazy = true,
 		cmd = { "Outline", "OutlineOpen" },
-		keys = { -- Example mapping to toggle outline
-			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-		},
 		opts = {},
 	},
 	{ "towolf/vim-helm", ft = "helm" },
-	"tpope/vim-fugitive",
-	"shumphrey/fugitive-gitlab.vim",
-	"tpope/vim-rhubarb",
-	"tpope/vim-eunuch",
+	{ "tpope/vim-fugitive" },
+	{ "shumphrey/fugitive-gitlab.vim" },
+	{ "tpope/vim-rhubarb" },
+	{ "tpope/vim-eunuch" },
 	{ "yorickpeterse/nvim-tree-pairs", opts = {} },
 
 	-- lsp zero start
@@ -75,7 +72,6 @@ require("lazy").setup({
 
 	{ "lewis6991/gitsigns.nvim", opts = {}, priority = 1002 },
 	{ "vladdoster/remember.nvim", opts = {} },
-	{ "EdenEast/nightfox.nvim", priority = 1000 },
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{ "projekt0n/github-nvim-theme", priority = 1000 },
 	{
@@ -113,19 +109,6 @@ require("lazy").setup({
 				},
 			})
 		end,
-		keys = {
-			{ "<leader><leader>", "<cmd>:FzfLua<cr>" },
-			{ "<leader>f", "<cmd>:FzfLua files<CR>" },
-			{ "<leader>g", "<cmd>:FzfLua live_grep_glob<CR>" },
-			{ "<leader>G", "<cmd>:FzfLua live_grep_resume<CR>" },
-			{ "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>" },
-			{ "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>" },
-			{ "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>" },
-			{ "<leader>b", "<cmd>:FzfLua buffers<cr>" },
-			{ '<leader>"', "<cmd>:FzfLua registers<cr>" },
-			{ "<leader>'", "<cmd>:FzfLua marks<cr>" },
-			{ "<C-r>", "<cmd>:FzfLua registers<cr>", mode = "i" },
-		},
 	},
 	{
 		-- Highlight, edit, and navigate code
@@ -170,9 +153,6 @@ require("lazy").setup({
 		version = "*",
 		opts = {
 			keys = "etovxqpdygfblzhckisuran",
-		},
-		keys = {
-			{ "s", "<cmd>:HopWord<CR>" },
 		},
 	},
 	{
@@ -238,10 +218,6 @@ require("lazy").setup({
 				},
 			})
 		end,
-		keys = {
-			{ "-", "<cmd>:Neotree toggle<CR>" },
-			{ "_", "<cmd>:Neotree toggle reveal<CR>" },
-		},
 	},
 	{
 		"utilyre/barbecue.nvim",
@@ -266,37 +242,10 @@ require("lazy").setup({
 			require("scope").setup()
 		end,
 	},
-	-- { "nvzone/volt", lazy = true },
-	-- { "nvzone/menu", lazy = true },
-	-- 	-- Uncomment next line if you want to follow only stable versions
-	-- 	-- version = "*"
-	-- },
-	-- End plugins
-	--    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-	-- { import = 'custom.plugins' },
 }, {})
 
--- theme
-vim.cmd.colorscheme("catppuccin-macchiato")
--- bufferline for tabs only
--- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
-require("bufferline").setup({
-	options = {
-		mode = "tabs",
-		always_show_bufferline = false,
-		offsets = {
-			{
-				filetype = "neo-tree",
-				text = "Neo-tree",
-				highlight = "Directory",
-				text_align = "left",
-			},
-		},
-	},
-})
-
 --- options
-vim.o.breakindent = true
+vim.opt.breakindent = true
 vim.opt.cmdheight = 1
 vim.opt.completeopt = "noselect,menuone"
 vim.opt.cursorline = true
@@ -343,28 +292,6 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
-
--- trail whitespace on save
--- vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
-vim.api.nvim_create_autocmd("BufWritePre", { command = ":lua MiniTrailspace.trim()" })
-
--- Run gofmt + goimport on save
-local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.go",
-	callback = function()
-		require("go.format").goimport()
-	end,
-	group = format_sync_grp,
-})
-
--- quickly move back to git root
-vim.api.nvim_create_user_command("CdGitRoot", function()
-	local git_root = vim.fn.system("git rev-parse --show-toplevel")
-	git_root = git_root:match("^%s*(.-)%s*$")
-	vim.api.nvim_set_current_dir(git_root)
-	vim.notify("changed dir to " .. git_root)
-end, {})
 
 -- start lsp config
 require("mason-null-ls").setup()
@@ -520,45 +447,79 @@ vim.api.nvim_create_user_command("Browse", function(gopts)
 	vim.fn.system({ "open", gopts.fargs[1] })
 end, { nargs = 1 })
 
--- keymaps
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
+-- trail whitespace on save
+vim.api.nvim_create_autocmd("BufWritePre", { command = ":lua MiniTrailspace.trim()" })
+
+-- Run gofmt + goimport on save
+local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*.go",
+	callback = function()
+		require("go.format").goimport()
+	end,
+	group = format_sync_grp,
+})
+
+-- quickly move back to git root
+vim.api.nvim_create_user_command("CdGitRoot", function()
+	local git_root = vim.fn.system("git rev-parse --show-toplevel")
+	git_root = git_root:match("^%s*(.-)%s*$")
+	vim.api.nvim_set_current_dir(git_root)
+	vim.notify("changed dir to " .. git_root)
+end, {})
+
+-- theme
+vim.cmd.colorscheme("catppuccin-macchiato")
+-- bufferline for tabs only
+-- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
+require("bufferline").setup({
+	options = {
+		mode = "tabs",
+		always_show_bufferline = false,
+		offsets = {
+			{
+				filetype = "neo-tree",
+				text = "Neo-tree",
+				highlight = "Directory",
+				text_align = "left",
+			},
+		},
+	},
+})
+
+-- keymaps: see `:help vim.keymap.set()`
 local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
-
-vim.api.nvim_set_keymap("n", "<leader>lu", "<cmd>:Lazy update<cr>", opts)
-
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
-
--- yank filepath
+vim.keymap.set("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
+vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<CR>", opts)
+vim.keymap.set("n", "q", "<Nop>", opts) -- disable macros
+vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", opts)
 vim.keymap.set(
 	"n",
 	"<leader>yf",
 	':let @+ = expand("%:p")<cr>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
-	{ desc = "Copy current file name and path", silent = false }
+	opts
 )
 
--- Remap for dealing with word wrap
--- vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
--- vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+-- fzf keybinds
+vim.keymap.set("n", "<leader><leader>", "<cmd>:FzfLua<cr>", opts)
+vim.keymap.set("n", "<leader>f", "<cmd>:FzfLua files<CR>", opts)
+vim.keymap.set("n", "<leader>g", "<cmd>:FzfLua live_grep_glob<CR>", opts)
+vim.keymap.set("n", "<leader>G", "<cmd>:FzfLua grep_curbuf<CR>", opts)
+vim.keymap.set("n", "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>", opts)
+vim.keymap.set("n", "<leader>d", "<cmd>:FzfLua lsp_workspace_diagnostics<CR>", opts)
+vim.keymap.set("n", "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>", opts)
+vim.keymap.set("n", "<leader>b", "<cmd>:FzfLua buffers<cr>", opts)
+vim.keymap.set("n", '<leader>"', "<cmd>:FzfLua registers<cr>", opts)
+vim.keymap.set("n", "<leader>'", "<cmd>:FzfLua marks<cr>", opts)
+vim.keymap.set("i", "<C-r>", "<cmd>:FzfLua registers<cr>", opts)
 
--- disable macros
-vim.keymap.set("n", "q", "<Nop>")
--- vim.keymap.del({ "n", "v", "i" }, "q")
+-- outline
+vim.keymap.set("n", "<leader>o", "<cmd>:Outline<CR>", opts)
 
--- set shortcut for cdgitroot
-vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", {})
+-- hop
+vim.keymap.set("n", "s", "<cmd>:HopWord<CR>", opts)
 
--- menu stuff
--- mouse users + nvimtree users!
--- vim.keymap.set({ "n", "v" }, "<RightMouse>", function()
---   require('menu.utils').delete_old_menus()
---
---   vim.cmd.exec '"normal! \\<RightMouse>"'
---
---   -- clicked buf
---   local buf = vim.api.nvim_win_get_buf(vim.fn.getmousepos().winid)
---   local options = vim.bo[buf].ft == "NvimTree" and "nvimtree" or "default"
---
---   require("menu").open(options, { mouse = true })
--- end, {})
+-- neotree
+vim.keymap.set("n", "-", "<cmd>:Neotree toggle<CR>", opts)
+vim.keymap.set("n", "_", "<cmd>:Neotree toggle reveal<CR>", opts)

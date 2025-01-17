@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	{
 		"hedyhli/outline.nvim",
-		lazy = true,
+		-- lazy = true,
 		cmd = { "Outline", "OutlineOpen" },
 		opts = {},
 	},
@@ -76,7 +76,7 @@ require("lazy").setup({
 	{ "projekt0n/github-nvim-theme", priority = 1000 },
 	{
 		"nvim-lualine/lualine.nvim",
-		lazy = false,
+		-- lazy = false,
 		opts = {
 			options = {
 				icons_enabled = true,
@@ -87,7 +87,7 @@ require("lazy").setup({
 	},
 	{
 		"ibhagwan/fzf-lua",
-		lazy = false,
+		-- lazy = false,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("fzf-lua").setup({
@@ -523,3 +523,7 @@ vim.keymap.set("n", "s", "<cmd>:HopWord<CR>", opts)
 -- neotree
 vim.keymap.set("n", "-", "<cmd>:Neotree toggle<CR>", opts)
 vim.keymap.set("n", "_", "<cmd>:Neotree toggle reveal<CR>", opts)
+
+-- wuickfix stuff
+vim.keymap.set("n", "<leader>cn", "<cmd>:cnext<CR>")
+vim.keymap.set("n", "<leader>cp", "<cmd>:cprev<CR>")

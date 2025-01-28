@@ -30,9 +30,7 @@ require("lazy").setup({
 	{ "yorickpeterse/nvim-tree-pairs", opts = {} },
 
 	-- lsp zero start
-	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
-	{ "williamboman/mason.nvim" },
-	{ "williamboman/mason-lspconfig.nvim" },
+	{ "VonHeikemen/lsp-zero.nvim", branch = "v4.x" },
 	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/nvim-cmp" },
@@ -41,7 +39,6 @@ require("lazy").setup({
 	{ "hrsh7th/cmp-buffer" }, -- Required
 	{ "L3MON4D3/LuaSnip" },
 	{ "nvimtools/none-ls.nvim" },
-	{ "jayp0521/mason-null-ls.nvim" },
 	{ "folke/neodev.nvim", opts = {} },
 	{
 		"j-hui/fidget.nvim",
@@ -73,7 +70,6 @@ require("lazy").setup({
 	{ "lewis6991/gitsigns.nvim", opts = {}, priority = 1002 },
 	{ "vladdoster/remember.nvim", opts = {} },
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-	{ "projekt0n/github-nvim-theme", priority = 1000 },
 	{
 		"nvim-lualine/lualine.nvim",
 		-- lazy = false,
@@ -91,6 +87,9 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("fzf-lua").setup({
+				files = {
+					fd_opts = [[--color=never --type f --type l --exclude .git --hidden --no-ignore --follow]],
+				},
 				winopts = {
 					preview = {
 						layout = "vertical",
@@ -293,28 +292,8 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 
--- start lsp config
-require("mason-null-ls").setup()
-local null_ls = require("null-ls")
-
-null_ls.setup({
-	sources = {
-		null_ls.builtins.diagnostics.hadolint,
-		null_ls.builtins.formatting.isort,
-		null_ls.builtins.formatting.prettier,
-		null_ls.builtins.formatting.shfmt,
-		null_ls.builtins.formatting.stylua,
-	},
-})
-
-require("mason-null-ls").setup({
-	ensure_installed = nil,
-	automatic_installation = true,
-})
-
-local lsp_zero = require("lsp-zero")
+-- START LSP-ZERO v4
 local cmp = require("cmp")
-
 cmp.setup({
 	preselect = "item",
 	completion = {
@@ -348,91 +327,121 @@ cmp.setup({
 	},
 })
 
-require("mason").setup({})
-require("mason-lspconfig").setup({
-	ensure_installed = {},
-	handlers = {
-		lsp_zero.default_setup,
-		["lua_ls"] = function()
-			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({
-				settings = {
-					Lua = {
-						format = { enable = false },
-						workspace = { checkThirdParty = "Disable" },
-						telemetry = { enable = false },
-						diagnostics = {
-							globals = { "vim" },
-						},
-					},
-				},
-			})
-		end,
-		["gopls"] = function()
-			local lspconfig = require("lspconfig")
-			lspconfig.gopls.setup({
-				settings = {
-					gopls = {
-						hints = {
-							assignVariableTypes = true,
-							compositeLiteralFields = true,
-							compositeLiteralTypes = true,
-							constantValues = true,
-							functionTypeParameters = true,
-							parameterNames = true,
-							rangeVariableTypes = true,
-						},
-					},
-				},
-			})
-		end,
-		["helm_ls"] = function()
-			local lspconfig = require("lspconfig")
-			lspconfig.helm_ls.setup({
-				settings = {
-					["helm-ls"] = {
-						yamlls = {
-							path = "yaml-language-server",
-							config = {
-								schemas = {
-									["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.28.11-standalone-strict/_definitions.json"] = "**/templates/**",
-								},
-							},
-						},
-					},
-				},
-			})
-		end,
+-- Reserve a space in the gutter
+-- This will avoid an annoying layout shift in the screen
+vim.opt.signcolumn = "yes"
+
+-- Add borders to floating windows
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+
+-- Add cmp_nvim_lsp capabilities settings to lspconfig
+-- This should be executed before you configure any language server
+local lspconfig_defaults = require("lspconfig").util.default_config
+lspconfig_defaults.capabilities =
+	vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+
+-- This is where you enable features that only work
+-- if there is a language server active in the file
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(event)
+		-- keymaps for LSP only
+		local opts = { buffer = event.buf }
+		vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+		vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
+		vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
+		vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
+		vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
+		vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
+		vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
+		vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+		vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+		vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+		-- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+
+		vim.keymap.set("n", "<leader>F", "<cmd>:LspZeroFormat<CR>", { buffer = true })
+
+		-- 	DOESN'T WORK YET
+		-- 	-- Create a command `:Format` local to the LSP buffer
+		-- 	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+		-- 		vim.lsp.buf.format({ async = true, timeout_ms = 10000 })
+		-- 	end, { desc = "Format current buffer with LSP" })
+		--
+		-- 	vim.api.nvim_buf_create_user_command(bufnr, "ToggleInlayHints", function(_)
+		-- 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), { bufnr })
+		-- 	end, { desc = "Toggle Inlay Hints" })
+		--
+		-- 	vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
+		-- 	vim.keymap.set("n", "<leader>li", "<cmd>:ToggleInlayHints<CR>", { buffer = true })
+
+		--  maybe not needed?
+		vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+			virtual_text = false,
+			update_in_insert = true,
+			underline = false,
+		})
+	end,
+})
+
+local null_ls = require("null-ls")
+null_ls.setup({
+	sources = {
+		null_ls.builtins.diagnostics.hadolint,
+		null_ls.builtins.formatting.isort,
+		null_ls.builtins.formatting.prettier,
+		null_ls.builtins.formatting.shfmt,
+		null_ls.builtins.formatting.stylua,
 	},
 })
 
-lsp_zero.on_attach(function(_, bufnr)
-	-- see :help lsp-zero-keybindings
-	-- to learn the available actions
-	lsp_zero.default_keymaps({ buffer = bufnr })
-
-	vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", { buffer = true })
-	vim.keymap.set("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { buffer = true })
-	vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
-
-	-- Create a command `:Format` local to the LSP buffer
-	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		vim.lsp.buf.format({ async = true, timeout_ms = 10000 })
-	end, { desc = "Format current buffer with LSP" })
-
-	vim.api.nvim_buf_create_user_command(bufnr, "ToggleInlayHints", function(_)
-		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), { bufnr })
-	end, { desc = "Toggle Inlay Hints" })
-
-	vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
-	vim.keymap.set("n", "<leader>li", "<cmd>:ToggleInlayHints<CR>", { buffer = true })
-
-	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-		virtual_text = false,
-		update_in_insert = true,
-		underline = false,
-	})
-end)
+local lspconfig = require("lspconfig")
+lspconfig.gopls.setup({
+	settings = {
+		gopls = {
+			hints = {
+				assignVariableTypes = true,
+				compositeLiteralFields = true,
+				compositeLiteralTypes = true,
+				constantValues = true,
+				functionTypeParameters = true,
+				parameterNames = true,
+				rangeVariableTypes = true,
+			},
+		},
+	},
+})
+lspconfig.helm_ls.setup({
+	settings = {
+		["helm-ls"] = {
+			yamlls = {
+				path = "yaml-language-server",
+				config = {
+					schemas = {
+						["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.28.11-standalone-strict/_definitions.json"] = "**/templates/**",
+					},
+				},
+			},
+		},
+	},
+})
+lspconfig.bashls.setup({})
+lspconfig.yamlls.setup({})
+lspconfig.ruff.setup({})
+lspconfig.pyright.setup({})
+lspconfig.lua_ls.setup({
+	settings = {
+		Lua = {
+			format = { enable = false },
+			workspace = { checkThirdParty = "Disable" },
+			telemetry = { enable = false },
+			diagnostics = {
+				globals = { "vim" },
+			},
+		},
+	},
+})
+-- END LSP-ZERO v4
 
 -- set sign icons
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
@@ -493,6 +502,7 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
 vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<CR>", opts)
 vim.keymap.set("n", "q", "<Nop>", opts) -- disable macros
+vim.keymap.set("n", "<F1>", "<Nop>", opts) -- disable f1 help]
 vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", opts)
 vim.keymap.set(
 	"n",
@@ -527,3 +537,6 @@ vim.keymap.set("n", "_", "<cmd>:Neotree toggle reveal<CR>", opts)
 -- wuickfix stuff
 vim.keymap.set("n", "<leader>cn", "<cmd>:cnext<CR>")
 vim.keymap.set("n", "<leader>cp", "<cmd>:cprev<CR>")
+
+-- git browse
+vim.keymap.set("n", "<leader>B", "<cmd>:GBrowse<CR>")

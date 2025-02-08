@@ -218,16 +218,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{
-		"utilyre/barbecue.nvim",
-		name = "barbecue",
-		version = "*",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		opts = {},
-	},
 	{ "windwp/nvim-autopairs", opts = {} },
 	{ "kylechui/nvim-surround", opts = {} },
 	{
@@ -240,6 +230,9 @@ require("lazy").setup({
 		config = function()
 			require("scope").setup()
 		end,
+	},
+	{
+		"Bekaboo/dropbar.nvim",
 	},
 }, {})
 
@@ -357,7 +350,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 		vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
 		vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+		vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
 		-- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 
 		vim.keymap.set("n", "<leader>F", "<cmd>:LspZeroFormat<CR>", { buffer = true })
@@ -418,7 +411,7 @@ lspconfig.helm_ls.setup({
 				path = "yaml-language-server",
 				config = {
 					schemas = {
-						["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.28.11-standalone-strict/_definitions.json"] = "**/templates/**",
+						["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.29.12-standalone-strict/_definitions.json"] = "**/templates/**",
 					},
 				},
 			},

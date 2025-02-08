@@ -1,4 +1,4 @@
-font-family = "Hack Nerd Font"
+font-family = "JetbrainsMono Nerd Font"
 font-thicken = true
 theme = "catppuccin-macchiato"
 bold-is-bright = true
@@ -8,3 +8,5 @@ keybind = global:alt+`=toggle_quick_terminal
 quick-terminal-animation-duration = 0.1
 
 confirm-close-surface = false
+
+split-divider-color = "#939ab7"

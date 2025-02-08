@@ -3,12 +3,8 @@
 	"terminals": [
 		{
 			"name": "iTerm",
-			"cmd": [
-				"open",
-				"-a",
-				"iTerm",
-				"$cwd"
-			],
+            "cmd": ["open", "-a", "iTerm", "$cwd"],
+
 			"platform": "osx"
 		},
 	],

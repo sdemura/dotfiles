@@ -4,7 +4,6 @@
 	[
 		"FindInFiles-addon",
 		"Jinja2",
-		"LSP-bash",
 		"LSP-json",
 		"LSP-pyright",
 	],
@@ -32,6 +31,7 @@
 		"LSP-gopls",
 		"LSP-json",
 		"LSP-lua",
+		"LSP-pylsp",
 		"LSP-pyright",
 		"LSP-yaml",
 		"MarkdownPreview",

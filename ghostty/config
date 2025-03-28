@@ -1,5 +1,6 @@
 font-family = "JetbrainsMono Nerd Font"
 font-thicken = true
+font-size = 12
 theme = "catppuccin-macchiato"
 bold-is-bright = true
 macos-option-as-alt = true
@@ -10,3 +11,4 @@ quick-terminal-animation-duration = 0.1
 confirm-close-surface = false
 
 split-divider-color = "#939ab7"
+

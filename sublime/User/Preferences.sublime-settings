@@ -3,7 +3,6 @@
 		"FindInFiles-addon",
 		"Jinja2",
 		"LSP-json",
-		"LSP-pyright",
 		"Vintage",
 	],
 	"theme": "Adaptive.sublime-theme",
@@ -51,4 +50,5 @@
 	"word_separators": "./\\()\"':,.;<>~!@#$%^&*|+=[]{}`~?",
 	"sub_word_separators": "-_",
 	// "draw_white_space": ["all_tabs", "selection"]
+	"disable_plugin_host_3.3": true,
 }

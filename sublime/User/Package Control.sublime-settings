@@ -5,7 +5,6 @@
 		"FindInFiles-addon",
 		"Jinja2",
 		"LSP-json",
-		"LSP-pyright",
 	],
 	"installed_packages":
 	[
@@ -32,7 +31,7 @@
 		"LSP-json",
 		"LSP-lua",
 		"LSP-pylsp",
-		"LSP-pyright",
+		"LSP-ruff",
 		"LSP-yaml",
 		"MarkdownPreview",
 		"Origami",

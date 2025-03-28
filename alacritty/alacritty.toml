@@ -50,4 +50,4 @@ dynamic_title = true
 option_as_alt = "Both"
 
 [general]
-import = ["/Users/sean/.dotfiles/alacritty/themes/catppuccin_mocha.toml"]
+import = ["/Users/sean/.dotfiles/alacritty/themes/catppuccin_macchiato.toml"]

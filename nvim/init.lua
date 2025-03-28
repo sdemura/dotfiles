@@ -45,6 +45,9 @@ require("lazy").setup({
 		opts = {
 			notification = {
 				override_vim_notify = true,
+				window = {
+					winblend = 0,
+				},
 			},
 		},
 	},
@@ -69,12 +72,35 @@ require("lazy").setup({
 
 	{ "lewis6991/gitsigns.nvim", opts = {}, priority = 1002 },
 	{ "vladdoster/remember.nvim", opts = {} },
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		opts = {
+			integrations = {
+				colorful_winsep = {
+					enabled = true,
+					color = "text",
+				},
+				mini = {
+					indentscope_color = "lavendar",
+				},
+				hop = true,
+				window_picker = true,
+				fidget = true,
+				dropbar = {
+					enabled = true,
+					color_mode = false,
+				},
+			},
+		},
+	},
 	{
 		"nvim-lualine/lualine.nvim",
 		-- lazy = false,
 		opts = {
 			options = {
+				theme = "catppuccin",
 				icons_enabled = true,
 				component_separators = "|",
 				section_separators = "",
@@ -222,6 +248,7 @@ require("lazy").setup({
 	{ "kylechui/nvim-surround", opts = {} },
 	{
 		"akinsho/bufferline.nvim",
+		after = "catppuccin",
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
 	},
@@ -232,7 +259,24 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"Bekaboo/dropbar.nvim",
+		"BrunoKrugel/bbq.nvim",
+		name = "barbecue",
+		version = "*",
+		dependencies = {
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		opts = {
+			-- configurations go here
+		},
+	},
+	-- {
+	-- 	"Bekaboo/dropbar.nvim",
+	-- },
+	{ "nvzone/volt", lazy = true },
+	{
+		"nvzone/menu",
+		lazy = true,
 	},
 }, {})
 
@@ -249,6 +293,7 @@ vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.scrolloff = 10
 vim.opt.shiftwidth = 4
+vim.opt.showmode = false
 vim.opt.signcolumn = "yes"
 vim.opt.softtabstop = 4
 vim.opt.splitbelow = true
@@ -324,6 +369,9 @@ cmp.setup({
 -- This will avoid an annoying layout shift in the screen
 vim.opt.signcolumn = "yes"
 
+
+
+
 -- Add borders to floating windows
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
@@ -354,26 +402,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 
 		vim.keymap.set("n", "<leader>F", "<cmd>:LspZeroFormat<CR>", { buffer = true })
-
-		-- 	DOESN'T WORK YET
-		-- 	-- Create a command `:Format` local to the LSP buffer
-		-- 	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		-- 		vim.lsp.buf.format({ async = true, timeout_ms = 10000 })
-		-- 	end, { desc = "Format current buffer with LSP" })
-		--
-		-- 	vim.api.nvim_buf_create_user_command(bufnr, "ToggleInlayHints", function(_)
-		-- 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), { bufnr })
-		-- 	end, { desc = "Toggle Inlay Hints" })
-		--
-		-- 	vim.keymap.set("n", "<leader>F", "<cmd>:Format<CR>", { buffer = true })
-		-- 	vim.keymap.set("n", "<leader>li", "<cmd>:ToggleInlayHints<CR>", { buffer = true })
-
-		--  maybe not needed?
-		vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-			virtual_text = false,
-			update_in_insert = true,
-			underline = false,
-		})
 	end,
 })
 
@@ -436,12 +464,24 @@ lspconfig.lua_ls.setup({
 })
 -- END LSP-ZERO v4
 
--- set sign icons
-local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
+
+-- disable virtualtext
+vim.diagnostic.config({
+	virtual_text = false,
+	virtual_lines = false,
+	update_in_insert = true,
+	underline = false,
+	severity_sort = true,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "󰅚 ",
+			[vim.diagnostic.severity.WARN] = "󰀪 ",
+			[vim.diagnostic.severity.HINT] = "󰌶 ",
+			[vim.diagnostic.severity.INFO] = "  ",
+		},
+	},
+})
+
 -- end lsp config
 
 -- gbrowse to work with gitlab
@@ -473,11 +513,11 @@ end, {})
 -- theme
 vim.cmd.colorscheme("catppuccin-macchiato")
 -- bufferline for tabs only
--- require("bufferline").setup({ options = { mode = "tabs", always_show_bufferline = false } })
 require("bufferline").setup({
 	options = {
 		mode = "tabs",
 		always_show_bufferline = false,
+		highlights = require("catppuccin.groups.integrations.bufferline").get(),
 		offsets = {
 			{
 				filetype = "neo-tree",
@@ -495,7 +535,7 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><C-l><CR>", opts)
 vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<CR>", opts)
 vim.keymap.set("n", "q", "<Nop>", opts) -- disable macros
-vim.keymap.set("n", "<F1>", "<Nop>", opts) -- disable f1 help]
+vim.keymap.set({ "n", "v", "i" }, "<F1>", "<Nop>", opts) -- disable f1 help]
 vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", opts)
 vim.keymap.set(
 	"n",
@@ -527,9 +567,62 @@ vim.keymap.set("n", "s", "<cmd>:HopWord<CR>", opts)
 vim.keymap.set("n", "-", "<cmd>:Neotree toggle<CR>", opts)
 vim.keymap.set("n", "_", "<cmd>:Neotree toggle reveal<CR>", opts)
 
--- wuickfix stuff
+-- quickfix stuff
 vim.keymap.set("n", "<leader>cn", "<cmd>:cnext<CR>")
 vim.keymap.set("n", "<leader>cp", "<cmd>:cprev<CR>")
 
 -- git browse
 vim.keymap.set("n", "<leader>B", "<cmd>:GBrowse<CR>")
+
+-- mouse mode!
+-- mouse users + nvimtree users!
+vim.keymap.set({ "n", "v" }, "<RightMouse>", function()
+	require("menu.utils").delete_old_menus()
+
+	vim.cmd.exec('"normal! \\<RightMouse>"')
+
+	local menu_options = {
+
+		{
+			name = "Format Buffer",
+			cmd = function()
+				vim.lsp.buf.format()
+			end,
+			rtxt = "<leader>fm",
+		},
+		{
+			name = "Code Actions",
+			cmd = vim.lsp.buf.code_action,
+			rtxt = "<leader>ca",
+		},
+		{ name = "separator" },
+		{
+			name = "Goto Definition",
+			cmd = vim.lsp.buf.definition,
+			rtxt = "gd",
+		},
+		{
+			name = "Goto Declaration",
+			cmd = vim.lsp.buf.declaration,
+			rtxt = "gD",
+		},
+		{
+			name = "Goto Implementation",
+			cmd = vim.lsp.buf.implementation,
+			rtxt = "gi",
+		},
+		{ name = "separator" },
+		{
+			name = "Show signature help",
+			cmd = vim.lsp.buf.signature_help,
+			rtxt = "gs",
+		},
+		{
+			name = "Find References",
+			cmd = vim.lsp.buf.references,
+			rtxt = "gr",
+		},
+	}
+
+	require("menu").open(menu_options, { mouse = true })
+end, {})

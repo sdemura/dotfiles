@@ -270,14 +270,6 @@ require("lazy").setup({
 			-- configurations go here
 		},
 	},
-	-- {
-	-- 	"Bekaboo/dropbar.nvim",
-	-- },
-	{ "nvzone/volt", lazy = true },
-	{
-		"nvzone/menu",
-		lazy = true,
-	},
 }, {})
 
 --- options
@@ -289,6 +281,7 @@ vim.opt.expandtab = true
 vim.opt.inccommand = "nosplit"
 vim.opt.linebreak = true
 vim.opt.list = true
+vim.opt.mousemodel = "extend"
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.scrolloff = 10
@@ -369,9 +362,6 @@ cmp.setup({
 -- This will avoid an annoying layout shift in the screen
 vim.opt.signcolumn = "yes"
 
-
-
-
 -- Add borders to floating windows
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
@@ -381,29 +371,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 local lspconfig_defaults = require("lspconfig").util.default_config
 lspconfig_defaults.capabilities =
 	vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
-
--- This is where you enable features that only work
--- if there is a language server active in the file
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(event)
-		-- keymaps for LSP only
-		local opts = { buffer = event.buf }
-		vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-		vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-		vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
-		vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
-		vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
-		vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
-		vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-		vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-		vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-		vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-		vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
-		-- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-
-		vim.keymap.set("n", "<leader>F", "<cmd>:LspZeroFormat<CR>", { buffer = true })
-	end,
-})
 
 local null_ls = require("null-ls")
 null_ls.setup({
@@ -462,25 +429,51 @@ lspconfig.lua_ls.setup({
 		},
 	},
 })
--- END LSP-ZERO v4
 
+-- This is where you enable features that only work
+-- if there is a language server active in the file
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(event)
+		-- keymaps for LSP only
+		local opts = { buffer = event.buf }
+		vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+		vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
+		vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
+		vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
+		vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
+		vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
+		vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
+		vim.keymap.set("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+		vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+		vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+		vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
+		-- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 
--- disable virtualtext
-vim.diagnostic.config({
-	virtual_text = false,
-	virtual_lines = false,
-	update_in_insert = true,
-	underline = false,
-	severity_sort = true,
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = "󰅚 ",
-			[vim.diagnostic.severity.WARN] = "󰀪 ",
-			[vim.diagnostic.severity.HINT] = "󰌶 ",
-			[vim.diagnostic.severity.INFO] = "  ",
-		},
-	},
+		vim.keymap.set("n", "<leader>F", "<cmd>:LspZeroFormat<CR>", { buffer = true })
+		--
+		-- disable virtualtext
+		-- not sure why this has to be in LspAttach, but whatever?
+		vim.diagnostic.config({
+			virtual_text = false,
+			-- virtual_lines = {
+			-- 	current_line = false,
+			-- },
+			update_in_insert = false,
+			underline = false,
+			severity_sort = true,
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = "󰅚",
+					[vim.diagnostic.severity.WARN] = "󰀪",
+					[vim.diagnostic.severity.HINT] = "󰌶",
+					[vim.diagnostic.severity.INFO] = " ",
+				},
+			},
+		})
+	end,
 })
+
+-- END LSP-ZERO v4
 
 -- end lsp config
 
@@ -511,7 +504,7 @@ vim.api.nvim_create_user_command("CdGitRoot", function()
 end, {})
 
 -- theme
-vim.cmd.colorscheme("catppuccin-macchiato")
+vim.cmd.colorscheme("catppuccin-frappe")
 -- bufferline for tabs only
 require("bufferline").setup({
 	options = {
@@ -574,55 +567,26 @@ vim.keymap.set("n", "<leader>cp", "<cmd>:cprev<CR>")
 -- git browse
 vim.keymap.set("n", "<leader>B", "<cmd>:GBrowse<CR>")
 
--- mouse mode!
--- mouse users + nvimtree users!
-vim.keymap.set({ "n", "v" }, "<RightMouse>", function()
-	require("menu.utils").delete_old_menus()
+--
+vim.keymap.set("n", "gK", function()
+	local new_config = not vim.diagnostic.config().virtual_lines
+	vim.diagnostic.config({ virtual_lines = new_config })
+end, { desc = "Toggle diagnostic virtual_lines" })
 
-	vim.cmd.exec('"normal! \\<RightMouse>"')
-
-	local menu_options = {
-
-		{
-			name = "Format Buffer",
-			cmd = function()
-				vim.lsp.buf.format()
-			end,
-			rtxt = "<leader>fm",
+vim.diagnostic.config({
+	virtual_text = false,
+	-- virtual_lines = {
+	-- 	current_line = false,
+	-- },
+	update_in_insert = false,
+	underline = false,
+	severity_sort = true,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "󰅚",
+			[vim.diagnostic.severity.WARN] = "󰀪",
+			[vim.diagnostic.severity.HINT] = "󰌶",
+			[vim.diagnostic.severity.INFO] = " ",
 		},
-		{
-			name = "Code Actions",
-			cmd = vim.lsp.buf.code_action,
-			rtxt = "<leader>ca",
-		},
-		{ name = "separator" },
-		{
-			name = "Goto Definition",
-			cmd = vim.lsp.buf.definition,
-			rtxt = "gd",
-		},
-		{
-			name = "Goto Declaration",
-			cmd = vim.lsp.buf.declaration,
-			rtxt = "gD",
-		},
-		{
-			name = "Goto Implementation",
-			cmd = vim.lsp.buf.implementation,
-			rtxt = "gi",
-		},
-		{ name = "separator" },
-		{
-			name = "Show signature help",
-			cmd = vim.lsp.buf.signature_help,
-			rtxt = "gs",
-		},
-		{
-			name = "Find References",
-			cmd = vim.lsp.buf.references,
-			rtxt = "gr",
-		},
-	}
-
-	require("menu").open(menu_options, { mouse = true })
-end, {})
+	},
+})

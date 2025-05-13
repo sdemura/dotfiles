@@ -11,6 +11,8 @@
   "inhibit_snippet_completions": true,
   // "show_code_actions": "bulb",
   "show_inlay_hints": true,
+  "show_multiline_diagnostics_highlights": false,
+
   "clients": {
     "helm-ls": {
       "enabled": true,

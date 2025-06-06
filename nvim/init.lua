@@ -125,7 +125,7 @@ require("lazy").setup({
 					["--info"] = "default",
 				},
 				grep = {
-					rg_opts = [[--hidden --column -g "!.git" --line-number --no-heading --color=always --smart-case --max-columns=4096]],
+					rg_opts = [[--hidden --column -g "!.git" --line-number --no-heading --no-ignore-vcs --color=always --smart-case --max-columns=4096]],
 				},
 				keymap = {
 					fzf = {

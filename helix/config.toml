@@ -1,4 +1,4 @@
-theme = "catppuccin_macchiato"
+theme = "catppuccin_frappe"
 
 [editor]
 line-number = "relative"
@@ -7,8 +7,6 @@ cursorline = true
 color-modes = true
 completion-trigger-len = 1
 idle-timeout = 0
-bufferline = "multiple"
-mouse = false
 
 [editor.file-picker]
 hidden = false
@@ -18,7 +16,7 @@ git-ignore = false
 [editor.lsp]
 display-messages = true
 snippets = false
-display-inlay-hints = true
+display-inlay-hints = false
 
 [editor.statusline]
 mode.normal = "NORMAL"
@@ -47,6 +45,10 @@ skip-levels = 1
 "{" = ["goto_prev_paragraph"]
 "}" = ["goto_next_paragraph"]
 "C-6" = ["goto_last_accessed_file"]
+
+[keys.normal."space"]
+o = "file_picker_in_current_buffer_directory"
+H = ":toggle lsp.display-inlay-hints"
 
 [keys.insert]
 C-h = "delete_char_backward" # Most terminals do this by default.

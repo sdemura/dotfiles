@@ -341,6 +341,10 @@ local on_attach = function(_, bufnr)
 		vim.diagnostic.config({ virtual_lines = not current_config })
 	end, { desc = "Toggle diagnostic virtual text" })
 
+	vim.keymap.set("n", "gH", function()
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+	end, { desc = "Toggle inlay hints" })
+
 	vim.diagnostic.config({
 		virtual_text = false,
 		virtual_lines = false,

@@ -59,10 +59,10 @@ require("lazy").setup({
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 			},
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = true,
-			},
+			-- format_on_save = {
+			-- 	timeout_ms = 500,
+			-- 	lsp_fallback = true,
+			-- },
 		},
 	},
 
@@ -124,11 +124,11 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("fzf-lua").setup({
-				files = { fd_opts = [[--color=never --type f --type l --exclude .git --hidden --no-ignore --follow]] },
+				files = { fd_opts = [[--color=never --type f --type l --exclude .git --exclude .venv --exclude .ruff_cache --hidden --no-ignore --follow]] },
 				winopts = { preview = { layout = "vertical" } },
 				fzf_opts = { ["--info"] = "default" },
 				grep = {
-					rg_opts = [[--hidden --column -g "!.git" --line-number --no-heading --no-ignore-vcs --color=always --smart-case --max-columns=4096]],
+					rg_opts = [[--hidden --column -g '!.venv' -g "!.git" --line-number --no-heading --no-ignore-vcs --color=always --smart-case --max-columns=4096]],
 				},
 				keymap = { fzf = { ["ctrl-q"] = "select-all+accept" } },
 			})
@@ -229,6 +229,7 @@ require("lazy").setup({
 		dependencies = { "SmiteshP/nvim-navic", "nvim-tree/nvim-web-devicons" },
 		opts = {},
 	},
+	{ "b0o/schemastore.nvim" },
 }, {})
 
 --- Options ---
@@ -320,30 +321,50 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 -- Callback function executed when an LSP client attaches to a buffer.
 local on_attach = function(_, bufnr)
 	local opts = { buffer = bufnr, noremap = true, silent = true }
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show hover information", buffer = bufnr }) -- Show hover information for the word under the cursor
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition", buffer = bufnr }) -- Go to definition
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration", buffer = bufnr }) -- Go to declaration
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation", buffer = bufnr }) -- Go to implementation
-	vim.keymap.set("n", "go", vim.lsp.buf.type_definition, { desc = "Go to type definition", buffer = bufnr }) -- Go to type definition
-	vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "List references", buffer = bufnr }) -- List references
-	vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, { desc = "Show signature help", buffer = bufnr }) -- Show signature help
-	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, { desc = "Rename symbol", buffer = bufnr }) -- Rename symbol
-	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Trigger code action", buffer = bufnr }) -- Trigger code action
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", { desc = "Show hover information" }, opts))
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", { desc = "Go to definition" }, opts))
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", { desc = "Go to declaration" }, opts))
+	vim.keymap.set(
+		"n",
+		"gi",
+		vim.lsp.buf.implementation,
+		vim.tbl_extend("force", { desc = "Go to implementation" }, opts)
+	)
+	vim.keymap.set(
+		"n",
+		"go",
+		vim.lsp.buf.type_definition,
+		vim.tbl_extend("force", { desc = "Go to type definition" }, opts)
+	)
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", { desc = "List references" }, opts))
+	vim.keymap.set(
+		"n",
+		"gs",
+		vim.lsp.buf.signature_help,
+		vim.tbl_extend("force", { desc = "Show signature help" }, opts)
+	)
+	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, vim.tbl_extend("force", { desc = "Rename symbol" }, opts))
+	vim.keymap.set(
+		"n",
+		"<leader>ca",
+		vim.lsp.buf.code_action,
+		vim.tbl_extend("force", { desc = "Trigger code action" }, opts)
+	)
 	vim.keymap.set(
 		"n",
 		"<leader>e",
 		vim.diagnostic.open_float,
-		{ desc = "Open floating diagnostic window", buffer = bufnr }
-	) -- Open floating diagnostic window
+		vim.tbl_extend("force", { desc = "Open floating diagnostic window" }, opts)
+	)
 
 	vim.keymap.set("n", "gK", function()
 		local current_config = vim.diagnostic.config().virtual_lines
 		vim.diagnostic.config({ virtual_lines = not current_config })
-	end, { desc = "Toggle diagnostic virtual text" })
+	end, vim.tbl_extend("force", { desc = "Toggle diagnostic virtual text" }, opts))
 
 	vim.keymap.set("n", "gH", function()
 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-	end, { desc = "Toggle inlay hints" })
+	end, vim.tbl_extend("force", { desc = "Toggle inlay hints" }, opts))
 
 	vim.diagnostic.config({
 		virtual_text = false,
@@ -406,8 +427,29 @@ local servers = {
 		},
 	},
 	bashls = {},
-	yamlls = {},
+	yamlls = {
+		settings = {
+			yaml = {
+				schemaStore = {
+					-- You must disable built-in schemaStore support if you want to use
+					-- this plugin and its advanced options like `ignore`.
+					enable = false,
+					-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+					url = "",
+				},
+				schemas = require("schemastore").yaml.schemas(),
+			},
+		},
+	},
 	ruff = {},
+	jsonls = {
+		settings = {
+			json = {
+				schemas = require("schemastore").json.schemas(),
+				validate = { enable = true },
+			},
+		},
+	},
 	pyright = {},
 }
 
@@ -418,17 +460,20 @@ for server_name, custom_opts in pairs(servers) do
 	}, custom_opts or {}))
 end
 
--- Custom Commands & Autocommands
-vim.api.nvim_create_user_command("Browse", function(gopts)
-	vim.fn.system({ "open", gopts.fargs[1] })
-end, { nargs = 1, desc = "Open given URL in default browser" })
+-- autoformat go
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*.go",
+	callback = function(args)
+		require("conform").format({ bufnr = args.buf })
+	end,
+})
 
 vim.api.nvim_create_autocmd(
 	"BufWritePre",
 	{ command = ":lua MiniTrailspace.trim()", desc = "Trim trailing whitespace" }
 )
 
-vim.api.nvim_create_user_command("CdGitRoot", function()
+vim.api.nvim_create_user_command("GitRoot", function()
 	local handle = io.popen("git rev-parse --show-toplevel 2> /dev/null")
 	local git_root = ""
 	if handle then -- Check if handle is not nil
@@ -445,7 +490,7 @@ vim.api.nvim_create_user_command("CdGitRoot", function()
 end, { desc = "Change current directory to Git repository root" })
 
 -- Final Setup (Theme, UI, Keymaps)
-vim.cmd.colorscheme("catppuccin-frappe")
+vim.cmd.colorscheme("catppuccin-macchiato")
 
 require("bufferline").setup({
 	options = {

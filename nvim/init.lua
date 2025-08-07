@@ -59,10 +59,6 @@ require("lazy").setup({
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 			},
-			-- format_on_save = {
-			-- 	timeout_ms = 500,
-			-- 	lsp_fallback = true,
-			-- },
 		},
 	},
 
@@ -71,14 +67,6 @@ require("lazy").setup({
 		"j-hui/fidget.nvim",
 		opts = { notification = { override_vim_notify = true, window = { winblend = 0 } } },
 	},
-	-- {
-	-- 	"ray-x/go.nvim",
-	-- 	dependencies = { "ray-x/guihua.lua", "neovim/nvim-lspconfig", "nvim-treesitter/nvim-treesitter" },
-	-- 	opts = { lsp_inlay_hints = { enable = false } },
-	-- 	ft = { "go", "gomod" },
-	-- 	build = ':lua require("go.install").update_all_sync()',
-	-- },
-
 	{ "lewis6991/gitsigns.nvim", opts = {} },
 	{ "vladdoster/remember.nvim", opts = {} },
 	{
@@ -321,35 +309,37 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 -- Callback function executed when an LSP client attaches to a buffer.
 local on_attach = function(_, bufnr)
 	local opts = { buffer = bufnr, noremap = true, silent = true }
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", { desc = "Show hover information" }, opts))
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", { desc = "Go to definition" }, opts))
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", { desc = "Go to declaration" }, opts))
-	vim.keymap.set(
-		"n",
-		"gi",
-		vim.lsp.buf.implementation,
-		vim.tbl_extend("force", { desc = "Go to implementation" }, opts)
-	)
-	vim.keymap.set(
-		"n",
-		"go",
-		vim.lsp.buf.type_definition,
-		vim.tbl_extend("force", { desc = "Go to type definition" }, opts)
-	)
-	vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", { desc = "List references" }, opts))
-	vim.keymap.set(
-		"n",
-		"gs",
-		vim.lsp.buf.signature_help,
-		vim.tbl_extend("force", { desc = "Show signature help" }, opts)
-	)
-	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, vim.tbl_extend("force", { desc = "Rename symbol" }, opts))
-	vim.keymap.set(
-		"n",
-		"<leader>ca",
-		vim.lsp.buf.code_action,
-		vim.tbl_extend("force", { desc = "Trigger code action" }, opts)
-	)
+	-- K, gd, and gD are now defaults in Neovim 0.11.x, no need to define them
+	
+	-- gi conflicts with new default 'gri' - show helpful message
+	vim.keymap.set("n", "gi", function()
+		vim.notify("Use 'gri' for implementation (Neovim 0.11.x default)", vim.log.levels.INFO)
+	end, vim.tbl_extend("force", { desc = "Implementation (use gri in 0.11.x)" }, opts))
+	
+	-- go conflicts with new default 'grt' - show helpful message
+	vim.keymap.set("n", "go", function()
+		vim.notify("Use 'grt' for type definition (Neovim 0.11.x default)", vim.log.levels.INFO)
+	end, vim.tbl_extend("force", { desc = "Type definition (use grt in 0.11.x)" }, opts))
+	
+	-- gr conflicts with new default 'grr' - show helpful message
+	vim.keymap.set("n", "gr", function()
+		vim.notify("Use 'grr' for references (Neovim 0.11.x default)", vim.log.levels.INFO)
+	end, vim.tbl_extend("force", { desc = "References (use grr in 0.11.x)" }, opts))
+	
+	-- gs conflicts with new default '<C-S>' in insert mode - show helpful message
+	vim.keymap.set("n", "gs", function()
+		vim.notify("Use '<C-S>' in insert mode for signature help (Neovim 0.11.x default)", vim.log.levels.INFO)
+	end, vim.tbl_extend("force", { desc = "Signature help (use <C-S> in insert mode)" }, opts))
+	
+	-- <space>rn conflicts with new default 'grn' - show helpful message
+	vim.keymap.set("n", "<space>rn", function()
+		vim.notify("Use 'grn' for rename (Neovim 0.11.x default)", vim.log.levels.INFO)
+	end, vim.tbl_extend("force", { desc = "Rename symbol (use grn in 0.11.x)" }, opts))
+	
+	-- <leader>ca conflicts with new default 'gra' - show helpful message
+	vim.keymap.set("n", "<leader>ca", function()
+		vim.notify("Use 'gra' for code action (Neovim 0.11.x default)", vim.log.levels.INFO)
+	end, vim.tbl_extend("force", { desc = "Code action (use gra in 0.11.x)" }, opts))
 	vim.keymap.set(
 		"n",
 		"<leader>e",
@@ -460,7 +450,8 @@ for server_name, custom_opts in pairs(servers) do
 	}, custom_opts or {}))
 end
 
--- autoformat go
+-- autoformat go and only go as I do not want to use
+-- autoformat with conform for all filetypes; just go.
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*.go",
 	callback = function(args)

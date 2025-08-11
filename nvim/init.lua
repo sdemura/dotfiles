@@ -31,7 +31,6 @@ require("lazy").setup({
 	{ "yorickpeterse/nvim-tree-pairs", opts = {} },
 
 	-- LSP, Completion, and Formatter Plugins
-	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/nvim-cmp" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/cmp-buffer" },
@@ -61,8 +60,6 @@ require("lazy").setup({
 			},
 		},
 	},
-
-	{ "folke/neodev.nvim", opts = {} },
 	{
 		"j-hui/fidget.nvim",
 		opts = { notification = { override_vim_notify = true, window = { winblend = 0 } } },
@@ -112,11 +109,13 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("fzf-lua").setup({
-				files = { fd_opts = [[--color=never --type f --type l --exclude .git --exclude .venv --exclude .ruff_cache --hidden --no-ignore --follow]] },
+				files = {
+					fd_opts = [[--color=never --type f --type l --exclude .git --exclude .venv --exclude .ruff_cache --exclude .mypy_cache --hidden --no-ignore --follow]],
+				},
 				winopts = { preview = { layout = "vertical" } },
 				fzf_opts = { ["--info"] = "default" },
 				grep = {
-					rg_opts = [[--hidden --column -g '!.venv' -g "!.git" --line-number --no-heading --no-ignore-vcs --color=always --smart-case --max-columns=4096]],
+					rg_opts = [[--hidden --column -g '!.venv' -g "!.git" -g "!.ruff_cache" -g "!.mypy_cache" --line-number --no-heading --no-ignore-vcs --color=always --smart-case --max-columns=4096]],
 				},
 				keymap = { fzf = { ["ctrl-q"] = "select-all+accept" } },
 			})
@@ -248,6 +247,10 @@ vim.opt.updatetime = 250
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
 vim.opt.wrap = false
 
+-- Modern 0.11.x options
+-- vim.opt.winborder = "rounded" -- Default rounded borders for floating windows
+-- vim.opt.completeopt:append("fuzzy") -- Enable fuzzy completion
+
 -- Disable specific built-in plugins
 vim.g.editorconfig = false
 vim.g.loaded_man = false
@@ -270,7 +273,6 @@ vim.g.loaded_node_provider = 0
 
 -- LSP & COMPLETION SETUP
 local cmp = require("cmp")
-local lspconfig = require("lspconfig")
 local lspkind = require("lspkind")
 
 -- nvim-cmp setup
@@ -302,153 +304,87 @@ cmp.setup({
 	},
 })
 
--- Add rounded borders to LSP floating windows.
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+-- Global LSP configuration (applies to all servers)
+vim.lsp.config("*", {
+	on_attach = function(_, bufnr)
+		local opts = { buffer = bufnr, noremap = true, silent = true }
+		-- K, gd, and gD are now defaults in Neovim 0.11.x, no need to define them
 
--- Callback function executed when an LSP client attaches to a buffer.
-local on_attach = function(_, bufnr)
-	local opts = { buffer = bufnr, noremap = true, silent = true }
-	-- K, gd, and gD are now defaults in Neovim 0.11.x, no need to define them
-	
-	-- gi conflicts with new default 'gri' - show helpful message
-	vim.keymap.set("n", "gi", function()
-		vim.notify("Use 'gri' for implementation (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Implementation (use gri in 0.11.x)" }, opts))
-	
-	-- go conflicts with new default 'grt' - show helpful message
-	vim.keymap.set("n", "go", function()
-		vim.notify("Use 'grt' for type definition (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Type definition (use grt in 0.11.x)" }, opts))
-	
-	-- gr conflicts with new default 'grr' - show helpful message
-	vim.keymap.set("n", "gr", function()
-		vim.notify("Use 'grr' for references (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "References (use grr in 0.11.x)" }, opts))
-	
-	-- gs conflicts with new default '<C-S>' in insert mode - show helpful message
-	vim.keymap.set("n", "gs", function()
-		vim.notify("Use '<C-S>' in insert mode for signature help (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Signature help (use <C-S> in insert mode)" }, opts))
-	
-	-- <space>rn conflicts with new default 'grn' - show helpful message
-	vim.keymap.set("n", "<space>rn", function()
-		vim.notify("Use 'grn' for rename (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Rename symbol (use grn in 0.11.x)" }, opts))
-	
-	-- <leader>ca conflicts with new default 'gra' - show helpful message
-	vim.keymap.set("n", "<leader>ca", function()
-		vim.notify("Use 'gra' for code action (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Code action (use gra in 0.11.x)" }, opts))
-	vim.keymap.set(
-		"n",
-		"<leader>e",
-		vim.diagnostic.open_float,
-		vim.tbl_extend("force", { desc = "Open floating diagnostic window" }, opts)
-	)
+		-- gi conflicts with new default 'gri' - show helpful message
+		vim.keymap.set("n", "gi", function()
+			vim.notify("Use 'gri' for implementation (Neovim 0.11.x default)", vim.log.levels.INFO)
+		end, vim.tbl_extend("force", { desc = "Implementation (use gri in 0.11.x)" }, opts))
 
-	vim.keymap.set("n", "gK", function()
-		local current_config = vim.diagnostic.config().virtual_lines
-		vim.diagnostic.config({ virtual_lines = not current_config })
-	end, vim.tbl_extend("force", { desc = "Toggle diagnostic virtual text" }, opts))
+		-- go conflicts with new default 'grt' - show helpful message
+		vim.keymap.set("n", "go", function()
+			vim.notify("Use 'grt' for type definition (Neovim 0.11.x default)", vim.log.levels.INFO)
+		end, vim.tbl_extend("force", { desc = "Type definition (use grt in 0.11.x)" }, opts))
 
-	vim.keymap.set("n", "gH", function()
-		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-	end, vim.tbl_extend("force", { desc = "Toggle inlay hints" }, opts))
+		-- gr conflicts with new default 'grr' - show helpful message
+		vim.keymap.set("n", "gr", function()
+			vim.notify("Use 'grr' for references (Neovim 0.11.x default)", vim.log.levels.INFO)
+		end, vim.tbl_extend("force", { desc = "References (use grr in 0.11.x)" }, opts))
 
-	vim.diagnostic.config({
-		virtual_text = false,
-		virtual_lines = false,
-		update_in_insert = false,
-		underline = true,
-		severity_sort = true,
-		signs = {
-			text = {
-				[vim.diagnostic.severity.ERROR] = "󰅚",
-				[vim.diagnostic.severity.WARN] = "󰀪",
-				[vim.diagnostic.severity.HINT] = "󰌶",
-				[vim.diagnostic.severity.INFO] = " ",
-			},
-		},
-	})
-end
+		-- gs conflicts with new default '<C-S>' in insert mode - show helpful message
+		vim.keymap.set("n", "gs", function()
+			vim.notify("Use '<C-S>' in insert mode for signature help (Neovim 0.11.x default)", vim.log.levels.INFO)
+		end, vim.tbl_extend("force", { desc = "Signature help (use <C-S> in insert mode)" }, opts))
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		-- <space>rn conflicts with new default 'grn' - show helpful message
+		vim.keymap.set("n", "<space>rn", function()
+			vim.notify("Use 'grn' for rename (Neovim 0.11.x default)", vim.log.levels.INFO)
+		end, vim.tbl_extend("force", { desc = "Rename symbol (use grn in 0.11.x)" }, opts))
 
--- Define server-specific LSP configurations.
-local servers = {
-	gopls = {
-		settings = {
-			gopls = {
-				hints = {
-					assignVariableTypes = true,
-					compositeLiteralFields = true,
-					compositeLiteralTypes = true,
-					constantValues = true,
-					functionTypeParameters = true,
-					parameterNames = true,
-					rangeVariableTypes = true,
+		-- <leader>ca conflicts with new default 'gra' - show helpful message
+		vim.keymap.set("n", "<leader>ca", function()
+			vim.notify("Use 'gra' for code action (Neovim 0.11.x default)", vim.log.levels.INFO)
+		end, vim.tbl_extend("force", { desc = "Code action (use gra in 0.11.x)" }, opts))
+		vim.keymap.set(
+			"n",
+			"<leader>e",
+			vim.diagnostic.open_float,
+			vim.tbl_extend("force", { desc = "Open floating diagnostic window" }, opts)
+		)
+
+		vim.keymap.set("n", "gK", function()
+			local current_config = vim.diagnostic.config().virtual_lines
+			vim.diagnostic.config({ virtual_lines = not current_config })
+		end, vim.tbl_extend("force", { desc = "Toggle diagnostic virtual text" }, opts))
+
+		vim.keymap.set("n", "gH", function()
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		end, vim.tbl_extend("force", { desc = "Toggle inlay hints" }, opts))
+
+		vim.diagnostic.config({
+			virtual_text = false,
+			virtual_lines = false,
+			update_in_insert = false,
+			underline = true,
+			severity_sort = true,
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = "󰅚",
+					[vim.diagnostic.severity.WARN] = "󰀪",
+					[vim.diagnostic.severity.HINT] = "󰌶",
+					[vim.diagnostic.severity.INFO] = " ",
 				},
 			},
-		},
-	},
-	helm_ls = {
-		settings = {
-			["helm-ls"] = {
-				yamlls = {
-					path = "yaml-language-server",
-					config = {
-						schemas = {
-							["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.29.12-standalone-strict/_definitions.json"] = "**/templates/**",
-						},
-					},
-				},
-			},
-		},
-	},
-	lua_ls = {
-		settings = {
-			Lua = {
-				format = { enable = false },
-				workspace = { checkThirdParty = "Disable" },
-				telemetry = { enable = false },
-				diagnostics = { globals = { "vim" } },
-			},
-		},
-	},
-	bashls = {},
-	yamlls = {
-		settings = {
-			yaml = {
-				schemaStore = {
-					-- You must disable built-in schemaStore support if you want to use
-					-- this plugin and its advanced options like `ignore`.
-					enable = false,
-					-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-					url = "",
-				},
-				schemas = require("schemastore").yaml.schemas(),
-			},
-		},
-	},
-	ruff = {},
-	jsonls = {
-		settings = {
-			json = {
-				schemas = require("schemastore").json.schemas(),
-				validate = { enable = true },
-			},
-		},
-	},
-	pyright = {},
-}
+		})
+	end,
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
 
-for server_name, custom_opts in pairs(servers) do
-	lspconfig[server_name].setup(vim.tbl_deep_extend("force", {
-		on_attach = on_attach,
-		capabilities = capabilities,
-	}, custom_opts or {}))
-end
+-- -- Enable the LSP servers (these will load from lsp/*.lua files)
+vim.lsp.enable({
+	"gopls",
+	"lua_ls",
+	"pyright",
+	"ruff",
+	"yamlls",
+	"jsonls",
+	"bashls",
+	"helm_ls",
+})
 
 -- autoformat go and only go as I do not want to use
 -- autoformat with conform for all filetypes; just go.
@@ -500,7 +436,7 @@ vim.keymap.set("n", "<Esc><Esc>", "<cmd>:nohlsearch<CR><C-l><CR>", key_opts) -- 
 vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<CR>", { desc = "Update Lazy plugins" })
 vim.keymap.set("n", "q", "<Nop>", key_opts) -- Disable the 'q' key
 vim.keymap.set({ "n", "v", "i" }, "<F1>", "<Nop>", key_opts) -- Disable the <F1> key (help)
-vim.keymap.set("n", "<leader>r", "<cmd>:CdGitRoot<CR>", { desc = "Change directory to Git root" })
+vim.keymap.set("n", "<leader>r", "<cmd>:GitRoot<CR>", { desc = "Change directory to Git root" })
 
 vim.keymap.set("n", "<leader>yf", function()
 	local path = vim.fn.expand("%:p")
@@ -552,9 +488,9 @@ vim.keymap.set("n", "s", "<cmd>:HopWord<CR>", { desc = "Jump to a word using Hop
 vim.keymap.set("n", "-", "<cmd>:Neotree toggle<CR>", { desc = "Toggle Neo-tree file explorer" })
 vim.keymap.set("n", "_", "<cmd>:Neotree toggle reveal<CR>", { desc = "Toggle Neo-tree and reveal current file" })
 
--- Quickfix list keybinds:
-vim.keymap.set("n", "<leader>cn", "<cmd>:cnext<CR>", { desc = "Next quickfix item" })
-vim.keymap.set("n", "<leader>cp", "<cmd>:cprev<CR>", { desc = "Previous quickfix item" })
+-- Quickfix list keybinds (Note: ]q and [q are now defaults in 0.11.x)
+-- vim.keymap.set("n", "<leader>cn", "<cmd>:cnext<CR>", { desc = "Next quickfix item" })
+-- vim.keymap.set("n", "<leader>cp", "<cmd>:cprev<CR>", { desc = "Previous quickfix item" })
 
 -- Git browse keybind:
 vim.keymap.set("n", "<leader>B", "<cmd>:GBrowse<CR>", { desc = "Open current file in browser" })

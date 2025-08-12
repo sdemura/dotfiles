@@ -1,8 +1,5 @@
 {
 	"ignored_packages": [
-		"FindInFiles-addon",
-		"Jinja2",
-		"LSP-json",
 		"Vintage",
 	],
 	"theme": "Adaptive.sublime-theme",

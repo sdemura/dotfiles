@@ -2,9 +2,6 @@
 	"bootstrapped": true,
 	"in_process_packages":
 	[
-		"FindInFiles-addon",
-		"Jinja2",
-		"LSP-json",
 	],
 	"installed_packages":
 	[

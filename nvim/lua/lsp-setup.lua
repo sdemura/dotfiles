@@ -4,43 +4,27 @@ local M = {}
 local function setup_keymaps(bufnr)
 	local opts = { buffer = bufnr, noremap = true, silent = true }
 
-	vim.keymap.set("n", "gi", function()
-		vim.notify("Use 'gri' for implementation (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Implementation (use gri in 0.11.x)" }, opts))
+	-- Navigation
+	vim.keymap.set("n", "<leader>li", vim.lsp.buf.implementation, vim.tbl_extend("force", { desc = "Go to implementation" }, opts))
+	vim.keymap.set("n", "<leader>lt", vim.lsp.buf.type_definition, vim.tbl_extend("force", { desc = "Go to type definition" }, opts))
+	vim.keymap.set("n", "<leader>lD", vim.lsp.buf.declaration, vim.tbl_extend("force", { desc = "Go to declaration" }, opts))
 
-	vim.keymap.set("n", "go", function()
-		vim.notify("Use 'grt' for type definition (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Type definition (use grt in 0.11.x)" }, opts))
+	-- Information
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", { desc = "Hover" }, opts))
+	vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, vim.tbl_extend("force", { desc = "Signature help" }, opts))
+	vim.keymap.set("n", "<leader>lR", vim.lsp.buf.references, vim.tbl_extend("force", { desc = "Show references" }, opts))
 
-	vim.keymap.set("n", "gr", function()
-		vim.notify("Use 'grr' for references (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "References (use grr in 0.11.x)" }, opts))
+	-- Actions
+	vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, vim.tbl_extend("force", { desc = "Code action" }, opts))
+	vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, vim.tbl_extend("force", { desc = "Rename symbol" }, opts))
 
-	vim.keymap.set("n", "gs", function()
-		vim.notify("Use '<C-S>' in insert mode for signature help (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Signature help (use <C-S> in insert mode)" }, opts))
+	-- Diagnostics
+	vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float, vim.tbl_extend("force", { desc = "Show line diagnostics" }, opts))
+	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, vim.tbl_extend("force", { desc = "Go to previous diagnostic" }, opts))
+	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, vim.tbl_extend("force", { desc = "Go to next diagnostic" }, opts))
 
-	vim.keymap.set("n", "<space>rn", function()
-		vim.notify("Use 'grn' for rename (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Rename symbol (use grn in 0.11.x)" }, opts))
-
-	vim.keymap.set("n", "<leader>ca", function()
-		vim.notify("Use 'gra' for code action (Neovim 0.11.x default)", vim.log.levels.INFO)
-	end, vim.tbl_extend("force", { desc = "Code action (use gra in 0.11.x)" }, opts))
-
-	vim.keymap.set(
-		"n",
-		"<leader>e",
-		vim.diagnostic.open_float,
-		vim.tbl_extend("force", { desc = "Open floating diagnostic window" }, opts)
-	)
-
-	vim.keymap.set("n", "gK", function()
-		local current_config = vim.diagnostic.config().virtual_lines
-		vim.diagnostic.config({ virtual_lines = not current_config })
-	end, vim.tbl_extend("force", { desc = "Toggle diagnostic virtual text" }, opts))
-
-	vim.keymap.set("n", "gH", function()
+	-- Inlay hints
+	vim.keymap.set("n", "<leader>lh", function()
 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 	end, vim.tbl_extend("force", { desc = "Toggle inlay hints" }, opts))
 

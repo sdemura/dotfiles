@@ -79,4 +79,3 @@ return {
 	},
 	{ "tiagovla/scope.nvim" },
 }
-

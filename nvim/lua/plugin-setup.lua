@@ -153,7 +153,7 @@ function M.setup_bufferline()
 		options = {
 			mode = "tabs",
 			always_show_bufferline = false,
-			highlights = require("catppuccin.groups.integrations.bufferline").get(),
+			-- highlights = require("catppuccin.groups.integrations.bufferline").get(),
 			offsets = { { filetype = "neo-tree", text = "Neo-tree", highlight = "Directory", text_align = "left" } },
 		},
 	})
@@ -197,7 +197,6 @@ end
 function M.setup()
 	-- Plugins with complex configuration
 	M.setup_conform()
-	M.setup_fidget()
 	M.setup_catppuccin()
 	M.setup_lualine()
 	M.setup_fzf()
@@ -207,6 +206,7 @@ function M.setup()
 	M.setup_neotree()
 	M.setup_bufferline()
 	M.setup_scope()
+	M.setup_fidget()
 
 	-- Simple plugins that just need setup({})
 	M.setup_outline()

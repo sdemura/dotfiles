@@ -24,20 +24,20 @@ end, { desc = "Format buffer (manual)" })
 
 -- fzf-lua keybinds:
 vim.keymap.set("n", "<leader><leader>", "<cmd>:FzfLua<cr>", { desc = "Open FzfLua default fuzzy finder" })
-vim.keymap.set("n", "<leader>ff", "<cmd>:FzfLua files<CR>", { desc = "Find files using FzfLua" })
-vim.keymap.set("n", "<leader>fg", "<cmd>:FzfLua live_grep_glob<CR>", { desc = "Live grep across files" })
-vim.keymap.set("n", "<leader>fG", "<cmd>:FzfLua grep_curbuf<CR>", { desc = "Grep in current buffer" })
-vim.keymap.set("n", "<leader>fs", "<cmd>:FzfLua lsp_document_symbols<CR>", { desc = "List LSP document symbols" })
+vim.keymap.set("n", "<leader>f", "<cmd>:FzfLua files<CR>", { desc = "Find files using FzfLua" })
+vim.keymap.set("n", "<leader>g", "<cmd>:FzfLua live_grep_glob<CR>", { desc = "Live grep across files" })
+vim.keymap.set("n", "<leader>G", "<cmd>:FzfLua grep_curbuf<CR>", { desc = "Grep in current buffer" })
+vim.keymap.set("n", "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>", { desc = "List LSP document symbols" })
 vim.keymap.set(
 	"n",
-	"<leader>fd",
+	"<leader>d",
 	"<cmd>:FzfLua lsp_workspace_diagnostics<CR>",
 	{ desc = "List LSP workspace diagnostics" }
 )
-vim.keymap.set("n", "<leader>fc", "<cmd>:FzfLua files cwd=~/.config<CR>", { desc = "Find files in ~/.config" })
-vim.keymap.set("n", "<leader>fb", "<cmd>:FzfLua buffers<cr>", { desc = "List open buffers" })
-vim.keymap.set("n", '<leader>fr', "<cmd>:FzfLua registers<cr>", { desc = "Show registers" })
-vim.keymap.set("n", "<leader>fm", "<cmd>:FzfLua marks<cr>", { desc = "Show marks" })
+vim.keymap.set("n", "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>", { desc = "Find files in ~/.config" })
+vim.keymap.set("n", "<leader>b", "<cmd>:FzfLua buffers<cr>", { desc = "List open buffers" })
+vim.keymap.set("n", "<leader>r", "<cmd>:FzfLua registers<cr>", { desc = "Show registers" })
+vim.keymap.set("n", "<leader>m", "<cmd>:FzfLua marks<cr>", { desc = "Show marks" })
 vim.keymap.set("i", "<C-r>", "<cmd>:FzfLua registers<cr>", { desc = "Show registers (insert mode)" })
 
 -- outline.nvim keybinds:
@@ -51,4 +51,4 @@ vim.keymap.set("n", "-", "<cmd>:Neotree toggle<CR>", { desc = "Toggle Neo-tree f
 vim.keymap.set("n", "_", "<cmd>:Neotree toggle reveal<CR>", { desc = "Toggle Neo-tree and reveal current file" })
 
 -- Git browse keybind:
-vim.keymap.set("n", "<leader>B", "<cmd>:GBrowse<CR>", { desc = "Open current file in browser" })
+vim.keymap.set("n", "<leader>w", "<cmd>:GBrowse<CR>", { desc = "Open current file in webbrowser" })

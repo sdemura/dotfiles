@@ -193,6 +193,19 @@ function M.setup_barbecue()
 	require("barbecue").setup({})
 end
 
+function M.setup_codecompanion()
+	require("codecompanion").setup({
+		opts = {
+			log_level = "DEBUG", -- or "TRACE"
+		},
+		strategies = {
+			chat = { adapter = "gemini_cli" },
+			inline = { adapter = "gemini" },
+			cmd = { adapter = "gemini" },
+		},
+	})
+end
+
 -- Setup all plugins
 function M.setup()
 	-- Plugins with complex configuration
@@ -207,6 +220,7 @@ function M.setup()
 	M.setup_bufferline()
 	M.setup_scope()
 	M.setup_fidget()
+    -- M.setup_codecompanion()
 
 	-- Simple plugins that just need setup({})
 	M.setup_outline()

@@ -2,6 +2,6 @@
 	"extensions":
 	[
 		".npmrc",
-		"ini.dist"
-	]
+		"ini.dist",
+	],
 }

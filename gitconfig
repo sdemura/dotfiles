@@ -18,3 +18,5 @@
     br = !git branch --show-current
 [safe]
 	directory = /private/tmp
+[url "git@gitlab.com:"]
+	insteadOf = https://gitlab.com/

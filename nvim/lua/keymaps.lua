@@ -6,7 +6,6 @@ vim.keymap.set("n", "<Esc><Esc>", "<cmd>:nohlsearch<CR><C-l><CR>", key_opts) -- 
 vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<CR>", { desc = "Update Lazy plugins" })
 vim.keymap.set("n", "q", "<Nop>", key_opts) -- Disable the 'q' key
 vim.keymap.set({ "n", "v", "i" }, "<F1>", "<Nop>", key_opts) -- Disable the <F1> key (help)
-vim.keymap.set("n", "<leader>r", "<cmd>:GitRoot<CR>", { desc = "Change directory to Git root" })
 
 vim.keymap.set("n", "<leader>yf", function()
 	local path = vim.fn.expand("%:p")

@@ -4,20 +4,6 @@ local M = {}
 local function setup_keymaps(bufnr)
 	local opts = { buffer = bufnr, noremap = true, silent = true }
 
-	-- Navigation
-	-- vim.keymap.set("n", "<leader>li", vim.lsp.buf.implementation, vim.tbl_extend("force", { desc = "Go to implementation" }, opts))
-	-- vim.keymap.set("n", "<leader>lt", vim.lsp.buf.type_definition, vim.tbl_extend("force", { desc = "Go to type definition" }, opts))
-	-- vim.keymap.set("n", "<leader>lD", vim.lsp.buf.declaration, vim.tbl_extend("force", { desc = "Go to declaration" }, opts))
-	--
-	-- -- Information
-	-- vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", { desc = "Hover" }, opts))
-	-- vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, vim.tbl_extend("force", { desc = "Signature help" }, opts))
-	-- vim.keymap.set("n", "<leader>lR", vim.lsp.buf.references, vim.tbl_extend("force", { desc = "Show references" }, opts))
-	--
-	-- -- Actions
-	-- vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, vim.tbl_extend("force", { desc = "Code action" }, opts))
-	-- vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, vim.tbl_extend("force", { desc = "Rename symbol" }, opts))
-
 	-- Diagnostics
 	vim.keymap.set(
 		"n",

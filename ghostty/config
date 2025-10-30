@@ -10,3 +10,4 @@ quick-terminal-animation-duration = 0.1
 confirm-close-surface = false
 split-divider-color = "#939ab7"
 
+keybind = shift+enter=text:\x1b\r

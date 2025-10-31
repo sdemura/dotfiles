@@ -142,7 +142,12 @@ function M.setup_neotree()
 		filesystem = {
 			follow_current_file = { enabled = true },
 			window = { mappings = { ["s"] = "none", ["S"] = "none" } },
-			filtered_items = { visible = true, hide_gitignored = false, hide_dotfiles = false },
+			filtered_items = {
+			visible = true,
+			hide_gitignored = false,
+			hide_dotfiles = false,
+			hide_by_name = { ".git" },
+		},
 		},
 	})
 end

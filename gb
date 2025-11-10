@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+# gb - Open current git repo directory in browser (GitHub/GitLab)
+# Usage: gb [filename]
+
+set -e
+
+# Check if we're in a git repository
+if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+	echo "Error: Not in a git repository"
+	exit 1
+fi
+
+# Get the remote URL
+remote_url=$(git remote get-url origin 2>/dev/null || echo "")
+if [ -z "$remote_url" ]; then
+	echo "Error: No remote 'origin' found"
+	exit 1
+fi
+
+# Parse the remote URL to extract host and repo path
+# Handle both SSH and HTTPS formats
+if [[ "$remote_url" =~ ^git@([^:]+):(.+)$ ]]; then
+	# SSH format: git@github.com:user/repo or git@github.com:user/repo.git
+	host="${BASH_REMATCH[1]}"
+	repo_path="${BASH_REMATCH[2]}"
+	# Remove .git suffix if present
+	repo_path="${repo_path%.git}"
+elif [[ "$remote_url" =~ ^https?://([^/]+)/(.+)$ ]]; then
+	# HTTPS format: https://github.com/user/repo or https://github.com/user/repo.git
+	host="${BASH_REMATCH[1]}"
+	repo_path="${BASH_REMATCH[2]}"
+	# Remove .git suffix if present
+	repo_path="${repo_path%.git}"
+else
+	echo "Error: Could not parse remote URL: $remote_url"
+	exit 1
+fi
+
+# Get current branch
+branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "main")
+
+# Get git root directory
+git_root=$(git rev-parse --show-toplevel)
+
+# Get current directory relative to git root
+current_dir=$(pwd)
+relative_path="${current_dir#"$git_root"}"
+relative_path="${relative_path#/}" # Remove leading slash if present
+
+# If a filename parameter is provided, append it to the path
+if [ -n "$1" ]; then
+	if [ -n "$relative_path" ]; then
+		relative_path="$relative_path/$1"
+	else
+		relative_path="$1"
+	fi
+fi
+
+# Construct the URL based on the host
+if [[ "$host" == *"github.com"* ]]; then
+	# GitHub format
+	if [ -n "$relative_path" ]; then
+		url="https://${host}/${repo_path}/tree/${branch}/${relative_path}"
+	else
+		url="https://${host}/${repo_path}"
+	fi
+elif [[ "$host" == *"gitlab"* ]]; then
+	# GitLab format
+	if [ -n "$relative_path" ]; then
+		url="https://${host}/${repo_path}/-/tree/${branch}/${relative_path}"
+	else
+		url="https://${host}/${repo_path}"
+	fi
+else
+	echo "Error: Unsupported git host: $host"
+	exit 1
+fi
+
+# Open the URL in the default browser (macOS)
+open "$url"

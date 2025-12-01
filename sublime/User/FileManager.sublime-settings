@@ -1,14 +1,14 @@
 // Your settings for FileManager. See the default file to see the different options. 
 {
-	// "terminals": [
-	// 	{
-	// 		"name": "iTerm",
-    //         "cmd": ["open", "-a", "iTerm", "$cwd"],
+	"terminals": [
+		{
+			"name": "iTerm",
+            "cmd": ["/Users/sean/bin/ghostty-tab", "$cwd"],
 
-	// 		"platform": "osx"
-	// 	},
-	// ],
-	"show_open_terminal_command": false,
+			"platform": "osx"
+		},
+	],
+	"show_open_terminal_command": true,
 	"reveal_in_sidebar": true,
 	"show_open_in_browser_command": false,
 	"ask_for_confirmation_on_delete": false,

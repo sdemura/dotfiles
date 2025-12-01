@@ -3,7 +3,7 @@
 		"Vintage",
 	],
 	"theme": "Adaptive.sublime-theme",
-	"color_scheme": "Mariana.sublime-color-scheme",
+	"color_scheme": "Catppuccin Macchiato.sublime-color-scheme",
 	"font_face": "Hack Nerd Font",
 	// "font_face": "JetbrainsMono Nerd Font",
 	"font_size": 12,
@@ -48,4 +48,5 @@
 	"sub_word_separators": "-_",
 	// "draw_white_space": ["all_tabs", "selection"]
 	"disable_plugin_host_3.3": true,
+	"click_through": "always",
 }

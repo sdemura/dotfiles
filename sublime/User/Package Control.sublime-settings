@@ -28,6 +28,7 @@
 		"LSP-json",
 		"LSP-lua",
 		"LSP-ruff",
+		"LSP-ty",
 		"LSP-yaml",
 		"MarkdownPreview",
 		"Origami",

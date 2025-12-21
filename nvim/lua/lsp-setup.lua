@@ -4,21 +4,29 @@ local M = {}
 local function setup_keymaps(bufnr)
 	local opts = { buffer = bufnr, noremap = true, silent = true }
 
+	-- Navigation
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", { desc = "Go to definition" }, opts))
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", { desc = "Go to references" }, opts))
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", { desc = "Go to implementation" }, opts))
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", { desc = "Go to declaration" }, opts))
+
+	-- Documentation
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", { desc = "Hover documentation" }, opts))
+	vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, vim.tbl_extend("force", { desc = "Signature help" }, opts))
+
 	-- Diagnostics
-	vim.keymap.set(
-		"n",
-		"e",
-		vim.diagnostic.open_float,
-		vim.tbl_extend("force", { desc = "Show line diagnostics" }, opts)
-	)
+	vim.keymap.set("n", "e", vim.diagnostic.open_float, vim.tbl_extend("force", { desc = "Show line diagnostics" }, opts))
+	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, vim.tbl_extend("force", { desc = "Previous diagnostic" }, opts))
+	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, vim.tbl_extend("force", { desc = "Next diagnostic" }, opts))
+
+	-- Actions
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", { desc = "Rename symbol" }, opts))
+	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", { desc = "Code action" }, opts))
 
 	-- Inlay hints
 	vim.keymap.set("n", "<leader>lh", function()
 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 	end, vim.tbl_extend("force", { desc = "Toggle inlay hints" }, opts))
-
-	-- Add LSP definition mapping since it's not in the 0.11.x defaults
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", { desc = "Go to definition" }, opts))
 end
 
 -- Diagnostic Configuration

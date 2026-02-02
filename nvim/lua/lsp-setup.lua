@@ -7,7 +7,12 @@ local function setup_keymaps(bufnr)
 	-- Navigation
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", { desc = "Go to definition" }, opts))
 	vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", { desc = "Go to references" }, opts))
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", { desc = "Go to implementation" }, opts))
+	vim.keymap.set(
+		"n",
+		"gi",
+		vim.lsp.buf.implementation,
+		vim.tbl_extend("force", { desc = "Go to implementation" }, opts)
+	)
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", { desc = "Go to declaration" }, opts))
 
 	-- Documentation
@@ -15,7 +20,12 @@ local function setup_keymaps(bufnr)
 	vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, vim.tbl_extend("force", { desc = "Signature help" }, opts))
 
 	-- Diagnostics
-	vim.keymap.set("n", "e", vim.diagnostic.open_float, vim.tbl_extend("force", { desc = "Show line diagnostics" }, opts))
+	vim.keymap.set(
+		"n",
+		"e",
+		vim.diagnostic.open_float,
+		vim.tbl_extend("force", { desc = "Show line diagnostics" }, opts)
+	)
 	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, vim.tbl_extend("force", { desc = "Previous diagnostic" }, opts))
 	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, vim.tbl_extend("force", { desc = "Next diagnostic" }, opts))
 
@@ -70,6 +80,8 @@ function M.setup()
 		"jsonls",
 		"bashls",
 		"helm_ls",
+		"typescript",
+		-- "just",
 	})
 end
 

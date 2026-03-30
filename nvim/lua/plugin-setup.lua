@@ -85,24 +85,23 @@ end
 
 -- Treesitter configuration
 function M.setup_treesitter()
-	require("nvim-treesitter").setup({
-		ensure_installed = {
-			"dockerfile",
-			"gitcommit",
-			"go",
-			"gomod",
-			"gowork",
-			"hcl",
-			"ini",
-			"json",
-			"make",
-			"markdown",
-			"python",
-			"terraform",
-			"toml",
-			"yaml",
-		},
-		auto_install = true,
+	local ts_attempted = {}
+
+	vim.api.nvim_create_autocmd("FileType", {
+		callback = function()
+			local lang = vim.treesitter.language.get_lang(vim.bo.filetype)
+			if not lang then return end
+
+			if pcall(vim.treesitter.start) then
+				vim.bo.indentexpr = "v:lua.require'vim.treesitter'.indentexpr()"
+				return
+			end
+
+			-- Parser not available, try to install (once per language per session)
+			if ts_attempted[lang] then return end
+			ts_attempted[lang] = true
+			vim.cmd("TSInstall " .. lang)
+		end,
 	})
 end
 
@@ -132,7 +131,12 @@ end
 
 -- Neo-tree configuration
 function M.setup_neotree()
-	require("window-picker").setup({})
+	require("window-picker").setup({
+		highlights = {
+			statusline = { focused = { bg = "#c6a0f6" }, unfocused = { bg = "#8087a2" } },
+			winbar = { focused = { bg = "#c6a0f6" }, unfocused = { bg = "#8087a2" } },
+		},
+	})
 	require("neo-tree").setup({
 		popup_border_style = "rounded",
 		close_if_last_window = true,
@@ -196,7 +200,10 @@ function M.setup_barbecue()
 end
 
 function M.setup_render_markdown()
-	require("render-markdown").setup({})
+	require("render-markdown").setup({
+		html = { enabled = false },
+		latex = { enabled = false },
+	})
 end
 
 -- Setup all plugins

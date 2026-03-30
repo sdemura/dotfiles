@@ -16,7 +16,6 @@ vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.scrolloff = 10
 vim.opt.shiftwidth = 4
-vim.opt.showmode = false
 vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
 vim.opt.softtabstop = 4
@@ -28,6 +27,7 @@ vim.opt.tabstop = 4
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
+vim.opt.winborder = "rounded"
 vim.opt.wrap = false
 
 -- Disable specific built-in plugins
@@ -39,9 +39,7 @@ vim.g.loaded_remote_plugins = 1
 vim.g.loaded_shada_plugin = 1
 vim.g.loaded_spellfile_plugin = 1
 vim.g.loaded_gzip = 1
-vim.g.loaded_tar = 1
 vim.g.loaded_tarPlugin = 1
-vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 vim.g.loaded_tutor_mode_plugin = 1
 vim.g.loaded_python3_provider = 0

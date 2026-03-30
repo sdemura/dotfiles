@@ -8,7 +8,7 @@ function M.setup()
 	cmp.setup({
 		snippet = {
 			expand = function(args)
-				require("luasnip").lsp_expand(args.body)
+				vim.snippet.expand(args.body)
 			end,
 		},
 		mapping = cmp.mapping.preset.insert({
@@ -20,7 +20,6 @@ function M.setup()
 		}),
 		sources = cmp.config.sources({
 			{ name = "nvim_lsp" },
-			{ name = "luasnip" },
 			{ name = "buffer" },
 			{ name = "path" },
 		}),

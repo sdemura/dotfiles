@@ -35,8 +35,6 @@ vim.pack.add({
 	"https://github.com/hrsh7th/cmp-nvim-lsp",
 	"https://github.com/hrsh7th/cmp-buffer",
 	"https://github.com/hrsh7th/cmp-path",
-	"https://github.com/L3MON4D3/LuaSnip",
-	"https://github.com/saadparwaiz1/cmp_luasnip",
 	"https://github.com/onsails/lspkind.nvim",
 
 	-- Treesitter

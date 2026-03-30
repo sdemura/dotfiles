@@ -86,11 +86,12 @@ end
 -- Treesitter configuration
 function M.setup_treesitter()
 	local ts_attempted = {}
+	local ts_ignore = { "fidget" }
 
 	vim.api.nvim_create_autocmd("FileType", {
 		callback = function()
 			local lang = vim.treesitter.language.get_lang(vim.bo.filetype)
-			if not lang then return end
+			if not lang or vim.list_contains(ts_ignore, lang) then return end
 
 			if pcall(vim.treesitter.start) then
 				vim.bo.indentexpr = "v:lua.require'vim.treesitter'.indentexpr()"

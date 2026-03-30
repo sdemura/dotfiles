@@ -5,7 +5,6 @@ vim.g.maplocalleader = " "
 --- Options ---
 vim.opt.breakindent = true
 vim.opt.cmdheight = 1
-vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.ignorecase = true

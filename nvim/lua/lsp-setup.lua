@@ -62,10 +62,10 @@ function M.setup()
 
 	-- Global LSP configuration (applies to all servers)
 	vim.lsp.config("*", {
-		on_attach = function(_, bufnr)
+		on_attach = function(client, bufnr)
 			setup_keymaps(bufnr)
+			vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 		end,
-		capabilities = require("cmp_nvim_lsp").default_capabilities(),
 	})
 
 	-- Enable the LSP servers (these will load from lsp/*.lua files)

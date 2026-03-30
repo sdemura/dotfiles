@@ -1,6 +1,7 @@
 local M = {}
 
 -- LSP Keymaps
+-- Neovim 0.11 built-in defaults (no need to define): K, [d, ]d
 local function setup_keymaps(bufnr)
 	local opts = { buffer = bufnr, noremap = true, silent = true }
 
@@ -16,18 +17,15 @@ local function setup_keymaps(bufnr)
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", { desc = "Go to declaration" }, opts))
 
 	-- Documentation
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", { desc = "Hover documentation" }, opts))
 	vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, vim.tbl_extend("force", { desc = "Signature help" }, opts))
 
 	-- Diagnostics
 	vim.keymap.set(
 		"n",
-		"e",
+		"<leader>e",
 		vim.diagnostic.open_float,
 		vim.tbl_extend("force", { desc = "Show line diagnostics" }, opts)
 	)
-	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, vim.tbl_extend("force", { desc = "Previous diagnostic" }, opts))
-	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, vim.tbl_extend("force", { desc = "Next diagnostic" }, opts))
 
 	-- Actions
 	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", { desc = "Rename symbol" }, opts))
@@ -74,14 +72,14 @@ function M.setup()
 	vim.lsp.enable({
 		"gopls",
 		"lua_ls",
-		"pyright",
 		"ruff",
 		"yamlls",
 		"jsonls",
 		"bashls",
 		"helm_ls",
 		"typescript",
-		-- "just",
+		"just",
+		"ty",
 	})
 end
 

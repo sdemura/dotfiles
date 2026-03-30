@@ -36,18 +36,10 @@ return {
 			"onsails/lspkind.nvim",
 		},
 	},
-	{ "hrsh7th/cmp-nvim-lsp" },
-	{ "hrsh7th/cmp-buffer" },
-	{ "hrsh7th/cmp-path" },
-	{ "L3MON4D3/LuaSnip" },
-	{ "saadparwaiz1/cmp_luasnip" },
-	{ "onsails/lspkind.nvim" },
-
 	-- Plugins with configuration handled externally
 	{
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
-		module = "conform",
 		cmd = { "ConformInfo" },
 	},
 	{ "j-hui/fidget.nvim" },
@@ -60,7 +52,7 @@ return {
 		build = ":TSUpdate",
 	},
 	{ "smoka7/hop.nvim", version = "*" },
-	{ "echasnovski/mini.nvim" },
+	{ "nvim-mini/mini.nvim" },
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v3.x",
@@ -73,16 +65,12 @@ return {
 	},
 	{
 		"akinsho/bufferline.nvim",
-		after = "catppuccin",
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
 	},
 	{ "tiagovla/scope.nvim" },
-	-- {
-	-- 	"olimorris/codecompanion.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 	},
-	-- },
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" },
+	},
 }

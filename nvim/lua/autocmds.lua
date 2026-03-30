@@ -17,14 +17,9 @@ vim.api.nvim_create_autocmd(
 
 -- User command to change directory to Git repository root
 vim.api.nvim_create_user_command("GitRoot", function()
-	local handle = io.popen("git rev-parse --show-toplevel 2> /dev/null")
-	local git_root = ""
-	if handle then -- Check if handle is not nil
-		git_root = handle:read("*a"):match("^%s*(.-)%s*$")
-		handle:close()
-	end
+	local git_root = vim.fn.system("git rev-parse --show-toplevel"):gsub("%s+$", "")
 
-	if git_root and git_root ~= "" then
+	if vim.v.shell_error == 0 and git_root ~= "" then
 		vim.api.nvim_set_current_dir(git_root)
 		vim.notify("Changed directory to " .. git_root, vim.log.levels.INFO)
 	else

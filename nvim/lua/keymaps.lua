@@ -16,7 +16,7 @@ end, { noremap = true, silent = true, desc = "Yank full file path to clipboard" 
 vim.keymap.set({ "n", "v" }, "<leader>F", function()
 	require("conform").format({
 		async = true,
-		lsp_fallback = true,
+		lsp_format = "fallback",
 		timeout_ms = 1000,
 	})
 end, { desc = "Format buffer (manual)" })

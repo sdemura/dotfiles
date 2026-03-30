@@ -9,7 +9,7 @@ function M.setup_conform()
 	require("conform").setup({
 		formatters_by_ft = {
 			lua = { "stylua" },
-			python = { "isort", "black" },
+			python = { "ruff_format", "ruff_organize_imports" },
 			go = { "goimports", "gofmt" },
 			sh = { "shfmt" },
 			javascript = { "prettier" },
@@ -36,12 +36,12 @@ function M.setup_catppuccin()
 		integrations = {
 			gitsigns = true,
 			fidget = true,
-			lsp_trouble = true,
+			fzf = true,
 			treesitter = true,
 			notify = true,
 			mini = {
 				enabled = true,
-				indentscope_color = "lavendar",
+				indentscope_color = "lavender",
 			},
 			native_lsp = {
 				enabled = true,
@@ -60,7 +60,7 @@ end
 function M.setup_lualine()
 	require("lualine").setup({
 		options = {
-			theme = "catppuccin",
+			theme = "catppuccin-nvim",
 			icons_enabled = true,
 			component_separators = "|",
 			section_separators = "",
@@ -198,17 +198,8 @@ function M.setup_barbecue()
 	require("barbecue").setup({})
 end
 
-function M.setup_codecompanion()
-	require("codecompanion").setup({
-		opts = {
-			log_level = "DEBUG", -- or "TRACE"
-		},
-		strategies = {
-			chat = { adapter = "gemini_cli" },
-			inline = { adapter = "gemini" },
-			cmd = { adapter = "gemini" },
-		},
-	})
+function M.setup_render_markdown()
+	require("render-markdown").setup({})
 end
 
 -- Setup all plugins
@@ -225,7 +216,6 @@ function M.setup()
 	M.setup_bufferline()
 	M.setup_scope()
 	M.setup_fidget()
-    -- M.setup_codecompanion()
 
 	-- Simple plugins that just need setup({})
 	M.setup_outline()
@@ -235,6 +225,7 @@ function M.setup()
 	M.setup_autopairs()
 	M.setup_surround()
 	M.setup_barbecue()
+	M.setup_render_markdown()
 end
 
 return M

@@ -19,7 +19,7 @@ vim.pack.add({
 	"https://github.com/tiagovla/scope.nvim",
 
 	-- Plugins with version pinning
-	{ src = "https://github.com/BrunoKrugel/bbq.nvim", version = vim.version.range("*") },
+	"https://github.com/BrunoKrugel/bbq.nvim",
 	{ src = "https://github.com/akinsho/bufferline.nvim", version = vim.version.range("*") },
 	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = vim.version.range("3.x") },
 

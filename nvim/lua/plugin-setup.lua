@@ -85,7 +85,7 @@ end
 
 -- Treesitter configuration
 function M.setup_treesitter()
-	require("nvim-treesitter.configs").setup({
+	require("nvim-treesitter").setup({
 		ensure_installed = {
 			"dockerfile",
 			"gitcommit",
@@ -103,9 +103,6 @@ function M.setup_treesitter()
 			"yaml",
 		},
 		auto_install = true,
-		highlight = { enable = true, use_languagetree = true },
-		indent = { enable = true, disable = { "python", "yaml" } },
-		endwise = { enable = true },
 	})
 end
 

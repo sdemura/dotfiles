@@ -1,76 +1,51 @@
--- Pure plugin definitions with no configuration
--- All plugin setup is handled in plugin-setup.lua and called from init.lua
+vim.pack.add({
+	-- Simple plugins
+	"https://github.com/towolf/vim-helm",
+	"https://github.com/tpope/vim-fugitive",
+	"https://github.com/shumphrey/fugitive-gitlab.vim",
+	"https://github.com/tpope/vim-rhubarb",
+	"https://github.com/tpope/vim-eunuch",
+	"https://github.com/b0o/schemastore.nvim",
+	"https://github.com/hedyhli/outline.nvim",
+	"https://github.com/yorickpeterse/nvim-tree-pairs",
+	"https://github.com/lewis6991/gitsigns.nvim",
+	"https://github.com/vladdoster/remember.nvim",
+	"https://github.com/windwp/nvim-autopairs",
+	"https://github.com/kylechui/nvim-surround",
+	"https://github.com/j-hui/fidget.nvim",
+	"https://github.com/nvim-lualine/lualine.nvim",
+	"https://github.com/smoka7/hop.nvim",
+	"https://github.com/nvim-mini/mini.nvim",
+	"https://github.com/tiagovla/scope.nvim",
 
-return {
-	-- Simple plugins with no configuration
-	{ "towolf/vim-helm", ft = "helm" },
-	{ "tpope/vim-fugitive" },
-	{ "shumphrey/fugitive-gitlab.vim" },
-	{ "tpope/vim-rhubarb" },
-	{ "tpope/vim-eunuch" },
-	{ "b0o/schemastore.nvim" },
+	-- Plugins with version pinning
+	{ src = "https://github.com/BrunoKrugel/bbq.nvim", version = vim.version.range("*") },
+	{ src = "https://github.com/akinsho/bufferline.nvim", version = vim.version.range("*") },
+	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = vim.version.range("3.x") },
 
-	-- Simple plugins (configuration handled in plugin-setup.lua)
-	{ "hedyhli/outline.nvim", cmd = { "Outline", "OutlineOpen" } },
-	{ "yorickpeterse/nvim-tree-pairs" },
-	{ "lewis6991/gitsigns.nvim" },
-	{ "vladdoster/remember.nvim" },
-	{ "windwp/nvim-autopairs" },
-	{ "kylechui/nvim-surround" },
-	{
-		"BrunoKrugel/bbq.nvim",
-		name = "barbecue",
-		version = "*",
-		dependencies = { "SmiteshP/nvim-navic", "nvim-tree/nvim-web-devicons" },
-	},
+	-- Dependencies (listed explicitly, no nesting)
+	"https://github.com/SmiteshP/nvim-navic",
+	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/MunifTanjim/nui.nvim",
+	"https://github.com/s1n7ax/nvim-window-picker",
 
-	-- LSP and Completion
-	{
-		"hrsh7th/nvim-cmp",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
-			"onsails/lspkind.nvim",
-		},
-	},
-	-- Plugins with configuration handled externally
-	{
-		"stevearc/conform.nvim",
-		event = { "BufWritePre" },
-		cmd = { "ConformInfo" },
-	},
-	{ "j-hui/fidget.nvim" },
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-	{ "nvim-lualine/lualine.nvim" },
-	{ "ibhagwan/fzf-lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
-	{
-		"nvim-treesitter/nvim-treesitter",
-		dependencies = { "RRethy/nvim-treesitter-endwise" },
-		build = ":TSUpdate",
-	},
-	{ "smoka7/hop.nvim", version = "*" },
-	{ "nvim-mini/mini.nvim" },
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
-			"s1n7ax/nvim-window-picker",
-		},
-	},
-	{
-		"akinsho/bufferline.nvim",
-		version = "*",
-		dependencies = "nvim-tree/nvim-web-devicons",
-	},
-	{ "tiagovla/scope.nvim" },
-	{
-		"MeanderingProgrammer/render-markdown.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" },
-	},
-}
+	-- Completion stack
+	"https://github.com/hrsh7th/nvim-cmp",
+	"https://github.com/hrsh7th/cmp-nvim-lsp",
+	"https://github.com/hrsh7th/cmp-buffer",
+	"https://github.com/hrsh7th/cmp-path",
+	"https://github.com/L3MON4D3/LuaSnip",
+	"https://github.com/saadparwaiz1/cmp_luasnip",
+	"https://github.com/onsails/lspkind.nvim",
+
+	-- Treesitter
+	"https://github.com/nvim-treesitter/nvim-treesitter",
+	"https://github.com/RRethy/nvim-treesitter-endwise",
+
+	-- Formatting and UI
+	"https://github.com/stevearc/conform.nvim",
+	{ src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
+	"https://github.com/ibhagwan/fzf-lua",
+	"https://github.com/MeanderingProgrammer/render-markdown.nvim",
+})

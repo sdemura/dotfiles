@@ -3,7 +3,7 @@ local key_opts = { noremap = true, silent = true }
 -- Keymaps:
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true, desc = "Leader key" })
 vim.keymap.set("n", "<Esc><Esc>", "<cmd>:nohlsearch<CR><C-l><CR>", key_opts) -- Clear search highlighting and redraw screen
-vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<CR>", { desc = "Update Lazy plugins" })
+vim.keymap.set("n", "<leader>pu", "<cmd>lua vim.pack.update()<CR>", { desc = "Update plugins" })
 vim.keymap.set("n", "q", "<Nop>", key_opts) -- Disable the 'q' key
 vim.keymap.set({ "n", "v", "i" }, "<F1>", "<Nop>", key_opts) -- Disable the <F1> key (help)
 

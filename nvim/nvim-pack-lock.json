@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "LuaSnip": {
-      "rev": "642b0c595e11608b4c18219e93b88d7637af27bc",
-      "src": "https://github.com/L3MON4D3/LuaSnip"
-    },
     "bbq.nvim": {
       "rev": "268f1c45fe9f470f1143143394f01a2181559953",
       "src": "https://github.com/BrunoKrugel/bbq.nvim"
@@ -28,10 +24,6 @@
     "cmp-path": {
       "rev": "c642487086dbd9a93160e1679a1327be111cbc25",
       "src": "https://github.com/hrsh7th/cmp-path"
-    },
-    "cmp_luasnip": {
-      "rev": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90",
-      "src": "https://github.com/saadparwaiz1/cmp_luasnip"
     },
     "conform.nvim": {
       "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",

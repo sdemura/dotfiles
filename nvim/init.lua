@@ -9,10 +9,6 @@ require("pack-hooks")
 -- Install and load plugins
 require("plugins")
 
--- Setup configurations
+-- Setup configurations (plugin/ dir handles the rest)
 require("completion").setup()
-require("plugin-setup").setup()
 require("lsp-setup").setup()
-
--- Set colorscheme
-vim.cmd.colorscheme("catppuccin-macchiato")

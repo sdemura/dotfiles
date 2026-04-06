@@ -10,10 +10,8 @@ vim.pack.add({
 	"https://github.com/j-hui/fidget.nvim",
 	"https://github.com/nvim-lualine/lualine.nvim",
 	"https://github.com/nvim-mini/mini.nvim",
-	"https://github.com/tiagovla/scope.nvim",
 
 	-- Plugins with version pinning
-	{ src = "https://github.com/akinsho/bufferline.nvim", version = vim.version.range("*") },
 	"https://github.com/SmiteshP/nvim-navic",
 
 	-- Completion

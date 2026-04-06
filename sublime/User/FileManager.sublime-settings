@@ -8,7 +8,7 @@
 			"platform": "osx"
 		},
 	],
-	"show_open_terminal_command": true,
+	"show_open_terminal_command": false,
 	"reveal_in_sidebar": true,
 	"show_open_in_browser_command": false,
 	"ask_for_confirmation_on_delete": false,

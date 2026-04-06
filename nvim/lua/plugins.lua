@@ -7,11 +7,7 @@ vim.pack.add({
 	"https://github.com/tpope/vim-eunuch",
 	"https://github.com/b0o/schemastore.nvim",
 	"https://github.com/hedyhli/outline.nvim",
-	"https://github.com/yorickpeterse/nvim-tree-pairs",
 	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/vladdoster/remember.nvim",
-	"https://github.com/windwp/nvim-autopairs",
-	"https://github.com/kylechui/nvim-surround",
 	"https://github.com/j-hui/fidget.nvim",
 	"https://github.com/nvim-lualine/lualine.nvim",
 	"https://github.com/smoka7/hop.nvim",
@@ -19,7 +15,6 @@ vim.pack.add({
 	"https://github.com/tiagovla/scope.nvim",
 
 	-- Plugins with version pinning
-	"https://github.com/BrunoKrugel/bbq.nvim",
 	{ src = "https://github.com/akinsho/bufferline.nvim", version = vim.version.range("*") },
 	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = vim.version.range("3.x") },
 
@@ -30,12 +25,8 @@ vim.pack.add({
 	"https://github.com/MunifTanjim/nui.nvim",
 	"https://github.com/s1n7ax/nvim-window-picker",
 
-	-- Completion stack
-	"https://github.com/hrsh7th/nvim-cmp",
-	"https://github.com/hrsh7th/cmp-nvim-lsp",
-	"https://github.com/hrsh7th/cmp-buffer",
-	"https://github.com/hrsh7th/cmp-path",
-	"https://github.com/onsails/lspkind.nvim",
+	-- Completion
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
 
 	-- Treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",

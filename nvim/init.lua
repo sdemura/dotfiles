@@ -8,7 +8,3 @@ require("pack-hooks")
 
 -- Install and load plugins
 require("plugins")
-
--- Setup configurations (plugin/ dir handles the rest)
-require("completion").setup()
-require("lsp-setup").setup()

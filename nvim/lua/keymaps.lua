@@ -1,54 +1,34 @@
-local key_opts = { noremap = true, silent = true }
-
--- Keymaps:
+-- Editor keymaps (plugin keymaps live in plugin/*.lua)
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true, desc = "Leader key" })
-vim.keymap.set("n", "<Esc><Esc>", "<cmd>:nohlsearch<CR><C-l><CR>", key_opts) -- Clear search highlighting and redraw screen
-vim.keymap.set("n", "<leader>pu", "<cmd>lua vim.pack.update()<CR>", { desc = "Update plugins" })
-vim.keymap.set("n", "<leader>px", "<cmd>PackClean<CR>", { desc = "Clean unused plugins" })
-vim.keymap.set("n", "q", "<Nop>", key_opts) -- Disable the 'q' key
-vim.keymap.set({ "n", "v", "i" }, "<F1>", "<Nop>", key_opts) -- Disable the <F1> key (help)
+vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR><C-l><CR>", { desc = "Clear search and redraw" })
+vim.keymap.set("n", "q", "<Nop>", { desc = "Disable q" })
+vim.keymap.set({ "n", "v", "i" }, "<F1>", "<Nop>", { desc = "Disable F1" })
+
+vim.keymap.set("n", "<leader>u", "<cmd>lua vim.pack.update()<CR>", { desc = "Update plugins" })
+-- vim.keymap.set("n", "<leader>pu", "<cmd>lua vim.pack.update(nil, {force = true })<CR>", { desc = "Update plugins" })
+vim.keymap.set("n", "<leader>x", "<cmd>PackClean<CR>", { desc = "Clean unused plugins" })
 
 vim.keymap.set("n", "<leader>yf", function()
 	local path = vim.fn.expand("%:p")
 	vim.fn.setreg("+", path)
 	vim.notify("Copied path to clipboard:\n" .. path, vim.log.levels.INFO, { title = "Yank File Path" })
-end, { noremap = true, silent = true, desc = "Yank full file path to clipboard" })
+end, { desc = "Yank full file path to clipboard" })
 
-vim.keymap.set({ "n", "v" }, "<leader>F", function()
-	require("conform").format({
-		async = true,
-		lsp_format = "fallback",
-		timeout_ms = 1000,
-	})
-end, { desc = "Format buffer (manual)" })
+-- Move by visible lines (from mini.basics)
+vim.keymap.set({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true, silent = true })
 
--- fzf-lua keybinds:
-vim.keymap.set("n", "<leader><leader>", "<cmd>:FzfLua<cr>", { desc = "Open FzfLua default fuzzy finder" })
-vim.keymap.set("n", "<leader>f", "<cmd>:FzfLua files<CR>", { desc = "Find files using FzfLua" })
-vim.keymap.set("n", "<leader>g", "<cmd>:FzfLua live_grep_glob<CR>", { desc = "Live grep across files" })
-vim.keymap.set("n", "<leader>G", "<cmd>:FzfLua grep_curbuf<CR>", { desc = "Grep in current buffer" })
-vim.keymap.set("n", "<leader>s", "<cmd>:FzfLua lsp_document_symbols<CR>", { desc = "List LSP document symbols" })
-vim.keymap.set(
-	"n",
-	"<leader>d",
-	"<cmd>:FzfLua lsp_workspace_diagnostics<CR>",
-	{ desc = "List LSP workspace diagnostics" }
-)
-vim.keymap.set("n", "<leader>cc", "<cmd>:FzfLua files cwd=~/.config<CR>", { desc = "Find files in ~/.config" })
-vim.keymap.set("n", "<leader>b", "<cmd>:FzfLua buffers<cr>", { desc = "List open buffers" })
-vim.keymap.set("n", "<leader>r", "<cmd>:FzfLua registers<cr>", { desc = "Show registers" })
-vim.keymap.set("n", "<leader>m", "<cmd>:FzfLua marks<cr>", { desc = "Show marks" })
-vim.keymap.set("i", "<C-r>", "<cmd>:FzfLua registers<cr>", { desc = "Show registers (insert mode)" })
+-- Put empty lines above/below (dot-repeatable)
+vim.keymap.set("n", "gO", "<cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = "Put empty line above" })
+vim.keymap.set("n", "go", "<cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = "Put empty line below" })
 
--- outline.nvim keybinds:
-vim.keymap.set("n", "<leader>o", "<cmd>:Outline<CR>", { desc = "Open Outline window" })
+-- System clipboard
+vim.keymap.set({ "n", "x" }, "gy", '"+y', { silent = true, desc = "Copy to system clipboard" })
+vim.keymap.set("n", "gp", '"+p', { silent = true, desc = "Paste from system clipboard" })
+vim.keymap.set("x", "gp", '"+P', { silent = true, desc = "Paste from system clipboard" })
 
--- hop.nvim keybinds:
-vim.keymap.set("n", "s", "<cmd>:HopWord<CR>", { desc = "Jump to a word using Hop" })
+-- Reselect last changed/put/yanked text
+vim.keymap.set("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', { expr = true, replace_keycodes = false, desc = "Visually select changed text" })
 
--- neo-tree.nvim keybinds:
-vim.keymap.set("n", "-", "<cmd>:Neotree toggle<CR>", { desc = "Toggle Neo-tree file explorer" })
-vim.keymap.set("n", "_", "<cmd>:Neotree toggle reveal<CR>", { desc = "Toggle Neo-tree and reveal current file" })
-
--- Git browse keybind:
-vim.keymap.set("n", "<leader>w", "<cmd>:GBrowse<CR>", { desc = "Open current file in webbrowser" })
+-- Search inside visual selection
+vim.keymap.set("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual selection" })

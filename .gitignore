@@ -6,5 +6,4 @@ nvim/bundle.old
 nvim/tmp
 nvim/bundle
 .DS_Store
-nvim/plugin
 nvim/lazy-lock.json

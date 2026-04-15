@@ -23,11 +23,12 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.swapfile = false
 vim.opt.switchbuf = "useopen"
+vim.opt.shortmess:append("c")
 vim.opt.tabstop = 4
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.wildignore = vim.opt.wildignore + { "*/.git/*", "*/.hg/*", "*/.DS_Store", "*.o", "*.pyc" }
-vim.opt.winborder = "rounded"
+-- vim.opt.winborder = "rounded"
 vim.opt.wrap = false
 
 -- Disable specific built-in plugins

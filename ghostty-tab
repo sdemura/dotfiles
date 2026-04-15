@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# ghostty-tab - Open a directory in Ghostty tab or window
+# Usage: ghostty-tab <path>
+
+path="${1:-.}"
+
+# Resolve to absolute path
+if [[ ! "$path" = /* ]]; then
+    path="$(cd "$path" 2>/dev/null && pwd)" || path="$PWD/$path"
+fi
+
+# Check if directory exists
+if [[ ! -d "$path" ]]; then
+    echo "Error: Directory '$path' does not exist" >&2
+    exit 1
+fi
+
+# Check if Ghostty is running
+if pgrep -x "Ghostty" > /dev/null; then
+    # Ghostty is running - open new tab with AppleScript
+    osascript <<EOF
+tell application "Ghostty"
+    activate
+    tell application "System Events"
+        keystroke "t" using {command down}
+    end tell
+    delay 0.2
+    do script "cd \"$path\"" in front window
+end tell
+EOF
+else
+    # Ghostty is not running - open new window
+    open -a Ghostty "$path"
+fi

@@ -147,13 +147,26 @@ _gs_widget() { gs; zle reset-prompt; }
 zle -N _gs_widget
 bindkey '^G' _gs_widget
 
-# ── FZF Theme (Catppuccin Macchiato) ────────────────────────────────
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
---color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
---color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
---color=selected-bg:#494d64 \
---color=border:#363a4f,label:#cad3f5"
+# ── Theme (Catppuccin — auto light/dark) ───────────────────────────
+if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == "Dark" ]]; then
+    # Catppuccin Macchiato
+    export FZF_DEFAULT_OPTS=" \
+        --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
+        --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
+        --color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
+        --color=selected-bg:#494d64 \
+        --color=border:#363a4f,label:#cad3f5"
+    sed -i '' 's/^palette = .*/palette = "catppuccin_macchiato"/' ~/.dotfiles/starship.toml
+else
+    # Catppuccin Latte
+    export FZF_DEFAULT_OPTS=" \
+        --color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
+        --color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
+        --color=marker:#7287fd,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39 \
+        --color=selected-bg:#bcc0cc \
+        --color=border:#ccd0da,label:#4c4f69"
+    sed -i '' 's/^palette = .*/palette = "catppuccin_latte"/' ~/.dotfiles/starship.toml
+fi
 
 # ── External sources ────────────────────────────────────────────────
 [[ -f ~/.env.zsh ]] && source ~/.env.zsh

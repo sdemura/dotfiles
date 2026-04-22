@@ -3,9 +3,9 @@
 	[
 		".profile",
 		"zsh",
-		"ash",
-		"sh",
 		"bashrc",
+		"ash",
 		"bash",
+		"sh",
 	],
 }

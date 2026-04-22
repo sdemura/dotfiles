@@ -213,7 +213,7 @@
 	[
 		"html.erb"
 	],*/
-	"Ruby":
+	/*"Ruby":
 	[
 		"jbuilder",
 		"podspec",
@@ -222,19 +222,142 @@
 		"rb",
 		"simplecov",
 		"thor"
+	],*/
+	/*"HAML":
+	[
+		"haml"
+	],*/
+	/*"INI":
+	[
+		".npmrc",
+		"ini.dist"
+	],*/
+	/*"XML":
+	[
+		"xml.dist"
+	],*/
+	/*"Shell-Unix-Generic":
+	[
+		".profile",
+		"ash",
+		"bash",
+		"bashrc",
+		"sh",
+		"zsh"
+	],*/
+	/*"YAML":
+	[
+		".gemrc",
+		"YAML-tmLanguage",
+		"yml",
+		"yml.dist"
+	],*/
+	/*"Python":
+	[
+		"py3",
+		"pyw"
+	],*/
+	/*"HTML (Rails)":
+	[
+		"html.erb"
+	],*/
+	/*"PHP":
+	[
+		"inc",
+		"php3",
+		"php4",
+		"php5",
+		"phtml"
+	],*/
+	/*"JSON":
+	[
+		".babelrc",
+		".bowerrc",
+		".csslintrc",
+		".eslintrc",
+		".jscsrc",
+		".jshintrc",
+		".stylelintrc",
+		"geojson"
+	],*/
+	/*"XML":
+	[
+		"xml.dist"
+	],*/
+	/*"YAML":
+	[
+		".gemrc",
+		"YAML-tmLanguage",
+		"yml",
+		"yml.dist"
+	],*/
+	/*"PHP":
+	[
+		"inc",
+		"php3",
+		"php4",
+		"php5",
+		"phtml"
+	],*/
+	/*"INI":
+	[
+		".npmrc",
+		"ini.dist"
+	],*/
+	/*"Shell-Unix-Generic":
+	[
+		".profile",
+		"ash",
+		"bash",
+		"bashrc",
+		"sh",
+		"zsh"
+	],*/
+	/*"HTML (Rails)":
+	[
+		"html.erb"
+	],*/
+	/*"JSON":
+	[
+		".babelrc",
+		".bowerrc",
+		".csslintrc",
+		".eslintrc",
+		".jscsrc",
+		".jshintrc",
+		".stylelintrc",
+		"geojson"
+	],*/
+	/*"Ruby":
+	[
+		"jbuilder",
+		"podspec",
+		"rabl",
+		"rake",
+		"rb",
+		"simplecov",
+		"thor"
+	],*/
+	/*"HAML":
+	[
+		"haml"
+	],*/
+	/*"Python":
+	[
+		"py3",
+		"pyw"
+	],*/
+	"PHP":
+	[
+		"inc",
+		"php3",
+		"php4",
+		"php5",
+		"phtml"
 	],
 	"HAML":
 	[
 		"haml"
-	],
-	"INI":
-	[
-		".npmrc",
-		"ini.dist"
-	],
-	"XML":
-	[
-		"xml.dist"
 	],
 	"Shell-Unix-Generic":
 	[
@@ -244,6 +367,10 @@
 		"bashrc",
 		"sh",
 		"zsh"
+	],
+	"HTML (Rails)":
+	[
+		"html.erb"
 	],
 	"YAML":
 	[
@@ -257,18 +384,6 @@
 		"py3",
 		"pyw"
 	],
-	"HTML (Rails)":
-	[
-		"html.erb"
-	],
-	"PHP":
-	[
-		"inc",
-		"php3",
-		"php4",
-		"php5",
-		"phtml"
-	],
 	"JSON":
 	[
 		".babelrc",
@@ -279,5 +394,24 @@
 		".jshintrc",
 		".stylelintrc",
 		"geojson"
+	],
+	"Ruby":
+	[
+		"jbuilder",
+		"podspec",
+		"rabl",
+		"rake",
+		"rb",
+		"simplecov",
+		"thor"
+	],
+	"INI":
+	[
+		".npmrc",
+		"ini.dist"
+	],
+	"XML":
+	[
+		"xml.dist"
 	],
 }

@@ -1,13 +1,10 @@
 // Settings in here override those in "LSP-gopls/LSP-gopls.sublime-settings"
 {
-	"command": [
-		"/Users/sean/go/bin/gopls"
-	],
 	"settings": {
 		"gopls.gofumpt": true,
 		"runTestsInPanel": true,
 		"gopls.staticcheck": true,
 		"gopls.semanticTokens": false,
-		"manageGoplsBinary": false,
+		"manageGoplsBinary": true,
 	},
 }

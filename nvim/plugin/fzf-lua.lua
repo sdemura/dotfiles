@@ -1,11 +1,11 @@
 require("fzf-lua").setup({
 	files = {
-		fd_opts = [[--color=never --type f --type l --exclude .git --exclude .jj --exclude .venv --exclude .ruff_cache --exclude .mypy_cache --hidden --no-ignore --follow]],
+		fd_opts = [[--color=never --type f --type l --exclude .git --exclude .jj --exclude .venv --exclude .ruff_cache --exclude .mypy_cache --exclude node_modules --exclude vendor --hidden --no-ignore --follow]],
 	},
 	winopts = { preview = { layout = "vertical" } },
 	fzf_colors = true,
 	grep = {
-		rg_opts = [[--hidden --column -g '!.venv' -g "!.git" -g "!.jj" -g "!.ruff_cache" -g "!.mypy_cache" --line-number --no-heading --no-ignore-vcs --color=always --smart-case --max-columns=4096]],
+		rg_opts = [[--hidden --column -g '!.venv' -g "!.git" -g "!.jj" -g "!.ruff_cache" -g "!.mypy_cache" -g "!node_modules" -g "!vendor" --line-number --no-heading --no-ignore-vcs --color=always --smart-case --max-columns=4096]],
 	},
 	keymap = { fzf = { true, ["ctrl-q"] = "select-all+accept" } },
 })

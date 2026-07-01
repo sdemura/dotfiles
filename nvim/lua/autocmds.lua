@@ -10,10 +10,15 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- Trim trailing whitespace on save
-vim.api.nvim_create_autocmd(
-	"BufWritePre",
-	{ command = ":lua MiniTrailspace.trim()", desc = "Trim trailing whitespace" }
-)
+vim.api.nvim_create_autocmd("BufWritePre", {
+	callback = function()
+		-- Skip markdown: trailing double-space is a hard line break there.
+		if vim.bo.buftype == "" and vim.bo.modifiable and vim.bo.filetype ~= "markdown" then
+			require("mini.trailspace").trim()
+		end
+	end,
+	desc = "Trim trailing whitespace",
+})
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -52,7 +57,7 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 
 -- User command to change directory to Git repository root
 vim.api.nvim_create_user_command("GitRoot", function()
-	local root = vim.fs.root(0, ".git")
+	local root = require("util").git_root()
 	if root then
 		vim.api.nvim_set_current_dir(root)
 		vim.notify("Changed directory to " .. root, vim.log.levels.INFO)

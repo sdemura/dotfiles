@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/sean/.codex/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/sean/.codex/hooks/codex-policy.mjs'",
+            "timeout": 10,
+            "statusMessage": "Checking local and review-write policy"
+          }
+        ],
+        "matcher": "^(Bash|mcp__.*)$"
+      }
+    ]
+  }
+}

@@ -519,7 +519,7 @@ with:
 # Commands that must always surface a Codex approval prompt.
 ```
 
-Retain all 10 existing allow rules, all 10 prompt rules, and all four forbidden rules.
+Retain all 11 existing allow rules, all 10 prompt rules, and all four forbidden rules.
 
 - [ ] **Step 3: Validate rule counts and required prohibitions**
 
@@ -531,7 +531,7 @@ Run:
 /opt/homebrew/bin/rg -c 'decision="forbidden"' /Users/sean/.dotfiles/codex/rules/default.rules
 ```
 
-Expected counts: `10`, `10`, and `4`.
+Expected counts: `11`, `10`, and `4`.
 
 Run:
 
@@ -926,12 +926,13 @@ attempting further changes.
 Run:
 
 ```bash
-/opt/homebrew/bin/git -C /Users/sean/.dotfiles log --oneline -4
+/opt/homebrew/bin/git -C /Users/sean/.dotfiles log --oneline -8
 /opt/homebrew/bin/git -C /Users/sean/.dotfiles status --short
 ```
 
-Expected: the design plus three implementation commits are present. Pre-existing unrelated dotfiles
-changes remain uncommitted and unchanged; no Codex runtime state appears in Git.
+Expected: the Codex design, plan, implementation, and migration-adjustment commits are present.
+Pre-existing unrelated dotfiles changes remain uncommitted and unchanged; no Codex runtime state
+appears in Git.
 
 ## Rollback Commands
 

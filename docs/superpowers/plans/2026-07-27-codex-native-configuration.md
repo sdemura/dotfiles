@@ -733,7 +733,7 @@ Expected: `codex: current` remains true after linking the tracked registration.
 ### Task 5: Simplify Runtime Configuration and Verify the Migration
 
 **Files:**
-- Modify: `/Users/sean/.codex/config.toml:93-141`
+- Modify: `/Users/sean/.codex/config.toml`
 - Test: `/Users/sean/.dotfiles/codex/hooks/codex-policy.test.mjs`
 - Read: `/Users/sean/.codex/AGENTS.md`
 - Read: `/Users/sean/.codex/hooks.json`
@@ -765,7 +765,7 @@ enabled = false
 Leave browser, visualize, Atlassian, GitLab, gopls, Pyright, Slack, and context-mode enabled. Leave
 Slack's nested MCP override disabled as it is today.
 
-- [ ] **Step 2: Remove obsolete feature and global environment entries**
+- [ ] **Step 2: Remove obsolete features, environment entries, and Claude profile naming**
 
 Delete the emptyable section:
 
@@ -784,6 +784,11 @@ inherit = "core"
 Delete the entire `[shell_environment_policy.set]` table and all 12 values beneath it. Do not remove
 the separate `[mcp_servers.node_repl.env]` table or any of its values.
 
+Rename the custom permission profile from `claude-parity` to `local-development`, update its
+description to Codex-native wording, and remove `~/.claude` from its workspace roots. Retain the
+`~/src` and `~/.dotfiles` workspace roots, `~/go` read access, `/tmp/Codex` write access, and
+inheritance from `:workspace`.
+
 - [ ] **Step 3: Parse the runtime configuration**
 
 Run:
@@ -801,11 +806,21 @@ Run:
 
 ```bash
 /opt/homebrew/bin/rg -n \
-  'js_repl|ANTHROPIC_|CLAUDE_CODE_|MAX_THINKING_TOKENS' \
+  'js_repl|ANTHROPIC_|CLAUDE_CODE_|MAX_THINKING_TOKENS|claude-parity|"~/.claude"' \
   /Users/sean/.codex/config.toml
 ```
 
 Expected: no output.
+
+Run:
+
+```bash
+/opt/homebrew/bin/rg -n \
+  'default_permissions = "local-development"|permissions\.local-development' \
+  /Users/sean/.codex/config.toml
+```
+
+Expected: the selected profile and all three `local-development` tables are present.
 
 Run:
 

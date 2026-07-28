@@ -1,0 +1,28 @@
+prefix_rule(pattern=["node", "/Users/sean/.codex/skills/.system/openai-docs/scripts/fetch-codex-manual.mjs"], decision="allow")
+prefix_rule(pattern=["/Users/sean/.local/bin/codex", "mcp", "login"], decision="allow")
+prefix_rule(pattern=["/Users/sean/.local/bin/codex", "mcp", "list"], decision="allow")
+prefix_rule(pattern=["/Users/sean/.local/bin/codex", "doctor"], decision="allow")
+prefix_rule(pattern=["/bin/mkdir", "-p", "/Users/sean/.local/share/terminfo/67", "/Users/sean/.local/share/terminfo/78"], decision="allow")
+prefix_rule(pattern=["/bin/cp", "/Applications/Ghostty.app/Contents/Resources/terminfo/67/ghostty", "/Users/sean/.local/share/terminfo/67/ghostty"], decision="allow")
+prefix_rule(pattern=["/bin/cp", "/Applications/Ghostty.app/Contents/Resources/terminfo/78/xterm-ghostty", "/Users/sean/.local/share/terminfo/78/xterm-ghostty"], decision="allow")
+prefix_rule(pattern=["/bin/zsh", "-lic", "/Users/sean/.local/bin/codex doctor --summary --ascii --no-color"], decision="allow")
+prefix_rule(pattern=["/opt/homebrew/bin/git", "-C", "/Users/sean/.dotfiles", "apply", "--cached"], decision="allow")
+prefix_rule(pattern=["/opt/homebrew/bin/git", "-C", "/Users/sean/.dotfiles", "commit"], decision="allow")
+
+# Commands that must always surface a Codex approval prompt.
+prefix_rule(pattern=["curl"], decision="prompt")
+prefix_rule(pattern=["wget"], decision="prompt")
+prefix_rule(pattern=["scp"], decision="prompt")
+prefix_rule(pattern=["rsync"], decision="prompt")
+prefix_rule(pattern=[["pip", "pip3"], "install"], decision="prompt")
+prefix_rule(pattern=[["python", "python3"], "-m", "pip", "install"], decision="prompt")
+prefix_rule(pattern=["npm", ["install", "i", "ci", "add"]], decision="prompt")
+prefix_rule(pattern=["npx"], decision="prompt")
+prefix_rule(pattern=[["gcloud", "az"]], decision="prompt")
+prefix_rule(pattern=[["terraform", "tofu"], ["apply", "init", "import", "state", "taint", "workspace", "refresh", "plan"]], decision="prompt")
+
+# Exact-prefix defense in depth. The policy hook covers global options and wildcard forms.
+prefix_rule(pattern=["git", "push"], decision="forbidden", justification="Sean pushes manually.")
+prefix_rule(pattern=[["terraform", "tofu"], "destroy"], decision="forbidden", justification="Infrastructure destruction is forbidden.")
+prefix_rule(pattern=["aws", "ec2", "terminate-instances"], decision="forbidden", justification="EC2 termination is forbidden.")
+prefix_rule(pattern=["aws", "s3", ["rb", "rm"]], decision="forbidden", justification="Destructive S3 operations are forbidden.")

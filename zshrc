@@ -10,8 +10,9 @@ export HISTFILE=~/.zsh_history
 export HISTSIZE=10000000
 export SAVEHIST=$HISTSIZE
 
-# https://gpanders.com/blog/the-definitive-guide-to-using-tmux-256color-on-macos/
-export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
+# Keep custom terminfo entries readable inside sandboxed tools such as Codex.
+export TERMINFO="$HOME/.local/share/terminfo"
+unset TERMINFO_DIRS
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$HOME/go/bin:$PATH"

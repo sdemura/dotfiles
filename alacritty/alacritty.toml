@@ -13,8 +13,7 @@ size = 12.0
 offset.y = 1
 
 [font.normal]
-# family = "JetBrainsMono NF"
-family = "Hack Nerd Font"
+family = "JetBrainsMono NF"
 
 [[keyboard.bindings]]
 chars = "\u001E"
@@ -45,9 +44,9 @@ mods = "Command"
 save_to_clipboard = true
 
 [window]
-decorations_theme_variant = "Dark"
+decorations_theme_variant = "Light"
 dynamic_title = true
 option_as_alt = "Both"
 
 [general]
-import = ["/Users/sean/.dotfiles/alacritty/themes/catppuccin_macchiato.toml"]
+import = ["/Users/sean/.dotfiles/alacritty/themes/catppuccin_latte.toml"]

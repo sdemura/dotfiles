@@ -4,8 +4,7 @@ vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR><C-l>", { desc = "Clear se
 vim.keymap.set("n", "q", "<Nop>", { desc = "Disable q" })
 vim.keymap.set({ "n", "v", "i" }, "<F1>", "<Nop>", { desc = "Disable F1" })
 
-vim.keymap.set("n", "<leader>u", "<cmd>lua vim.pack.update()<CR>", { desc = "Update plugins" })
--- vim.keymap.set("n", "<leader>pu", "<cmd>lua vim.pack.update(nil, {force = true })<CR>", { desc = "Update plugins" })
+vim.keymap.set("n", "<leader>u", function() vim.pack.update() end, { desc = "Update plugins" })
 vim.keymap.set("n", "<leader>x", "<cmd>PackClean<CR>", { desc = "Clean unused plugins" })
 
 vim.keymap.set("n", "<leader>yf", function()

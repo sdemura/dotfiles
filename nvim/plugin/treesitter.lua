@@ -1,5 +1,4 @@
-vim.api.nvim_create_autocmd("FileType", {
-	callback = function(ev)
-		pcall(vim.treesitter.start, ev.buf)
-	end,
+require("arborist").setup({
+	update_cadence = "weekly",
+	ensure_installed = { "go", "lua", "python", "helm", "just" },
 })

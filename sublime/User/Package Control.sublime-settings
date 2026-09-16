@@ -1,4 +1,8 @@
 {
+	    "channels":
+    [
+        "https://packages.sublimetext.com/channel_v4.json",
+	],
 	"bootstrapped": true,
 	"in_process_packages":
 	[

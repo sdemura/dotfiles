@@ -1,9 +1,35 @@
 add_newline = false
 command_timeout = 3000
+format = '$username$hostname$localip$shlvl$singularity$kubernetes$nats${custom.worktree}${custom.repository}$directory$all'
 
-palette = "catppuccin_macchiato"
+palette = "catppuccin_latte"
 
 [directory]
+format = '[$path]($style)[$read_only]($read_only_style) '
+repo_root_format = '[$path]($style)[$read_only]($read_only_style) '
+repo_root_style = "bold lavender"
+style = "bold lavender"
+
+[custom.worktree]
+command = '''
+git_dir=$(git rev-parse --path-format=absolute --git-dir 2>/dev/null) || exit 1
+common_dir=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || exit 1
+test "$git_dir" != "$common_dir" || exit 1
+basename "$(git rev-parse --show-toplevel 2>/dev/null)"
+'''
+when = true
+format = '([\(󰙅 $output\) ]($style))'
+shell = ['sh']
+style = "bold peach"
+
+[custom.repository]
+command = '''
+common_dir=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || exit 1
+basename "$(dirname "$common_dir")"
+'''
+when = true
+format = '[$output]($style)'
+shell = ['sh']
 style = "bold lavender"
 
 [aws]

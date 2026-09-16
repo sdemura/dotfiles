@@ -27,3 +27,5 @@ prefix_rule(pattern=[["terraform", "tofu"], "destroy"], decision="forbidden", ju
 prefix_rule(pattern=["aws", "ec2", "terminate-instances"], decision="forbidden", justification="EC2 termination is forbidden.")
 prefix_rule(pattern=["aws", "s3", ["rb", "rm"]], decision="forbidden", justification="Destructive S3 operations are forbidden.")
 prefix_rule(pattern=["/opt/homebrew/bin/git", "-C", "/Users/sean/.dotfiles", "add"], decision="allow")
+prefix_rule(pattern=["git", "-C", "/Users/sean/src/gitlab.com/corelight/engineering/sensor-test-automation-2", "switch"], decision="allow")
+prefix_rule(pattern=["uv", "lock"], decision="allow")

@@ -18,6 +18,7 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # ── Completions ─────────────────────────────────────────────────────
@@ -41,16 +42,53 @@ alias ls='lsd'
 alias rg="rg --hidden -g '!.git' -g '!.venv' --no-ignore-vcs"
 
 # ── Functions ───────────────────────────────────────────────────────
+# source "$HOME/.dotfiles/wt.zsh"
+
 # Close all tmux windows except current
 tabo() { tmux kill-window -a; }
+
+# # Rename tmux window to 'claude' while claude is running
+# claude() {
+#   if [[ -n "$TMUX" ]]; then
+#     local prev
+#     prev=$(tmux display-message -p '#W')
+#     tmux rename-window claude
+#     command claude "$@"
+#     local rc=$?
+#     tmux rename-window "$prev"
+#     tmux set-window-option -u automatic-rename
+#     return $rc
+#   else
+#     command claude "$@"
+#   fi
+# }
 
 # Copy file contents to clipboard
 pc() { pbcopy < "$1" && echo "copied contents of $1 to clipboard"; }
 
-# Copy absolute path to clipboard
+# Copy absolute path to clipboard (no args: fuzzy repo selector)
 rp() {
-  local p
-  p=$(realpath "${1:-.}") && printf '%s' "$p" | pbcopy && echo "copied $p to clipboard"
+  if [[ -n "$1" ]]; then
+    local p
+    p=$(realpath "$1") && printf '%s' "$p" | pbcopy && echo "copied $p to clipboard"
+    return
+  fi
+
+  local cache_file="$HOME/.git_repos.cache"
+  local src_dir="$HOME/src"
+
+  if [[ ! -f "$cache_file" ]]; then
+    echo "No repo cache found. Run 'repo update' first." >&2
+    return 1
+  fi
+
+  local selection
+  selection=$(fzf <"$cache_file")
+
+  if [[ -n "$selection" ]]; then
+    printf '%s' "$src_dir/$selection" | pbcopy
+    echo "copied $src_dir/$selection to clipboard"
+  fi
 }
 
 # Fuzzy find a git repository and cd into it
@@ -158,6 +196,8 @@ if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == "Dark" ]]; then
         --color=selected-bg:#494d64 \
         --color=border:#363a4f,label:#cad3f5"
     sed -i '' 's/^palette = .*/palette = "catppuccin_macchiato"/' ~/.dotfiles/starship.toml
+    cp ~/.dotfiles/lsd/colors-macchiato.yaml ~/.config/lsd/colors.yaml
+    sed -i '' 's/skin: catppuccin-.*/skin: catppuccin-macchiato/' ~/Library/Application\ Support/k9s/config.yaml
 else
     # Catppuccin Latte
     export FZF_DEFAULT_OPTS=" \
@@ -167,6 +207,8 @@ else
         --color=selected-bg:#bcc0cc \
         --color=border:#ccd0da,label:#4c4f69"
     sed -i '' 's/^palette = .*/palette = "catppuccin_latte"/' ~/.dotfiles/starship.toml
+    cp ~/.dotfiles/lsd/colors-latte.yaml ~/.config/lsd/colors.yaml
+    sed -i '' 's/skin: catppuccin-.*/skin: catppuccin-latte/' ~/Library/Application\ Support/k9s/config.yaml
 fi
 
 # ── External sources ────────────────────────────────────────────────
@@ -174,3 +216,13 @@ fi
 
 # ── Prompt ──────────────────────────────────────────────────────────
 eval "$(starship init zsh)"
+
+# ── Cursor ──────────────────────────────────────────────────────────
+# Reset cursor to a bar on every prompt so it doesn't get stuck as a block
+# after a program (nvim, fzf, etc.) exits without restoring it.
+_set_cursor_bar() { printf '\e[5 q' }
+precmd_functions+=(_set_cursor_bar)
+
+
+# added by SpookiUI — force a portable TERM over SSH (see fix-ssh)
+alias ssh="TERM=xterm-256color ssh"

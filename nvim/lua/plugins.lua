@@ -24,8 +24,7 @@ vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
 
 	-- Treesitter
-	"https://github.com/nvim-treesitter/nvim-treesitter",
-	"https://github.com/RRethy/nvim-treesitter-endwise",
+	"https://github.com/arborist-ts/arborist.nvim",
 
 	-- Formatting and UI
 	"https://github.com/stevearc/conform.nvim",

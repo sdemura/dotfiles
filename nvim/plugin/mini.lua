@@ -11,7 +11,7 @@ require("mini.surround").setup({
 	mappings = { add = "ys", delete = "ds", replace = "cs", find = "", find_left = "", highlight = "", update_n_lines = "" },
 	n_lines = 50,
 })
-vim.keymap.del("x", "ys")
+pcall(vim.keymap.del, "x", "ys")
 vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { desc = "Surround visual selection" })
 
 require("mini.jump2d").setup({

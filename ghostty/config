@@ -1,29 +1,42 @@
-font-family = "JetbrainsMono Nerd Font"
+# 1.3.1 is buggy as hell
+auto-update-channel = tip
+
+# font-family = "JetbrainsMono Nerd Font"
+# font-family = "IntoneMono Nerd Font Mono"
+# font-family = "IosevkaTerm Nerd Font Mono"
+font-family = "Monaspace Argon NF"
 font-thicken = true
-font-thicken-strength = 127
-font-size = 12
+# Monaspace ships real weight variants, so heavy synthetic thickening
+# muddies it — lighter than the 127 that was tuned for thin Iosevka strokes.
+font-thicken-strength = 64
+font-size = 13
+adjust-cell-height = 12%
+
 theme = light:catppuccin-latte,dark:catppuccin-macchiato
+# theme = catppuccin-macchiato
 bold-is-bright = true
 macos-option-as-alt = true
 keybind = global:alt+`=toggle_quick_terminal
 quick-terminal-animation-duration = 0.1
 confirm-close-surface = false
 
+macos-titlebar-style = "native"
+
 keybind = shift+enter=text:\x1b\r
 keybind = ctrl+f=write_scrollback_file:open
 
 # tmux-style splits
-keybind = ctrl+b>x=close_surface
-keybind = ctrl+b>z=toggle_split_zoom
-keybind = ctrl+b>\=new_split:right
-keybind = ctrl+b>-=new_split:down
-
-# tmux-style split navigation (ctrl+b + hjkl)
-keybind = ctrl+b>h=goto_split:left
-keybind = ctrl+b>j=goto_split:bottom
-keybind = ctrl+b>k=goto_split:top
-keybind = ctrl+b>l=goto_split:right
-keybind = ctrl+b>left=goto_split:left
-keybind = ctrl+b>down=goto_split:bottom
-keybind = ctrl+b>up=goto_split:top
-keybind = ctrl+b>right=goto_split:right
+# keybind = ctrl+b>x=close_surface
+# keybind = ctrl+b>z=toggle_split_zoom
+# keybind = ctrl+b>\=new_split:right
+# keybind = ctrl+b>-=new_split:down
+#
+# # tmux-style split navigation (ctrl+b + hjkl)
+# keybind = ctrl+b>h=goto_split:left
+# keybind = ctrl+b>j=goto_split:bottom
+# keybind = ctrl+b>k=goto_split:top
+# keybind = ctrl+b>l=goto_split:right
+# keybind = ctrl+b>left=goto_split:left
+# keybind = ctrl+b>down=goto_split:bottom
+# keybind = ctrl+b>up=goto_split:top
+# keybind = ctrl+b>right=goto_split:right

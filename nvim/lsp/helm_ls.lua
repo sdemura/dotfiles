@@ -8,7 +8,7 @@ return {
 				path = "yaml-language-server",
 				config = {
 					schemas = {
-						["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.29.12-standalone-strict/_definitions.json"] = "**/templates/**",
+						kubernetes = "templates/**",
 					},
 				},
 			},

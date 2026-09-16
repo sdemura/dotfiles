@@ -6,15 +6,16 @@ navic.setup({
 	depth_limit = 5,
 })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
+local winbar = " %{%v:lua.require'nvim-navic'.get_location()%}"
+
+vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter", "FileType" }, {
+	group = vim.api.nvim_create_augroup("NavicWinbar", { clear = true }),
 	callback = function()
-		if vim.bo.filetype == "minifiles" or vim.bo.buftype == "nofile" then
+		if vim.bo.filetype == "neo-tree" or vim.bo.buftype ~= "" then
+			if vim.wo.winbar == winbar then vim.wo.winbar = "" end
 			return
 		end
-		if navic.is_available() and navic.get_location() ~= "" then
-			vim.wo.winbar = " " .. navic.get_location()
-		else
-			vim.wo.winbar = " "
-		end
+		vim.wo.winbar = winbar
 	end,
+	desc = "Show live breadcrumbs in editing windows",
 })

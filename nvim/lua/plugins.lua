@@ -12,7 +12,13 @@ vim.pack.add({
 	"https://github.com/nvim-mini/mini.nvim",
 
 	-- Plugins with version pinning
+	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = vim.version.range("3.x") },
 	"https://github.com/SmiteshP/nvim-navic",
+
+	-- Dependencies (listed explicitly, no nesting)
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/MunifTanjim/nui.nvim",
+	"https://github.com/s1n7ax/nvim-window-picker",
 
 	-- Completion
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },

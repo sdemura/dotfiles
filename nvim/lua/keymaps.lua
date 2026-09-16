@@ -1,6 +1,6 @@
 -- Editor keymaps (plugin keymaps live in plugin/*.lua)
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true, desc = "Leader key" })
-vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR><C-l><CR>", { desc = "Clear search and redraw" })
+vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR><C-l>", { desc = "Clear search and redraw" })
 vim.keymap.set("n", "q", "<Nop>", { desc = "Disable q" })
 vim.keymap.set({ "n", "v", "i" }, "<F1>", "<Nop>", { desc = "Disable F1" })
 

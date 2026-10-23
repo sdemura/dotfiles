@@ -18,8 +18,30 @@ vim.keymap.set({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true, 
 vim.keymap.set({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true, silent = true })
 
 -- Put empty lines above/below (dot-repeatable)
-vim.keymap.set("n", "gO", "<cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = "Put empty line above" })
-vim.keymap.set("n", "go", "<cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = "Put empty line below" })
+local put_above = false
+
+function _G.PutBlankLine()
+	local line = vim.fn.line(".") - (put_above and 1 or 0)
+	vim.fn.append(line, vim.fn["repeat"]({ "" }, vim.v.count1))
+end
+
+local function blank_line(above)
+	return function()
+		put_above = above
+		vim.go.operatorfunc = "v:lua.PutBlankLine"
+		return "g@l"
+	end
+end
+
+vim.keymap.set("n", "go", blank_line(false), {
+	expr = true,
+	desc = "Put empty line below",
+})
+
+vim.keymap.set("n", "gO", blank_line(true), {
+	expr = true,
+	desc = "Put empty line above",
+})
 
 -- System clipboard
 vim.keymap.set({ "n", "x" }, "gy", '"+y', { silent = true, desc = "Copy to system clipboard" })

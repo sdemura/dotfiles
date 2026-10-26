@@ -2,7 +2,7 @@ add_newline = false
 command_timeout = 3000
 format = '$username$hostname$localip$shlvl$singularity$kubernetes$nats${custom.worktree}${custom.repository}$directory$all'
 
-palette = "catppuccin_latte"
+palette = "catppuccin_macchiato"
 
 [directory]
 format = '[$path]($style)[$read_only]($read_only_style) '

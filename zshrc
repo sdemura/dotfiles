@@ -86,23 +86,25 @@ rp() {
   selection=$(fzf <"$cache_file")
 
   if [[ -n "$selection" ]]; then
-    printf '%s' "$src_dir/$selection" | pbcopy
-    echo "copied $src_dir/$selection to clipboard"
+    [[ "$selection" == /* ]] || selection="$src_dir/$selection"
+    printf '%s' "$selection" | pbcopy
+    echo "copied $selection to clipboard"
   fi
 }
 
-# Fuzzy find a git repository and cd into it
+# Fuzzy find a git repository or worktree and cd into it
 repo() {
   local cache_file="$HOME/.git_repos.cache"
   local src_dir="$HOME/src"
+  local worktree_dir="$HOME/.herdr/worktrees"
 
   if ! command -v fd &>/dev/null || ! command -v fzf &>/dev/null; then
     echo "Error: fd and fzf are required" >&2
     return 1
   fi
 
-  if [[ ! -d "$src_dir" ]]; then
-    echo "Error: $src_dir directory does not exist" >&2
+  if [[ ! -d "$src_dir" && ! -d "$worktree_dir" ]]; then
+    echo "Error: neither $src_dir nor $worktree_dir exists" >&2
     return 1
   fi
 
@@ -110,20 +112,26 @@ repo() {
     local silent="$1"
     [[ "$silent" != "silent" ]] && echo "Updating git repo cache..." >&2
     {
-      fd --hidden --type d '^\.git$' --base-directory "$src_dir" --exec dirname |
-        sed 's|^\./||' |
-        while IFS= read -r repo; do
-          local parent="$(dirname "$repo")"
-          local is_submodule=false
-          while [[ "$parent" != "." ]]; do
-            if [[ -e "$src_dir/$parent/.git" ]]; then
-              is_submodule=true
-              break
+      local root_dir
+      for root_dir in "$src_dir" "$worktree_dir"; do
+        [[ -d "$root_dir" ]] || continue
+        fd --hidden --type d --type f '^\.git$' --base-directory "$root_dir" --exec dirname |
+          sed 's|^\./||' |
+          while IFS= read -r repo; do
+            local parent="$(dirname "$repo")"
+            local is_submodule=false
+            while [[ "$parent" != "." ]]; do
+              if [[ -e "$root_dir/$parent/.git" ]]; then
+                is_submodule=true
+                break
+              fi
+              parent="$(dirname "$parent")"
+            done
+            if [[ "$is_submodule" == "false" ]]; then
+              printf '%s\n' "$root_dir/$repo"
             fi
-            parent="$(dirname "$parent")"
           done
-          [[ "$is_submodule" == "false" ]] && echo "$repo"
-        done
+      done
     } >"$cache_file.tmp" &&
       mv "$cache_file.tmp" "$cache_file"
     [[ "$silent" != "silent" ]] && echo "Cache update complete." >&2
@@ -143,8 +151,9 @@ repo() {
   repo=$(fzf <"$cache_file")
 
   if [[ -n "$repo" ]]; then
+    [[ "$repo" == /* ]] || repo="$src_dir/$repo"
     echo "Switching to $repo" >&2
-    cd "$src_dir/$repo" || return
+    cd "$repo" || return
   fi
 }
 

@@ -154,18 +154,40 @@ _repo_picker() {
   fi
 }
 
-# Fuzzy switch to a recent git branch
-gs() {
-  local branch
-  branch=$(git reflog --date=relative |
-    grep 'checkout: moving' |
-    sed 's/.*{\(.*\)}: checkout: moving.* to \(.*\)/\2 (\1)/' |
-    awk -F' \\(' '!seen[$1]++ {printf "\033[33m%s\033[0m \033[32m(%s\033[0m\n", $1, $2}' |
-    fzf --layout=reverse --ansi --preview-window=right:66% \
-      --preview 'git log --color=always --format="%C(yellow)%h %C(green)%ar %C(reset)%s" $(echo {} | awk "{print \$1}") --' |
-    awk '{print $1}')
+# Fuzzy switch to a local or fetched remote branch, with a commit preview.
+_branch_picker() {
+  if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != true ]]; then
+    echo "Error: not inside a Git working tree" >&2
+    return 1
+  fi
 
-  [[ -n "$branch" ]] && git switch "$branch"
+  local branches selection ref tracking_branch
+  branches=$(git for-each-ref --sort=-committerdate \
+    --format='%(if)%(symref)%(then)%(else)%(refname)%09%(refname:short)%09%(committerdate:relative)%09%(subject)%(end)' \
+    refs/heads refs/remotes) || return
+  if [[ -z "$branches" ]]; then
+    echo "No branches found." >&2
+    return 1
+  fi
+
+  selection=$(printf '%s\n' "$branches" | sed '/^$/d' |
+    fzf --layout=reverse --delimiter=$'\t' --with-nth=2.. --nth=1 \
+      --prompt='Branch> ' --preview-window=right:66% \
+      --preview 'git log -30 --color=always --format="%C(yellow)%h %C(green)%ar %C(reset)%s" {1} --') || return
+  [[ -n "$selection" ]] || return 0
+  ref="${selection%%$'\t'*}"
+
+  if [[ "$ref" == refs/heads/* ]]; then
+    git switch -- "${ref#refs/heads/}"
+  else
+    tracking_branch=$(git for-each-ref --format='%(refname:lstrip=2)%09%(upstream)' refs/heads |
+      awk -F '\t' -v upstream="$ref" '$2 == upstream { print $1; exit }')
+    if [[ -n "$tracking_branch" ]]; then
+      git switch -- "$tracking_branch"
+    else
+      git switch --track -- "$ref"
+    fi
+  fi
 }
 
 # ── ZLE Widgets & Keybindings ───────────────────────────────────────
@@ -182,7 +204,7 @@ fancy-ctrl-z() {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# Ctrl-O opens a picker: R for repositories, W for worktrees.
+# Ctrl-O opens a picker: R for repositories, W for worktrees, B for branches.
 # Remove the single-key action so zsh waits for the second key.
 bindkey -r '^O'
 _repo_widget() { repo; zle reset-prompt; }
@@ -193,10 +215,14 @@ _wrepo_widget() { wrepo; zle reset-prompt; }
 zle -N _wrepo_widget
 bindkey '^Ow' _wrepo_widget
 
-# Ctrl-G: fuzzy branch switcher
-_gs_widget() { gs; zle reset-prompt; }
-zle -N _gs_widget
-bindkey '^G' _gs_widget
+_branch_widget() { _branch_picker; zle reset-prompt; }
+zle -N _branch_widget
+bindkey '^Ob' _branch_widget
+
+# Retire gs even when reloading an existing shell; Ctrl-G cancels input again.
+unfunction gs _gs_widget 2>/dev/null || true
+zle -D _gs_widget 2>/dev/null || true
+bindkey '^G' send-break
 
 # ── Theme (Catppuccin — auto light/dark) ───────────────────────────
 if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == "Dark" ]]; then

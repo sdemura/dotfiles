@@ -74,7 +74,7 @@ rp() {
     return
   fi
 
-  local cache_file="$HOME/.git_repos.cache"
+  local cache_file="$HOME/.git_repos_src.cache"
   local src_dir="$HOME/src"
 
   if [[ ! -f "$cache_file" ]]; then
@@ -92,66 +92,63 @@ rp() {
   fi
 }
 
-# Fuzzy find a git repository or worktree and cd into it
-repo() {
-  local cache_file="$HOME/.git_repos.cache"
-  local src_dir="$HOME/src"
-  local worktree_dir="$HOME/.herdr/worktrees"
+# Keep source repositories separate from worktrees and the old mixed cache.
+repo() { _repo_picker "$HOME/src" "$HOME/.git_repos_src.cache" "$1"; }
+wrepo() { _repo_picker "$HOME/.herdr/worktrees" "$HOME/.git_worktrees.cache" "$1"; }
+
+_repo_update_cache() {
+  setopt localoptions pipefail
+  local root_dir="$1" cache_file="$2" silent="$3"
+  [[ "$silent" != "silent" ]] && echo "Updating git repo cache for $root_dir..." >&2
+  fd --hidden --type d --type f '^\.git$' --base-directory "$root_dir" --exec dirname |
+    sed 's|^\./||' |
+    while IFS= read -r repo; do
+      local parent="$(dirname "$repo")"
+      local is_submodule=false
+      while [[ "$parent" != "." ]]; do
+        if [[ -e "$root_dir/$parent/.git" ]]; then
+          is_submodule=true
+          break
+        fi
+        parent="$(dirname "$parent")"
+      done
+      if [[ "$is_submodule" == "false" ]]; then
+        printf '%s\n' "$root_dir/$repo"
+      fi
+    done >"$cache_file.tmp" || return
+  mv "$cache_file.tmp" "$cache_file" || return
+  [[ "$silent" != "silent" ]] && echo "Cache update complete." >&2
+  return 0
+}
+
+_repo_picker() {
+  local root_dir="$1" cache_file="$2" action="$3"
 
   if ! command -v fd &>/dev/null || ! command -v fzf &>/dev/null; then
     echo "Error: fd and fzf are required" >&2
     return 1
   fi
 
-  if [[ ! -d "$src_dir" && ! -d "$worktree_dir" ]]; then
-    echo "Error: neither $src_dir nor $worktree_dir exists" >&2
+  if [[ ! -d "$root_dir" ]]; then
+    echo "Error: $root_dir does not exist" >&2
     return 1
   fi
 
-  _repo_update_cache() {
-    local silent="$1"
-    [[ "$silent" != "silent" ]] && echo "Updating git repo cache..." >&2
-    {
-      local root_dir
-      for root_dir in "$src_dir" "$worktree_dir"; do
-        [[ -d "$root_dir" ]] || continue
-        fd --hidden --type d --type f '^\.git$' --base-directory "$root_dir" --exec dirname |
-          sed 's|^\./||' |
-          while IFS= read -r repo; do
-            local parent="$(dirname "$repo")"
-            local is_submodule=false
-            while [[ "$parent" != "." ]]; do
-              if [[ -e "$root_dir/$parent/.git" ]]; then
-                is_submodule=true
-                break
-              fi
-              parent="$(dirname "$parent")"
-            done
-            if [[ "$is_submodule" == "false" ]]; then
-              printf '%s\n' "$root_dir/$repo"
-            fi
-          done
-      done
-    } >"$cache_file.tmp" &&
-      mv "$cache_file.tmp" "$cache_file"
-    [[ "$silent" != "silent" ]] && echo "Cache update complete." >&2
-  }
-
-  if [[ "$1" == "update" ]] || [[ ! -f "$cache_file" ]]; then
-    _repo_update_cache
-    [[ "$1" == "update" ]] && return 0
+  if [[ "$action" == "update" ]] || [[ ! -f "$cache_file" ]]; then
+    _repo_update_cache "$root_dir" "$cache_file" || return
+    [[ "$action" == "update" ]] && return 0
   fi
 
   if [[ -n "$(find "$cache_file" -mmin +1440 2>/dev/null)" ]]; then
     echo "Cache is stale, updating in background..." >&2
-    (_repo_update_cache silent &)
+    (_repo_update_cache "$root_dir" "$cache_file" silent &)
   fi
 
   local repo
   repo=$(fzf <"$cache_file")
 
   if [[ -n "$repo" ]]; then
-    [[ "$repo" == /* ]] || repo="$src_dir/$repo"
+    [[ "$repo" == /* ]] || repo="$root_dir/$repo"
     echo "Switching to $repo" >&2
     cd "$repo" || return
   fi
@@ -185,10 +182,16 @@ fancy-ctrl-z() {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# Ctrl-O: fuzzy repo switcher
+# Ctrl-O opens a picker: R for repositories, W for worktrees.
+# Remove the single-key action so zsh waits for the second key.
+bindkey -r '^O'
 _repo_widget() { repo; zle reset-prompt; }
 zle -N _repo_widget
-bindkey '^O' _repo_widget
+bindkey '^Or' _repo_widget
+
+_wrepo_widget() { wrepo; zle reset-prompt; }
+zle -N _wrepo_widget
+bindkey '^Ow' _wrepo_widget
 
 # Ctrl-G: fuzzy branch switcher
 _gs_widget() { gs; zle reset-prompt; }

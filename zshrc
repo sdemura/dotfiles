@@ -190,6 +190,25 @@ _branch_picker() {
   fi
 }
 
+# FzfLua-style entry point: choose a picker, then choose its destination.
+_open_picker() {
+  local selection
+  selection=$(printf '%s\n' \
+    $'Branches\tSwitch branch in the current repository' \
+    $'Repositories\tOpen a repository in ~/src' \
+    $'Worktrees\tOpen a worktree in ~/.herdr/worktrees' |
+    fzf --height=~40% --layout=reverse --border=rounded --no-multi \
+      --delimiter=$'\t' --nth=1 --tabstop=16 --prompt='Open> ' \
+      --header='Choose a picker · Enter: open · Esc/Ctrl-G: cancel' \
+      --bind='ctrl-g:abort') || return
+
+  case "${selection%%$'\t'*}" in
+    Branches) _branch_picker ;;
+    Repositories) repo ;;
+    Worktrees) wrepo ;;
+  esac
+}
+
 # ── ZLE Widgets & Keybindings ───────────────────────────────────────
 # Ctrl-Z: toggle foreground/background (or stash current input)
 fancy-ctrl-z() {
@@ -204,20 +223,13 @@ fancy-ctrl-z() {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# Ctrl-O opens a picker: R for repositories, W for worktrees, B for branches.
-# Remove the single-key action so zsh waits for the second key.
-bindkey -r '^O'
-_repo_widget() { repo; zle reset-prompt; }
-zle -N _repo_widget
-bindkey '^Or' _repo_widget
-
-_wrepo_widget() { wrepo; zle reset-prompt; }
-zle -N _wrepo_widget
-bindkey '^Ow' _wrepo_widget
-
-_branch_widget() { _branch_picker; zle reset-prompt; }
-zle -N _branch_widget
-bindkey '^Ob' _branch_widget
+# Ctrl-O immediately opens the picker menu, including after reloading zshrc.
+bindkey -r '^Or' '^Ow' '^Ob'
+unfunction _repo_widget _wrepo_widget _branch_widget 2>/dev/null || true
+zle -D _repo_widget _wrepo_widget _branch_widget 2>/dev/null || true
+_open_widget() { _open_picker; zle reset-prompt; }
+zle -N _open_widget
+bindkey '^O' _open_widget
 
 # Retire gs even when reloading an existing shell; Ctrl-G cancels input again.
 unfunction gs _gs_widget 2>/dev/null || true

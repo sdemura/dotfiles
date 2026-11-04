@@ -94,7 +94,28 @@ rp() {
 
 # Keep source repositories separate from worktrees and the old mixed cache.
 repo() { _repo_picker "$HOME/src" "$HOME/.git_repos_src.cache" "$1"; }
-wrepo() { _repo_picker "$HOME/.herdr/worktrees" "$HOME/.git_worktrees.cache" "$1"; }
+
+# Git knows all worktrees for this repository, regardless of their location.
+wrepo() {
+  setopt localoptions pipefail
+  if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != true ]]; then
+    echo "Not inside a Git checkout. Open a repository first." >&2
+    return 1
+  fi
+
+  local worktree record listing
+  local -a worktrees
+  listing=$(git worktree list --porcelain -z) || return
+  for record in "${(@0)listing}"; do
+    [[ "$record" == 'worktree '* ]] && worktrees+=("${record#worktree }")
+  done
+  worktree=$(printf '%s\0' "${worktrees[@]}" |
+    fzf --read0 --layout=reverse --prompt='Worktree> ' \
+      --header='Worktrees of the current repository' \
+      --preview='git -C {} status --short --branch') || return
+  [[ -n "$worktree" ]] || return 0
+  cd -- "$worktree"
+}
 
 _repo_update_cache() {
   setopt localoptions pipefail
@@ -192,21 +213,46 @@ _branch_picker() {
 
 # FzfLua-style entry point: choose a picker, then choose its destination.
 _open_picker() {
-  local selection
-  selection=$(printf '%s\n' \
-    $'Branches\tSwitch branch in the current repository' \
-    $'Repositories\tOpen a repository in ~/src' \
-    $'Worktrees\tOpen a worktree in ~/.herdr/worktrees' |
-    fzf --height=~40% --layout=reverse --border=rounded --no-multi \
-      --delimiter=$'\t' --nth=1 --tabstop=16 --prompt='Open> ' \
-      --header='Choose a picker · Enter: open · Esc/Ctrl-G: cancel' \
-      --bind='ctrl-g:abort') || return
+  local selection branch_error branch_description='Switch branch in the current repository'
+  local worktree_error worktree_description='Open a worktree of the current repository'
+  local help='Choose a picker · Enter: open · Esc/Ctrl-G: cancel'
+  local header="$help"
+  if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != true ]]; then
+    branch_error='Not inside a Git checkout. Open a repository first.'
+    worktree_error="$branch_error"
+  elif [[ -z "$(git for-each-ref \
+    --format='%(if)%(symref)%(then)%(else)%(refname)%(end)' refs/heads refs/remotes)" ]]; then
+    branch_error='No local or fetched remote branches in this repository.'
+  fi
+  [[ -n "$branch_error" ]] && branch_description="Unavailable: $branch_error"
+  [[ -n "$worktree_error" ]] && worktree_description="Unavailable: $worktree_error"
 
-  case "${selection%%$'\t'*}" in
-    Branches) _branch_picker ;;
-    Repositories) repo ;;
-    Worktrees) wrepo ;;
-  esac
+  while true; do
+    selection=$(printf '%s\n' \
+      "Branches"$'\t'"$branch_description" \
+      $'Repositories\tOpen a repository in ~/src' \
+      "Worktrees"$'\t'"$worktree_description" |
+      fzf --height=~40% --layout=reverse --border=rounded --no-multi \
+        --delimiter=$'\t' --nth=1 --tabstop=16 --prompt='Open> ' \
+        --header="$header" --bind='ctrl-g:abort') || return
+
+    case "${selection%%$'\t'*}" in
+      Branches)
+        if [[ -n "$branch_error" ]]; then
+          header="$branch_error"$'\n'"$help"
+          continue
+        fi
+        _branch_picker ;;
+      Repositories) repo ;;
+      Worktrees)
+        if [[ -n "$worktree_error" ]]; then
+          header="$worktree_error"$'\n'"$help"
+          continue
+        fi
+        wrepo ;;
+    esac
+    return
+  done
 }
 
 # ── ZLE Widgets & Keybindings ───────────────────────────────────────

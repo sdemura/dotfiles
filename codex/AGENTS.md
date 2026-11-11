@@ -12,6 +12,13 @@
   `~/src/gitlab.com/corelight/engineering/cloud/hermes`).
 - Cloud team repos live under `~/src/gitlab.com/corelight/engineering/cloud/`.
 
+## Worktrees
+- Create new worktrees under `~/.worktrees/<repo-name>/<worktree-name>`.
+- Use `git worktree add` directly. Specify the repository, branch, base, and destination.
+- Before retrying a failed creation, check whether Git created the branch or worktree.
+- Use the current linked worktree when already in one. Keep existing worktrees in place.
+- Do not create worktrees inside a repository or as visible sibling checkouts.
+
 ## General
 - For low-stakes or easily reversible choices, make a reasonable assumption, state it, and
   proceed. Ask only when the decision is high-stakes or hard to reverse.

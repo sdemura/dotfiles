@@ -8,13 +8,13 @@ import sys
 
 
 STATES = {
-    "SessionStart": "💤",
-    "UserPromptSubmit": "⏳",
-    "PermissionRequest": "🙋",
-    "PostToolUse": "⏳",
-    "PostToolUseFailure": "⏳",
-    "Stop": "✅",
-    "Interrupt": "💤",
+    "SessionStart": "brightblack",
+    "UserPromptSubmit": "yellow",
+    "PermissionRequest": "red",
+    "PostToolUse": "yellow",
+    "PostToolUseFailure": "yellow",
+    "Stop": "green",
+    "Interrupt": "brightblack",
     "SessionEnd": "",
 }
 

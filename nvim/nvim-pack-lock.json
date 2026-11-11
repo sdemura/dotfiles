@@ -1,7 +1,7 @@
 {
   "plugins": {
     "arborist.nvim": {
-      "rev": "a34436d6b5efdc86e6f80f8c79844aae8d649a92",
+      "rev": "1a6b2cb16c72641e1311ceb165feb6e4bf30c8fa",
       "src": "https://github.com/arborist-ts/arborist.nvim"
     },
     "blink.cmp": {
@@ -26,7 +26,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "507dfc85551ff2d9293ec215f10f19395252aada",
+      "rev": "22f0bbd3140a8a3b34fec75e5a640513ca6d4ce3",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "lualine.nvim": {
@@ -34,7 +34,7 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mini.nvim": {
-      "rev": "4084a97fb06593e7f3855a9c5c63f1b87ae225e3",
+      "rev": "f9ac12d7cbd2563cfc2cce9a8152fc8df2ad0d6f",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "neo-tree.nvim": {
@@ -55,7 +55,7 @@
       "src": "https://github.com/s1n7ax/nvim-window-picker"
     },
     "outline.nvim": {
-      "rev": "d8e48fe265fa9c33364809bf9cf32a1f032a8ac1",
+      "rev": "03ce1482222dc2bf1f781559508301f05382936d",
       "src": "https://github.com/hedyhli/outline.nvim"
     },
     "plenary.nvim": {
@@ -63,11 +63,11 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "8e8795368391036643b622875a6da6a51bcd33f4",
+      "rev": "9c235bedc4f96145e63fcad5b78cd78bce8822c4",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "schemastore.nvim": {
-      "rev": "0065b39e82ce104b7d90ad1b9eb3670203bf26ea",
+      "rev": "92e7b3b2dbd1505fcbcb20f1fdd987b35e9cd34b",
       "src": "https://github.com/b0o/schemastore.nvim"
     },
     "vim-eunuch": {

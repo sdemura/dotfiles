@@ -25,6 +25,8 @@ macos-titlebar-style = "native"
 keybind = shift+enter=text:\x1b\r
 keybind = ctrl+f=write_scrollback_file:open
 
+adjust-cursor-thickness = 2
+
 # tmux-style splits
 # keybind = ctrl+b>x=close_surface
 # keybind = ctrl+b>z=toggle_split_zoom

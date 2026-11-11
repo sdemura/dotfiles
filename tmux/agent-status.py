@@ -8,14 +8,14 @@ import sys
 
 
 STATES = {
-    "SessionStart": ("IDLE", "brightblack"),
-    "UserPromptSubmit": ("RUN", "yellow"),
-    "PermissionRequest": ("ASK", "red"),
-    "PostToolUse": ("RUN", "yellow"),
-    "PostToolUseFailure": ("RUN", "yellow"),
-    "Stop": ("DONE", "green"),
-    "Interrupt": ("IDLE", "brightblack"),
-    "SessionEnd": ("", "default"),
+    "SessionStart": "💤",
+    "UserPromptSubmit": "⏳",
+    "PermissionRequest": "🙋",
+    "PostToolUse": "⏳",
+    "PostToolUseFailure": "⏳",
+    "Stop": "✅",
+    "Interrupt": "💤",
+    "SessionEnd": "",
 }
 
 
@@ -46,11 +46,9 @@ def update():
                 "#{pane_pid}:#{pane_current_command}"],
         check=True, capture_output=True, text=True, timeout=1,
     ).stdout.strip()
-    label, color = state
-    text = f"#[fg={color},noreverse]{sys.argv[1]}:{label}" if label else ""
     subprocess.run(
         tmux + ["set-option", "-p", "-t", pane, "@agent_process", process,
-                ";", "set-option", "-p", "-t", pane, "@agent_status", text],
+                ";", "set-option", "-p", "-t", pane, "@agent_status", state],
         check=True, capture_output=True, timeout=1,
     )
 

@@ -9,16 +9,6 @@
             "type": "command"
           }
         ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.dotfiles/tmux/agent-status.py\" codex",
-            "timeout": 3
-          }
-        ],
-        "matcher": "^(startup|resume)$"
       }
     ],
     "PreToolUse": [
@@ -32,72 +22,6 @@
           }
         ],
         "matcher": "^(Bash|mcp__.*)$"
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.dotfiles/tmux/agent-status.py\" codex",
-            "timeout": 3
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.dotfiles/tmux/agent-status.py\" codex",
-            "timeout": 3
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.dotfiles/tmux/agent-status.py\" codex",
-            "timeout": 3
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.dotfiles/tmux/agent-status.py\" codex",
-            "timeout": 3
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.dotfiles/tmux/agent-status.py\" codex",
-            "timeout": 3
-          }
-        ]
-      }
-    ],
-    "Interrupt": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.dotfiles/tmux/agent-status.py\" codex",
-            "timeout": 3
-          }
-        ]
       }
     ]
   }

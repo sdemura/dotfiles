@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Show Codex and Claude hook events in tmux's window tabs."""
+"""Show Claude hook events in tmux's window tabs."""
 
 import json
 import os
@@ -14,13 +14,12 @@ STATES = {
     "PostToolUse": "yellow",
     "PostToolUseFailure": "yellow",
     "Stop": "green",
-    "Interrupt": "brightblack",
     "SessionEnd": "",
 }
 
 
 def update():
-    if len(sys.argv) != 2 or sys.argv[1] not in ("codex", "claude"):
+    if len(sys.argv) != 2 or sys.argv[1] != "claude":
         return
     pane = os.environ.get("TMUX_PANE", "")
     socket = os.environ.get("TMUX", "").rsplit(",", 2)[0]
@@ -31,10 +30,7 @@ def update():
     if not isinstance(event, dict):
         raise ValueError("expected a JSON object")
     # Child agents share the terminal. Only the main agent owns its label.
-    thread = os.environ.get("CODEX_THREAD_ID")
-    if event.get("agent_id") or (
-        sys.argv[1] == "codex" and thread and event.get("session_id") != thread
-    ):
+    if event.get("agent_id"):
         return
     state = STATES.get(event.get("hook_event_name"))
     if state is None:

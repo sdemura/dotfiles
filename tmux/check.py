@@ -53,6 +53,9 @@ def check(folder):
     def popup(parent):
         return "popup-" + parent.removeprefix("$")
 
+    def popup_indicator(parent):
+        return " POP " in value(parent, "#{E:status-right}")
+
     try:
         # Include shell quotes and a literal tmux format in the starting path.
         cwd = folder / "space ' \" #{session_name}"
@@ -76,6 +79,7 @@ def check(folder):
             root, "#{E:window-status-current-format}"
         )
         assert "tpm" not in run("list-keys", "-T", "prefix")
+        assert not popup_indicator(parent)
         print("PASS: config loads; reloads preserve terminal rules and tab text")
 
         master, slave = pty.openpty()
@@ -144,7 +148,9 @@ def check(folder):
 
         keys(b"\x02g")
         wait(lambda: popup(parent) in clients())
+        assert popup_indicator(parent)
         scratch = value(popup(parent) + ":", "#{pane_id}")
+        assert not popup_indicator(scratch)
         assert Path(value(scratch, "#{pane_current_path}")).resolve() == cwd.resolve(), (
             str(cwd), value(root, "#{pane_current_path}"),
             value(scratch, "#{pane_current_path}"),
@@ -158,7 +164,9 @@ def check(folder):
         wait(lambda: value(extra, "#{pane-border-status}") == "top")
         keys(b"\x02g")
         wait(lambda: len(clients()) == 1)
+        assert popup_indicator(parent)
         run("rename-session", "-t", parent, "renamed parent")
+        assert popup_indicator(parent)
         keys(b"\x02g")
         wait(lambda: popup(parent) in clients())
         assert original in run("list-windows", "-t", popup(parent), "-F", "#{window_id}").splitlines()
@@ -174,12 +182,19 @@ def check(folder):
 
         other = run("new-session", "-d", "-P", "-F", "#{session_id}",
                     "-s", "another parent", "/bin/sh -i")
+        assert not popup_indicator(other)
         run("switch-client", "-t", other)
         keys(b"\x02g")
         wait(lambda: popup(other) in clients())
         assert popup(other) != popup(parent)
         assert run("has-session", "-t", popup(parent)) == ""
+        assert popup_indicator(other)
         print("PASS: parent sessions use separate popups")
+        last = value(popup(other) + ":", "#{pane_id}")
+        run("send-keys", "-t", last, "C-d")
+        wait(lambda: len(clients()) == 1 and not popup_indicator(other))
+        assert popup_indicator(parent)
+        print("PASS: POP tracks this parent's popup, including hidden terminals and final exit")
     finally:
         if client is not None:
             client.kill()

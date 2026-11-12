@@ -154,6 +154,9 @@ def check(folder):
 
         keys(b"\x02g")
         wait(lambda: popup(parent) in clients())
+        assert value(parent, "#{pane_floating_flag}") == "1"
+        assert value(parent, "#{pane_modal_flag}") == "1"
+        assert value(root, "#{pane-border-status}") == "off"
         assert popup_indicator(parent)
         scratch = value(popup(parent) + ":", "#{pane_id}")
         assert not popup_indicator(scratch)
@@ -167,8 +170,10 @@ def check(folder):
         )
         assert value(scratch, "#{pane-border-status}") == "top"
         original = value(scratch, "#{window_id}")
-        extra = run("new-window", "-P", "-F", "#{pane_id}",
-                    "-t", popup(parent) + ":", "/bin/sh -i")
+        # Prefix commands must reach the inner session.
+        keys(b"\x02c")
+        wait(lambda: len(run("list-windows", "-t", popup(parent)).splitlines()) == 2)
+        extra = value(popup(parent) + ":", "#{pane_id}")
         wait(lambda: value(extra, "#{pane-border-status}") == "top")
         keys(b"\x02g")
         wait(lambda: len(clients()) == 1)
@@ -184,7 +189,32 @@ def check(folder):
         keys(f"\x1b[<0;{dot_x};{row}M\x1b[<0;{dot_x};{row}m".encode())
         wait(lambda: popup(parent) in clients())
         assert value(popup(parent) + ":", "#{pane_id}") == extra
-        print("PASS: clicking the dot reopens the same popup; session-name clicks stay unchanged")
+        scratch_pids = run("list-panes", "-s", "-t", popup(parent), "-F",
+                           "#{pane_id}:#{pane_pid}")
+        keys(f"\x1b[<0;{dot_x};{row}M\x1b[<0;{dot_x};{row}m".encode())
+        wait(lambda: len(clients()) == 1)
+        wait(lambda: value(root, "#{window_panes}") == "1")
+        assert value(root, "#{pane-border-status}") == "off"
+        assert value(root, "#{pane_pid}") == pid
+        assert popup_indicator(parent)
+        keys(f"\x1b[<0;{dot_x};{row}M\x1b[<0;{dot_x};{row}m".encode())
+        wait(lambda: popup(parent) in clients())
+        assert value(popup(parent) + ":", "#{pane_id}") == extra
+        assert run("list-panes", "-s", "-t", popup(parent), "-F",
+                   "#{pane_id}:#{pane_pid}") == scratch_pids
+        keys(b"\x02g")
+        wait(lambda: len(clients()) == 1)
+        wait(lambda: value(root, "#{window_panes}") == "1")
+        # The float must also work above a zoomed pane without clearing zoom.
+        zoom_split = run("split-window", "-d", "-P", "-F", "#{pane_id}",
+                         "-t", root, "/bin/sh -i")
+        run("resize-pane", "-Z", "-t", root)
+        assert value(root, "#{window_zoomed_flag}") == "1"
+        keys(f"\x1b[<0;{dot_x};{row}M\x1b[<0;{dot_x};{row}m".encode())
+        wait(lambda: popup(parent) in clients())
+        assert value(root, "#{window_zoomed_flag}") == "1"
+        assert value(parent, "#{pane_floating_flag}") == "1"
+        print("PASS: dot clicks open, hide, and reopen; scratch tabs and processes survive")
         assert original in run("list-windows", "-t", popup(parent), "-F", "#{window_id}").splitlines()
         closing = value(extra, "#{window_id}")
         run("send-keys", "-t", extra, "C-d")
@@ -194,6 +224,10 @@ def check(folder):
         assert value(scratch, "#{pane-border-status}") == "top"
         keys(b"\x02g")
         wait(lambda: len(clients()) == 1)
+        wait(lambda: value(root, "#{window_panes}") == "2")
+        assert value(root, "#{window_zoomed_flag}") == "1"
+        run("resize-pane", "-Z", "-t", root)
+        run("kill-pane", "-t", zoom_split)
         print("PASS: popup paths, persistent tabs, parent renames, labels, and Ctrl-d")
 
         other = run("new-session", "-d", "-P", "-F", "#{session_id}",

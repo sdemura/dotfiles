@@ -226,7 +226,7 @@ def check(folder):
         assert value(extra, "#{pane-border-status}") == "off"
         assert "second scratch tab" in value(wrapper, "#{E:pane-border-format}")
         print("PASS: only the outer scratch border shows the live process, custom name, and agent dot")
-        keys(b"\x02g")
+        keys(b"\x020")
         wait(lambda: len(clients()) == 1)
         wait(lambda: value(root, "#{window_panes}") == "1")
         assert value(root, "#{E:window-status-current-format}") == tab_before_popup
@@ -255,7 +255,7 @@ def check(folder):
         assert value(popup(parent) + ":", "#{pane_id}") == extra
         assert run("list-panes", "-s", "-t", popup(parent), "-F",
                    "#{pane_id}:#{pane_pid}") == scratch_pids
-        keys(b"\x02g")
+        keys(b"\x020")
         wait(lambda: len(clients()) == 1)
         wait(lambda: value(root, "#{window_panes}") == "1")
         # The float must also work above a zoomed pane without clearing zoom.
@@ -279,7 +279,7 @@ def check(folder):
                                        "-F", "#{window_id}").splitlines())
         assert "no such window" not in drain(0.3).lower()
         assert value(scratch, "#{pane-border-status}") == "off"
-        keys(b"\x02g")
+        keys(b"\x020")
         wait(lambda: len(clients()) == 1)
         wait(lambda: value(root, "#{window_panes}") == "2")
         assert value(root, "#{window_zoomed_flag}") == "1"
@@ -292,7 +292,7 @@ def check(folder):
         assert popup_indicator(other)
         assert popup(other) not in run("list-sessions", "-F", "#{session_name}").splitlines()
         run("switch-client", "-t", other)
-        keys(b"\x02g")
+        keys(b"\x020")
         wait(lambda: popup(other) in clients())
         assert popup(other) != popup(parent)
         assert run("has-session", "-t", popup(parent)) == ""

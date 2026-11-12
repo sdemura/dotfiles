@@ -66,6 +66,8 @@ def check(folder):
             "-f", "/dev/null", "new-session", "-d", "-P", "-F", "#{pane_id}",
             "-s", "parent with ' quotes", "-c", str(cwd).replace("#", "##"), "/bin/sh -i",
         )
+        original_clicks = [run("list-keys", "-T", "root", key)
+                           for key in ("MouseDown1Status", "MouseDown3StatusLeft")]
         parent = value(root, "#{session_id}")
         run("set-option", "-g", "default-shell", "/bin/sh")
         run("source-file", str(config))
@@ -81,6 +83,8 @@ def check(folder):
             root, "#{E:window-status-current-format}"
         )
         assert "tpm" not in run("list-keys", "-T", "prefix")
+        assert original_clicks == [run("list-keys", "-T", "root", key)
+                                   for key in ("MouseDown1Status", "MouseDown3StatusLeft")]
         assert not popup_indicator(parent)
         print("PASS: config loads; reloads preserve terminal rules and tab text")
 
@@ -171,8 +175,16 @@ def check(folder):
         assert popup_indicator(parent)
         run("rename-session", "-t", parent, "renamed parent")
         assert popup_indicator(parent)
-        keys(b"\x02g")
+        # A click on the session name must not open the popup.
+        row = int(value(parent, "#{client_height}"))
+        keys(f"\x1b[<0;2;{row}M\x1b[<0;2;{row}m".encode())
+        assert len(clients()) == 1
+        left = re.sub(r"#\[[^\]]*\]", "", value(parent, "#{E:status-left}"))
+        dot_x = left.index("●") + 1
+        keys(f"\x1b[<0;{dot_x};{row}M\x1b[<0;{dot_x};{row}m".encode())
         wait(lambda: popup(parent) in clients())
+        assert value(popup(parent) + ":", "#{pane_id}") == extra
+        print("PASS: clicking the dot reopens the same popup; session-name clicks stay unchanged")
         assert original in run("list-windows", "-t", popup(parent), "-F", "#{window_id}").splitlines()
         closing = value(extra, "#{window_id}")
         run("send-keys", "-t", extra, "C-d")

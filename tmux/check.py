@@ -85,7 +85,8 @@ def check(folder):
         assert "tpm" not in run("list-keys", "-T", "prefix")
         assert original_clicks == [run("list-keys", "-T", "root", key)
                                    for key in ("MouseDown1Status", "MouseDown3StatusLeft")]
-        assert not popup_indicator(parent)
+        assert popup_indicator(parent)
+        assert popup(parent) not in run("list-sessions", "-F", "#{session_name}").splitlines()
         print("PASS: config loads; reloads preserve terminal rules and tab text")
 
         master, slave = pty.openpty()
@@ -152,8 +153,16 @@ def check(folder):
         wait(lambda: value(root, "#{pane-border-status}") == "off")
         print("PASS: split labels and shared tab text keep each agent dot")
 
-        keys(b"\x02g")
+        # The dot must create a popup before the keyboard shortcut is used.
+        run("rename-window", "-t", root, "align")
+        tab_before_popup = value(root, "#{E:window-status-current-format}")
+        row = int(value(parent, "#{client_height}"))
+        left = re.sub(r"#\[[^\]]*\]", "", value(parent, "#{E:status-left}"))
+        dot_x = left.index("●") + 1
+        keys(f"\x1b[<0;{dot_x};{row}M\x1b[<0;{dot_x};{row}m".encode())
         wait(lambda: popup(parent) in clients())
+        assert value(root, "#{window_name}") == "align"
+        assert value(root, "#{E:window-status-current-format}") == tab_before_popup
         assert value(parent, "#{pane_floating_flag}") == "1"
         assert value(parent, "#{pane_modal_flag}") == "1"
         assert value(root, "#{pane-border-status}") == "off"
@@ -177,6 +186,8 @@ def check(folder):
         wait(lambda: value(extra, "#{pane-border-status}") == "top")
         keys(b"\x02g")
         wait(lambda: len(clients()) == 1)
+        wait(lambda: value(root, "#{window_panes}") == "1")
+        assert value(root, "#{E:window-status-current-format}") == tab_before_popup
         assert popup_indicator(parent)
         run("rename-session", "-t", parent, "renamed parent")
         assert popup_indicator(parent)
@@ -210,10 +221,14 @@ def check(folder):
                          "-t", root, "/bin/sh -i")
         run("resize-pane", "-Z", "-t", root)
         assert value(root, "#{window_zoomed_flag}") == "1"
+        zoomed_tab = value(root, "#{E:window-status-current-format}")
+        assert "alignZ" in zoomed_tab
         keys(f"\x1b[<0;{dot_x};{row}M\x1b[<0;{dot_x};{row}m".encode())
         wait(lambda: popup(parent) in clients())
         assert value(root, "#{window_zoomed_flag}") == "1"
         assert value(parent, "#{pane_floating_flag}") == "1"
+        assert value(root, "#{E:window-status-current-format}") == zoomed_tab
+        print("PASS: popup leaves tab text unchanged, including the zoom indicator")
         print("PASS: dot clicks open, hide, and reopen; scratch tabs and processes survive")
         assert original in run("list-windows", "-t", popup(parent), "-F", "#{window_id}").splitlines()
         closing = value(extra, "#{window_id}")
@@ -232,7 +247,8 @@ def check(folder):
 
         other = run("new-session", "-d", "-P", "-F", "#{session_id}",
                     "-s", "another parent", "/bin/sh -i")
-        assert not popup_indicator(other)
+        assert popup_indicator(other)
+        assert popup(other) not in run("list-sessions", "-F", "#{session_name}").splitlines()
         run("switch-client", "-t", other)
         keys(b"\x02g")
         wait(lambda: popup(other) in clients())
@@ -242,9 +258,18 @@ def check(folder):
         print("PASS: parent sessions use separate popups")
         last = value(popup(other) + ":", "#{pane_id}")
         run("send-keys", "-t", last, "C-d")
-        wait(lambda: len(clients()) == 1 and not popup_indicator(other))
+        wait(lambda: len(clients()) == 1 and popup(other) not in
+             run("list-sessions", "-F", "#{session_name}").splitlines())
+        assert popup_indicator(other)
         assert popup_indicator(parent)
-        print("PASS: left status dot tracks this parent's popup, including hidden terminals and final exit")
+        left = re.sub(r"#\[[^\]]*\]", "", value(other, "#{E:status-left}"))
+        dot_x = left.index("●") + 1
+        keys(f"\x1b[<0;{dot_x};{row}M\x1b[<0;{dot_x};{row}m".encode())
+        wait(lambda: popup(other) in clients())
+        assert value(popup(other) + ":", "#{pane_id}") != last
+        assert value(scratch, "#{window_id}") == original
+        assert popup_indicator(other)
+        print("PASS: dot stays visible after final exit and creates a new popup on click")
     finally:
         if client is not None:
             client.kill()

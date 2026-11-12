@@ -86,6 +86,9 @@ All these commands start in the **active pane's current directory**.
 | `\` | Split across the full window height, side by side. |
 | `_` | Split across the full window width, above and below. |
 
+Click the **+ after the last tab** to create a window in the active pane's current
+directory. The button also works inside floating scratch terminals.
+
 ## Floating scratch terminal
 
 Press `Prefix 0` or click the **gray dot beside the session name**. The float
@@ -153,6 +156,7 @@ OSC 52 support.
 The bottom status bar has a divider above the window tabs. It shows the parent
 session name and scratch launcher on the left. On the right, it shows the
 24-hour clock and indicators for Prefix, copy mode, and zoom.
+The muted **+** after the last tab creates another window.
 
 Split panes show a label along the top border. The label defaults to the current
 process name. A single ordinary pane has no top label. Use `Prefix r` to set a

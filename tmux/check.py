@@ -58,6 +58,17 @@ def check(folder):
         left = re.sub(r"#\[[^\]]*\]", "", value(parent, "#{E:status-left}"))
         return "│ ● │" in left
 
+    def new_window_button_x(target):
+        # Sentinels preserve the padding that run() normally strips.
+        tabs = value(target, "|#{W:#{E:window-status-format}#{?loop_last_flag,,#{E:window-status-separator}}}|")[1:-1]
+        left = value(target, "|#{T;=/#{status-left-length}:status-left}|")[1:-1]
+        bar = re.sub(r"#\[[^\]]*\]", "", left + tabs)
+        assert bar.count("+") == 1, bar
+        return bar.index("+") + 1
+
+    def click(x, y):
+        keys(f"\x1b[<0;{x};{y}M\x1b[<0;{x};{y}m".encode())
+
     try:
         # Include shell quotes and a literal tmux format in the starting path.
         cwd = folder / "space ' \" #{session_name}"
@@ -110,6 +121,28 @@ def check(folder):
         keys(b"n")
         assert value(root, "#{pane_pid}") == pid
         print("PASS: r names the pane; Ctrl-r requires confirmation")
+
+        # The + belongs to its own mouse range, after the last tab.
+        row = int(value(parent, "#{client_height}"))
+        click(new_window_button_x(parent), row)
+        wait(lambda: value(parent, "#{session_windows}") == "2")
+        first_new = value(parent, "#{window_id}")
+        assert Path(value(parent, "#{pane_current_path}")).resolve() == cwd.resolve()
+        left = re.sub(r"#\[[^\]]*\]", "", value(parent, "|#{T;=/#{status-left-length}:status-left}|")[1:-1])
+        click(len(left) + 2, row)
+        assert value(parent, "#{pane_id}") == root
+        # It must also work when the last tab is inactive.
+        click(new_window_button_x(parent), row)
+        wait(lambda: value(parent, "#{session_windows}") == "3")
+        second_new = value(parent, "#{window_id}")
+        assert second_new != first_new
+        assert Path(value(parent, "#{pane_current_path}")).resolve() == cwd.resolve()
+        new_window_button_x(parent)  # Exactly one + after all three tabs.
+        for window in (first_new, second_new):
+            run("kill-window", "-t", window)
+        assert value(parent, "#{pane_id}") == root
+        assert value(root, "#{pane_pid}") == pid
+        print("PASS: + creates tabs in the current directory; ordinary tab clicks still select tabs")
 
         run("send-keys", "-t", root, "-l",
             "i=0; while [ $i -lt 80 ]; do echo 'alpha beta gamma'; i=$((i+1)); done")
@@ -213,6 +246,16 @@ def check(folder):
         )
         run("kill-pane", "-t", scratch_split)
         original = value(scratch, "#{window_id}")
+        # A + inside the float creates a scratch tab, not a parent tab.
+        parent_windows = value(parent, "#{session_windows}")
+        click(int(value(wrapper, "#{pane_left}")) + new_window_button_x(popup(parent)),
+              int(value(wrapper, "#{pane_top}")) + int(value(wrapper, "#{pane_height}")))
+        wait(lambda: value(popup(parent), "#{session_windows}") == "2")
+        assert value(parent, "#{session_windows}") == parent_windows
+        assert Path(value(popup(parent), "#{pane_current_path}")).resolve() == cwd.resolve()
+        run("kill-window", "-t", value(popup(parent), "#{window_id}"))
+        assert value(popup(parent), "#{pane_id}") == scratch
+        print("PASS: the + inside a scratch terminal creates a tab in its own session")
         # Prefix commands must reach the inner session.
         keys(b"\x02c")
         wait(lambda: len(run("list-windows", "-t", popup(parent)).splitlines()) == 2)

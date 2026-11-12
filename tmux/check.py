@@ -5,6 +5,7 @@ import fcntl
 import os
 from pathlib import Path
 import pty
+import re
 import select
 import struct
 import subprocess
@@ -54,7 +55,8 @@ def check(folder):
         return "popup-" + parent.removeprefix("$")
 
     def popup_indicator(parent):
-        return " POP " in value(parent, "#{E:status-right}")
+        left = re.sub(r"#\[[^\]]*\]", "", value(parent, "#{E:status-left}"))
+        return "│ ● │" in left
 
     try:
         # Include shell quotes and a literal tmux format in the starting path.
@@ -194,7 +196,7 @@ def check(folder):
         run("send-keys", "-t", last, "C-d")
         wait(lambda: len(clients()) == 1 and not popup_indicator(other))
         assert popup_indicator(parent)
-        print("PASS: POP tracks this parent's popup, including hidden terminals and final exit")
+        print("PASS: left status dot tracks this parent's popup, including hidden terminals and final exit")
     finally:
         if client is not None:
             client.kill()

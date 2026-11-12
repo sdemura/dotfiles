@@ -153,6 +153,8 @@ def check(folder):
         assert popup_indicator(parent)
         scratch = value(popup(parent) + ":", "#{pane_id}")
         assert not popup_indicator(scratch)
+        assert value(scratch, "#{E:status-left}") == ""
+        assert value(scratch, "#{status}") == "2"
         assert Path(value(scratch, "#{pane_current_path}")).resolve() == cwd.resolve(), (
             str(cwd), value(root, "#{pane_current_path}"),
             value(scratch, "#{pane_current_path}"),

@@ -165,6 +165,8 @@ def check(folder):
         assert value(root, "#{E:window-status-current-format}") == tab_before_popup
         assert value(parent, "#{pane_floating_flag}") == "1"
         assert value(parent, "#{pane_modal_flag}") == "1"
+        wrapper = value(parent, "#{pane_id}")
+        assert value(wrapper, "#{pane-border-status}") == "top"
         assert value(root, "#{pane-border-status}") == "off"
         assert popup_indicator(parent)
         scratch = value(popup(parent) + ":", "#{pane_id}")
@@ -177,13 +179,53 @@ def check(folder):
             "\n".join(line for line in run("show-messages").splitlines()
                       if "display-popup" in line or "run-shell -C" in line)[:2500],
         )
-        assert value(scratch, "#{pane-border-status}") == "top"
+        assert value(scratch, "#{pane-border-status}") == "off"
+        assert value(wrapper, "#{E:pane-border-format}") == value(
+            scratch, "#{E:pane-border-format}"
+        )
+        # The outer border must follow process changes without changing titles.
+        run("rename-window", "-t", scratch, "scratch-tab")
+        drain()
+        # Escape the command name so only the border can print plain "sleep".
+        run("send-keys", "-t", scratch, "-l", "slee\\p 30")
+        run("send-keys", "-t", scratch, "Enter")
+        wait(lambda: value(scratch, "#{pane_current_command}") == "sleep")
+        assert " sleep " in value(wrapper, "#{E:pane-border-format}")
+        assert "sleep" in drain(1.3), "outer border did not redraw the live process"
+        run("send-keys", "-t", scratch, "C-c")
+        wait(lambda: value(scratch, "#{pane_current_command}") != "sleep")
+        # Split labels stay hidden inside the scratch terminal. The active
+        # pane's custom name and agent dot still appear in the outer border.
+        scratch_split = run("split-window", "-P", "-F", "#{pane_id}",
+                            "-t", scratch, "/bin/sh -i")
+        assert value(scratch, "#{pane-border-status}") == "off"
+        run("set-option", "-p", "-t", scratch_split, "@pane_label", "review 'quoted' #{pane_id}")
+        run("set-option", "-p", "-t", scratch_split, "@agent_process",
+            value(scratch_split, "#{pane_pid}:#{pane_current_command}"))
+        run("set-option", "-p", "-t", scratch_split, "@agent_status", "green")
+        outer_label = value(wrapper, "#{E:pane-border-format}")
+        assert outer_label == value(scratch_split, "#{E:pane-border-format}")
+        assert "fg=green" in outer_label and "●" in outer_label
+        assert "review 'quoted' ##{pane_id}" in outer_label
+        run("select-pane", "-t", scratch)
+        assert value(wrapper, "#{E:pane-border-format}") == value(
+            scratch, "#{E:pane-border-format}"
+        )
+        run("kill-pane", "-t", scratch_split)
         original = value(scratch, "#{window_id}")
         # Prefix commands must reach the inner session.
         keys(b"\x02c")
         wait(lambda: len(run("list-windows", "-t", popup(parent)).splitlines()) == 2)
         extra = value(popup(parent) + ":", "#{pane_id}")
-        wait(lambda: value(extra, "#{pane-border-status}") == "top")
+        assert value(extra, "#{pane-border-status}") == "off"
+        run("set-option", "-p", "-t", extra, "@pane_label", "second scratch tab")
+        assert "second scratch tab" in value(wrapper, "#{E:pane-border-format}")
+        # Reloading while open must preserve the outer label and inner layout.
+        run("source-file", str(config))
+        assert value(wrapper, "#{pane-border-status}") == "top"
+        assert value(extra, "#{pane-border-status}") == "off"
+        assert "second scratch tab" in value(wrapper, "#{E:pane-border-format}")
+        print("PASS: only the outer scratch border shows the live process, custom name, and agent dot")
         keys(b"\x02g")
         wait(lambda: len(clients()) == 1)
         wait(lambda: value(root, "#{window_panes}") == "1")
@@ -236,7 +278,7 @@ def check(folder):
         wait(lambda: closing not in run("list-windows", "-t", popup(parent),
                                        "-F", "#{window_id}").splitlines())
         assert "no such window" not in drain(0.3).lower()
-        assert value(scratch, "#{pane-border-status}") == "top"
+        assert value(scratch, "#{pane-border-status}") == "off"
         keys(b"\x02g")
         wait(lambda: len(clients()) == 1)
         wait(lambda: value(root, "#{window_panes}") == "2")

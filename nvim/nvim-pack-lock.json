@@ -26,7 +26,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "22f0bbd3140a8a3b34fec75e5a640513ca6d4ce3",
+      "rev": "ded1c96d3d9d74634287d722431c26690968a4bf",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "lualine.nvim": {
@@ -34,7 +34,7 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mini.nvim": {
-      "rev": "f9ac12d7cbd2563cfc2cce9a8152fc8df2ad0d6f",
+      "rev": "3d0cf05999ec1084dd660649a09f38b9d0d49e16",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "neo-tree.nvim": {
@@ -67,7 +67,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "schemastore.nvim": {
-      "rev": "92e7b3b2dbd1505fcbcb20f1fdd987b35e9cd34b",
+      "rev": "13a365fa7a893891fe8724390ad7e608d1c1c59b",
       "src": "https://github.com/b0o/schemastore.nvim"
     },
     "vim-eunuch": {

@@ -7,8 +7,10 @@ from pathlib import Path
 import pty
 import re
 import select
+import shlex
 import struct
 import subprocess
+import sys
 import tempfile
 import termios
 import time
@@ -199,6 +201,84 @@ def check(folder):
         split = run("split-window", "-d", "-P", "-F", "#{pane_id}",
                     "-t", root, "/bin/sh -i")
         wait(lambda: value(root, "#{pane-border-status}") == "top")
+
+        # Drag and copy in scrolled history without returning to live output.
+        run("copy-mode", "-t", root)
+        run("send-keys", "-t", root, "-X", "-N", "5", "scroll-up")
+        scroll = value(root, "#{scroll_position}")
+        assert int(scroll) > 0
+        row = int(value(root, "#{pane_top}")) + 3
+        run("set-buffer", "untouched")
+        keys(f"\x1b[<0;1;{row}M\x1b[<32;20;{row}M\x1b[<0;20;{row}m".encode())
+        assert value(root, "#{pane_mode}") == "copy-mode"
+        assert value(root, "#{scroll_position}") == scroll
+        assert value(root, "#{selection_present}") == "1"
+        assert run("show-buffer") == "untouched"
+        drain(0.35)
+        click(20, row)
+        assert value(root, "#{pane_mode}") == "copy-mode"
+        assert value(root, "#{scroll_position}") == scroll
+        keys(b"y")
+        copied = run("show-buffer")
+        assert copied == "/tmp/my_file-name.py", copied
+        assert value(root, "#{pane_mode}") == "copy-mode"
+        assert value(root, "#{scroll_position}") == scroll
+        print("PASS: drag, same-pane clicks, and y keep the scroll position")
+
+        # Both normal panes and panes already in copy mode can receive focus.
+        for target_in_copy_mode in (False, True):
+            if target_in_copy_mode:
+                run("copy-mode", "-t", split)
+            run("send-keys", "-t", root, "-X", "begin-selection")
+            run("send-keys", "-t", root, "-X", "-N", "3", "cursor-right")
+            assert value(root, "#{selection_present}") == "1"
+            drain(0.35)  # Each case starts with a single click, not a double-click.
+            click(3, int(value(split, "#{pane_top}")) + 3)
+            assert value(parent, "#{pane_id}") == split, (
+                target_in_copy_mode, run("list-panes", "-F", "#{pane_id}:#{pane_mode}:#{pane_active}")
+            )
+            assert value(root, "#{pane_mode}") == ""
+            assert value(split, "#{pane_mode}") == (
+                "copy-mode" if target_in_copy_mode else ""
+            )
+            assert run("show-buffer") == copied
+            run("select-pane", "-t", root)
+            run("copy-mode", "-t", root)
+            run("send-keys", "-t", root, "-X", "-N", "5", "scroll-up")
+        # Keyboard pane changes still preserve the previous pane's history view.
+        scroll = value(root, "#{scroll_position}")
+        keys(b"\x02j")
+        assert value(parent, "#{pane_id}") == split
+        assert value(root, "#{pane_mode}") == "copy-mode"
+        assert value(root, "#{scroll_position}") == scroll
+        keys(b"\x02k")
+        assert value(parent, "#{pane_id}") == root
+        run("send-keys", "-t", root, "-X", "cancel")
+        run("send-keys", "-t", split, "-X", "cancel")
+        print("PASS: clicking another pane exits the old copy mode; keyboard changes preserve it")
+
+        # A program requesting mouse input must still receive the selecting click.
+        mouse_log = folder / "mouse-event"
+        mouse_app = (
+            "import os, termios, tty; saved = termios.tcgetattr(0); tty.setraw(0); "
+            "os.write(1, b'\\x1b[?1000h\\x1b[?1006h'); event = os.read(0, 128); "
+            "termios.tcsetattr(0, termios.TCSANOW, saved); "
+            "os.write(1, b'\\x1b[?1000l\\x1b[?1006l'); "
+            f"open({str(mouse_log)!r}, 'wb').write(event)"
+        )
+        run("send-keys", "-t", split, "-l", shlex.join([sys.executable, "-c", mouse_app]))
+        run("send-keys", "-t", split, "Enter")
+        wait(lambda: value(split, "#{mouse_any_flag}") == "1")
+        run("copy-mode", "-t", root)
+        drain(0.35)
+        click(3, int(value(split, "#{pane_top}")) + 3)
+        wait(lambda: mouse_log.exists() and mouse_log.stat().st_size > 0)
+        assert mouse_log.read_bytes().startswith(b"\x1b[<0;"), mouse_log.read_bytes()
+        assert value(root, "#{pane_mode}") == ""
+        assert value(parent, "#{pane_id}") == split
+        run("select-pane", "-t", root)
+        print("PASS: selecting a pane still forwards the click to its application")
+
         for pane, color in ((root, "yellow"), (split, "green")):
             run("set-option", "-p", "-t", pane, "@agent_process",
                 value(pane, "#{pane_pid}:#{pane_current_command}"))

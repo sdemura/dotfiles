@@ -145,6 +145,10 @@ Mouse selection waits for an explicit copy:
   words for both double-click selection and keyboard word movement.
 - Triple-click to select a line.
 - Press `y` to copy. Press `Escape` to leave copy mode.
+- Left-click inside another pane to exit copy mode in the previous pane.
+  This clears any uncopied selection and returns that pane to live output.
+  Clicking inside the same pane keeps copy mode and the scroll position.
+  Keyboard pane changes also keep the previous pane's scroll position.
 
 Applications that handle mouse input receive their normal clicks. The copy-mode
 scrollbar appears on the right and hides after half a second of inactivity.

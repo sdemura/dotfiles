@@ -141,7 +141,8 @@ search keys used after entering copy mode.
 Mouse selection waits for an explicit copy:
 
 - Drag to select text. Releasing the mouse keeps the selection.
-- Double-click to select a word.
+- Double-click to select a word, full path, or filename. `/` and `.` stay within
+  words for both double-click selection and keyboard word movement.
 - Triple-click to select a line.
 - Press `y` to copy. Press `Escape` to leave copy mode.
 

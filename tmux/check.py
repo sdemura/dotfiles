@@ -145,7 +145,7 @@ def check(folder):
         print("PASS: + creates tabs in the current directory; ordinary tab clicks still select tabs")
 
         run("send-keys", "-t", root, "-l",
-            "i=0; while [ $i -lt 80 ]; do echo 'alpha beta gamma'; i=$((i+1)); done")
+            "i=0; while [ $i -lt 80 ]; do echo '/tmp/my_file-name.py beta gamma'; i=$((i+1)); done")
         run("send-keys", "-t", root, "Enter")
         drain(0.4)
         for clicks, in_copy_mode in ((2, False), (3, False), (2, True), (3, True)):
@@ -161,12 +161,14 @@ def check(folder):
             assert run("show-buffer") == "untouched"
             scroll = value(root, "#{scroll_position}")
             keys(b"y")
-            assert run("show-buffer") == ("alpha" if clicks == 2 else "alpha beta gamma")
+            assert run("show-buffer") == (
+                "/tmp/my_file-name.py" if clicks == 2 else "/tmp/my_file-name.py beta gamma"
+            )
             assert value(root, "#{pane_mode}") == "copy-mode"
             assert value(root, "#{scroll_position}") == scroll
             keys(b"\x1b")
             drain(0.35)
-        print("PASS: word/line clicks wait for y; copying keeps mode and scroll position")
+        print("PASS: full-path/line clicks wait for y; copying keeps mode and scroll position")
 
         assert value(root, "#{pane-border-status}") == "off"
         split = run("split-window", "-d", "-P", "-F", "#{pane_id}",

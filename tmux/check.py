@@ -57,9 +57,10 @@ def check(folder):
     def popup(parent):
         return "popup-" + parent.removeprefix("$")
 
-    def popup_indicator(parent):
-        left = re.sub(r"#\[[^\]]*\]", "", value(parent, "#{E:status-left}"))
-        return "│ ● │" in left
+    def popup_indicator(parent, color="themelightgrey"):
+        left = value(parent, "#{E:status-left}")
+        return ("│ ● │" in re.sub(r"#\[[^\]]*\]", "", left)
+                and f"fg={color} nobold] ● " in left)
 
     def new_window_button_x(target):
         # Sentinels preserve the padding that run() normally strips.
@@ -314,7 +315,7 @@ def check(folder):
         wrapper = value(parent, "#{pane_id}")
         assert value(wrapper, "#{pane-border-status}") == "top"
         assert value(root, "#{pane-border-status}") == "off"
-        assert popup_indicator(parent)
+        assert popup_indicator(parent, "blue")
         scratch = value(popup(parent) + ":", "#{pane_id}")
         assert not popup_indicator(scratch)
         assert value(scratch, "#{E:status-left}") == ""
@@ -378,6 +379,7 @@ def check(folder):
         assert "second scratch tab" in value(wrapper, "#{E:pane-border-format}")
         # Reloading while open must preserve the outer label and inner layout.
         run("source-file", str(config))
+        assert popup_indicator(parent, "blue")
         assert value(wrapper, "#{pane-border-status}") == "top"
         assert value(extra, "#{pane-border-status}") == "off"
         assert "second scratch tab" in value(wrapper, "#{E:pane-border-format}")
@@ -452,7 +454,8 @@ def check(folder):
         wait(lambda: popup(other) in clients())
         assert popup(other) != popup(parent)
         assert run("has-session", "-t", popup(parent)) == ""
-        assert popup_indicator(other)
+        assert popup_indicator(other, "blue")
+        assert popup_indicator(parent)
         print("PASS: parent sessions use separate popups")
         last = value(popup(other) + ":", "#{pane_id}")
         run("send-keys", "-t", last, "C-d")
@@ -466,8 +469,8 @@ def check(folder):
         wait(lambda: popup(other) in clients())
         assert value(popup(other) + ":", "#{pane_id}") != last
         assert value(scratch, "#{window_id}") == original
-        assert popup_indicator(other)
-        print("PASS: dot stays visible after final exit and creates a new popup on click")
+        assert popup_indicator(other, "blue")
+        print("PASS: dot is blue while open, gray after closing, and creates a new popup after final exit")
     finally:
         if client is not None:
             client.kill()

@@ -91,7 +91,8 @@ directory. The button also works inside floating scratch terminals.
 
 ## Floating scratch terminal
 
-Press `Prefix 0` or click the **gray dot beside the session name**. The float
+Press `Prefix 0` or click the **launcher dot beside the session name**. The dot
+is blue while the float is open and gray when closed. The float
 occupies 80% of the terminal's width and height and has a blue border. The parent
 status bar stays available, so the same dot can hide or reopen the float.
 
@@ -179,7 +180,7 @@ Colored dots in window tabs and pane labels show agent state:
 | Gray | Claude session started, before a work event. |
 
 Window tabs include the status dots from every agent pane in that window.
-The separate gray launcher dot beside the parent session name opens the scratch
+The separate launcher dot beside the parent session name opens the scratch
 terminal; it is not an agent status indicator.
 
 Codex state comes from its terminal title while `codex` is the pane's current

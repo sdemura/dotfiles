@@ -81,7 +81,14 @@ def check(folder):
                            for key in ("MouseDown1Status", "MouseDown3StatusLeft")]
         parent = value(root, "#{session_id}")
         run("set-option", "-g", "default-shell", "/bin/sh")
+        terminal_defaults = run("show-options", "-s", "terminal-features")
+        # Reloads must remove the old rule without removing tmux's defaults.
+        run("set-option", "-s", "terminal-features[11]", "*256col*:RGB")
         run("source-file", str(config))
+        terminal_features = run("show-options", "-s", "terminal-features").splitlines()
+        assert all(entry in terminal_features for entry in terminal_defaults.splitlines())
+        assert any("xterm-ghostty:RGB:cstyle" in entry for entry in terminal_features)
+        assert not any("*256col*:RGB" in entry for entry in terminal_features)
         assert Path(value(root, "#{pane_current_path}")).resolve() == cwd.resolve()
         initial = [run("show-options", "-s", option) for option in
                    ("terminal-features", "terminal-overrides")]
@@ -99,6 +106,24 @@ def check(folder):
         assert popup_indicator(parent)
         assert popup(parent) not in run("list-sessions", "-F", "#{session_name}").splitlines()
         print("PASS: config loads; reloads preserve terminal rules and tab text")
+
+        # Evaluate the configured tmux format with representative Codex titles.
+        title = value(root, "#{pane_title}")
+        codex_titles = [
+            ("[ ! ] Action Required - Approve command", "red"),
+            ("[ . ] Action Required - Choose an option", "red"),
+            ("Codex - Review tmux.conf", "green"),
+            ("Review ⠋ previous task", "green"),
+            ("", "green"),
+        ] + [(f"{spinner} Working - Review tmux.conf", "yellow")
+             for spinner in "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"]
+        for prefix in ("", "● "):
+            for sample, expected in codex_titles:
+                run("select-pane", "-t", root, "-T", prefix + sample)
+                actual = value(root, "#{E:@codex-status-color}")
+                assert actual == expected, (prefix + sample, expected, actual)
+        run("select-pane", "-t", root, "-T", title)
+        print("PASS: Codex titles show working, action-required, and ready colors")
 
         master, slave = pty.openpty()
         fcntl.ioctl(slave, termios.TIOCSWINSZ, struct.pack("HHHH", 32, 120, 0, 0))

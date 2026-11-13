@@ -187,7 +187,8 @@ child-agent events. Stale Claude state is hidden after a pane process changes.
 Colors follow the terminal's light or dark palette. The configuration also
 sets a 50,000-line history limit, immediate Escape handling, focus events,
 clipboard support, and graphics passthrough. Pane borders, prompts, selections,
-and menus use the terminal palette.
+and menus use the terminal palette. True-color and cursor-shape support are
+explicitly enabled for Ghostty. Other terminals use tmux's capability detection.
 
 ## Check configuration changes
 
@@ -198,7 +199,7 @@ python3 tmux/check.py
 ```
 
 The check uses a disposable tmux server and a terminal client. It covers config
-reloads, copy and mouse behavior, pane labels, scratch session persistence,
-working directories, window tabs, zoom, and separate parent sessions. It removes
-its test server when it finishes. Python 3 is required for this check and the
-Claude hook helper.
+reloads, terminal rules, Codex title states, copy and mouse behavior, pane labels,
+scratch session persistence, working directories, window tabs, zoom, and separate
+parent sessions. It removes its test server when it finishes. Python 3 is
+required for this check and the Claude hook helper.

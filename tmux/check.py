@@ -2,6 +2,7 @@
 """Check tmux behavior on a disposable server: python3 tmux/check.py."""
 
 import fcntl
+from itertools import product
 import os
 from pathlib import Path
 import pty
@@ -175,7 +176,7 @@ def check(folder):
             "i=0; while [ $i -lt 80 ]; do echo '/tmp/my_file-name.py beta gamma'; i=$((i+1)); done")
         run("send-keys", "-t", root, "Enter")
         drain(0.4)
-        for clicks, in_copy_mode in ((2, False), (3, False), (2, True), (3, True)):
+        for clicks, in_copy_mode, copy_key in product((2, 3), (False, True), (b"y", b"Y")):
             run("set-buffer", "untouched")
             if in_copy_mode:
                 run("copy-mode", "-t", root)
@@ -187,15 +188,19 @@ def check(folder):
             assert value(root, "#{pane_mode}") == "copy-mode"
             assert run("show-buffer") == "untouched"
             scroll = value(root, "#{scroll_position}")
-            keys(b"y")
+            keys(copy_key)
             assert run("show-buffer") == (
                 "/tmp/my_file-name.py" if clicks == 2 else "/tmp/my_file-name.py beta gamma"
             )
-            assert value(root, "#{pane_mode}") == "copy-mode"
-            assert value(root, "#{scroll_position}") == scroll
-            keys(b"\x1b")
+            if copy_key == b"Y":
+                assert value(root, "#{pane_mode}") == "copy-mode"
+                assert value(root, "#{scroll_position}") == scroll
+                assert value(root, "#{selection_present}") == "0"
+                keys(b"\x1b")
+            else:
+                assert value(root, "#{pane_mode}") == ""
             drain(0.35)
-        print("PASS: full-path/line clicks wait for y; copying keeps mode and scroll position")
+        print("PASS: word/line selection waits for copying; y exits copy mode; Y keeps scroll position")
 
         assert value(root, "#{pane-border-status}") == "off"
         split = run("split-window", "-d", "-P", "-F", "#{pane_id}",
@@ -218,12 +223,13 @@ def check(folder):
         click(20, row)
         assert value(root, "#{pane_mode}") == "copy-mode"
         assert value(root, "#{scroll_position}") == scroll
-        keys(b"y")
+        keys(b"Y")
         copied = run("show-buffer")
         assert copied == "/tmp/my_file-name.py", copied
         assert value(root, "#{pane_mode}") == "copy-mode"
         assert value(root, "#{scroll_position}") == scroll
-        print("PASS: drag, same-pane clicks, and y keep the scroll position")
+        assert value(root, "#{selection_present}") == "0"
+        print("PASS: drag, same-pane clicks, and Y keep the scroll position")
 
         # Both normal panes and panes already in copy mode can receive focus.
         for target_in_copy_mode in (False, True):

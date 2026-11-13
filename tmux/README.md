@@ -129,7 +129,8 @@ a keyboard selection.
 
 | In copy mode, without Prefix | Action |
 | --- | --- |
-| `y` | Copy the selection, clear it, and keep copy mode and the scroll position. |
+| `y` | Copy the selection and exit copy mode. |
+| `Y` | Copy the selection, clear it, and keep copy mode and the scroll position. |
 | `Escape` | Exit copy mode. |
 | `/` | Search forward as text is entered. |
 | `?` | Search backward as text is entered. |
@@ -144,7 +145,8 @@ Mouse selection waits for an explicit copy:
 - Double-click to select a word, full path, or filename. `/` and `.` stay within
   words for both double-click selection and keyboard word movement.
 - Triple-click to select a line.
-- Press `y` to copy. Press `Escape` to leave copy mode.
+- Press `y` to copy and exit copy mode. Press `Y` to copy and keep the scroll position.
+- Press `Escape` to leave copy mode without copying.
 - Left-click inside another pane to exit copy mode in the previous pane.
   This clears any uncopied selection and returns that pane to live output.
   Clicking inside the same pane keeps copy mode and the scroll position.
